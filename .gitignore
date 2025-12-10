@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+.venv/
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Airflow logs (gây lỗi symlink trên Windows)
+airflow/logs/
+
+# Model files (quá lớn cho GitHub - 540MB)
+*.pth
+*.pt
+*.h5
+*.pkl
+*.model
+
+# Data files (nếu quá lớn)
+# data/
+# rawdata/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Byte-compiled files
+*.pyc
+
+# Cookie files
+cookie/
+
+# Compressed files
+*.rar
+*.zip
+*.tar.gz
+
+# Temporary files
+*.tmp
+*.temp
+*.log

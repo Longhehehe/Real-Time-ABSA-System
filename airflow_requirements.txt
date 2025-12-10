@@ -1,0 +1,8 @@
+pandas
+scikit-learn
+joblib
+openpyxl
+# vncorenlp wrapper if used, otherwise the code uses local jar path
+# We'll assume the code handles the jar path, but we need numpy etc.
+numpy
+tqdm

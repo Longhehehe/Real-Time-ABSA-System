@@ -1,0 +1,31 @@
+FROM apache/airflow:2.7.1
+
+USER root
+
+# Install OpenJDK, git, wget, unzip
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+           openjdk-17-jre-headless \
+           build-essential \
+           git \
+           wget \
+           unzip \
+    && apt-get autoremove -yqq --purge \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# Set JAVA_HOME
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+
+# Download VnCoreNLP
+RUN git clone https://github.com/vncorenlp/VnCoreNLP.git /opt/vncorenlp \
+    && chmod +x /opt/vncorenlp/VnCoreNLP-1.1.1.jar
+
+# Set VNCORENLP_PATH environment variable
+ENV VNCORENLP_PATH=/opt/vncorenlp/VnCoreNLP-1.1.1.jar
+
+USER airflow
+
+# Install Python dependencies
+COPY airflow_requirements.txt .
+RUN pip install --no-cache-dir -r airflow_requirements.txt

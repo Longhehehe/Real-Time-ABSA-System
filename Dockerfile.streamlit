@@ -1,0 +1,26 @@
+FROM python:3.9-slim
+
+WORKDIR /app
+
+# Upgrade pip timeout for slow connections
+ENV PIP_DEFAULT_TIMEOUT=1000
+
+# Install system dependencies if needed (e.g. for numpy/pandas compilation sometimes)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy requirements separately to cache build steps
+COPY app_requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install --no-cache-dir -r app_requirements.txt
+
+# Copy the rest of the application
+# We will use volume mount in docker-compose for dev, 
+# but copying here is good practice for production build.
+COPY . .
+
+# Expose Streamlit port
+EXPOSE 8501
+
+CMD ["streamlit", "run", "app/dashboard.py", "--server.address=0.0.0.0"]
