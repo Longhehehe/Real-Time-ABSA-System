@@ -22,10 +22,19 @@ x-airflow-common:
     # Warning: In Docker, paths are different. We mount current dir to /opt/airflow/project
     - ./:/opt/airflow/project
   user: "${AIRFLOW_UID:-50000}:0"
+  # GPU access configuration
+  deploy:
+    resources:
+      reservations:
+        devices:
+          - driver: nvidia
+            count: all
+            capabilities: [gpu]
   depends_on:
     &airflow-common-depends-on
     postgres:
       condition: service_healthy
+
 
 services:
   postgres:

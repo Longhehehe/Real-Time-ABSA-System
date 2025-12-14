@@ -4,3 +4,10 @@ pandas
 openpyxl
 numpy
 kafka-python
+requests
+fake-useragent
+scikit-learn==1.3.2
+joblib
+selenium
+webdriver-manager
+transformers

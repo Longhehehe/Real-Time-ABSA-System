@@ -4,10 +4,16 @@ import pandas as pd
 import warnings
 warnings.filterwarnings('ignore')
 
+# Determine base directory (works for both local Windows and Docker)
+# In Docker: /opt/airflow/project
+# In Local: c:/Users/Long/Documents/Hoc_Tap/SE363 (1)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+PROJECT_DIR = SCRIPT_DIR  # train_pipeline.py is at project root
+
 # Add the correct path to find Src modules
 # The structure is: prepro/23520932_23520903_20520692_src/23520932_23520903_20520692_src/Src
-base_path = r'c:/Users/Long/Documents/Hoc_Tap/SE363 (1)/prepro/23520932_23520903_20520692_src/23520932_23520903_20520692_src'
-sys.path.insert(0, base_path)
+src_path = os.path.join(PROJECT_DIR, 'prepro', '23520932_23520903_20520692_src', '23520932_23520903_20520692_src')
+sys.path.insert(0, src_path)
 
 from Src.train_multinb_rf import MultinomialNBModel
 from Src.preprocessing import preprocess_text
@@ -15,8 +21,8 @@ from Src.preprocessing import preprocess_text
 def run_training():
     print("🚀 Starting Training Pipeline...")
     
-    # 1. Load Data
-    data_path = r'c:/Users/Long/Documents/Hoc_Tap/SE363 (1)/data/label/absa_grouped_vietnamese.xlsx'
+    # 1. Load Data - Use relative path
+    data_path = os.path.join(PROJECT_DIR, 'data', 'label', 'absa_grouped_vietnamese.xlsx')
     print(f"📥 Loading data from: {data_path}")
     
     # Handle the specific header structure of the file
@@ -83,14 +89,17 @@ def run_training():
     
     # Priority: Environment Variable (Docker) > Local Path (Dev)
     env_vncorenlp_path = os.getenv('VNCORENLP_PATH')
-    local_vncorenlp_path = r'c:/Users/Long/Documents/Hoc_Tap/SE363 (1)/VnCoreNLP/VnCoreNLP-1.1.1.jar'
+    local_vncorenlp_path = os.path.join(PROJECT_DIR, 'VnCoreNLP', 'VnCoreNLP-1.1.1.jar')
     
     if env_vncorenlp_path and os.path.exists(env_vncorenlp_path):
         vncorenlp_path = env_vncorenlp_path
         print(f"🌍 Using VnCoreNLP from ENV: {vncorenlp_path}")
-    else:
-        vncorenlp_path = local_vncorenlp_path # Fallback
+    elif os.path.exists(local_vncorenlp_path):
+        vncorenlp_path = local_vncorenlp_path
         print(f"🏠 Using VnCoreNLP from LOCAL: {vncorenlp_path}")
+    else:
+        vncorenlp_path = None
+        print("⚠️ VnCoreNLP not found, using basic preprocessing")
     # Note: If user doesn't have VnCoreNLP jar at this exact path, it might fail. 
     # Let's try to run relevant preprocessing without full VnCoreNLP if possible, or assume it exists.
     # Inspecting parameters: `vncorenlp_path` is passed.
@@ -112,7 +121,7 @@ def run_training():
         # I might need to simplify or assume it works. 
         # For the script to be valid, I write standard code.
         
-        preprocessed_texts = preprocess_text(texts, use_parallel=False) 
+        preprocessed_texts = preprocess_text(texts, use_parallel=False, vncorenlp_path=vncorenlp_path) 
         
         results, _, _, _ = model.train_model_with_preprocessed(
             train_df, 
@@ -124,7 +133,7 @@ def run_training():
         print(f"✅ Training completed. Accuracy: {results.get('accuracy', 0.0):.4f}")
         
         # 5. Save Model
-        output_dir = r'c:/Users/Long/Documents/Hoc_Tap/SE363 (1)/models/best_model'
+        output_dir = os.path.join(PROJECT_DIR, 'models', 'best_model')
         os.makedirs(output_dir, exist_ok=True)
         # The class `MultiNomialNBModel` creates a timestamped folder. We might want a fixed folder for the dashboard to load.
         # I'll modify the save logic or just rename after.

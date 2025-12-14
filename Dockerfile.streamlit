@@ -12,7 +12,10 @@ RUN apt-get update && apt-get install -y \
 
 # Copy requirements separately to cache build steps
 COPY app_requirements.txt .
+
+# Install PyTorch CPU version first (smaller, ~200MB vs 2GB for CUDA)
 RUN pip install --upgrade pip && \
+    pip install torch --index-url https://download.pytorch.org/whl/cpu && \
     pip install --no-cache-dir -r app_requirements.txt
 
 # Copy the rest of the application
