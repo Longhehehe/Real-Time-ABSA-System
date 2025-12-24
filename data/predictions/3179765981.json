@@ -1,0 +1,684 @@
+[
+  {
+    "review_id": "3179765981_1766500337184_84f889ae",
+    "original_text": "Hàng nhận được đúng như mô tả, đóng gói cẩn thận. Giao hàng nhanh",
+    "cleaned_text": "hàng nhận được đúng như mô tả, đóng gói cẩn thận. giao hàng nhanh",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501462.7417245
+  },
+  {
+    "review_id": "3179765981_1766500337294_0d289531",
+    "original_text": "Hàng nhận đúng như mô tả đóng gói cẩn thận giao hàng nhanh. \n 🔋Thời lượng pin:  Ok 📸Chất lượng camera:  Ok",
+    "cleaned_text": "hàng nhận đúng như mô tả đóng gói cẩn thận giao hàng nhanh. 🔋thời lượng pin: ok 📸chất lượng camera: ok",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766501462.7417293
+  },
+  {
+    "review_id": "3179765981_1766500337295_44fd81a6",
+    "original_text": "Hiệu năng chip A19 Pro, Camera chính 48 MP, Màn hình OLED 6.9 inch,",
+    "cleaned_text": "hiệu năng chip a19 pro, camera chính 48 mp, màn hình oled 6.9 inch,",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501462.7417345
+  },
+  {
+    "review_id": "3179765981_1766500337295_82457a1b",
+    "original_text": "Tùy chọn giao hàng nhanh, Hiệu năng chip A19 Pro, Hệ điều hành iOS, Camera chính 48 MP,",
+    "cleaned_text": "tùy chọn giao hàng nhanh, hiệu năng chip a19 pro, hệ điều hành ios, camera chính 48 mp,",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501462.7417388
+  },
+  {
+    "review_id": "3179765981_1766500337295_7a67bc53",
+    "original_text": "Quay phim độ phân giải 8K, Camera trước độ phân giải cao, Thiết kế điện thoại cao cấp,",
+    "cleaned_text": "quay phim độ phân giải 8k, camera trước độ phân giải cao, thiết kế điện thoại cao cấp,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501462.7417428
+  },
+  {
+    "review_id": "3179765981_1766500337295_5aa4567b",
+    "original_text": "Hiệu năng chip A19 Pro, Thiết kế điện thoại cao cấp, Dung lượng pin 5000 mAh, Quay phim độ phân giải 8K, Màn hình OLED 6.9 inch,",
+    "cleaned_text": "hiệu năng chip a19 pro, thiết kế điện thoại cao cấp, dung lượng pin 5000 mah, quay phim độ phân giải 8k, màn hình oled 6.9 inch,",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501462.7417467
+  },
+  {
+    "review_id": "3179765981_1766500337295_58e3d644",
+    "original_text": "Hiệu năng chip A19 Pro, Bảo hành chính hãng Apple, Thiết kế điện thoại cao cấp,",
+    "cleaned_text": "hiệu năng chip a19 pro, bảo hành chính hãng apple, thiết kế điện thoại cao cấp,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766501462.7417512
+  },
+  {
+    "review_id": "3179765981_1766500337295_9e1fe7c0",
+    "original_text": "Dung lượng pin 5000 mAh, Quay phim độ phân giải 8K, Thiết kế điện thoại cao cấp, Hệ điều hành iOS, tuyệt với",
+    "cleaned_text": "dung lượng pin 5000 mah, quay phim độ phân giải 8k, thiết kế điện thoại cao cấp, hệ điều hành ios, tuyệt với",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501462.741756
+  },
+  {
+    "review_id": "3179765981_1766500337295_6991c072",
+    "original_text": "Máy mới đẹp. Giao nhanh đặt cái 3 ngày đã thấy giao. Rất hài lòng dịch vụ",
+    "cleaned_text": "máy mới đẹp. giao nhanh đặt cái 3 ngày đã thấy giao. rất hài lòng dịch vụ",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "POS",
+      "Giá cả": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Dịch vụ chăm sóc khách hàng": "POS",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501462.7417595
+  },
+  {
+    "review_id": "3179765981_1766500337295_96c51d89",
+    "original_text": "🔋Battery Life:  excellent 📸Camera Quality:  outstanding  ⚡Performance:  oustanding Premium smartphone design, Express delivery option,",
+    "cleaned_text": "🔋battery life: excellent 📸camera quality: outstanding ⚡performance: oustanding premium smartphone design, express delivery option,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501462.7417643
+  },
+  {
+    "review_id": "3179765981_1766500337295_5eb8543c",
+    "original_text": "⚡Performance:  good 📸Camera Quality:  good 🔋Battery Life:  good 6.9 inch OLED display,",
+    "cleaned_text": "⚡performance: good 📸camera quality: good 🔋battery life: good 6.9 inch oled display,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501573.318517
+  },
+  {
+    "review_id": "3179765981_1766500337295_fd2c2475",
+    "original_text": "Hệ điều hành iOS, Màn hình OLED 6.9 inch, \n 📸Chất lượng camera:  ok ⚡Hiệu suất:  ok 🔋Thời lượng pin:  ok Kdkdkdkđkdkdk",
+    "cleaned_text": "hệ điều hành ios, màn hình oled 6.9 inch, 📸chất lượng camera: ok ⚡hiệu suất: ok 🔋thời lượng pin: ok kdkdkdkđkdkdk",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501573.3185244
+  },
+  {
+    "review_id": "3179765981_1766500337295_6ffac1a7",
+    "original_text": "siêu đẹp luôn, Bảo hành chính hãng Apple, Camera trước độ phân giải cao,",
+    "cleaned_text": "siêu đẹp luôn, bảo hành chính hãng apple, camera trước độ phân giải cao,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766501573.3185282
+  },
+  {
+    "review_id": "3179765981_1766500337295_cbc8016b",
+    "original_text": "🔋Thời lượng pin:  cả ngày 📸Chất lượng camera:  quá nét luôn ⚡Hiệu suất:  siêu nhanh",
+    "cleaned_text": "🔋thời lượng pin: cả ngày 📸chất lượng camera: quá nét luôn ⚡hiệu suất: siêu nhanh",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501573.318534
+  },
+  {
+    "review_id": "3179765981_1766500337295_8cf028c8",
+    "original_text": "Hàng nhận được đúng như mô tả đóng gói cẩn thận giao hàng rất nhanh.",
+    "cleaned_text": "hàng nhận được đúng như mô tả đóng gói cẩn thận giao hàng rất nhanh.",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501573.318538
+  },
+  {
+    "review_id": "3179765981_1766500337295_b63e16a1",
+    "original_text": "Hệ điều hành iOS, Thiết kế điện thoại cao cấp, Bảo hành chính hãng Apple,",
+    "cleaned_text": "hệ điều hành ios, thiết kế điện thoại cao cấp, bảo hành chính hãng apple,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "POS",
+      "Đổi trả & bảo hành": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766501573.318542
+  },
+  {
+    "review_id": "3179765981_1766500337295_60bc6d2e",
+    "original_text": "Hệ điều hành iOS, Hiệu năng chip A19 Pro,",
+    "cleaned_text": "hệ điều hành ios, hiệu năng chip a19 pro,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501573.3185453
+  },
+  {
+    "review_id": "3179765981_1766500337295_520355ae",
+    "original_text": "Được đúng như mô tả giao hàng nhanh.Hàng nhận được đúng như mô tả giao hàng nhanh.",
+    "cleaned_text": "được đúng như mô tả giao hàng nhanh.hàng nhận được đúng như mô tả giao hàng nhanh.",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501573.3185492
+  },
+  {
+    "review_id": "3179765981_1766500337295_5ee95e35",
+    "original_text": "Giao hơi lâu xíu\nNhưng nhận nguyên seal \nĐóg gói cẩn thận đẹp \nOkokokokok\nSẽ mua tiếp những lần sau này",
+    "cleaned_text": "giao hơi lâu xíu nhưng nhận nguyên seal đóg gói cẩn thận đẹp okokokokok sẽ mua tiếp những lần sau này",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Đổi trả & bảo hành": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766501573.3185527
+  },
+  {
+    "review_id": "3179765981_1766500337296_547c421d",
+    "original_text": "Hàng nhận đúng như mô tả đóng gói cẩn thận giao hàng rất nhanh.",
+    "cleaned_text": "hàng nhận đúng như mô tả đóng gói cẩn thận giao hàng rất nhanh.",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501573.3185582
+  },
+  {
+    "review_id": "3179765981_1766500337296_09fd37c7",
+    "original_text": "Shop đóng hàng cẩn thận rất chuyên nghiệp nhận đúng đơn hàng đặt iPhone 17 pro max mới 100\\100 rất hài lòng ủng hộ shop",
+    "cleaned_text": "shop đóng hàng cẩn thận rất chuyên nghiệp nhận đúng đơn hàng đặt iphone 17 pro max mới 100\\100 rất hài lòng ủng hộ shop",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766501701.2736287
+  },
+  {
+    "review_id": "3179765981_1766500337296_5eb9705c",
+    "original_text": "Dung lượng pin 5000 mAh, Quay phim độ phân giải 8K, Tùy chọn giao hàng nhanh,",
+    "cleaned_text": "dung lượng pin 5000 mah, quay phim độ phân giải 8k, tùy chọn giao hàng nhanh,",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501701.2736347
+  },
+  {
+    "review_id": "3179765981_1766500337296_b6df4178",
+    "original_text": "Hàng nhận đúng như mô tả.Đóng gói cẩn thận giao hàng nhanh.",
+    "cleaned_text": "hàng nhận đúng như mô tả.đóng gói cẩn thận giao hàng nhanh.",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501701.2736392
+  },
+  {
+    "review_id": "3179765981_1766500337296_59793f20",
+    "original_text": "📸Chất lượng camera:Thiết kế điện thoại cao cấp, Tùy chọn giao hàng nhanh, Quay phim độ phân giải 8K,\n máy đẹp pin ngon",
+    "cleaned_text": "📸chất lượng camera:thiết kế điện thoại cao cấp, tùy chọn giao hàng nhanh, quay phim độ phân giải 8k, máy đẹp pin ngon",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766501701.2736423
+  },
+  {
+    "review_id": "3179765981_1766500337296_8dda85a6",
+    "original_text": "Hệ điều hành iOS, Dung lượng pin 5000 mAh, Tùy chọn giao hàng nhanh, Camera chính 48 MP, Màn hình OLED 6.9 inch, Quay phim độ phân giải 8K,",
+    "cleaned_text": "hệ điều hành ios, dung lượng pin 5000 mah, tùy chọn giao hàng nhanh, camera chính 48 mp, màn hình oled 6.9 inch, quay phim độ phân giải 8k,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766501701.2736442
+  },
+  {
+    "review_id": "3179765981_1766500337296_abdbe1a6",
+    "original_text": "Camera chính 48 MP, Dung lượng pin 5000 mAh, Quay phim độ phân giải 8K, Thiết kế điện thoại cao cấp,",
+    "cleaned_text": "camera chính 48 mp, dung lượng pin 5000 mah, quay phim độ phân giải 8k, thiết kế điện thoại cao cấp,",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Đóng gói & bao bì": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501701.2736478
+  },
+  {
+    "review_id": "3179765981_1766500337296_8017491b",
+    "original_text": "Màn hình OLED 6.9 inch, Quay phim độ phân giải 8K, Camera trước độ phân giải cao,",
+    "cleaned_text": "màn hình oled 6.9 inch, quay phim độ phân giải 8k, camera trước độ phân giải cao,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501701.2736514
+  },
+  {
+    "review_id": "3179765981_1766500337296_6088b3ee",
+    "original_text": "📸Chất lượng camera:  good 🔋Thời lượng pin:  goos ⚡Hiệu suất:  goodTùy chọn giao hàng nhanh, Dung lượng pin 5000 mAh,",
+    "cleaned_text": "📸chất lượng camera: good 🔋thời lượng pin: goos ⚡hiệu suất: goodtùy chọn giao hàng nhanh, dung lượng pin 5000 mah,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501701.273656
+  },
+  {
+    "review_id": "3179765981_1766500337296_90673dea",
+    "original_text": "Tùy chọn giao hàng nhanh, Bảo hành chính hãng Apple, sp xuất sắc ạ",
+    "cleaned_text": "tùy chọn giao hàng nhanh, bảo hành chính hãng apple, sp xuất sắc ạ",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766501701.2736595
+  },
+  {
+    "review_id": "3179765981_1766500337296_ea6fec1b",
+    "original_text": "Vận chuyển nhanh",
+    "cleaned_text": "vận chuyển nhanh",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501701.2736635
+  },
+  {
+    "review_id": "3179765981_1766500337296_19e79340",
+    "original_text": "⚡Hiệu suất:  Hiệu năng chip A19 Pro, Quay phim độ phân giải 8K,",
+    "cleaned_text": "⚡hiệu suất: hiệu năng chip a19 pro, quay phim độ phân giải 8k,",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501802.9793162
+  },
+  {
+    "review_id": "3179765981_1766500337296_6b4f4e65",
+    "original_text": "Camera trước độ phân giải cao,  🔋Thời lượng pin:quá tốt\n 📸Chất lượng camera:ngon nghẻ\n ⚡Hiệu suất:tuyệt vời Thiết kế điện thoại cao cấp, Hiệu năng chip A19 Pro,",
+    "cleaned_text": "camera trước độ phân giải cao, 🔋thời lượng pin:quá tốt 📸chất lượng camera:ngon nghẻ ⚡hiệu suất:tuyệt vời thiết kế điện thoại cao cấp, hiệu năng chip a19 pro,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501802.9793234
+  },
+  {
+    "review_id": "3179765981_1766500337296_ec66e719",
+    "original_text": "⚡Hiệu suất:dùng được cả ngày",
+    "cleaned_text": "⚡hiệu suất:dùng được cả ngày",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766501802.9793272
+  },
+  {
+    "review_id": "3179765981_1766500337296_ace1ec12",
+    "original_text": "Mua được ip17 màu cam trên Laz, giao nhanh trong ngày. Quá tuyệt. Cho shop 5 sao",
+    "cleaned_text": "mua được ip17 màu cam trên laz, giao nhanh trong ngày. quá tuyệt. cho shop 5 sao",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "POS",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501802.9793334
+  },
+  {
+    "review_id": "3179765981_1766500337296_306b01c7",
+    "original_text": "Ảng nhặn đúng như mô tả đóng gói cẩn thận, giao hàng nhanh. \n 🔋Thời lượng pin:  ok 📸Chất lượng camera:  ok",
+    "cleaned_text": "ảng nhặn đúng như mô tả đóng gói cẩn thận, giao hàng nhanh. 🔋thời lượng pin: ok 📸chất lượng camera: ok",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501802.979337
+  },
+  {
+    "review_id": "3179765981_1766500337296_f16b56ec",
+    "original_text": "iPhone 17 Pro Max 256GB VN/A – Màu Xanh Sang Trọng ✨\nHiệu năng A19 Bionic siêu khủng ⚡️ – Camera đỉnh cao 📸 – Bộ nhớ 256GB thoải mái lưu trữ.💙 Lựa chọn hoàn hảo cho người yêu công nghệ!",
+    "cleaned_text": "iphone 17 pro max 256gb vn/a – màu xanh sang trọng ✨ hiệu năng a19 bionic siêu khủng ⚡️ – camera đỉnh cao 📸 – bộ nhớ 256gb thoải mái lưu trữ.💙 lựa chọn hoàn hảo cho người yêu công nghệ!",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766501802.979341
+  },
+  {
+    "review_id": "3179765981_1766500337296_5843831a",
+    "original_text": "📸Chất lượng camera:  ok 🔋Thời lượng pin:  ok ⚡Hiệu suất:  okk",
+    "cleaned_text": "📸chất lượng camera: ok 🔋thời lượng pin: ok ⚡hiệu suất: okk",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501802.9793437
+  },
+  {
+    "review_id": "3179765981_1766500337296_42c75a98",
+    "original_text": "Bảo hành chính hãng Apple, Màn hình OLED 6.9 inch, Dung lượng pin 5000 mAh, Thiết kế điện thoại cao cấp,",
+    "cleaned_text": "bảo hành chính hãng apple, màn hình oled 6.9 inch, dung lượng pin 5000 mah, thiết kế điện thoại cao cấp,",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "POS",
+      "Đổi trả & bảo hành": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766501802.979348
+  },
+  {
+    "review_id": "3179765981_1766500337297_cc9f98d0",
+    "original_text": "Giao hàng nhanh chóng, đơn hàng chính hãng đóng gói chắc chắn\nGiao nhanh chón trong ngày sẽ ủng hộ shop tiếp",
+    "cleaned_text": "giao hàng nhanh chóng, đơn hàng chính hãng đóng gói chắc chắn giao nhanh chón trong ngày sẽ ủng hộ shop tiếp",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766501802.9793525
+  },
+  {
+    "review_id": "3179765981_1766500337297_d424c92a",
+    "original_text": "Sản phẩm rất đẹp, nhiều tính năng, chụp ảnh đẹp. Rất ưng ý 5 sao",
+    "cleaned_text": "sản phẩm rất đẹp, nhiều tính năng, chụp ảnh đẹp. rất ưng ý 5 sao",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766501802.9793556
+  }
+]

@@ -1,0 +1,394 @@
+[
+  {
+    "review_id": "1844054019_1766512723763_96f947e2",
+    "original_text": "xài tóc mượt rất ưng, đã mua nhiều lần, săn sale được rẻ. mua mall nên yên tâm",
+    "cleaned_text": "xài tóc mượt rất ưng, đã mua nhiều lần, săn sale được rẻ. mua mall nên yên tâm",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512934.1494699
+  },
+  {
+    "review_id": "1844054019_1766512723764_60be1a2f",
+    "original_text": "Làm sống lại tóc ngay lập tức, Công thức nhẹ nhàng cho sử dụng hàng ngày, Hương thơm lâu dài, Làm cho tóc mềm mại và mượt mà,",
+    "cleaned_text": "làm sống lại tóc ngay lập tức, công thức nhẹ nhàng cho sử dụng hàng ngày, hương thơm lâu dài, làm cho tóc mềm mại và mượt mà,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512934.1494799
+  },
+  {
+    "review_id": "1844054019_1766512723764_28e227ca",
+    "original_text": "Thành phần tự nhiên cho tóc khỏe mạnh, Mang lại cho tóc vẻ ngoài khỏe mạnh và sống động, \n Hương thơm:Dầu gội có thành phần tự nhiên, giúp tóc mình trông khỏe mạnh và sống động hơn hẳn. 🌿 Mùi hương nhẹ nhàng, dễ chịu, không quá nồng. 🌸 Khi gội xong tóc mềm mượt, không bị khô rít. 👍 Rất ưng ý sản phẩm này. ✨",
+    "cleaned_text": "thành phần tự nhiên cho tóc khỏe mạnh, mang lại cho tóc vẻ ngoài khỏe mạnh và sống động, hương thơm:dầu gội có thành phần tự nhiên, giúp tóc mình trông khỏe mạnh và sống động hơn hẳn. 🌿 mùi hương nhẹ nhàng, dễ chịu, không quá nồng. 🌸 khi gội xong tóc mềm mượt, không bị khô rít. 👍 rất ưng ý sản phẩm này. ✨",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512934.1494837
+  },
+  {
+    "review_id": "1844054019_1766512723764_38111dce",
+    "original_text": "cảm ơn shop mình đã nhận được sản phẩm sớm hơn mong đợi giá cả hợp lý lần sau sẽ ủng hộ shipper vui vẻ",
+    "cleaned_text": "cảm ơn shop mình đã nhận được sản phẩm sớm hơn mong đợi giá cả hợp lý lần sau sẽ ủng hộ shipper vui vẻ",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512934.1494868
+  },
+  {
+    "review_id": "1844054019_1766512723764_e2b386c7",
+    "original_text": "Làm cho tóc mềm mại và mượt mà, Làm sống lại tóc ngay lập tức, Làm sống lại tóc ngay lập tức, Mang lại cho tóc vẻ ngoài khỏe mạnh và sống động, Bảo vệ tóc khỏi hư tổn,",
+    "cleaned_text": "làm cho tóc mềm mại và mượt mà, làm sống lại tóc ngay lập tức, làm sống lại tóc ngay lập tức, mang lại cho tóc vẻ ngoài khỏe mạnh và sống động, bảo vệ tóc khỏi hư tổn,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512934.1494896
+  },
+  {
+    "review_id": "1844054019_1766512723764_95b43e4a",
+    "original_text": "Giao hàng nhanh vid mua của chính hãng nen khá tin tưởng Tóc mượt và bóng mịn, Dạng 10 gói tiện lợi khi đi du lịch,",
+    "cleaned_text": "giao hàng nhanh vid mua của chính hãng nen khá tin tưởng tóc mượt và bóng mịn, dạng 10 gói tiện lợi khi đi du lịch,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512934.1494927
+  },
+  {
+    "review_id": "1844054019_1766512723764_ac066c9e",
+    "original_text": "Mình dùng dầu gội này lâu rồi. Cũng khá ổn, tóc có vẻ khỏe hơn. Không hẳn có tác dụng mọc tóc nhưng ít rụng hơn.",
+    "cleaned_text": "mình dùng dầu gội này lâu rồi. cũng khá ổn, tóc có vẻ khỏe hơn. không hẳn có tác dụng mọc tóc nhưng ít rụng hơn.",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512934.1494954
+  },
+  {
+    "review_id": "1844054019_1766512723764_ea035b88",
+    "original_text": "Promotes hair growth, Long-lasting fragrance, Suitable for all hair types,",
+    "cleaned_text": "promotes hair growth, long-lasting fragrance, suitable for all hair types,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512934.1494977
+  },
+  {
+    "review_id": "1844054019_1766512723764_62a72da9",
+    "original_text": "Hàng giao nhanh, đóng gói kỹ, dầu rội giảm thiểu rụng tóc đáng kể, mùi hương lâu dài, kích thích mọc tóc, rất ưng ý với dòng sản phẩm này, sẽ tiếp tục ủng hộ shop lâu dài, tặng shop và sản phẩm 5 sao",
+    "cleaned_text": "hàng giao nhanh, đóng gói kỹ, dầu rội giảm thiểu rụng tóc đáng kể, mùi hương lâu dài, kích thích mọc tóc, rất ưng ý với dòng sản phẩm này, sẽ tiếp tục ủng hộ shop lâu dài, tặng shop và sản phẩm 5 sao",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512934.1495006
+  },
+  {
+    "review_id": "1844054019_1766512723764_c49ad3ed",
+    "original_text": "Đã mua vài lần trước, nay mua lại. Mùi thơm dịu dàng mình khá thích. Chất lượng khá ổn, hy vọng về lâu dài nsx ko vì lợi nhuận mà làm giảm chất lượng.",
+    "cleaned_text": "đã mua vài lần trước, nay mua lại. mùi thơm dịu dàng mình khá thích. chất lượng khá ổn, hy vọng về lâu dài nsx ko vì lợi nhuận mà làm giảm chất lượng.",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512934.1495032
+  },
+  {
+    "review_id": "1844054019_1766512723763_74d51866",
+    "original_text": "Làm sạch da đầu hiệu quả, Bảo vệ tóc khỏi hư tổn, Thành phần tự nhiên cho tóc khỏe mạnh, Thêm độ bóng cho tóc xỉn màu, Làm cho tóc mềm mại và mượt mà,",
+    "cleaned_text": "làm sạch da đầu hiệu quả, bảo vệ tóc khỏi hư tổn, thành phần tự nhiên cho tóc khỏe mạnh, thêm độ bóng cho tóc xỉn màu, làm cho tóc mềm mại và mượt mà,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512969.3131647
+  },
+  {
+    "review_id": "1844054019_1766512723763_c5622715",
+    "original_text": "Mọi thứ thấy bình thường, dùng thấy cũng bình thường, mỗi tội đắt. chẳng có giảm giá gì cả. haizzzz. bruh bruh",
+    "cleaned_text": "mọi thứ thấy bình thường, dùng thấy cũng bình thường, mỗi tội đắt. chẳng có giảm giá gì cả. haizzzz. bruh bruh",
+    "sentiment": {},
+    "rating": 4,
+    "processed_at": 1766512969.3131692
+  },
+  {
+    "review_id": "1844054019_1766512723764_56f44473",
+    "original_text": "Mang lại cho tóc vẻ ngoài khỏe mạnh và sống động, Thêm độ bóng cho tóc xỉn màu, Làm dịu da đầu ngứa, dùng hơn 3 chai rồi rất thích",
+    "cleaned_text": "mang lại cho tóc vẻ ngoài khỏe mạnh và sống động, thêm độ bóng cho tóc xỉn màu, làm dịu da đầu ngứa, dùng hơn 3 chai rồi rất thích",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512969.3131716
+  },
+  {
+    "review_id": "1844054019_1766512723762_b41732a9",
+    "original_text": "Làm dịu da đầu ngứa, Dễ dàng rửa sạch, Tăng độ phồng cho tóc mỏng, Làm cho tóc mềm mại và mượt mà, Phù hợp cho mọi loại tóc, Thêm độ bóng cho tóc xỉn màu, Bảo vệ tóc khỏi hư tổn, Làm sống lại tóc ngay lập tức,",
+    "cleaned_text": "làm dịu da đầu ngứa, dễ dàng rửa sạch, tăng độ phồng cho tóc mỏng, làm cho tóc mềm mại và mượt mà, phù hợp cho mọi loại tóc, thêm độ bóng cho tóc xỉn màu, bảo vệ tóc khỏi hư tổn, làm sống lại tóc ngay lập tức,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766512969.313174
+  },
+  {
+    "review_id": "1844054019_1766512723763_c54ba97f",
+    "original_text": "hihihi mình nhận hàng rồi giao hàng nhanh nay đặt mai có đúng mẫu đúng màu xài không còn rụng tóc thích lắm ạ có kem theo mấy quà tặng nhỏ sẽ quay lại ủng hộ shop hihihi",
+    "cleaned_text": "hihihi mình nhận hàng rồi giao hàng nhanh nay đặt mai có đúng mẫu đúng màu xài không còn rụng tóc thích lắm ạ có kem theo mấy quà tặng nhỏ sẽ quay lại ủng hộ shop hihihi",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513047.1597817
+  },
+  {
+    "review_id": "1844054019_1766512723763_a9dec30f",
+    "original_text": "hihihi mình nhận hàng rồi giao hàng nhanh đúng màu đúng mẫu giá rẻ sài ok lắm nha ra tóc con nhiều lắm ạ sẽ ủng hộ shop hihihi",
+    "cleaned_text": "hihihi mình nhận hàng rồi giao hàng nhanh đúng màu đúng mẫu giá rẻ sài ok lắm nha ra tóc con nhiều lắm ạ sẽ ủng hộ shop hihihi",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513047.1597855
+  },
+  {
+    "review_id": "1844054019_1766512723763_6d18ef67",
+    "original_text": "Phù hợp cho mọi loại tóc, Kích thích mọc tóc, Nuôi dưỡng và dưỡng ẩm sâu cho tóc, Hương thơm lâu dài,",
+    "cleaned_text": "phù hợp cho mọi loại tóc, kích thích mọc tóc, nuôi dưỡng và dưỡng ẩm sâu cho tóc, hương thơm lâu dài,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513047.1597884
+  },
+  {
+    "review_id": "1844054019_1766512723763_41bc15fb",
+    "original_text": "Giao hàng khá nhanh chóng ạ. Hàng được bọc kĩ càng, cẩn thận. Mk kiểm tra thấy còn nguyên vẹn và lành lặn, không bị sứt mẻ hay nứt vỡ gì. Mua dầu gội,  sữa tắm còn được tặng thêm Dạ hương rất tuyệt ạ. Mk chưa dùng nên cũng không biết chất lượng thế nào. Nếu ổn thì mk sẽ tiếp tục ủng hộ shop nhiều hơn nữa. Nhìn chung tất cả đều rất tuyệt vời. Mk cảm ơn nhiều ạ.",
+    "cleaned_text": "giao hàng khá nhanh chóng ạ. hàng được bọc kĩ càng, cẩn thận. mk kiểm tra thấy còn nguyên vẹn và lành lặn, không bị sứt mẻ hay nứt vỡ gì. mua dầu gội, sữa tắm còn được tặng thêm dạ hương rất tuyệt ạ. mk chưa dùng nên cũng không biết chất lượng thế nào. nếu ổn thì mk sẽ tiếp tục ủng hộ shop nhiều hơn nữa. nhìn chung tất cả đều rất tuyệt vời. mk cảm ơn nhiều ạ.",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513047.1597908
+  },
+  {
+    "review_id": "1844054019_1766512723763_801730d3",
+    "original_text": "Thành phần:dầu gội dược liệu dưỡng tóc \n Hương thơm:mùi thơm nhẹ nhàng \n Hiệu quả:mềm tóc , đã dùng nhiều lần rất thích",
+    "cleaned_text": "thành phần:dầu gội dược liệu dưỡng tóc hương thơm:mùi thơm nhẹ nhàng hiệu quả:mềm tóc , đã dùng nhiều lần rất thích",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513047.1597931
+  },
+  {
+    "review_id": "1844054019_1766512723763_be637a1b",
+    "original_text": "Giao hàng nhanh, mùi thơm dễ chịu\nTóc đỡ rụng \nMong nsx ra thêm phiên bản túi refill",
+    "cleaned_text": "giao hàng nhanh, mùi thơm dễ chịu tóc đỡ rụng mong nsx ra thêm phiên bản túi refill",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513047.1597953
+  },
+  {
+    "review_id": "1844054019_1766512723763_96b41b7b",
+    "original_text": "Hương thơm lâu dài, Dễ dàng rửa sạch, Công thức nhẹ nhàng cho sử dụng hàng ngày, Công thức nhẹ nhàng cho sử dụng hàng ngày, Thành phần tự nhiên cho tóc khỏe mạnh,",
+    "cleaned_text": "hương thơm lâu dài, dễ dàng rửa sạch, công thức nhẹ nhàng cho sử dụng hàng ngày, công thức nhẹ nhàng cho sử dụng hàng ngày, thành phần tự nhiên cho tóc khỏe mạnh,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513047.1597977
+  },
+  {
+    "review_id": "1844054019_1766512723764_64740a69",
+    "original_text": "Đã nhận được hàng, đúng mẫu, chất lượng ổn, date xa đã mua nhiều lần, mua giá sale hợp lý",
+    "cleaned_text": "đã nhận được hàng, đúng mẫu, chất lượng ổn, date xa đã mua nhiều lần, mua giá sale hợp lý",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513047.1598
+  },
+  {
+    "review_id": "1844054019_1766512723764_b8718193",
+    "original_text": "Tăng độ phồng cho tóc mỏng, Công thức nhẹ nhàng cho sử dụng hàng ngày, Làm sống lại tóc ngay lập tức, Dễ dàng rửa sạch,",
+    "cleaned_text": "tăng độ phồng cho tóc mỏng, công thức nhẹ nhàng cho sử dụng hàng ngày, làm sống lại tóc ngay lập tức, dễ dàng rửa sạch,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513047.1598022
+  },
+  {
+    "review_id": "1844054019_1766512723764_16f8824a",
+    "original_text": "Làm dịu da đầu ngứa, Thêm độ bóng cho tóc xỉn màu, Công thức nhẹ nhàng cho sử dụng hàng ngày, Thành phần tự nhiên cho tóc khỏe mạnh, \n Hiệu quả:  tốt cho tóc",
+    "cleaned_text": "làm dịu da đầu ngứa, thêm độ bóng cho tóc xỉn màu, công thức nhẹ nhàng cho sử dụng hàng ngày, thành phần tự nhiên cho tóc khỏe mạnh, hiệu quả: tốt cho tóc",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513047.159804
+  },
+  {
+    "review_id": "1844054019_1766512723765_86e423bc",
+    "original_text": "Oke đã dùng nhiều lần đợi mãi mới có dịp sale để đắt mua đơn cao còn được tặng quà quá là oke la giá tốt oke",
+    "cleaned_text": "oke đã dùng nhiều lần đợi mãi mới có dịp sale để đắt mua đơn cao còn được tặng quà quá là oke la giá tốt oke",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513110.9099033
+  },
+  {
+    "review_id": "1844054019_1766512723644_36eef25d",
+    "original_text": "Hiệu quả: Dưỡng tốt\n Hương thơm: Thảo mộc nhẹ mà lâu\n Thành phần: Thảo mộc thiên nhiên\nDùng dòng này dưỡng ổn nên tóc nhanh bết và dễ bị gàu, phải 2 ngày gội 1 lần. Mình không thích dùng dầu xả nên chỉ gội thôi, thấy tóc đủ mượt, không bị rối hay khô xơ đâu. Mua chai lớn cho kinh tế. Date xa.",
+    "cleaned_text": "hiệu quả: dưỡng tốt hương thơm: thảo mộc nhẹ mà lâu thành phần: thảo mộc thiên nhiên dùng dòng này dưỡng ổn nên tóc nhanh bết và dễ bị gàu, phải 2 ngày gội 1 lần. mình không thích dùng dầu xả nên chỉ gội thôi, thấy tóc đủ mượt, không bị rối hay khô xơ đâu. mua chai lớn cho kinh tế. date xa.",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513110.909912
+  },
+  {
+    "review_id": "1844054019_1766512723764_a2066bc7",
+    "original_text": "Làm dịu da đầu ngứa, Nuôi dưỡng và dưỡng ẩm sâu cho tóc, Thêm độ bóng cho tóc xỉn màu, Bảo vệ tóc khỏi hư tổn, Mang lại cho tóc vẻ ngoài khỏe mạnh và sống động, Làm cho tóc mềm mại và mượt mà,",
+    "cleaned_text": "làm dịu da đầu ngứa, nuôi dưỡng và dưỡng ẩm sâu cho tóc, thêm độ bóng cho tóc xỉn màu, bảo vệ tóc khỏi hư tổn, mang lại cho tóc vẻ ngoài khỏe mạnh và sống động, làm cho tóc mềm mại và mượt mà,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513196.1291544
+  },
+  {
+    "review_id": "1844054019_1766512723764_352e4cce",
+    "original_text": "Sản phẩm có uy tín.Làm dịu da đầu ngứa, Công thức nhẹ nhàng cho sử dụng hàng ngày, Shop đóng gói cẩn thận,giá rẻ hơn các shop khác.Shipper nhiệt tình.",
+    "cleaned_text": "sản phẩm có uy tín.làm dịu da đầu ngứa, công thức nhẹ nhàng cho sử dụng hàng ngày, shop đóng gói cẩn thận,giá rẻ hơn các shop khác.shipper nhiệt tình.",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513196.1291585
+  },
+  {
+    "review_id": "1844054019_1766512723764_c472d546",
+    "original_text": "Kích thích mọc tóc, Thêm độ bóng cho tóc xỉn màu, dầu gội thích lắm mùi hương dễ chịu",
+    "cleaned_text": "kích thích mọc tóc, thêm độ bóng cho tóc xỉn màu, dầu gội thích lắm mùi hương dễ chịu",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513196.129161
+  },
+  {
+    "review_id": "1844054019_1766512723764_f21270e7",
+    "original_text": "Hiệu quả:tóc mềm mượt nhưng không kiềm dầu tốt như trước, tóc vẫn dễ bết\n Hương thơm:thơm hương xả, nhưng cũng không thơm lâu như trước",
+    "cleaned_text": "hiệu quả:tóc mềm mượt nhưng không kiềm dầu tốt như trước, tóc vẫn dễ bết hương thơm:thơm hương xả, nhưng cũng không thơm lâu như trước",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513196.1291633
+  },
+  {
+    "review_id": "1844054019_1766512723762_d5b70f8d",
+    "original_text": "Đã nhận được hàng. Đóng gói cẩn thận. Nhìn có vẻ chắc chắn. Chưa sử dụng. Lúc nào sd sẽ phản hồi nhé.\n Hương thơm:  ok",
+    "cleaned_text": "đã nhận được hàng. đóng gói cẩn thận. nhìn có vẻ chắc chắn. chưa sử dụng. lúc nào sd sẽ phản hồi nhé. hương thơm: ok",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513211.512575
+  },
+  {
+    "review_id": "1844054019_1766512723762_67a32169",
+    "original_text": "Thành phần tự nhiên cho tóc khỏe mạnh, Làm cho tóc mềm mại và mượt mà, may được trừ xu nên giá hời hơn \nSản phẩm chất lượng",
+    "cleaned_text": "thành phần tự nhiên cho tóc khỏe mạnh, làm cho tóc mềm mại và mượt mà, may được trừ xu nên giá hời hơn sản phẩm chất lượng",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513211.5125794
+  },
+  {
+    "review_id": "1844054019_1766512723762_6a5cb026",
+    "original_text": "giao hàng nhanh sản phẩm giống mô tả,đóng gói sản phẩm rất cẩn thận.Đã mua nhiều lần.Sẽ tiếp tục ủng hộ lần sau.",
+    "cleaned_text": "giao hàng nhanh sản phẩm giống mô tả,đóng gói sản phẩm rất cẩn thận.đã mua nhiều lần.sẽ tiếp tục ủng hộ lần sau.",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513211.5125818
+  },
+  {
+    "review_id": "1844054019_1766512723763_2d66d73f",
+    "original_text": "Hiệu quả:  tóc mềm mượt  Hương thơm:  mùi thảo dược nhẹ nhàng Thành phần:  không biết Mình rất ủng hộ sản phẩm nội địa này. Nong nhà sản xuất giữ được chất lượng vững bền.",
+    "cleaned_text": "hiệu quả: tóc mềm mượt hương thơm: mùi thảo dược nhẹ nhàng thành phần: không biết mình rất ủng hộ sản phẩm nội địa này. nong nhà sản xuất giữ được chất lượng vững bền.",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513211.5125847
+  },
+  {
+    "review_id": "1844054019_1766512723763_e265ca68",
+    "original_text": "Thành phần tự nhiên cho tóc khỏe mạnh, Phù hợp cho mọi loại tóc, Làm sạch da đầu hiệu quả, \n Thành phần:thiên nhiên",
+    "cleaned_text": "thành phần tự nhiên cho tóc khỏe mạnh, phù hợp cho mọi loại tóc, làm sạch da đầu hiệu quả, thành phần:thiên nhiên",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513211.512587
+  },
+  {
+    "review_id": "1844054019_1766512723763_792e5164",
+    "original_text": "Mang lại cho tóc vẻ ngoài khỏe mạnh và sống động, Kích thích mọc tóc, Công thức nhẹ nhàng cho sử dụng hàng ngày, Tăng độ phồng cho tóc mỏng,",
+    "cleaned_text": "mang lại cho tóc vẻ ngoài khỏe mạnh và sống động, kích thích mọc tóc, công thức nhẹ nhàng cho sử dụng hàng ngày, tăng độ phồng cho tóc mỏng,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513211.5125895
+  },
+  {
+    "review_id": "1844054019_1766512723763_5ba40065",
+    "original_text": "dầu gội có mùi dược liệu nhẹ chứ không thơm, làm giảm gãy rụng tóc, làm sạch da đầu và tóc. Đã dùng dầu gội này 1 năm nay.",
+    "cleaned_text": "dầu gội có mùi dược liệu nhẹ chứ không thơm, làm giảm gãy rụng tóc, làm sạch da đầu và tóc. đã dùng dầu gội này 1 năm nay.",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513211.5125918
+  },
+  {
+    "review_id": "1844054019_1766512723764_bbd12813",
+    "original_text": "Mùi hương thơm mát dễ chịu, lưu hương lâu. Cả nhà mình đều dùng loại này. Hiệu quả trị gàu với kích thích mọc tóc thì không thấy rõ, nhưng dưỡng và giảm rụng khá tốt",
+    "cleaned_text": "mùi hương thơm mát dễ chịu, lưu hương lâu. cả nhà mình đều dùng loại này. hiệu quả trị gàu với kích thích mọc tóc thì không thấy rõ, nhưng dưỡng và giảm rụng khá tốt",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513211.5125947
+  },
+  {
+    "review_id": "1844054019_1766512723763_f7a2f29e",
+    "original_text": "Sản phẩm đã được giao đến khá nhanh chóng. Tôi rất hài lòng với tốc độ vận chuyển này. Tôi sẽ sớm sử dụng sản phẩm và mong đợi những trải nghiệm tuyệt vời. Nếu có điều gì đó cần phản hồi thêm, tôi sẽ liên hệ lại. Cảm ơn và hi vọng nhiu uu đãi cho khách thân thiết",
+    "cleaned_text": "sản phẩm đã được giao đến khá nhanh chóng. tôi rất hài lòng với tốc độ vận chuyển này. tôi sẽ sớm sử dụng sản phẩm và mong đợi những trải nghiệm tuyệt vời. nếu có điều gì đó cần phản hồi thêm, tôi sẽ liên hệ lại. cảm ơn và hi vọng nhiu uu đãi cho khách thân thiết",
+    "sentiment": {},
+    "rating": 4,
+    "processed_at": 1766513211.512597
+  },
+  {
+    "review_id": "1844054019_1766512723762_f9717700",
+    "original_text": "Mùi thơm dễ chịu, dùng mấy năm rồi và vẫn mua lại thường xuyên, tác dụng kích thích mọc tóc thì ko rõ rệt lắm nhưng cũng cứ hi vọng vậy.",
+    "cleaned_text": "mùi thơm dễ chịu, dùng mấy năm rồi và vẫn mua lại thường xuyên, tác dụng kích thích mọc tóc thì ko rõ rệt lắm nhưng cũng cứ hi vọng vậy.",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513460.30956
+  },
+  {
+    "review_id": "1844054019_1766512723762_0f7213ef",
+    "original_text": "Làm sống lại tóc ngay lập tức, Hương thơm lâu dài, Tăng độ phồng cho tóc mỏng, \nSản phẩm đóng gói sản phẩm cẩn thận, hàng giao nhận nhanh chóng, mua  dc giá rẻ",
+    "cleaned_text": "làm sống lại tóc ngay lập tức, hương thơm lâu dài, tăng độ phồng cho tóc mỏng, sản phẩm đóng gói sản phẩm cẩn thận, hàng giao nhận nhanh chóng, mua dc giá rẻ",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513494.3446605
+  },
+  {
+    "review_id": "1844054019_1766512723762_c5d2a3f8",
+    "original_text": "Dầu gội này mình được bạn bè giới thiệu, lần đầu mua dùng thử mong sẽ hợp với mình, sẽ mua dùng tiếp nếu hợp. Cảm ơn shop đóng hàng cẩn thận",
+    "cleaned_text": "dầu gội này mình được bạn bè giới thiệu, lần đầu mua dùng thử mong sẽ hợp với mình, sẽ mua dùng tiếp nếu hợp. cảm ơn shop đóng hàng cẩn thận",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513494.3446631
+  },
+  {
+    "review_id": "1844054019_1766512723762_2e162621",
+    "original_text": "Hình ảnh chỉ mang tính chất nhận đồng xu\nCó chất lượng như mô tả",
+    "cleaned_text": "hình ảnh chỉ mang tính chất nhận đồng xu có chất lượng như mô tả",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513494.3446655
+  },
+  {
+    "review_id": "1844054019_1766512723763_b24c65e5",
+    "original_text": "Làm cho tóc mềm mại và mượt mà, Thành phần tự nhiên cho tóc khỏe mạnh, Shop đóng gói cẩn thận,giao hàng nhanh,giá rẻ hơn các shop khác, mọi người nên mua.Shipper thân thiện",
+    "cleaned_text": "làm cho tóc mềm mại và mượt mà, thành phần tự nhiên cho tóc khỏe mạnh, shop đóng gói cẩn thận,giao hàng nhanh,giá rẻ hơn các shop khác, mọi người nên mua.shipper thân thiện",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513494.344668
+  },
+  {
+    "review_id": "1844054019_1766512723763_0e5e4153",
+    "original_text": "săn sale ship khá nhanh , rẻ hơn sàn tmdt khác, mua 2 chai tặng kèm quà nước rửa tay 250ml",
+    "cleaned_text": "săn sale ship khá nhanh , rẻ hơn sàn tmdt khác, mua 2 chai tặng kèm quà nước rửa tay 250ml",
+    "sentiment": {},
+    "rating": 4,
+    "processed_at": 1766513494.3446705
+  },
+  {
+    "review_id": "1844054019_1766512723763_9fadaad1",
+    "original_text": "Thành phần tự nhiên cho tóc khỏe mạnh, Làm sống lại tóc ngay lập tức, \n💪Hiệu quả：ok\n🌸Mùi hương：thơm\nhiệu quả trên cả tóc nam. dùng hợp với tóc mình nên thích nha. dòng cho nam dùng không bằng",
+    "cleaned_text": "thành phần tự nhiên cho tóc khỏe mạnh, làm sống lại tóc ngay lập tức, 💪hiệu quả：ok 🌸mùi hương：thơm hiệu quả trên cả tóc nam. dùng hợp với tóc mình nên thích nha. dòng cho nam dùng không bằng",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513494.3446724
+  },
+  {
+    "review_id": "1844054019_1766512723763_518c070a",
+    "original_text": "đã nhận được hàng rồi,shop giao hàng nhanh chóng, đúng mẫu đã đặt,dầu gội rất thơm mùi dịu nhẹ, làm mượt tóc sẽ quay lại mua ủng hộ shop khi cần",
+    "cleaned_text": "đã nhận được hàng rồi,shop giao hàng nhanh chóng, đúng mẫu đã đặt,dầu gội rất thơm mùi dịu nhẹ, làm mượt tóc sẽ quay lại mua ủng hộ shop khi cần",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513494.344675
+  },
+  {
+    "review_id": "1844054019_1766512723763_79443e51",
+    "original_text": "Chất lượng tốt. Sẽ quay lại mua lần tiếp theo",
+    "cleaned_text": "chất lượng tốt. sẽ quay lại mua lần tiếp theo",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513494.3446772
+  },
+  {
+    "review_id": "1844054019_1766512723763_243181c7",
+    "original_text": "Thành phần tự nhiên cho tóc khỏe mạnh, Kích thích mọc tóc, \nĐã mua nhiều lần, tháng nào cũng mua, xài tốt",
+    "cleaned_text": "thành phần tự nhiên cho tóc khỏe mạnh, kích thích mọc tóc, đã mua nhiều lần, tháng nào cũng mua, xài tốt",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766513494.3446794
+  }
+]

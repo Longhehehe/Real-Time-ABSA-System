@@ -1,0 +1,852 @@
+[
+  {
+    "review_id": "1289058773_1765869525603_29cc38aa",
+    "original_text": "Hình ảnh mang tính chất nhận xu,gioa hàng nhanh đóng gói cẩn thận",
+    "cleaned_text": "hình ảnh mang tính chất nhận xu,gioa hàng nhanh đóng gói cẩn thận",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "NEU",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": null,
+      "Độ chính hãng": null
+    },
+    "rating": 5,
+    "processed_at": 1765871146.4918587
+  },
+  {
+    "review_id": "1289058773_1765869525603_cc6debc5",
+    "original_text": "Giao hàng như kiểu hoả tốc luôn, quá nhanh, săn sale giá rẻ, hàng chất lượngLàm tóc bóng mượt,",
+    "cleaned_text": "giao hàng như kiểu hoả tốc luôn, quá nhanh, săn sale giá rẻ, hàng chất lượnglàm tóc bóng mượt,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": null,
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Thành phần": null,
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871146.4918637
+  },
+  {
+    "review_id": "1289058773_1765869525603_83553592",
+    "original_text": "Nhẹ nhàng trên da đầu, Tăng độ phồng cho tóc, Thêm độ bóng cho tóc xỉn màu,  giao hàng nhanh chóng cảm ơn Lazada luôn khuyến mãi lớn cho tui mua hàng của mình",
+    "cleaned_text": "nhẹ nhàng trên da đầu, tăng độ phồng cho tóc, thêm độ bóng cho tóc xỉn màu, giao hàng nhanh chóng cảm ơn lazada luôn khuyến mãi lớn cho tui mua hàng của mình",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871146.491868
+  },
+  {
+    "review_id": "1289058773_1765869525603_f2af0c55",
+    "original_text": "Hương thơm:ok\n Thành phần:ok\n Hiệu quả:okKết quả tuyệt vời,",
+    "cleaned_text": "hương thơm:ok thành phần:ok hiệu quả:okkết quả tuyệt vời,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871146.491871
+  },
+  {
+    "review_id": "1289058773_1765869525603_884b4d08",
+    "original_text": "Hiệu quả:dưỡng tóc\n Hương thơm:thơm\n Thành phần:dầu gội dược liệu dưỡng tóc thô xơ.hư tổn",
+    "cleaned_text": "hiệu quả:dưỡng tóc hương thơm:thơm thành phần:dầu gội dược liệu dưỡng tóc thô xơ.hư tổn",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "NEG",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEG",
+      "Giá cả": null,
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871146.4918752
+  },
+  {
+    "review_id": "1289058773_1765869525603_bdad3edf",
+    "original_text": "Kích thích mọc tóc, Nhẹ nhàng trên da đầu, Tăng cường sợi tóc,",
+    "cleaned_text": "kích thích mọc tóc, nhẹ nhàng trên da đầu, tăng cường sợi tóc,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871146.4918787
+  },
+  {
+    "review_id": "1289058773_1765869525603_e2dd7266",
+    "original_text": "Kích thích mọc tóc, Dưỡng ẩm tóc khô, Phù hợp cho sử dụng hàng ngày,",
+    "cleaned_text": "kích thích mọc tóc, dưỡng ẩm tóc khô, phù hợp cho sử dụng hàng ngày,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871146.491882
+  },
+  {
+    "review_id": "1289058773_1765869525603_6b1ffa22",
+    "original_text": "Làm tóc bóng mượt, Dưỡng ẩm tóc khô, Nhẹ nhàng trên da đầu, Nhẹ nhàng trên da đầu,",
+    "cleaned_text": "làm tóc bóng mượt, dưỡng ẩm tóc khô, nhẹ nhàng trên da đầu, nhẹ nhàng trên da đầu,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871146.4918857
+  },
+  {
+    "review_id": "1289058773_1765869525603_a3e7bcbd",
+    "original_text": "HÒA CHUNG NHỊP ĐẬP - TẤP NẬP SĂN SALE\nKhách said: Xung quanh tôi toàn người đến săn sale tới 90%, eh!\n\n😱 Quá trời ưu đãi, quá trời sản phẩm chất lượng mà giá chỉ từ vài chục nghìn đồng, bảo sao SAVANI lại tấp nập đến vậy!\n\n‼ Hàng sale sốc hết theo giờ >> Đến Savani chốt ngay và\n luôn!",
+    "cleaned_text": "hòa chung nhịp đập - tấp nập săn sale khách said: xung quanh tôi toàn người đến săn sale tới 90%, eh! 😱 quá trời ưu đãi, quá trời sản phẩm chất lượng mà giá chỉ từ vài chục nghìn đồng, bảo sao savani lại tấp nập đến vậy! ‼ hàng sale sốc hết theo giờ >> đến savani chốt ngay và luôn!",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": null,
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": null,
+      "Giá cả": "POS",
+      "Thành phần": null,
+      "Độ chính hãng": null
+    },
+    "rating": 5,
+    "processed_at": 1765871146.4918885
+  },
+  {
+    "review_id": "1289058773_1765869593611_d62763ef",
+    "original_text": "Hương thơm tươi mát, Nuôi dưỡng tóc hiệu quả, Thêm độ bóng cho tóc xỉn màu, Tăng cường sợi tóc,",
+    "cleaned_text": "hương thơm tươi mát, nuôi dưỡng tóc hiệu quả, thêm độ bóng cho tóc xỉn màu, tăng cường sợi tóc,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871146.4918923
+  },
+  {
+    "review_id": "1289058773_1765869593714_1747de50",
+    "original_text": "Hương thơm:ok\n Thành phần:ok\n Hiệu quả:okKết quả tuyệt vời,",
+    "cleaned_text": "hương thơm:ok thành phần:ok hiệu quả:okkết quả tuyệt vời,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3903542
+  },
+  {
+    "review_id": "1289058773_1765869593715_8e0937d6",
+    "original_text": "Giao hành nhanh, đầy đủ, gội rất mượt và thoem, sẽ quay lại ủng hộ sau",
+    "cleaned_text": "giao hành nhanh, đầy đủ, gội rất mượt và thoem, sẽ quay lại ủng hộ sau",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": null,
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": null,
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3903666
+  },
+  {
+    "review_id": "1289058773_1765869593715_a9f0b51b",
+    "original_text": "Làm tóc bóng mượt, Nuôi dưỡng tóc hiệu quả, Hương thơm tươi mát\nSản phẩm tốt, đã sử dụng loại này rất lâu",
+    "cleaned_text": "làm tóc bóng mượt, nuôi dưỡng tóc hiệu quả, hương thơm tươi mát sản phẩm tốt, đã sử dụng loại này rất lâu",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3903759
+  },
+  {
+    "review_id": "1289058773_1765869593715_cde02322",
+    "original_text": "sản phẩm chất lượng .gội tóc mềm mượt . sạch gầu    mui hương thơm dịu  . mình sử dụng sản phẩm rất lâu rồi . mình sẽ ủng hộ tiếp",
+    "cleaned_text": "sản phẩm chất lượng .gội tóc mềm mượt . sạch gầu mui hương thơm dịu . mình sử dụng sản phẩm rất lâu rồi . mình sẽ ủng hộ tiếp",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.390384
+  },
+  {
+    "review_id": "1289058773_1765869593715_70a781c0",
+    "original_text": "Phù hợp cho mọi loại tóc, Nhẹ nhàng trên da đầu, Nuôi dưỡng tóc hiệu quả, Làm dịu da đầu ngứa,",
+    "cleaned_text": "phù hợp cho mọi loại tóc, nhẹ nhàng trên da đầu, nuôi dưỡng tóc hiệu quả, làm dịu da đầu ngứa,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3903918
+  },
+  {
+    "review_id": "1289058773_1765869593715_b8293668",
+    "original_text": "Bảo vệ tóc khỏi hư tổn, Làm tóc bóng mượt, Kiểm soát tóc xù, Làm sạch tóc kỹ lưỡng, Làm sạch tóc kỹ lưỡng, Làm sạch tóc kỹ lưỡng,",
+    "cleaned_text": "bảo vệ tóc khỏi hư tổn, làm tóc bóng mượt, kiểm soát tóc xù, làm sạch tóc kỹ lưỡng, làm sạch tóc kỹ lưỡng, làm sạch tóc kỹ lưỡng,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3903997
+  },
+  {
+    "review_id": "1289058773_1765869593715_bfb3c761",
+    "original_text": "Kích thích mọc tóc, Làm sạch tóc kỹ lưỡng, Nhẹ nhàng trên da đầu, Phù hợp cho sử dụng hàng ngày, Đã nhận được hàng shop giao hàng nhanh đóng gói cẩn thận có quà tặng kèm theo",
+    "cleaned_text": "kích thích mọc tóc, làm sạch tóc kỹ lưỡng, nhẹ nhàng trên da đầu, phù hợp cho sử dụng hàng ngày, đã nhận được hàng shop giao hàng nhanh đóng gói cẩn thận có quà tặng kèm theo",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.390407
+  },
+  {
+    "review_id": "1289058773_1765869593715_f653741c",
+    "original_text": "Tăng cường sợi tóc, Làm tóc bóng mượt, sử dụng tốt\n Hương thơm:  hương thơm Thành phần:  dược liệu thiên nhiên",
+    "cleaned_text": "tăng cường sợi tóc, làm tóc bóng mượt, sử dụng tốt hương thơm: hương thơm thành phần: dược liệu thiên nhiên",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3904145
+  },
+  {
+    "review_id": "1289058773_1765869593715_bdf62a10",
+    "original_text": "đóng gói cẩn thận giá cả hợp lý giao hàng nhanh chóng rất thích sẽ tiếp tục ủng hộ shop tiếp",
+    "cleaned_text": "đóng gói cẩn thận giá cả hợp lý giao hàng nhanh chóng rất thích sẽ tiếp tục ủng hộ shop tiếp",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": null,
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Thành phần": "NEU",
+      "Độ chính hãng": null
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3904223
+  },
+  {
+    "review_id": "1289058773_1765869593715_406fa21e",
+    "original_text": "Phù hợp cho mọi loại tóc, Làm dịu da đầu ngứa, Tăng độ phồng cho tóc, Hương thơm tươi mát, có giảm giàu nha.",
+    "cleaned_text": "phù hợp cho mọi loại tóc, làm dịu da đầu ngứa, tăng độ phồng cho tóc, hương thơm tươi mát, có giảm giàu nha.",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3904302
+  },
+  {
+    "review_id": "1289058773_1765869593715_a5e26eec",
+    "original_text": "Làm tóc bóng mượt, Hương thơm sang trọng, mình thích mùi thơm của Hoa Linh vì nó nghiêng về thảo mộc. Tóc sạch và không gàu. Ủng hộ sản oh Việt cọ tâm nè. Mình mua rất nhiều gửi cho người thân sống ở nước ngoài gội cho bớt rụng tóc.",
+    "cleaned_text": "làm tóc bóng mượt, hương thơm sang trọng, mình thích mùi thơm của hoa linh vì nó nghiêng về thảo mộc. tóc sạch và không gàu. ủng hộ sản oh việt cọ tâm nè. mình mua rất nhiều gửi cho người thân sống ở nước ngoài gội cho bớt rụng tóc.",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3904374
+  },
+  {
+    "review_id": "1289058773_1765869593715_90456937",
+    "original_text": "Hiệu quả:rất tốt Nuôi dưỡng tóc hiệu quả,\n Hương thơm:bền lâu dịu nhẹ\n Thành phần:thảo mộc Làm dịu da đầu ngứa,",
+    "cleaned_text": "hiệu quả:rất tốt nuôi dưỡng tóc hiệu quả, hương thơm:bền lâu dịu nhẹ thành phần:thảo mộc làm dịu da đầu ngứa,",
+    "sentiment": {
+      "Dịch vụ khách hàng": null,
+      "Bao bì đống gói": null,
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": null,
+      "Giá cả": null,
+      "Thành phần": "POS",
+      "Độ chính hãng": null
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3904445
+  },
+  {
+    "review_id": "1289058773_1765869593715_43f74326",
+    "original_text": "Mua bình bột chữa cháy 4 kg\n\nBình\n\n20\n\n253.800\n\n5.076.00\n\nMua bình bột chữa cháy 6 kgPhù hợp cho sử dụng hàng ngày, Phù hợp cho mọi loại tóc, Tăng cường sợi tóc, Nuôi dưỡng tóc hiệu quả,",
+    "cleaned_text": "mua bình bột chữa cháy 4 kg bình 20 253.800 5.076.00 mua bình bột chữa cháy 6 kgphù hợp cho sử dụng hàng ngày, phù hợp cho mọi loại tóc, tăng cường sợi tóc, nuôi dưỡng tóc hiệu quả,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3904521
+  },
+  {
+    "review_id": "1289058773_1765869593715_75eafc0c",
+    "original_text": "Kiểm soát tóc xù, Hương thơm tươi mát, Bảo vệ tóc khỏi hư tổn, đóng gói tốt, giao hàng nhanh, hương thơm.",
+    "cleaned_text": "kiểm soát tóc xù, hương thơm tươi mát, bảo vệ tóc khỏi hư tổn, đóng gói tốt, giao hàng nhanh, hương thơm.",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3904595
+  },
+  {
+    "review_id": "1289058773_1765869593715_9da478e4",
+    "original_text": "Hình ảnh mang tính chất nhận xu,gioa hàng nhanh đóng gói cẩn thận",
+    "cleaned_text": "hình ảnh mang tính chất nhận xu,gioa hàng nhanh đóng gói cẩn thận",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "NEU",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": null,
+      "Thành phần": null,
+      "Độ chính hãng": null
+    },
+    "rating": 5,
+    "processed_at": 1765871250.390467
+  },
+  {
+    "review_id": "1289058773_1765869593715_616b19fc",
+    "original_text": "hàng giao đúng mẫu quảng cáo.đóng gói cẩn thận.giao hàng khá nhanh.sản phẩm đã,sử dụng qua.khá ok.chống rụng tóc và tóc mượt",
+    "cleaned_text": "hàng giao đúng mẫu quảng cáo.đóng gói cẩn thận.giao hàng khá nhanh.sản phẩm đã,sử dụng qua.khá ok.chống rụng tóc và tóc mượt",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "NEU",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": null,
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3904743
+  },
+  {
+    "review_id": "1289058773_1765869593715_7b98a82f",
+    "original_text": "Mùi khá thơm, giá cũng rẻ, mình dùng thử thấy ưng nên mua lại, ko bị gàu nhu nhiều loại khác",
+    "cleaned_text": "mùi khá thơm, giá cũng rẻ, mình dùng thử thấy ưng nên mua lại, ko bị gàu nhu nhiều loại khác",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3904812
+  },
+  {
+    "review_id": "1289058773_1765869593715_bf563ab6",
+    "original_text": "Hương thơm tươi mát, Làm sạch tóc kỹ lưỡng, Nhẹ nhàng trên da đầu,",
+    "cleaned_text": "hương thơm tươi mát, làm sạch tóc kỹ lưỡng, nhẹ nhàng trên da đầu,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3904886
+  },
+  {
+    "review_id": "1289058773_1765869593715_7babac64",
+    "original_text": "Phù hợp cho mọi loại tóc, Kích thích mọc tóc, Tăng độ phồng cho tóc, Làm tóc bóng mượt, Dưỡng ẩm tóc khô, Bảo vệ tóc khỏi hư tổn,",
+    "cleaned_text": "phù hợp cho mọi loại tóc, kích thích mọc tóc, tăng độ phồng cho tóc, làm tóc bóng mượt, dưỡng ẩm tóc khô, bảo vệ tóc khỏi hư tổn,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.390496
+  },
+  {
+    "review_id": "1289058773_1765869593716_46f11301",
+    "original_text": "Giao hàng như kiểu hoả tốc luôn, quá nhanh, săn sale giá rẻ, hàng chất lượngLàm tóc bóng mượt,",
+    "cleaned_text": "giao hàng như kiểu hoả tốc luôn, quá nhanh, săn sale giá rẻ, hàng chất lượnglàm tóc bóng mượt,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": null,
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Thành phần": null,
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871250.3905032
+  },
+  {
+    "review_id": "1289058773_1765869593716_6d824a48",
+    "original_text": "hàng chất lượng đã mua nhiều lần. hàng tặng rất thích. sẽ mua lại khi hết. hình ảnh mang tính chất nhận xu Phù hợp cho sử dụng hàng ngày, Thêm độ bóng cho tóc xỉn màu, Nhẹ nhàng trên da đầu,",
+    "cleaned_text": "hàng chất lượng đã mua nhiều lần. hàng tặng rất thích. sẽ mua lại khi hết. hình ảnh mang tính chất nhận xu phù hợp cho sử dụng hàng ngày, thêm độ bóng cho tóc xỉn màu, nhẹ nhàng trên da đầu,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.883953
+  },
+  {
+    "review_id": "1289058773_1765869593716_294a377c",
+    "original_text": "Chất lượng:Tốt\n Kết cấu:Đẹp\n Hiệu quả:Mềm Mượt,Suôn Tóc,Thơm Dịu Nhẹ\n🙏Nam Mô A Di Đà Phật✋\n✋Dầu Gội Dược Liệu Nguyên Xuân🌸Mẫu Mã Đẹp,Chiết Xuất Thiên Nhiên🌿An Toàn Cho Tóc,Da Đầu và Sức Khỏe,Nên Mua Dùng Thay Thế Cho Những Loại Dầu Gội Hóa Chất🏥😇\n✋Người Biết Thương Yêu Muôn Loài❤😇🌏Ăn Uống Thuần Thực Vật Thuận Theo Tự Nhiên🌳☯🌾🥗🌿Niệm Phật📿Thiền Định🧘‍♂️📿🧘Sống Thiện Lương🌺và Hiểu Rõ Luật Nhân Quả Thiện Ác Báo Ứng❤🖤Sanh👶Lão👴👵Bệnh🏥Tử⚰,Thành Trụ Hoại Không🌏💥,Sinh Diệt Trong Trời Đất✋📿🌳☁🌈🌏là Phúc😇\n🌸Hiếu Kính Cha Mẹ\n🌸Hòa Ái Mọi Người\n🌸Yêu Thương Vạn Vật\n🙏Nam Mô Đại Bi Quan Thế Âm Bồ Tát✋\n🙏Nam Mô Bổn Sư Thích Ca Mâu Ni Phật✋😇",
+    "cleaned_text": "chất lượng:tốt kết cấu:đẹp hiệu quả:mềm mượt,suôn tóc,thơm dịu nhẹ 🙏nam mô a di đà phật✋ ✋dầu gội dược liệu nguyên xuân🌸mẫu mã đẹp,chiết xuất thiên nhiên🌿an toàn cho tóc,da đầu và sức khỏe,nên mua dùng thay thế cho những loại dầu gội hóa chất🏥😇 ✋người biết thương yêu muôn loài❤😇🌏ăn uống thuần thực vật thuận theo tự nhiên🌳☯🌾🥗🌿niệm phật📿thiền định🧘‍♂️📿🧘sống thiện lương🌺và hiểu rõ luật nhân quả thiện ác báo ứng❤🖤sanh👶lão👴👵bệnh🏥tử⚰,thành trụ hoại không🌏💥,sinh diệt trong trời đất✋📿🌳☁🌈🌏là phúc😇 🌸hiếu kính cha mẹ 🌸hòa ái mọi người 🌸yêu thương vạn vật 🙏nam mô đại bi quan thế âm bồ tát✋ 🙏nam mô bổn sư thích ca mâu ni phật✋😇",
+    "sentiment": {
+      "Dịch vụ khách hàng": null,
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": null,
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8839593
+  },
+  {
+    "review_id": "1289058773_1765869593716_301e4f32",
+    "original_text": "Thành phần:Thêm độ bóng cho tóc xỉn màu, Phù hợp cho sử dụng hàng ngày,",
+    "cleaned_text": "thành phần:thêm độ bóng cho tóc xỉn màu, phù hợp cho sử dụng hàng ngày,",
+    "sentiment": {
+      "Dịch vụ khách hàng": null,
+      "Bao bì đống gói": null,
+      "Hiệu quả sản phẩm": null,
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": null,
+      "Giá cả": null,
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8839633
+  },
+  {
+    "review_id": "1289058773_1765869593716_332d9806",
+    "original_text": "Chuẩn hàng rất tuyệt vời",
+    "cleaned_text": "chuẩn hàng rất tuyệt vời",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8839672
+  },
+  {
+    "review_id": "1289058773_1765869593716_0cffa3c2",
+    "original_text": "Mua được giá rẻ giao nhanh lắm dầu gội thơm và tóc rất mềm mượt nên mua nhé cả nhà được áp mã giảm giá nên giá rẻ lại chất lượng",
+    "cleaned_text": "mua được giá rẻ giao nhanh lắm dầu gội thơm và tóc rất mềm mượt nên mua nhé cả nhà được áp mã giảm giá nên giá rẻ lại chất lượng",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8839703
+  },
+  {
+    "review_id": "1289058773_1765869593716_039e0ce4",
+    "original_text": "Dưỡng ẩm tóc khô, Hương thơm lâu dài, Kích thích mọc tóc, Làm tóc bóng mượt, Làm sạch tóc kỹ lưỡng,",
+    "cleaned_text": "dưỡng ẩm tóc khô, hương thơm lâu dài, kích thích mọc tóc, làm tóc bóng mượt, làm sạch tóc kỹ lưỡng,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8839736
+  },
+  {
+    "review_id": "1289058773_1765869593716_2736e0a6",
+    "original_text": "Chất lượng tương đối, cũng không có gì nổi trội. Gội xong tóc hơi khô và ít mượt",
+    "cleaned_text": "chất lượng tương đối, cũng không có gì nổi trội. gội xong tóc hơi khô và ít mượt",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "NEG",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8839772
+  },
+  {
+    "review_id": "1289058773_1765869593716_f6954b1a",
+    "original_text": "Hiệu quả:dưỡng tóc\n Hương thơm:thơm\n Thành phần:dầu gội dược liệu dưỡng tóc thô xơ.hư tổn",
+    "cleaned_text": "hiệu quả:dưỡng tóc hương thơm:thơm thành phần:dầu gội dược liệu dưỡng tóc thô xơ.hư tổn",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "NEG",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.883981
+  },
+  {
+    "review_id": "1289058773_1765869593716_9ca3eef5",
+    "original_text": "Thành phần:  Làm sạch tóc kỹ lưỡng, Tăng độ phồng cho tóc, Hương thơm lâu dài, Nhẹ nhàng trên da đầu,",
+    "cleaned_text": "thành phần: làm sạch tóc kỹ lưỡng, tăng độ phồng cho tóc, hương thơm lâu dài, nhẹ nhàng trên da đầu,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": null,
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8839846
+  },
+  {
+    "review_id": "1289058773_1765869593716_167cac44",
+    "original_text": "Mình xài thử gần 2 tháng rồi mới lên đánh giá. Dầu gội đầu thơm ít bọt. Gội mượt tóc. Nhưng có điều hơi ngứa da đầu. Giá cũng rẻ. Theo mình sử dụng ok. Mọi người nên mua thử",
+    "cleaned_text": "mình xài thử gần 2 tháng rồi mới lên đánh giá. dầu gội đầu thơm ít bọt. gội mượt tóc. nhưng có điều hơi ngứa da đầu. giá cũng rẻ. theo mình sử dụng ok. mọi người nên mua thử",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEG",
+      "Giá cả": "POS",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.883988
+  },
+  {
+    "review_id": "1289058773_1765869593716_c6042741",
+    "original_text": "HÒA CHUNG NHỊP ĐẬP - TẤP NẬP SĂN SALE\nKhách said: Xung quanh tôi toàn người đến săn sale tới 90%, eh!\n\n😱 Quá trời ưu đãi, quá trời sản phẩm chất lượng mà giá chỉ từ vài chục nghìn đồng, bảo sao SAVANI lại tấp nập đến vậy!\n\n‼ Hàng sale sốc hết theo giờ >> Đến Savani chốt ngay và\n luôn!",
+    "cleaned_text": "hòa chung nhịp đập - tấp nập săn sale khách said: xung quanh tôi toàn người đến săn sale tới 90%, eh! 😱 quá trời ưu đãi, quá trời sản phẩm chất lượng mà giá chỉ từ vài chục nghìn đồng, bảo sao savani lại tấp nập đến vậy! ‼ hàng sale sốc hết theo giờ >> đến savani chốt ngay và luôn!",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": null,
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": null,
+      "Giá cả": "POS",
+      "Thành phần": null,
+      "Độ chính hãng": null
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8839912
+  },
+  {
+    "review_id": "1289058773_1765869593716_0cf114cc",
+    "original_text": "Nhẹ nhàng trên da đầu, Tăng độ phồng cho tóc, Thêm độ bóng cho tóc xỉn màu,  giao hàng nhanh chóng cảm ơn Lazada luôn khuyến mãi lớn cho tui mua hàng của mình",
+    "cleaned_text": "nhẹ nhàng trên da đầu, tăng độ phồng cho tóc, thêm độ bóng cho tóc xỉn màu, giao hàng nhanh chóng cảm ơn lazada luôn khuyến mãi lớn cho tui mua hàng của mình",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8839943
+  },
+  {
+    "review_id": "1289058773_1765869593716_9f9d0665",
+    "original_text": "Hương thơm lâu dài, Nuôi dưỡng tóc hiệu quả, Phù hợp cho mọi loại tóc,",
+    "cleaned_text": "hương thơm lâu dài, nuôi dưỡng tóc hiệu quả, phù hợp cho mọi loại tóc,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8839972
+  },
+  {
+    "review_id": "1289058773_1765869593716_c3fd1a05",
+    "original_text": "Phù hợp cho sử dụng hàng ngày, Bảo vệ tóc khỏi hư tổn, Phù hợp cho mọi loại tóc,",
+    "cleaned_text": "phù hợp cho sử dụng hàng ngày, bảo vệ tóc khỏi hư tổn, phù hợp cho mọi loại tóc,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8840003
+  },
+  {
+    "review_id": "1289058773_1765869593716_15899530",
+    "original_text": "Kích thích mọc tóc, Nhẹ nhàng trên da đầu, Tăng cường sợi tóc,",
+    "cleaned_text": "kích thích mọc tóc, nhẹ nhàng trên da đầu, tăng cường sợi tóc,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8840036
+  },
+  {
+    "review_id": "1289058773_1765869593716_686eb6d7",
+    "original_text": "Bảo vệ tóc khỏi hư tổn, Phù hợp cho mọi loại tóc, Phù hợp cho mọi loại tóc, Tăng cường sợi tóc, Làm sạch tóc kỹ lưỡng, Làm sạch tóc kỹ lưỡng,",
+    "cleaned_text": "bảo vệ tóc khỏi hư tổn, phù hợp cho mọi loại tóc, phù hợp cho mọi loại tóc, tăng cường sợi tóc, làm sạch tóc kỹ lưỡng, làm sạch tóc kỹ lưỡng,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8840075
+  },
+  {
+    "review_id": "1289058773_1765869593717_3e0bb96b",
+    "original_text": "Kích thích mọc tóc, Dưỡng ẩm tóc khô, Phù hợp cho sử dụng hàng ngày,",
+    "cleaned_text": "kích thích mọc tóc, dưỡng ẩm tóc khô, phù hợp cho sử dụng hàng ngày,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8840103
+  },
+  {
+    "review_id": "1289058773_1765869593717_499d97ac",
+    "original_text": "Nuôi dưỡng tóc hiệu quả, Tăng độ phồng cho tóc, Kích thích mọc tóc, Tăng độ phồng cho tóc, Làm tóc bóng mượt,",
+    "cleaned_text": "nuôi dưỡng tóc hiệu quả, tăng độ phồng cho tóc, kích thích mọc tóc, tăng độ phồng cho tóc, làm tóc bóng mượt,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8840134
+  },
+  {
+    "review_id": "1289058773_1765869593717_ec087244",
+    "original_text": "Tăng độ phồng cho tóc, Làm tóc bóng mượt, \n Thành phần:okghjj jgrhj gdsjjj fhjrrjj",
+    "cleaned_text": "tăng độ phồng cho tóc, làm tóc bóng mượt, thành phần:okghjj jgrhj gdsjjj fhjrrjj",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8840163
+  },
+  {
+    "review_id": "1289058773_1765869593717_0a6a2eb4",
+    "original_text": "Đóng gói hàng cẩn thận, chắc chắn. Chất lượng sản phẩm tốt ..........,.,,,,.,..........",
+    "cleaned_text": "đóng gói hàng cẩn thận, chắc chắn. chất lượng sản phẩm tốt ..........,.,,,,.,..........",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871351.8840196
+  }
+]

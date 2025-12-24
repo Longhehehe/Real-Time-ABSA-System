@@ -1,0 +1,51 @@
+﻿1. Gán Nhãn Thuật ngữ Khía cạnh (Aspect Terms)
+Thuật ngữ khía cạnh là các thuật ngữ đơn từ hoặc đa từ gọi tên các khía cạnh cụ thể của thực thể mục tiêu (nhà hàng hoặc máy tính xách tay).
+* Những gì cần gán nhãn: 
+1.  Cụm danh từ đề cập rõ ràng đến khía cạnh. Ví dụ: "service", "staff", "food", hoặc "The cover for the DVD drive".
+2.  Động từ hoặc danh động từ đặt tên cho khía cạnh, ví dụ: "priced" và "gaming".
+3.  Nếu một thuật ngữ khía cạnh xuất hiện nhiều lần trong câu, tất cả các lần xuất hiện phải được chú thích (gán nhãn). Ví dụ: "the coat check girls" và "the coat check girls".
+4. Các thuật ngữ khía cạnh cần được gán nhãn ngay cả khi xuất hiện trong dấu ngoặc kép hoặc bị đánh vần sai.
+5. Các từ hạn định (Determiners) như "a", "the" không nên được bao gồm trong thuật ngữ khía cạnh, trừ khi chúng là một phần của các cụm danh từ được nhúng.
+* Những gì không được gán nhãn:
+1. Các chỉ báo tính chủ quan (Subjectivity indicators) tức là các từ/cụm từ bày tỏ ý kiến, đánh giá (ví dụ: "malfunction", "overpriced", "good", "great") KHÔNG được coi là thuật ngữ khía cạnh hoặc một phần của chúng.
+2.  Các tham chiếu đến thực thể mục tiêu nói chung (nhà hàng hoặc máy tính xách tay).
+3. Tên, loại, hoặc kiểu của máy tính xách tay (ví dụ: "netbook", "MacBook") hoặc tên nhà hàng.
+4. Đại từ (ví dụ: "it", "they", "this"), ngay cả khi chúng đề cập đến một khía cạnh.
+5. Các thuật ngữ khía cạnh ngầm (Implicit aspect terms)—chỉ những thuật ngữ được đề cập rõ ràng mới được gán nhãn.
+2. Gán Nhãn Tính Phân cực của Thuật ngữ Khía cạnh (Aspect Term Polarity)
+Mỗi thuật ngữ khía cạnh được xác định phải được gán một trong bốn cực tính, dựa trên cảm xúc, ý kiến, đánh giá, hoặc thái độ được thể hiện đối với khía cạnh đó:
+Phân cực
+	Định nghĩa
+	Ví dụ
+	Positive (Tích cực)
+	Bày tỏ thái độ/ý kiến tích cực.
+	"salads" có cực tính positive trong “their salads were great”.
+	Negative (Tiêu cực)
+	Bày tỏ thái độ/ý kiến tiêu cực.
+	"fajitas" có cực tính negative trong “I hated their fajitas”.
+	Conflict (Mâu thuẫn)
+	Bày tỏ cả cảm xúc tích cực và tiêu cực.
+	"fajitas" có cực tính conflict trong “The fajitas were great to taste, but not to see”.
+	Neutral (Trung tính)
+	Không bày tỏ cảm xúc tích cực hay tiêu cực rõ ràng.
+	"fajitas" có cực tính neutral trong “The fajitas were their starters”.
+	Các trường hợp cụ thể gán nhãn Neutral:
+• Khi bày tỏ mong muốn hoặc ước muốn trung tính đối với khía cạnh (ví dụ: “battery life”: neutral).
+• Khi cung cấp thông tin thực tế (không có cảm xúc) về khía cạnh.
+• Khi cảm xúc tích cực hoặc tiêu cực về khía cạnh có thể được suy luận nhưng không rõ ràng.
+• Khi sử dụng các từ như "moderate", "in line", hoặc "nothing out of the ordinary".
+3. Gán Nhãn Danh mục Khía cạnh (Aspect Categories)
+Ví dụ, đối với loại khía cạnh áp dụng cho dữ liệu đánh giá nhà hàng.
+Các danh mục nhãn cần đánh giá:
+*  food (thức ăn)
+*  service (dịch vụ)
+*  price (giá cả)
+*  ambience (bầu không khí và môi trường của nhà hàng)
+*  anecdotes/miscellaneous (giai thoại/linh tinh): Bao gồm các câu mô tả kinh nghiệm cá nhân của người đánh giá hoặc các khuyến nghị chung.
+* Một câu có thể được phân loại vào một hoặc nhiều danh mục dựa trên ý nghĩa tổng thể. Ví dụ: “The restaurant was expensive, but the menu was great” thảo luận về danh mục price và food.
+*  Danh mục khía cạnh có thể được gán nhãn ngay cả khi các thuật ngữ khía cạnh tương ứng không xuất hiện rõ ràng trong câu.
+4. Gán Nhãn Tính Phân cực của Danh mục Khía cạnh (Aspect Category Polarity)
+Mỗi danh mục khía cạnh được thảo luận trong một câu phải được gán một trong bốn cực tính (positive, negative, conflict, neutral).
+• Nguyên tắc Gán Nhãn: Hướng dẫn gán nhãn tính phân cực này giống với hướng dẫn cho tính phân cực của thuật ngữ khía cạnh.
+• Ví dụ: Trong câu “The restaurant was expensive, but the menu was great”, danh mục price có cực tính negative, và food có cực tính positive.
+• Quy tắc Chiếm ưu thế: Nếu một câu truyền đạt cả ý kiến trung tính và tiêu cực (hoặc tích cực) về một danh mục khía cạnh, thì các phân cực tiêu cực hoặc tích cực sẽ chiếm ưu thế.

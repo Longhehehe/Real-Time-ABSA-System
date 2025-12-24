@@ -1,0 +1,42 @@
+COLUMNS:
+'reviewContent'
+'Product-Oriented Aspects'
+'Unnamed: 2'
+'Unnamed: 3'
+'Unnamed: 4'
+'Price-Related Aspects'
+'Unnamed: 6'
+'Delivery & Packaging'
+'Unnamed: 8'
+'Seller / Shop Service'
+'Unnamed: 10'
+'Issues / Defects'
+'Unnamed: 12'
+
+
+HEAD(5):
+                                                                                                                                                               reviewContent Product-Oriented Aspects           Unnamed: 2           Unnamed: 3          Unnamed: 4 Price-Related Aspects            Unnamed: 6    Delivery & Packaging         Unnamed: 8  Seller / Shop Service                  Unnamed: 10           Issues / Defects         Unnamed: 12
+0                                                                                                                                                              reviewContent      Chất lượng sản phẩm  Trải nghiệm sử dụng  Đúng mô tả sản phẩm  Hiệu năng sản phẩm                Giá cả  Khuyến mãi & voucher  Vận chuyển & giao hàng  Đóng gói & bao bì  Uy tín & thái độ shop  Dịch vụ chăm sóc khách hàng  Lỗi & bảo hành & hàng giả  Đổi trả & bảo hành
+1  giày đúng như hình . so với giá tiền thì rất là tốt . tặng shop 5 sao nhé . tặng a giao hàng 5 sao chúc mọi người mạnh khỏe không ai bị f0 nữa , ăn têt vui vẻ nhé cả nhà                        2                    1                    1                   1                     2                     1                       2                  1                      2                            1                          1                   1
+2                                                                                                        giày giống trong hình trông hơi bé nhưng đi lại vừa , anh síp nhanh                        2                    1                    1                   1                     1                     1                       1                  1                      1                            1                          1                   1
+3                                                                                                                                                                        tốt                        1                    1                    1                   1                     1                     1                       1                  1                      1                            1                          1                   1
+4                                                                              hàng đẹp giao nhanh dung size đung mẫu sẽ ủng hộ shop nhiều shiper thái độ tốt cho shop 5 sao                       -1                    1                    1                   1                     1                     1                      -1                  1                     -1                            1                          1                   1
+
+First Column: reviewContent
+['reviewContent'
+ 'giày đúng như hình . so với giá tiền thì rất là tốt . tặng shop 5 sao nhé . tặng a giao hàng 5 sao chúc mọi người mạnh khỏe không ai bị f0 nữa , ăn têt vui vẻ nhé cả nhà'
+ 'giày giống trong hình trông hơi bé nhưng đi lại vừa , anh síp nhanh'
+ 'tốt'
+ 'hàng đẹp giao nhanh dung size đung mẫu sẽ ủng hộ shop nhiều shiper thái độ tốt cho shop 5 sao'
+ 'thấy giày đẹp , khá là giống hình , chưa sử dụng thử , hi vọng xài bền tí , nói chung là bề ngoài thì sản phẩm tốt lắm'
+ 'hàng chất lượng' 'giày chất da mịn đẹp'
+ 'giày đẹp giống hình giá thành vậy thì rẻ đẹp còn chất lượng thì đi nhiều mới biết được lần sau sẽ ủng hộ shop tiếp'
+ 'hàng đúng như hình . fdjkxbhjsjxhsbsiahaukdbxhiaindjxnjxiksnxjajdbxhchjdbdnkdoqjhshydifnbfhekjdbdhsndmsndbhagagsvhskjdnxnjdhdhwoksnxnx'
+ 'giày đẹp nhưng e đặt lộn size rồi ạ shop có thể đổi không ạ'
+ 'sản phẩm tốt' 'hàng đẹp' 'đặt số 42 mà lại giao số 43'
+ 'hàng tốt chất lượng tốt mọi người nên mua shiper vui tính . ghlbnklfdufsyjfdtyuydyugdyujkj'
+ 'dep . nen mua'
+ 'giày đúng với hình ảnh và rất đẹp còn giao hàng nhanh nữa nên cho shop 5 sao'
+ 'tốt như jdjdjdudirjeiwiwowkwksodckfnfjfhfudisjwkwkozixurjrjfudiejdjdjedk'
+ 'hơi lỗi size 1 tí nhưng vẫn mang được không hơi lỗi size 1 tí nhưng vẫn mang được không hơi lỗi size 1 tí nhưng vẫn mang được không hơi lỗi size 1 tí nhưng vẫn mang được không hơi lỗi size 1 tí nhưng vẫn mang được không hơi lỗi size 1 tí nhưng vẫn mang được không'
+ 'hàng tốt']

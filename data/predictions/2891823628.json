@@ -1,0 +1,1141 @@
+[
+  {
+    "review_id": "2891823628_1765869525137_81284421",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Công thức mỏng nhẹ, Đựng 2 chai tiện lợi, Công thức mỏng nhẹ, Đựng 2 chai tiện lợi, Công thức mỏng nhẹ, Đựng 2 chai tiện lợi,",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, công thức mỏng nhẹ, đựng 2 chai tiện lợi, công thức mỏng nhẹ, đựng 2 chai tiện lợi, công thức mỏng nhẹ, đựng 2 chai tiện lợi,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1959195
+  },
+  {
+    "review_id": "2891823628_1765869525137_d34dc102",
+    "original_text": "Công thức mỏng nhẹ, Cảm giác tóc sạch sẽ, Mùi hương bạc hà mát lạnh,",
+    "cleaned_text": "công thức mỏng nhẹ, cảm giác tóc sạch sẽ, mùi hương bạc hà mát lạnh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1959255
+  },
+  {
+    "review_id": "2891823628_1765869525137_1a3318e8",
+    "original_text": "Đựng 2 chai tiện lợi, Chất lượng thương hiệu tin cậy, Công thức mỏng nhẹ, Thành phần tự nhiên, Kiểm soát gàu hiệu quả,",
+    "cleaned_text": "đựng 2 chai tiện lợi, chất lượng thương hiệu tin cậy, công thức mỏng nhẹ, thành phần tự nhiên, kiểm soát gàu hiệu quả,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1959293
+  },
+  {
+    "review_id": "2891823628_1765869525137_0cd7b6ed",
+    "original_text": "Cảm giác mát trên da đầu, Công thức mỏng nhẹ, Đựng 2 chai tiện lợi, Cảm giác tóc sạch sẽ,",
+    "cleaned_text": "cảm giác mát trên da đầu, công thức mỏng nhẹ, đựng 2 chai tiện lợi, cảm giác tóc sạch sẽ,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1959848
+  },
+  {
+    "review_id": "2891823628_1765869525137_96df58d8",
+    "original_text": "mình dùng quen rồi nay mua được với giá rẻ nên siêu ưnggg nên mua nha mọi người",
+    "cleaned_text": "mình dùng quen rồi nay mua được với giá rẻ nên siêu ưnggg nên mua nha mọi người",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.195989
+  },
+  {
+    "review_id": "2891823628_1765869525138_cbde3bd9",
+    "original_text": "Chất lượng thương hiệu tin cậy, Dịu nhẹ cho da đầu nhạy cảm, Mùi hương bạc hà mát lạnh, Hấp thụ nhanh,",
+    "cleaned_text": "chất lượng thương hiệu tin cậy, dịu nhẹ cho da đầu nhạy cảm, mùi hương bạc hà mát lạnh, hấp thụ nhanh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1959932
+  },
+  {
+    "review_id": "2891823628_1765869525138_73d362cc",
+    "original_text": "Hấp thụ nhanh, Mùi hương bạc hà mát lạnh, Kiểm soát gàu hiệu quả, Công thức mỏng nhẹ, Dịu nhẹ cho da đầu nhạy cảm, Cảm giác mát trên da đầu,",
+    "cleaned_text": "hấp thụ nhanh, mùi hương bạc hà mát lạnh, kiểm soát gàu hiệu quả, công thức mỏng nhẹ, dịu nhẹ cho da đầu nhạy cảm, cảm giác mát trên da đầu,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1959965
+  },
+  {
+    "review_id": "2891823628_1765869525138_574de09f",
+    "original_text": "Thành phần tự nhiên, Cảm giác tóc sạch sẽ, Dịu nhẹ cho da đầu nhạy cảm, Mùi hương bạc hà mát lạnh,",
+    "cleaned_text": "thành phần tự nhiên, cảm giác tóc sạch sẽ, dịu nhẹ cho da đầu nhạy cảm, mùi hương bạc hà mát lạnh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1960003
+  },
+  {
+    "review_id": "2891823628_1765869525138_e01f6ae5",
+    "original_text": "Công thức mỏng nhẹ, Đựng 2 chai tiện lợi, Chất lượng thương hiệu tin cậy, Dịu nhẹ cho da đầu nhạy cảm,",
+    "cleaned_text": "công thức mỏng nhẹ, đựng 2 chai tiện lợi, chất lượng thương hiệu tin cậy, dịu nhẹ cho da đầu nhạy cảm,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1960037
+  },
+  {
+    "review_id": "2891823628_1765869525138_320ca852",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Kiểm soát gàu hiệu quả, Mùi hương bạc hà mát lạnh,",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, kiểm soát gàu hiệu quả, mùi hương bạc hà mát lạnh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1960068
+  },
+  {
+    "review_id": "2891823628_1765869525138_010bbd9a",
+    "original_text": "Cảm giác tóc sạch sẽ, Chất lượng thương hiệu tin cậy, Chất lượng thương hiệu tin cậy, Thành phần tự nhiên,",
+    "cleaned_text": "cảm giác tóc sạch sẽ, chất lượng thương hiệu tin cậy, chất lượng thương hiệu tin cậy, thành phần tự nhiên,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1960104
+  },
+  {
+    "review_id": "2891823628_1765869525138_5476618d",
+    "original_text": "Đựng 2 chai tiện lợi, Công thức mỏng nhẹ, Thành phần tự nhiên, Cảm giác mát trên da đầu,",
+    "cleaned_text": "đựng 2 chai tiện lợi, công thức mỏng nhẹ, thành phần tự nhiên, cảm giác mát trên da đầu,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": null,
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1960142
+  },
+  {
+    "review_id": "2891823628_1765869525138_6e0d4e70",
+    "original_text": "8Dịu nhẹ cho da đầu nhạy cảm, Thành phần tự nhiên, Kiểm soát gàu hiệu quả, Cảm giác mát trên da đầu, Công thức mỏng nhẹ,",
+    "cleaned_text": "8dịu nhẹ cho da đầu nhạy cảm, thành phần tự nhiên, kiểm soát gàu hiệu quả, cảm giác mát trên da đầu, công thức mỏng nhẹ,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1960175
+  },
+  {
+    "review_id": "2891823628_1765869525138_8a814c7e",
+    "original_text": "Thành phần tự nhiên, Dịu nhẹ cho da đầu nhạy cảm, Đựng 2 chai tiện lợi, giao hàng nhanh đóng gói cẩn thận sẽ ủng hộ thêm",
+    "cleaned_text": "thành phần tự nhiên, dịu nhẹ cho da đầu nhạy cảm, đựng 2 chai tiện lợi, giao hàng nhanh đóng gói cẩn thận sẽ ủng hộ thêm",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.196021
+  },
+  {
+    "review_id": "2891823628_1765869525138_ca7a0556",
+    "original_text": "Chất lượng thương hiệu tin cậy, Cảm giác mát trên da đầu, Cảm giác mát trên da đầu, Mùi hương bạc hà mát lạnh, Đựng 2 chai tiện lợi,",
+    "cleaned_text": "chất lượng thương hiệu tin cậy, cảm giác mát trên da đầu, cảm giác mát trên da đầu, mùi hương bạc hà mát lạnh, đựng 2 chai tiện lợi,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1960247
+  },
+  {
+    "review_id": "2891823628_1765869525138_f0436146",
+    "original_text": "Mùi hương bạc hà mát lạnh, Cảm giác tóc sạch sẽ, Dịu nhẹ cho da đầu nhạy cảm, \nGiao hàng nhanh, sử dụng nhiều lần ok nha, giá cũng tốt nữa",
+    "cleaned_text": "mùi hương bạc hà mát lạnh, cảm giác tóc sạch sẽ, dịu nhẹ cho da đầu nhạy cảm, giao hàng nhanh, sử dụng nhiều lần ok nha, giá cũng tốt nữa",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1960278
+  },
+  {
+    "review_id": "2891823628_1765869525138_3a3a9a9d",
+    "original_text": "Cảm giác mát trên da đầu, Dịu nhẹ cho da đầu nhạy cảm, Đựng 2 chai tiện lợi, Chất lượng thương hiệu tin cậy,",
+    "cleaned_text": "cảm giác mát trên da đầu, dịu nhẹ cho da đầu nhạy cảm, đựng 2 chai tiện lợi, chất lượng thương hiệu tin cậy,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.1960313
+  },
+  {
+    "review_id": "2891823628_1765869592594_610415a9",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Thành phần tự nhiên, Chất lượng thương hiệu tin cậy, Kiểm soát gàu hiệu quả, vhjcsdhroi đóng góp của bạn sẽ có một số người dân ở đây không phải là người",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, thành phần tự nhiên, chất lượng thương hiệu tin cậy, kiểm soát gàu hiệu quả, vhjcsdhroi đóng góp của bạn sẽ có một số người dân ở đây không phải là người",
+    "sentiment": {
+      "Dịch vụ khách hàng": null,
+      "Bao bì đống gói": null,
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": null,
+      "Giá cả": null,
+      "Thành phần": "POS",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765870887.196035
+  },
+  {
+    "review_id": "2891823628_1765869592699_fb5ca363",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Kiểm soát gàu hiệu quả, Mùi hương bạc hà mát lạnh,",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, kiểm soát gàu hiệu quả, mùi hương bạc hà mát lạnh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.876111
+  },
+  {
+    "review_id": "2891823628_1765869592699_855b6f3b",
+    "original_text": "Thành phần tự nhiên, Cảm giác tóc sạch sẽ, Cảm giác tóc sạch sẽ, Hấp thụ nhanh, Hấp thụ nhanh, Cảm giác mát trên da đầu, Công thức mỏng nhẹ, Công thức mỏng nhẹ,",
+    "cleaned_text": "thành phần tự nhiên, cảm giác tóc sạch sẽ, cảm giác tóc sạch sẽ, hấp thụ nhanh, hấp thụ nhanh, cảm giác mát trên da đầu, công thức mỏng nhẹ, công thức mỏng nhẹ,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": null
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8761225
+  },
+  {
+    "review_id": "2891823628_1765869592699_5ea80e94",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Thành phần tự nhiên, Mùi hương bạc hà mát lạnh, Cảm giác mát trên da đầu, Chất lượng thương hiệu tin cậy,",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, thành phần tự nhiên, mùi hương bạc hà mát lạnh, cảm giác mát trên da đầu, chất lượng thương hiệu tin cậy,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8761313
+  },
+  {
+    "review_id": "2891823628_1765869592699_c35d588d",
+    "original_text": "Mùi hương bạc hà mát lạnh, Cảm giác tóc sạch sẽ, Dịu nhẹ cho da đầu nhạy cảm, \nGiao hàng nhanh, sử dụng nhiều lần ok nha, giá cũng tốt nữa",
+    "cleaned_text": "mùi hương bạc hà mát lạnh, cảm giác tóc sạch sẽ, dịu nhẹ cho da đầu nhạy cảm, giao hàng nhanh, sử dụng nhiều lần ok nha, giá cũng tốt nữa",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.876139
+  },
+  {
+    "review_id": "2891823628_1765869592699_f7ac523e",
+    "original_text": "Thành phần tự nhiên, Cảm giác tóc sạch sẽ, Dịu nhẹ cho da đầu nhạy cảm, Mùi hương bạc hà mát lạnh,",
+    "cleaned_text": "thành phần tự nhiên, cảm giác tóc sạch sẽ, dịu nhẹ cho da đầu nhạy cảm, mùi hương bạc hà mát lạnh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8761475
+  },
+  {
+    "review_id": "2891823628_1765869592699_8e0dffdd",
+    "original_text": "Chất lượng thương hiệu tin cậy, Cảm giác mát trên da đầu, Cảm giác mát trên da đầu, Mùi hương bạc hà mát lạnh, Đựng 2 chai tiện lợi,",
+    "cleaned_text": "chất lượng thương hiệu tin cậy, cảm giác mát trên da đầu, cảm giác mát trên da đầu, mùi hương bạc hà mát lạnh, đựng 2 chai tiện lợi,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8761554
+  },
+  {
+    "review_id": "2891823628_1765869592699_d4f9e0c1",
+    "original_text": "Đựng 2 chai tiện lợi, Dịu nhẹ cho da đầu nhạy cảm, Cảm giác tóc sạch sẽ,",
+    "cleaned_text": "đựng 2 chai tiện lợi, dịu nhẹ cho da đầu nhạy cảm, cảm giác tóc sạch sẽ,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8761623
+  },
+  {
+    "review_id": "2891823628_1765869592699_fc796789",
+    "original_text": "Công thức mỏng nhẹ, Kiểm soát gàu hiệu quả, Dịu nhẹ cho da đầu nhạy cảm, Mùi hương bạc hà mát lạnh,",
+    "cleaned_text": "công thức mỏng nhẹ, kiểm soát gàu hiệu quả, dịu nhẹ cho da đầu nhạy cảm, mùi hương bạc hà mát lạnh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8761694
+  },
+  {
+    "review_id": "2891823628_1765869592699_3e9688d2",
+    "original_text": "Dịch vụ chăm sóc khách hàng xuất sắc, giải đáp thắc mắc cực nhanh chóng, vừa nhắn hỏi đã thấy nhân viên rep rồi.",
+    "cleaned_text": "dịch vụ chăm sóc khách hàng xuất sắc, giải đáp thắc mắc cực nhanh chóng, vừa nhắn hỏi đã thấy nhân viên rep rồi.",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.876176
+  },
+  {
+    "review_id": "2891823628_1765869592699_23cff48c",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Đựng 2 chai tiện lợi, Thành phần tự nhiên, Mùi hương bạc hà mát lạnh,",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, đựng 2 chai tiện lợi, thành phần tự nhiên, mùi hương bạc hà mát lạnh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": null,
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": null
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8761837
+  },
+  {
+    "review_id": "2891823628_1765869592700_7f6af24e",
+    "original_text": "Đựng 2 chai tiện lợi, Kiểm soát gàu hiệu quả, mát lạnh bạc hà. Tôi rất hợp với dầu clia. Hàng chính hãnh Lên yên tâm",
+    "cleaned_text": "đựng 2 chai tiện lợi, kiểm soát gàu hiệu quả, mát lạnh bạc hà. tôi rất hợp với dầu clia. hàng chính hãnh lên yên tâm",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": null,
+      "Giá cả": "NEU",
+      "Thành phần": null,
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8761923
+  },
+  {
+    "review_id": "2891823628_1765869592700_d939d3e1",
+    "original_text": "8Dịu nhẹ cho da đầu nhạy cảm, Thành phần tự nhiên, Kiểm soát gàu hiệu quả, Cảm giác mát trên da đầu, Công thức mỏng nhẹ,",
+    "cleaned_text": "8dịu nhẹ cho da đầu nhạy cảm, thành phần tự nhiên, kiểm soát gàu hiệu quả, cảm giác mát trên da đầu, công thức mỏng nhẹ,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8761997
+  },
+  {
+    "review_id": "2891823628_1765869592700_6c5408ac",
+    "original_text": "Hấp thụ nhanh, Cảm giác mát trên da đầu, Kiểm soát gàu hiệu quả, Công thức mỏng nhẹ,",
+    "cleaned_text": "hấp thụ nhanh, cảm giác mát trên da đầu, kiểm soát gàu hiệu quả, công thức mỏng nhẹ,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8762069
+  },
+  {
+    "review_id": "2891823628_1765869592700_3eccdfa5",
+    "original_text": "Cảm giác tóc sạch sẽ, Đựng 2 chai tiện lợi, Kiểm soát gàu hiệu quả, Công thức mỏng nhẹ,",
+    "cleaned_text": "cảm giác tóc sạch sẽ, đựng 2 chai tiện lợi, kiểm soát gàu hiệu quả, công thức mỏng nhẹ,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8762136
+  },
+  {
+    "review_id": "2891823628_1765869592700_ebd93a2c",
+    "original_text": "Chất lượng thương hiệu tin cậy, Mùi hương bạc hà mát lạnh, Cảm giác mát trên da đầu,",
+    "cleaned_text": "chất lượng thương hiệu tin cậy, mùi hương bạc hà mát lạnh, cảm giác mát trên da đầu,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8762205
+  },
+  {
+    "review_id": "2891823628_1765869592700_fbaf9e5b",
+    "original_text": "Hấp thụ nhanh, Chất lượng thương hiệu tin cậy, Cảm giác mát trên da đầu, Mùi hương bạc hà mát lạnh, Công thức mỏng nhẹ, Đựng 2 chai tiện lợi,",
+    "cleaned_text": "hấp thụ nhanh, chất lượng thương hiệu tin cậy, cảm giác mát trên da đầu, mùi hương bạc hà mát lạnh, công thức mỏng nhẹ, đựng 2 chai tiện lợi,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8762274
+  },
+  {
+    "review_id": "2891823628_1765869592700_5806ac9e",
+    "original_text": "Thành phần tự nhiên, Cảm giác tóc sạch sẽ, Đựng 2 chai tiện lợi, Mùi hương bạc hà mát lạnh,",
+    "cleaned_text": "thành phần tự nhiên, cảm giác tóc sạch sẽ, đựng 2 chai tiện lợi, mùi hương bạc hà mát lạnh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8762338
+  },
+  {
+    "review_id": "2891823628_1765869592700_410bd91e",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Công thức mỏng nhẹ, Đựng 2 chai tiện lợi, Công thức mỏng nhẹ, Đựng 2 chai tiện lợi, Công thức mỏng nhẹ, Đựng 2 chai tiện lợi,",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, công thức mỏng nhẹ, đựng 2 chai tiện lợi, công thức mỏng nhẹ, đựng 2 chai tiện lợi, công thức mỏng nhẹ, đựng 2 chai tiện lợi,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8762412
+  },
+  {
+    "review_id": "2891823628_1765869592700_44958fa8",
+    "original_text": "Cảm giác mát trên da đầu, Dịu nhẹ cho da đầu nhạy cảm, Mùi hương bạc hà mát lạnh, Kiểm soát gàu hiệu quả,",
+    "cleaned_text": "cảm giác mát trên da đầu, dịu nhẹ cho da đầu nhạy cảm, mùi hương bạc hà mát lạnh, kiểm soát gàu hiệu quả,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.876248
+  },
+  {
+    "review_id": "2891823628_1765869592700_d8e3486a",
+    "original_text": "Cảm giác mát trên da đầu, Công thức mỏng nhẹ, Chất lượng thương hiệu tin cậy, Thành phần tự nhiên,",
+    "cleaned_text": "cảm giác mát trên da đầu, công thức mỏng nhẹ, chất lượng thương hiệu tin cậy, thành phần tự nhiên,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765870992.8762548
+  },
+  {
+    "review_id": "2891823628_1765869592700_3f387792",
+    "original_text": "Hấp thụ nhanh, Mùi hương bạc hà mát lạnh, Kiểm soát gàu hiệu quả, Công thức mỏng nhẹ, Dịu nhẹ cho da đầu nhạy cảm, Cảm giác mát trên da đầu,",
+    "cleaned_text": "hấp thụ nhanh, mùi hương bạc hà mát lạnh, kiểm soát gàu hiệu quả, công thức mỏng nhẹ, dịu nhẹ cho da đầu nhạy cảm, cảm giác mát trên da đầu,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3869352
+  },
+  {
+    "review_id": "2891823628_1765869592700_9570e500",
+    "original_text": "Đơn 249 tặng quà mà sao không thấy quà tặng gì hết ráo nhỉ, là sao vậy hả cái gì mà ghi cây cục cục vậy",
+    "cleaned_text": "đơn 249 tặng quà mà sao không thấy quà tặng gì hết ráo nhỉ, là sao vậy hả cái gì mà ghi cây cục cục vậy",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEG",
+      "Bao bì đống gói": null,
+      "Hiệu quả sản phẩm": "NEG",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": null,
+      "Giá cả": null,
+      "Thành phần": "NEU",
+      "Độ chính hãng": null
+    },
+    "rating": 4,
+    "processed_at": 1765871096.3869479
+  },
+  {
+    "review_id": "2891823628_1765869592700_ab7c9a45",
+    "original_text": "Công thức mỏng nhẹ, Đựng 2 chai tiện lợi, Chất lượng thương hiệu tin cậy, Dịu nhẹ cho da đầu nhạy cảm,",
+    "cleaned_text": "công thức mỏng nhẹ, đựng 2 chai tiện lợi, chất lượng thương hiệu tin cậy, dịu nhẹ cho da đầu nhạy cảm,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3869576
+  },
+  {
+    "review_id": "2891823628_1765869592700_eedbaa84",
+    "original_text": "nhận xét ở web rồi mà ta, chỉ không hài lòng ai bọc băng dính sp mùi chuột chết tởm quá",
+    "cleaned_text": "nhận xét ở web rồi mà ta, chỉ không hài lòng ai bọc băng dính sp mùi chuột chết tởm quá",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "NEU",
+      "Mùi hương": "NEG",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": null,
+      "Thành phần": null,
+      "Độ chính hãng": null
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3869665
+  },
+  {
+    "review_id": "2891823628_1765869592700_88a22d05",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Mùi hương bạc hà mát lạnh, Công thức mỏng nhẹ, Cảm giác mát trên da đầu,",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, mùi hương bạc hà mát lạnh, công thức mỏng nhẹ, cảm giác mát trên da đầu,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.386975
+  },
+  {
+    "review_id": "2891823628_1765869592700_68476d1d",
+    "original_text": "Mùi hương bạc hà mát lạnh, Công thức mỏng nhẹ, Công thức mỏng nhẹ, Kiểm soát gàu hiệu quả,",
+    "cleaned_text": "mùi hương bạc hà mát lạnh, công thức mỏng nhẹ, công thức mỏng nhẹ, kiểm soát gàu hiệu quả,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3869827
+  },
+  {
+    "review_id": "2891823628_1765869592700_0368dcc6",
+    "original_text": "Công thức mỏng nhẹ, Cảm giác mát trên da đầu, Kiểm soát gàu hiệu quả, Dịu nhẹ cho da đầu nhạy cảm,",
+    "cleaned_text": "công thức mỏng nhẹ, cảm giác mát trên da đầu, kiểm soát gàu hiệu quả, dịu nhẹ cho da đầu nhạy cảm,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3869908
+  },
+  {
+    "review_id": "2891823628_1765869592700_02077610",
+    "original_text": "mình dùng quen rồi nay mua được với giá rẻ nên siêu ưnggg nên mua nha mọi người",
+    "cleaned_text": "mình dùng quen rồi nay mua được với giá rẻ nên siêu ưnggg nên mua nha mọi người",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3869982
+  },
+  {
+    "review_id": "2891823628_1765869592700_4bad53c7",
+    "original_text": "Cảm giác tóc sạch sẽ, Thành phần tự nhiên, Mùi hương bạc hà mát lạnh, Đựng 2 chai tiện lợi, Hấp thụ nhanh,",
+    "cleaned_text": "cảm giác tóc sạch sẽ, thành phần tự nhiên, mùi hương bạc hà mát lạnh, đựng 2 chai tiện lợi, hấp thụ nhanh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.387006
+  },
+  {
+    "review_id": "2891823628_1765869592700_93d62385",
+    "original_text": "Thành phần tự nhiên, Dịu nhẹ cho da đầu nhạy cảm, Đựng 2 chai tiện lợi, giao hàng nhanh đóng gói cẩn thận sẽ ủng hộ thêm",
+    "cleaned_text": "thành phần tự nhiên, dịu nhẹ cho da đầu nhạy cảm, đựng 2 chai tiện lợi, giao hàng nhanh đóng gói cẩn thận sẽ ủng hộ thêm",
+    "sentiment": {
+      "Dịch vụ khách hàng": null,
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3870144
+  },
+  {
+    "review_id": "2891823628_1765869592701_2f486b74",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Cảm giác tóc sạch sẽ, Mùi hương bạc hà mát lạnh, Đựng 2 chai tiện lợi,",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, cảm giác tóc sạch sẽ, mùi hương bạc hà mát lạnh, đựng 2 chai tiện lợi,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": null,
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3870225
+  },
+  {
+    "review_id": "2891823628_1765869592701_5a9349ff",
+    "original_text": "Chất lượng thương hiệu tin cậy, Dịu nhẹ cho da đầu nhạy cảm, Mùi hương bạc hà mát lạnh, Hấp thụ nhanh,",
+    "cleaned_text": "chất lượng thương hiệu tin cậy, dịu nhẹ cho da đầu nhạy cảm, mùi hương bạc hà mát lạnh, hấp thụ nhanh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3870308
+  },
+  {
+    "review_id": "2891823628_1765869592701_875f9b49",
+    "original_text": "Mẫu mã đẹp, giao hàng nhanh chóng hãy sử dụng sa rất nhiều hột để cho da dầu lần sau sẽ ủng hộ rất nhiều.",
+    "cleaned_text": "mẫu mã đẹp, giao hàng nhanh chóng hãy sử dụng sa rất nhiều hột để cho da dầu lần sau sẽ ủng hộ rất nhiều.",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3870382
+  },
+  {
+    "review_id": "2891823628_1765869592701_683d7c8e",
+    "original_text": "Mùi hương bạc hà mát lạnh, Cảm giác tóc sạch sẽ, hình thành chỉ mang tính chất nhận xu",
+    "cleaned_text": "mùi hương bạc hà mát lạnh, cảm giác tóc sạch sẽ, hình thành chỉ mang tính chất nhận xu",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3870454
+  },
+  {
+    "review_id": "2891823628_1765869592701_8935f36f",
+    "original_text": "Mùi hương bạc hà mát lạnh, Cảm giác tóc sạch sẽ, Thành phần tự nhiên,",
+    "cleaned_text": "mùi hương bạc hà mát lạnh, cảm giác tóc sạch sẽ, thành phần tự nhiên,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3870533
+  },
+  {
+    "review_id": "2891823628_1765869592701_5098ad4e",
+    "original_text": "Cảm giác mát trên da đầu, Chất lượng thương hiệu tin cậy, Giá ngày sale tiết kiệm nhiều",
+    "cleaned_text": "cảm giác mát trên da đầu, chất lượng thương hiệu tin cậy, giá ngày sale tiết kiệm nhiều",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3870616
+  },
+  {
+    "review_id": "2891823628_1765869592701_d01601d6",
+    "original_text": "Cảm giác tóc sạch sẽ, Mùi hương bạc hà mát lạnh, Chất lượng thương hiệu tin cậy,",
+    "cleaned_text": "cảm giác tóc sạch sẽ, mùi hương bạc hà mát lạnh, chất lượng thương hiệu tin cậy,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3870697
+  },
+  {
+    "review_id": "2891823628_1765869592701_0099818c",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Thành phần tự nhiên, Chất lượng thương hiệu tin cậy,",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, thành phần tự nhiên, chất lượng thương hiệu tin cậy,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3870776
+  },
+  {
+    "review_id": "2891823628_1765869592701_4b0717aa",
+    "original_text": "Công thức mỏng nhẹ, Cảm giác tóc sạch sẽ, Mùi hương bạc hà mát lạnh,",
+    "cleaned_text": "công thức mỏng nhẹ, cảm giác tóc sạch sẽ, mùi hương bạc hà mát lạnh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.387086
+  },
+  {
+    "review_id": "2891823628_1765869592701_7cbe54c4",
+    "original_text": "Cảm giác tóc sạch sẽ, Chất lượng thương hiệu tin cậy, Chất lượng thương hiệu tin cậy, Thành phần tự nhiên,",
+    "cleaned_text": "cảm giác tóc sạch sẽ, chất lượng thương hiệu tin cậy, chất lượng thương hiệu tin cậy, thành phần tự nhiên,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871096.3870935
+  },
+  {
+    "review_id": "2891823628_1765869592701_e370c9e0",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Đựng 2 chai tiện lợi, Cảm giác mát trên da đầu, Thành phần tự nhiên,",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, đựng 2 chai tiện lợi, cảm giác mát trên da đầu, thành phần tự nhiên,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871402.710389
+  },
+  {
+    "review_id": "2891823628_1765869592701_d0629f67",
+    "original_text": "Hương thơm:  thơm lém nha quá thơm cũng ổn sạch gầu Hiệu quả:  giảm rụng tục  Thành phần:  lành tính nhó",
+    "cleaned_text": "hương thơm: thơm lém nha quá thơm cũng ổn sạch gầu hiệu quả: giảm rụng tục thành phần: lành tính nhó",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871402.7103941
+  },
+  {
+    "review_id": "2891823628_1765869592701_4837fb9b",
+    "original_text": "đã nhận hàng, shop đóng gói cẩn thận, date mới, chất lượng sản phẩm mình chưa ăn nên chưa đánh giá được. Shop giao nhanh. sẽ ủng hộ shop thêm nữa.",
+    "cleaned_text": "đã nhận hàng, shop đóng gói cẩn thận, date mới, chất lượng sản phẩm mình chưa ăn nên chưa đánh giá được. shop giao nhanh. sẽ ủng hộ shop thêm nữa.",
+    "sentiment": {
+      "Dịch vụ khách hàng": "POS",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "NEU",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": null,
+      "Thành phần": "NEU",
+      "Độ chính hãng": null
+    },
+    "rating": 5,
+    "processed_at": 1765871402.710398
+  },
+  {
+    "review_id": "2891823628_1765869592701_0c132c86",
+    "original_text": "Cảm giác mát trên da đầu, Công thức mỏng nhẹ, Đựng 2 chai tiện lợi, Cảm giác tóc sạch sẽ,",
+    "cleaned_text": "cảm giác mát trên da đầu, công thức mỏng nhẹ, đựng 2 chai tiện lợi, cảm giác tóc sạch sẽ,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871402.7104013
+  },
+  {
+    "review_id": "2891823628_1765869592701_783ccabb",
+    "original_text": "Đựng 2 chai tiện lợi, Công thức mỏng nhẹ, Thành phần tự nhiên, Cảm giác mát trên da đầu,",
+    "cleaned_text": "đựng 2 chai tiện lợi, công thức mỏng nhẹ, thành phần tự nhiên, cảm giác mát trên da đầu,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871402.7104044
+  },
+  {
+    "review_id": "2891823628_1765869592701_404ad0ee",
+    "original_text": "Đựng 2 chai tiện lợi, Chất lượng thương hiệu tin cậy, Công thức mỏng nhẹ, Thành phần tự nhiên, Kiểm soát gàu hiệu quả,",
+    "cleaned_text": "đựng 2 chai tiện lợi, chất lượng thương hiệu tin cậy, công thức mỏng nhẹ, thành phần tự nhiên, kiểm soát gàu hiệu quả,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "NEU",
+      "Kết cấu sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871402.7104073
+  },
+  {
+    "review_id": "2891823628_1765869592701_0525ed22",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Mùi hương bạc hà mát lạnh, Mùi hương bạc hà mát lạnh, Cảm giác mát trên da đầu, Đựng 2 chai tiện lợi,",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, mùi hương bạc hà mát lạnh, mùi hương bạc hà mát lạnh, cảm giác mát trên da đầu, đựng 2 chai tiện lợi,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "NEU",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "NEU",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871402.7104104
+  },
+  {
+    "review_id": "2891823628_1765869592701_6766426e",
+    "original_text": "Cảm giác mát trên da đầu, Dịu nhẹ cho da đầu nhạy cảm, Đựng 2 chai tiện lợi, Chất lượng thương hiệu tin cậy,",
+    "cleaned_text": "cảm giác mát trên da đầu, dịu nhẹ cho da đầu nhạy cảm, đựng 2 chai tiện lợi, chất lượng thương hiệu tin cậy,",
+    "sentiment": {
+      "Dịch vụ khách hàng": null,
+      "Bao bì đống gói": null,
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": null,
+      "Kết cấu sản phẩm": null,
+      "Giá cả": null,
+      "Thành phần": null,
+      "Độ chính hãng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1765871402.7104132
+  },
+  {
+    "review_id": "2891823628_1765869382228_be97e8f9",
+    "original_text": "Dịu nhẹ cho da đầu nhạy cảm, Đựng 2 chai tiện lợi, Thành phần tự nhiên, Mùi hương bạc hà mát lạnh,",
+    "cleaned_text": "dịu nhẹ cho da đầu nhạy cảm, đựng 2 chai tiện lợi, thành phần tự nhiên, mùi hương bạc hà mát lạnh,",
+    "sentiment": {
+      "Dịch vụ khách hàng": "NEU",
+      "Bao bì đống gói": "POS",
+      "Hiệu quả sản phẩm": "POS",
+      "Mùi hương": "POS",
+      "Kết cấu sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Thành phần": "POS",
+      "Độ chính hãng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1765871402.7104163
+  }
+]

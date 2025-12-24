@@ -1,0 +1,5 @@
+streamlit
+selenium
+pandas
+webdriver-manager
+beautifulsoup4

@@ -1,0 +1,55 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+venv/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Large files
+*.pth
+*.pt
+*.h5
+*.pkl
+*.model
+
+# Data directories (mount as volumes instead)
+rawdata/
+data/
+
+# Airflow logs
+airflow/logs/
+
+# IDE
+.idea/
+.vscode/
+
+# Archives
+*.rar
+*.zip
+*.tar.gz
+
+# Other
+*.log
+*.tmp
+*.temp
+Thumbs.db
+.DS_Store
+
+# Model files
+model/*.ipynb
+model/*.pth
+
+# Nhóm folder
+Nhóm*/
+
+# Cookie folder
+cookie/

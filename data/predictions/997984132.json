@@ -1,0 +1,547 @@
+[
+  {
+    "review_id": "997984132_1766510535581_d1e64f53",
+    "original_text": "Hiệu quả:  Làm tóc cảm thấy sạch sẽ và tươi mát, Nguyên liệu nhập khẩu từ Đức, Cải thiện sức khỏe da đầu, Giảm viêm da đầu,",
+    "cleaned_text": "hiệu quả: làm tóc cảm thấy sạch sẽ và tươi mát, nguyên liệu nhập khẩu từ đức, cải thiện sức khỏe da đầu, giảm viêm da đầu,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510662.9145668
+  },
+  {
+    "review_id": "997984132_1766510535581_6013e8c4",
+    "original_text": "Giảm viêm da đầu, Nhẹ nhàng trên da đầu, Giúp sửa chữa tóc hư tổn, Làm dịu da đầu bị kích ứng,",
+    "cleaned_text": "giảm viêm da đầu, nhẹ nhàng trên da đầu, giúp sửa chữa tóc hư tổn, làm dịu da đầu bị kích ứng,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Đóng gói & bao bì": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510662.9145722
+  },
+  {
+    "review_id": "997984132_1766510535581_7d95d430",
+    "original_text": "Giảm viêm da đầu, Cải thiện sức khỏe da đầu, Làm dịu da đầu bị kích ứng,",
+    "cleaned_text": "giảm viêm da đầu, cải thiện sức khỏe da đầu, làm dịu da đầu bị kích ứng,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766510662.9145756
+  },
+  {
+    "review_id": "997984132_1766510535581_67ca4b7b",
+    "original_text": "Làm dịu da đầu bị kích ứng, Mang lại cảm giác sảng khoái, Loại bỏ vảy trắng,",
+    "cleaned_text": "làm dịu da đầu bị kích ứng, mang lại cảm giác sảng khoái, loại bỏ vảy trắng,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510662.9145854
+  },
+  {
+    "review_id": "997984132_1766510535581_8bae8f96",
+    "original_text": "Ship nhanh, Dầu tạo nhiều bọt nhé, chỉ cần cho 1 tí là đủ gội nên khá là tiết kiệm ( dù giá khá cao). Gội vào rất mát lạnh, dễ chịu hết ngứa và hết vảy gầu luôn. trước cứ gội xong khô tóc rũ ra như tuyết rơi ý(đã thử rất nhiều loại đều k hết). từ khi mua ẻm về gội 1 lần đã thấy sạch hẳn,  giờ thì thoải mái k phải đội mũ nữa",
+    "cleaned_text": "ship nhanh, dầu tạo nhiều bọt nhé, chỉ cần cho 1 tí là đủ gội nên khá là tiết kiệm ( dù giá khá cao). gội vào rất mát lạnh, dễ chịu hết ngứa và hết vảy gầu luôn. trước cứ gội xong khô tóc rũ ra như tuyết rơi ý(đã thử rất nhiều loại đều k hết). từ khi mua ẻm về gội 1 lần đã thấy sạch hẳn, giờ thì thoải mái k phải đội mũ nữa",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEG",
+      "Vận chuyển & giao hàng": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510662.9145896
+  },
+  {
+    "review_id": "997984132_1766510535581_abb74a19",
+    "original_text": "Làm sạch da đầu kỹ lưỡng, Giảm ngứa da đầu, Giảm gàu.  Thường sử dụng 02 lần/tuần để duy trì giảm ngứa.",
+    "cleaned_text": "làm sạch da đầu kỹ lưỡng, giảm ngứa da đầu, giảm gàu. thường sử dụng 02 lần/tuần để duy trì giảm ngứa.",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510662.9145937
+  },
+  {
+    "review_id": "997984132_1766510535582_af4984db",
+    "original_text": "Giúp sửa chữa tóc hư tổn, Làm sạch da đầu một cách đ gründlich, Giảm viêm da đầu, Làm tóc mềm mượt và dễ dàng điều chỉnh, Giảm viêm da đầu,",
+    "cleaned_text": "giúp sửa chữa tóc hư tổn, làm sạch da đầu một cách đ gründlich, giảm viêm da đầu, làm tóc mềm mượt và dễ dàng điều chỉnh, giảm viêm da đầu,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510662.9145977
+  },
+  {
+    "review_id": "997984132_1766510535582_0cc13378",
+    "original_text": "Giảm ngứa da đầu, Hiệu quả trong việc điều trị gàu, Giảm rụng tóc, Loại bỏ vảy trắng,",
+    "cleaned_text": "giảm ngứa da đầu, hiệu quả trong việc điều trị gàu, giảm rụng tóc, loại bỏ vảy trắng,",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Đóng gói & bao bì": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510662.9146008
+  },
+  {
+    "review_id": "997984132_1766510535582_e51d1110",
+    "original_text": "Giảm ngứa da đầu, Loại bỏ vảy trắng, Giúp sửa chữa tóc hư tổn, Làm tóc mềm mại và dễ quản lý, Nguyên liệu nhập khẩu từ Đức,",
+    "cleaned_text": "giảm ngứa da đầu, loại bỏ vảy trắng, giúp sửa chữa tóc hư tổn, làm tóc mềm mại và dễ quản lý, nguyên liệu nhập khẩu từ đức,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510662.914604
+  },
+  {
+    "review_id": "997984132_1766510535582_be1ba39d",
+    "original_text": "đã dùng và mua lại nhiều lần, canh sale mua rẻ hơn còn đc tặng dầu gội giảm rụng.",
+    "cleaned_text": "đã dùng và mua lại nhiều lần, canh sale mua rẻ hơn còn đc tặng dầu gội giảm rụng.",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Khuyến mãi & voucher": "POS",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510662.9146168
+  },
+  {
+    "review_id": "997984132_1766510535582_355064b8",
+    "original_text": "Hiệu quả trong việc điều trị gàu, Cải thiện sức khỏe da đầu,",
+    "cleaned_text": "hiệu quả trong việc điều trị gàu, cải thiện sức khỏe da đầu,",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510790.4056783
+  },
+  {
+    "review_id": "997984132_1766510535582_114f2a1a",
+    "original_text": "Sp giống như mô tả. Giảm ngứa da đầu, nhưng ko gội một thời gian thì lại ngứa trở lại . TV thì shop trả lời hơi chậm nhưng sau cùng thì shop cũng có gọi điện đến tv nên tặng shop 5 S nhé .",
+    "cleaned_text": "sp giống như mô tả. giảm ngứa da đầu, nhưng ko gội một thời gian thì lại ngứa trở lại . tv thì shop trả lời hơi chậm nhưng sau cùng thì shop cũng có gọi điện đến tv nên tặng shop 5 s nhé .",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766510790.4056833
+  },
+  {
+    "review_id": "997984132_1766510535582_7a652b75",
+    "original_text": "Làm tóc cảm thấy sạch sẽ và tươi mát, Làm tóc mềm mại và dễ quản lý,",
+    "cleaned_text": "làm tóc cảm thấy sạch sẽ và tươi mát, làm tóc mềm mại và dễ quản lý,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510790.4056919
+  },
+  {
+    "review_id": "997984132_1766510535582_72c9b0bc",
+    "original_text": "Cải thiện sức khỏe da đầu, Làm sạch da đầu kỹ lưỡng, Giảm viêm da đầu,",
+    "cleaned_text": "cải thiện sức khỏe da đầu, làm sạch da đầu kỹ lưỡng, giảm viêm da đầu,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510790.4056957
+  },
+  {
+    "review_id": "997984132_1766510535582_b381759e",
+    "original_text": "Mua đúng mall nhưng check code ko thấy ra sản phẩm cả code lẫn QR code mong shop khắc phục , mua ở mall nên cũng k lo",
+    "cleaned_text": "mua đúng mall nhưng check code ko thấy ra sản phẩm cả code lẫn qr code mong shop khắc phục , mua ở mall nên cũng k lo",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766510790.4056985
+  },
+  {
+    "review_id": "997984132_1766510535582_307fe070",
+    "original_text": "Nhẹ nhàng trên da đầu, Cải thiện sức khỏe da đầu, Loại bỏ vảy trắng, Giảm rụng tóc, Hiệu quả trong việc điều trị gàu, Giảm viêm da đầu, Làm tóc mềm mại và dễ quản lý, Làm sạch da đầu kỹ lưỡng,",
+    "cleaned_text": "nhẹ nhàng trên da đầu, cải thiện sức khỏe da đầu, loại bỏ vảy trắng, giảm rụng tóc, hiệu quả trong việc điều trị gàu, giảm viêm da đầu, làm tóc mềm mại và dễ quản lý, làm sạch da đầu kỹ lưỡng,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766510790.405701
+  },
+  {
+    "review_id": "997984132_1766510535582_b5322440",
+    "original_text": "Làm tóc cảm thấy sạch sẽ và tươi mát, Làm dịu da đầu bị kích ứng, Nguyên liệu nhập khẩu từ Đức,",
+    "cleaned_text": "làm tóc cảm thấy sạch sẽ và tươi mát, làm dịu da đầu bị kích ứng, nguyên liệu nhập khẩu từ đức,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766510790.4057033
+  },
+  {
+    "review_id": "997984132_1766510535582_d2c4f70e",
+    "original_text": "Dưỡng tóc, Làm sạch da đầu, Dưỡng ẩm, Giúp dễ chải tóc, Cân bằng bã nhờn trên da đầu, Hương thơm tự nhiên,",
+    "cleaned_text": "dưỡng tóc, làm sạch da đầu, dưỡng ẩm, giúp dễ chải tóc, cân bằng bã nhờn trên da đầu, hương thơm tự nhiên,",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510790.4057076
+  },
+  {
+    "review_id": "997984132_1766510535582_a0f20159",
+    "original_text": "Nhẹ nhàng trên da đầu, Cải thiện sức khỏe da đầu, Mang lại cảm giác sảng khoái, Làm dịu da đầu bị kích ứng,",
+    "cleaned_text": "nhẹ nhàng trên da đầu, cải thiện sức khỏe da đầu, mang lại cảm giác sảng khoái, làm dịu da đầu bị kích ứng,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510790.405711
+  },
+  {
+    "review_id": "997984132_1766510535582_4344a084",
+    "original_text": "Đã nhận.mới sử dụng chưa biết kq tn. Nhìn chai nhỏ.do dầu gội thuốc nên nó giá cũng chát.\nGội xong sẽ quay lại đánh giá sau.\nHình ảnh chỉ để nhận xu",
+    "cleaned_text": "đã nhận.mới sử dụng chưa biết kq tn. nhìn chai nhỏ.do dầu gội thuốc nên nó giá cũng chát. gội xong sẽ quay lại đánh giá sau. hình ảnh chỉ để nhận xu",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEG",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510790.4057143
+  },
+  {
+    "review_id": "997984132_1766510535582_38f1a19d",
+    "original_text": "shop đóng gói cẩn thận giao hàng nhanh check ra hành chính hãng chưa dùng thử nên chưa bjt kết quả ❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
+    "cleaned_text": "shop đóng gói cẩn thận giao hàng nhanh check ra hành chính hãng chưa dùng thử nên chưa bjt kết quả ❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️❤️",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510926.675885
+  },
+  {
+    "review_id": "997984132_1766510535582_315566b5",
+    "original_text": "Giao nhanh gọn lẹ giao diện ổn áp còn phải sử dụng thế nào đợi sau sẽ rõ",
+    "cleaned_text": "giao nhanh gọn lẹ giao diện ổn áp còn phải sử dụng thế nào đợi sau sẽ rõ",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510926.6758945
+  },
+  {
+    "review_id": "997984132_1766510535582_a1f757c0",
+    "original_text": "Giúp sửa chữa tóc hư tổn, Kích thích mọc tóc, Giảm viêm da đầu, Giảm rụng tóc, Giảm rụng tóc, \n Hương thơm:  okkkkkk Okkkk\nOkkkk",
+    "cleaned_text": "giúp sửa chữa tóc hư tổn, kích thích mọc tóc, giảm viêm da đầu, giảm rụng tóc, giảm rụng tóc, hương thơm: okkkkkk okkkk okkkk",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766510926.6758978
+  },
+  {
+    "review_id": "997984132_1766510535582_fb86ccc7",
+    "original_text": "tem bị rách có dấu hiệu thay hàng",
+    "cleaned_text": "tem bị rách có dấu hiệu thay hàng",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEG",
+      "Trải nghiệm sử dụng": "NEG",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEG",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510926.6759017
+  },
+  {
+    "review_id": "997984132_1766510535582_bfad7cc7",
+    "original_text": "Mình đã dùng sản phẩm một thời gian thì thấy đầu ko còn vẩy và ngứa nên đã ngưng sử dụng 1 thời gian thì lại bắt đầu ngứa và có vẩy lại. Có lẽ ko thể trị dưt điểm được 😔",
+    "cleaned_text": "mình đã dùng sản phẩm một thời gian thì thấy đầu ko còn vẩy và ngứa nên đã ngưng sử dụng 1 thời gian thì lại bắt đầu ngứa và có vẩy lại. có lẽ ko thể trị dưt điểm được 😔",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEG",
+      "Hiệu năng sản phẩm": "NEG",
+      "Dịch vụ chăm sóc khách hàng": "NEG"
+    },
+    "rating": 5,
+    "processed_at": 1766510926.675905
+  },
+  {
+    "review_id": "997984132_1766510535582_4491bb5d",
+    "original_text": "Hết gàu thiệt nha mấy bà, tóc bồng bềnh, vài lần là hết nấm và ghẻ. Nhưng sài 1-2 lần 1 tuần thôi.",
+    "cleaned_text": "hết gàu thiệt nha mấy bà, tóc bồng bềnh, vài lần là hết nấm và ghẻ. nhưng sài 1-2 lần 1 tuần thôi.",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEG",
+      "Trải nghiệm sử dụng": "NEG",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEG",
+      "Giá cả": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Đổi trả & bảo hành": "NEG"
+    },
+    "rating": 5,
+    "processed_at": 1766510926.6759095
+  },
+  {
+    "review_id": "997984132_1766510535583_29c51ca9",
+    "original_text": "Cải thiện sức khỏe da đầu, Kích thích mọc tóc, Loại bỏ vảy trắng, Hiệu quả trong việc điều trị gàu,",
+    "cleaned_text": "cải thiện sức khỏe da đầu, kích thích mọc tóc, loại bỏ vảy trắng, hiệu quả trong việc điều trị gàu,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510926.675914
+  },
+  {
+    "review_id": "997984132_1766510535583_c48aeef7",
+    "original_text": "shop giao hàng nhanh giao đúng mẫu hàng chất lượng mình đã mua nhiều lần sẽ tiếp tục ủng hộ shop",
+    "cleaned_text": "shop giao hàng nhanh giao đúng mẫu hàng chất lượng mình đã mua nhiều lần sẽ tiếp tục ủng hộ shop",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766510926.6759164
+  },
+  {
+    "review_id": "997984132_1766510535583_53c9f126",
+    "original_text": "giao hàng nhanh, ship thân thiện, chưa sd nên chưa bit có gì đáng giá chất lượng sau",
+    "cleaned_text": "giao hàng nhanh, ship thân thiện, chưa sd nên chưa bit có gì đáng giá chất lượng sau",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510926.6759205
+  },
+  {
+    "review_id": "997984132_1766510535583_5620a341",
+    "original_text": "Hàng chưa sd nên ko biết ổn ko. Dùng OK sẽ quay lại ủng hộ shop. Đóng gói kĩ, hàng y hình. Thanks shop bán có tâm 💗",
+    "cleaned_text": "hàng chưa sd nên ko biết ổn ko. dùng ok sẽ quay lại ủng hộ shop. đóng gói kĩ, hàng y hình. thanks shop bán có tâm 💗",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766510926.675924
+  },
+  {
+    "review_id": "997984132_1766510535583_93d8c046",
+    "original_text": "Hiệu quả:  gội lần đầu nên chưa cảm giác lắm, nhưng gội xong thì thấy hết ngứa\n Hương thơm:  bình thường, vì từng xài nhiều loại dầu gội. Mùi dễ chịu\n Thành phần:  Giảm viêm da đầu, Làm dịu da đầu bị kích ứng,",
+    "cleaned_text": "hiệu quả: gội lần đầu nên chưa cảm giác lắm, nhưng gội xong thì thấy hết ngứa hương thơm: bình thường, vì từng xài nhiều loại dầu gội. mùi dễ chịu thành phần: giảm viêm da đầu, làm dịu da đầu bị kích ứng,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766511118.1799667
+  },
+  {
+    "review_id": "997984132_1766510535583_fcd9fcd0",
+    "original_text": "mới mua lần đầu,không biết có hết nấm da đầu không đây,nếu công dụng sẽ mua thêm lần sao?hy vọng sẽ chất lượng,giao hàng khá nhanh!",
+    "cleaned_text": "mới mua lần đầu,không biết có hết nấm da đầu không đây,nếu công dụng sẽ mua thêm lần sao?hy vọng sẽ chất lượng,giao hàng khá nhanh!",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Vận chuyển & giao hàng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766511118.1799757
+  },
+  {
+    "review_id": "997984132_1766510535583_d5cd6a50",
+    "original_text": "Hiệu quả trong việc điều trị gàu, Giúp sửa chữa tóc hư tổn, Giảm viêm da đầu,",
+    "cleaned_text": "hiệu quả trong việc điều trị gàu, giúp sửa chữa tóc hư tổn, giảm viêm da đầu,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766511118.1799781
+  },
+  {
+    "review_id": "997984132_1766510535583_175593f1",
+    "original_text": "Hiệu quả trong việc điều trị gàu,",
+    "cleaned_text": "hiệu quả trong việc điều trị gàu,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766511118.1799808
+  },
+  {
+    "review_id": "997984132_1766510535583_f41f63bf",
+    "original_text": "Hiệu quả trong việc điều trị gàu, Giảm viêm da đầu,",
+    "cleaned_text": "hiệu quả trong việc điều trị gàu, giảm viêm da đầu,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766511118.179983
+  },
+  {
+    "review_id": "997984132_1766510535583_be57e616",
+    "original_text": "Giảm ngứa da đầu, Giảm ngứa da đầu, Giảm ngứa da đầu, Giảm ngứa da đầu, Giảm ngứa da đầu, Giảm ngứa da đầu,",
+    "cleaned_text": "giảm ngứa da đầu, giảm ngứa da đầu, giảm ngứa da đầu, giảm ngứa da đầu, giảm ngứa da đầu, giảm ngứa da đầu,",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766511118.1799884
+  },
+  {
+    "review_id": "997984132_1766510535583_ac7a10fd",
+    "original_text": "Hiệu quả:tuyệt vời, gội là hết ngứa liền, Làm dịu da đầu bị kích ứng, không khô tóc\n Hương thơm:dễ chịu",
+    "cleaned_text": "hiệu quả:tuyệt vời, gội là hết ngứa liền, làm dịu da đầu bị kích ứng, không khô tóc hương thơm:dễ chịu",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766511118.1799908
+  },
+  {
+    "review_id": "997984132_1766510535583_351211ee",
+    "original_text": "Làm dịu da đầu bị kích ứng, Hiệu quả trong việc điều trị gàu, Nguyên liệu nhập khẩu từ Đức,",
+    "cleaned_text": "làm dịu da đầu bị kích ứng, hiệu quả trong việc điều trị gàu, nguyên liệu nhập khẩu từ đức,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766511118.1799932
+  },
+  {
+    "review_id": "997984132_1766510535583_634d0549",
+    "original_text": "Loại bỏ vảy gàu trắng, giảm ngứa da đầu, hiệu quả trong việc điều trị gàu,",
+    "cleaned_text": "loại bỏ vảy gàu trắng, giảm ngứa da đầu, hiệu quả trong việc điều trị gàu,",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766511118.179995
+  },
+  {
+    "review_id": "997984132_1766510535584_fb965be2",
+    "original_text": "Nhẹ nhàng trên da đầu, Giảm rụng tóc, Nguyên liệu nhập khẩu từ Đức, Cải thiện sức khỏe da đầu,",
+    "cleaned_text": "nhẹ nhàng trên da đầu, giảm rụng tóc, nguyên liệu nhập khẩu từ đức, cải thiện sức khỏe da đầu,",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766511118.1799986
+  }
+]

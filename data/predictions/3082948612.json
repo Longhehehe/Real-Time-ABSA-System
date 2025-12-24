@@ -1,0 +1,822 @@
+[
+  {
+    "review_id": "3082948612_1766500336871_beae2ce7",
+    "original_text": "Ngon, bổ, rẻ, chất lượng",
+    "cleaned_text": "ngon, bổ, rẻ, chất lượng",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500466.261139
+  },
+  {
+    "review_id": "3082948612_1766500336871_41125790",
+    "original_text": "Đã nhận Máy thiết kế đẹp, giá ổn, chất lượng chụp hình rõ nét, xài rất ok luôn. Giao hàng thì siêu siêu nhanh. Tặng shop 5 sao.",
+    "cleaned_text": "đã nhận máy thiết kế đẹp, giá ổn, chất lượng chụp hình rõ nét, xài rất ok luôn. giao hàng thì siêu siêu nhanh. tặng shop 5 sao.",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500466.2611513
+  },
+  {
+    "review_id": "3082948612_1766500336871_830a3266",
+    "original_text": "chất lượng sản phẩm bên shop rất tuyệt , đúng hàng chính hãng,đã tìm ra shop bán hàng uy tín chất lượng,và giá cả rất bình dân.... cảm on shop đã giao hàng nhanh và hàng chất lượng. rất đáng nên mua nhé mọi người",
+    "cleaned_text": "chất lượng sản phẩm bên shop rất tuyệt , đúng hàng chính hãng,đã tìm ra shop bán hàng uy tín chất lượng,và giá cả rất bình dân.... cảm on shop đã giao hàng nhanh và hàng chất lượng. rất đáng nên mua nhé mọi người",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766500466.2611554
+  },
+  {
+    "review_id": "3082948612_1766500336871_9b4fc227",
+    "original_text": "Shop giao hàng nhanh, đóng gói kỹ càng Đánh giá 5 sao,",
+    "cleaned_text": "shop giao hàng nhanh, đóng gói kỹ càng đánh giá 5 sao,",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500466.2611597
+  },
+  {
+    "review_id": "3082948612_1766500336871_162ad8dc",
+    "original_text": "giá rẻ,  đt xài mượt, không đòi hỏi thêm,  shop uy tín.",
+    "cleaned_text": "giá rẻ, đt xài mượt, không đòi hỏi thêm, shop uy tín.",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "POS",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500466.2611637
+  },
+  {
+    "review_id": "3082948612_1766500336871_49052445",
+    "original_text": "hơn mong đợi,Mua làm con kép phụ để phục vụ công việc, thấy giá rẻ nên mua về xài tạm thôi. Nhưng mà ai ngờ nó sắp bằng con chính luôn rồi. mấy khỏe nha, xài ngon ơ",
+    "cleaned_text": "hơn mong đợi,mua làm con kép phụ để phục vụ công việc, thấy giá rẻ nên mua về xài tạm thôi. nhưng mà ai ngờ nó sắp bằng con chính luôn rồi. mấy khỏe nha, xài ngon ơ",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEG"
+    },
+    "rating": 5,
+    "processed_at": 1766500466.2611685
+  },
+  {
+    "review_id": "3082948612_1766500336871_333c1a97",
+    "original_text": "nói chung là hài lòng",
+    "cleaned_text": "nói chung là hài lòng",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500466.2611728
+  },
+  {
+    "review_id": "3082948612_1766500336871_6e2a4107",
+    "original_text": "đặt hàng mua đt nhưng lại giao pin dự phòng",
+    "cleaned_text": "đặt hàng mua đt nhưng lại giao pin dự phòng",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEG",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEG",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500466.2611778
+  },
+  {
+    "review_id": "3082948612_1766500336871_bd6ed91e",
+    "original_text": "Màu sắc sống động và rực rỡ, Thiết kế sang trọng, Hiệu năng mượt mà, Giao diện dễ sử dụng, Thời lượng pin lâu dài, Chất lượng camera ấn tượng, Giá trị tuyệt vời cho số tiền, Không gian lưu trữ rộng rãi. Android dễ sử dụng, chỉ cần nhập gmail vào là sử dụng các app rất ổn. bình chọn cho shop 5 sao",
+    "cleaned_text": "màu sắc sống động và rực rỡ, thiết kế sang trọng, hiệu năng mượt mà, giao diện dễ sử dụng, thời lượng pin lâu dài, chất lượng camera ấn tượng, giá trị tuyệt vời cho số tiền, không gian lưu trữ rộng rãi. android dễ sử dụng, chỉ cần nhập gmail vào là sử dụng các app rất ổn. bình chọn cho shop 5 sao",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "POS",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500466.2611833
+  },
+  {
+    "review_id": "3082948612_1766500336871_252e3eff",
+    "original_text": "đã nhận,shop làm ăn uy tín , sẽ tiếp tục ủng hộ .",
+    "cleaned_text": "đã nhận,shop làm ăn uy tín , sẽ tiếp tục ủng hộ .",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766500466.2611897
+  },
+  {
+    "review_id": "3082948612_1766500336871_4fd6f293",
+    "original_text": "💲Giá cả:hợp với số tiền bỏ ra\n 🛡Độ bền:chờ sử dụng mới biết\n 👌Dễ sử dụng:lướt mượt, pin lâu",
+    "cleaned_text": "💲giá cả:hợp với số tiền bỏ ra 🛡độ bền:chờ sử dụng mới biết 👌dễ sử dụng:lướt mượt, pin lâu",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766500587.9036522
+  },
+  {
+    "review_id": "3082948612_1766500336871_61661957",
+    "original_text": "ngon,bổ,rẻ😃",
+    "cleaned_text": "ngon,bổ,rẻ😃",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500587.9036736
+  },
+  {
+    "review_id": "3082948612_1766500336872_6211be32",
+    "original_text": "máy xài êm ak shop vừa tầm giá rẻ .mọi chức năng đều ok lắm .shop tư vấn nhiệt tình nè sẽ ủng hộ thêm khj có nhu cầu nha shop .mn yên tâm shop uy tín ak",
+    "cleaned_text": "máy xài êm ak shop vừa tầm giá rẻ .mọi chức năng đều ok lắm .shop tư vấn nhiệt tình nè sẽ ủng hộ thêm khj có nhu cầu nha shop .mn yên tâm shop uy tín ak",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "POS",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766500587.903684
+  },
+  {
+    "review_id": "3082948612_1766500336872_bc5b68af",
+    "original_text": "mua điện thoại mà giao du phòng. lừa đảo",
+    "cleaned_text": "mua điện thoại mà giao du phòng. lừa đảo",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEG",
+      "Trải nghiệm sử dụng": "NEG",
+      "Đúng mô tả sản phẩm": "NEG",
+      "Hiệu năng sản phẩm": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEG",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500587.903692
+  },
+  {
+    "review_id": "3082948612_1766500336872_daa9c26e",
+    "original_text": "Máy xài rất ổn, cấu hình thì ko cần phải bàn , bề ngoài đẹp ,giá cũng hợp lý.",
+    "cleaned_text": "máy xài rất ổn, cấu hình thì ko cần phải bàn , bề ngoài đẹp ,giá cũng hợp lý.",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500587.9036999
+  },
+  {
+    "review_id": "3082948612_1766500336872_72a82f75",
+    "original_text": "Tốt hơn mong đợi,điện thoại xài OK lắm shop ơi,lần sau mình sẽ ủng hộ tiếp nhé. thấy shop làm ăn buôn bán uy tín, chất lượng ,mình rất hài lòng nhé.",
+    "cleaned_text": "tốt hơn mong đợi,điện thoại xài ok lắm shop ơi,lần sau mình sẽ ủng hộ tiếp nhé. thấy shop làm ăn buôn bán uy tín, chất lượng ,mình rất hài lòng nhé.",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Giá cả": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "POS",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500587.903731
+  },
+  {
+    "review_id": "3082948612_1766500336872_9c5522a1",
+    "original_text": "Mình đã nhận máy rồi nha shop yêu ơi. Máy rất là mới cứng cáp Full mọi chức năng nha, mình đã test qua thì ok lắm, chụp hình, coi phim, nghe nhạc rõ nét lắm giá cả thì cũng vừa túi tiền. Nói chung không mong hơn gì được nữa với tầm giá như thế này mà có được chiếc điện thoại xài Ok thì không đòi hỏi gì hơn được nữa sẽ mua và ủng hộ shop thêm nữa",
+    "cleaned_text": "mình đã nhận máy rồi nha shop yêu ơi. máy rất là mới cứng cáp full mọi chức năng nha, mình đã test qua thì ok lắm, chụp hình, coi phim, nghe nhạc rõ nét lắm giá cả thì cũng vừa túi tiền. nói chung không mong hơn gì được nữa với tầm giá như thế này mà có được chiếc điện thoại xài ok thì không đòi hỏi gì hơn được nữa sẽ mua và ủng hộ shop thêm nữa",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500587.9037519
+  },
+  {
+    "review_id": "3082948612_1766500336872_2b0e0d57",
+    "original_text": "5 sao cho shop giao hàng quá nhanh. Hàng đóng gói chắc chắn. Đầy đủ phụ kiện sạc. Nhân viên nhiệt tình. Máy nhìn khá mới, cảm ứng lướt nhẹ tay. Nói chung mọi thứ điều tốt. Cảm ơn shop nhiều nhé.😊",
+    "cleaned_text": "5 sao cho shop giao hàng quá nhanh. hàng đóng gói chắc chắn. đầy đủ phụ kiện sạc. nhân viên nhiệt tình. máy nhìn khá mới, cảm ứng lướt nhẹ tay. nói chung mọi thứ điều tốt. cảm ơn shop nhiều nhé.😊",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "POS",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500587.9037647
+  },
+  {
+    "review_id": "3082948612_1766500336872_79eee7c1",
+    "original_text": "sản phẩm giá trị tốt so với giá cả. mua nhiều lần rồi, cảm ơn shop,tặng dhop 5 sao",
+    "cleaned_text": "sản phẩm giá trị tốt so với giá cả. mua nhiều lần rồi, cảm ơn shop,tặng dhop 5 sao",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "POS",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "POS",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500587.9037745
+  },
+  {
+    "review_id": "3082948612_1766500336872_bbe004c6",
+    "original_text": "điện thoại các chức năng đều chạy tốt, ngồi cày game cũng ít bị nóng mà pin cũng xài lâu mới hết, màn hình nét căng xem phim thì phải nói là phê tận nóc luôn",
+    "cleaned_text": "điện thoại các chức năng đều chạy tốt, ngồi cày game cũng ít bị nóng mà pin cũng xài lâu mới hết, màn hình nét căng xem phim thì phải nói là phê tận nóc luôn",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "POS",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500587.9037933
+  },
+  {
+    "review_id": "3082948612_1766500336872_fa2b36af",
+    "original_text": "Mua hàng ở shop này khá ok, đóng gói ok. Giá tiền rẻ so với mặt bằng chung. Nhìn chung thì cũng hài lòng nha",
+    "cleaned_text": "mua hàng ở shop này khá ok, đóng gói ok. giá tiền rẻ so với mặt bằng chung. nhìn chung thì cũng hài lòng nha",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500724.4261656
+  },
+  {
+    "review_id": "3082948612_1766500336872_0b4d7fd4",
+    "original_text": "mình mua điện thoại mà sao giao cái gì vậy",
+    "cleaned_text": "mình mua điện thoại mà sao giao cái gì vậy",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEG",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500724.4261732
+  },
+  {
+    "review_id": "3082948612_1766500336872_c220ce90",
+    "original_text": "Tuyệt vời",
+    "cleaned_text": "tuyệt vời",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766500724.4261768
+  },
+  {
+    "review_id": "3082948612_1766500336872_042c1fc0",
+    "original_text": "nhìn chung cũng OK",
+    "cleaned_text": "nhìn chung cũng ok",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500724.4261818
+  },
+  {
+    "review_id": "3082948612_1766500336872_f1a1abd2",
+    "original_text": "Trên cả tuyệt vời,đóng gói sản phẩm chắc chắn, đã xài oke,5sao",
+    "cleaned_text": "trên cả tuyệt vời,đóng gói sản phẩm chắc chắn, đã xài oke,5sao",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500724.4261858
+  },
+  {
+    "review_id": "3082948612_1766500336872_8808b580",
+    "original_text": "mình đã mua của shop lần thứ hai rồi giá cả hợp lý vừa túi tiền Bỏ ra máy xài rất là ok chuẩn đúng chính hãng luôn nha shop Tặng sạc cáp ốp lưng về mình chỉ lắp sim vào là xài thôi với giá tiền thế này mà có được chiếc điện thoại cảm ứng xài Ok thì còn hơn gì được nữa",
+    "cleaned_text": "mình đã mua của shop lần thứ hai rồi giá cả hợp lý vừa túi tiền bỏ ra máy xài rất là ok chuẩn đúng chính hãng luôn nha shop tặng sạc cáp ốp lưng về mình chỉ lắp sim vào là xài thôi với giá tiền thế này mà có được chiếc điện thoại cảm ứng xài ok thì còn hơn gì được nữa",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766500724.4261882
+  },
+  {
+    "review_id": "3082948612_1766500336872_9852762f",
+    "original_text": "Tuyệt vời,Màu sắc sống động và rực rỡ, Thiết kế sang trọng, Hiệu năng mượt mà, Giao diện dễ sử dụng, Thời lượng pin lâu dài, Chất lượng camera ấn tượng, Giá trị tuyệt vời cho số tiền, Không gian lưu trữ rộng rãi,tặng shop 5 sao",
+    "cleaned_text": "tuyệt vời,màu sắc sống động và rực rỡ, thiết kế sang trọng, hiệu năng mượt mà, giao diện dễ sử dụng, thời lượng pin lâu dài, chất lượng camera ấn tượng, giá trị tuyệt vời cho số tiền, không gian lưu trữ rộng rãi,tặng shop 5 sao",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "POS",
+      "Uy tín & thái độ shop": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766500724.4261954
+  },
+  {
+    "review_id": "3082948612_1766500336872_1bf05ab2",
+    "original_text": "điên thoại xài ổn , shop uy tín .Hàng đẹp lắm ạ, máy xài mượt. Đặt trên này rẻ hơn ở ngoài cửa hàng nhiều luôn mà chất lượng tốt. Bạn đầu cũng lo là k sử dụng được nhưng thật sự là máy dùng rất ok luôn mn ạ . Màn hình Màu sắc sống động và rực rỡ, Thiết kế sang trọng, Hiệu năng mượt mà, Giao diện dễ sử dụng, Thời lượng pin lâu dài, Chất lượng camera ấn tượng, Giá trị tuyệt vời cho số tiền, Không gian lưu trữ rộng rãi. bình chọn cho shop 5 sao",
+    "cleaned_text": "điên thoại xài ổn , shop uy tín .hàng đẹp lắm ạ, máy xài mượt. đặt trên này rẻ hơn ở ngoài cửa hàng nhiều luôn mà chất lượng tốt. bạn đầu cũng lo là k sử dụng được nhưng thật sự là máy dùng rất ok luôn mn ạ . màn hình màu sắc sống động và rực rỡ, thiết kế sang trọng, hiệu năng mượt mà, giao diện dễ sử dụng, thời lượng pin lâu dài, chất lượng camera ấn tượng, giá trị tuyệt vời cho số tiền, không gian lưu trữ rộng rãi. bình chọn cho shop 5 sao",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "POS",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500724.4261985
+  },
+  {
+    "review_id": "3082948612_1766500336872_33aa8ced",
+    "original_text": "Rất mượt, tốc độ load nhanh, k bị delay, nói chung phân khúc này với giá tầm trung mình đánh giá là rất ổn định luôn. Màn hình to, dễ sử dụng.",
+    "cleaned_text": "rất mượt, tốc độ load nhanh, k bị delay, nói chung phân khúc này với giá tầm trung mình đánh giá là rất ổn định luôn. màn hình to, dễ sử dụng.",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766500724.4262016
+  },
+  {
+    "review_id": "3082948612_1766500336872_644ac8c6",
+    "original_text": "Hài lòng,mua máy mới cho thằng cu ở nhà xài. Xem phim chơi game giải trí thôi thấy cũng khá ổn, máy ít bị nóng mà xài cũng được lâu hết pin, xem phim lướt web khá mượt",
+    "cleaned_text": "hài lòng,mua máy mới cho thằng cu ở nhà xài. xem phim chơi game giải trí thôi thấy cũng khá ổn, máy ít bị nóng mà xài cũng được lâu hết pin, xem phim lướt web khá mượt",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500724.4262059
+  },
+  {
+    "review_id": "3082948612_1766500336872_e6ba2bb5",
+    "original_text": "Shop uy tín, giao hàng như giới thiệu,tặng shop 5 sao",
+    "cleaned_text": "shop uy tín, giao hàng như giới thiệu,tặng shop 5 sao",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766500829.3254335
+  },
+  {
+    "review_id": "3082948612_1766500336872_7a0a79d1",
+    "original_text": "Bán điện thoại mà đưa bin dự phòng đồ lừa đảo sau này ai mà mua nữa",
+    "cleaned_text": "bán điện thoại mà đưa bin dự phòng đồ lừa đảo sau này ai mà mua nữa",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEG",
+      "Trải nghiệm sử dụng": "NEG",
+      "Đúng mô tả sản phẩm": "NEG",
+      "Hiệu năng sản phẩm": "NEG",
+      "Lỗi & bảo hành & hàng giả": "NEG"
+    },
+    "rating": 1,
+    "processed_at": 1766500829.3254426
+  },
+  {
+    "review_id": "3082948612_1766500336872_76688839",
+    "original_text": "Tốt,tặng shop 5 sao",
+    "cleaned_text": "tốt,tặng shop 5 sao",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500829.3254485
+  },
+  {
+    "review_id": "3082948612_1766500336873_166a9660",
+    "original_text": "treo đầu dê bán thịt cầy",
+    "cleaned_text": "treo đầu dê bán thịt cầy",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 1,
+    "processed_at": 1766500829.3254523
+  },
+  {
+    "review_id": "3082948612_1766500336873_823b3a6f",
+    "original_text": "OK.Nhận máy sớm hơn dự kiến Shop đóng gói chỉnh chu Máy xài thấy khá ổn, giá cũng tương đối rẻ Chơi game tốt, các chức năng chạy ổn định, đáp ứng được nhu càu của mình Cho shop 5 sao nhé",
+    "cleaned_text": "ok.nhận máy sớm hơn dự kiến shop đóng gói chỉnh chu máy xài thấy khá ổn, giá cũng tương đối rẻ chơi game tốt, các chức năng chạy ổn định, đáp ứng được nhu càu của mình cho shop 5 sao nhé",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "POS",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "POS",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500829.325495
+  },
+  {
+    "review_id": "3082948612_1766500336873_3c3a5a1e",
+    "original_text": "Trên cả tuyệt vời",
+    "cleaned_text": "trên cả tuyệt vời",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500829.3255064
+  },
+  {
+    "review_id": "3082948612_1766500336873_8b8acc5e",
+    "original_text": "Hiệu năng mượt mà, Giao diện dễ sử dụng, Màn hình tuyệt đẹp, Màu sắc sống động và rực rỡ, Giá trị tuyệt vời cho số tiền, tặng shop 5 sao nhé.",
+    "cleaned_text": "hiệu năng mượt mà, giao diện dễ sử dụng, màn hình tuyệt đẹp, màu sắc sống động và rực rỡ, giá trị tuyệt vời cho số tiền, tặng shop 5 sao nhé.",
+    "sentiment": {
+      "Trải nghiệm sử dụng": "POS",
+      "Giá cả": "POS",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500829.3255115
+  },
+  {
+    "review_id": "3082948612_1766500336873_a6d25cb4",
+    "original_text": "sản phẩm chất lượng rất ổn, mẫu mã đẹp dễ cầm nắm Bộ nhớ lớn thoải sức lưu trữ hình ảnh, pin trâu ram máy lớn trải nghiệm game ko lo giật lag, giá cả phải chăng hợp túi tiền người lao động. shop tư vẫn rất OK có nhiều sản phẩm giá bình dân . đánh giá 5 sao",
+    "cleaned_text": "sản phẩm chất lượng rất ổn, mẫu mã đẹp dễ cầm nắm bộ nhớ lớn thoải sức lưu trữ hình ảnh, pin trâu ram máy lớn trải nghiệm game ko lo giật lag, giá cả phải chăng hợp túi tiền người lao động. shop tư vẫn rất ok có nhiều sản phẩm giá bình dân . đánh giá 5 sao",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "POS",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500829.3255236
+  },
+  {
+    "review_id": "3082948612_1766500336764_ce8e0847",
+    "original_text": "Tốt,ok,sản phẩm của shop đúng chất sáng xịn mịn, giá cả rất hợp túi tiền, nhận hàng thấy shop đóng gói rất cẩn thận và chu đáo luôn, mình rất hài lòng,mãi ủng hộ shop",
+    "cleaned_text": "tốt,ok,sản phẩm của shop đúng chất sáng xịn mịn, giá cả rất hợp túi tiền, nhận hàng thấy shop đóng gói rất cẩn thận và chu đáo luôn, mình rất hài lòng,mãi ủng hộ shop",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "POS",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500829.3255336
+  },
+  {
+    "review_id": "3082948612_1766500336870_ceaa8e5e",
+    "original_text": "lần đầu tiên mua máy trên shop nhận máy về ưng ý lắm máy còn mới xài rất là ok Quan trọng là phù hợp với giá tiền mình bỏ ra mà chất lượng thì cũng rất là ưng ý mọi chức năng đều rất là ok shop tư vấn nhiệt tình mình sẽ ủng hộ thêm lần sau nha tặng shop 5 sao Chúc shop mua may bán đắt cảm ơn shop",
+    "cleaned_text": "lần đầu tiên mua máy trên shop nhận máy về ưng ý lắm máy còn mới xài rất là ok quan trọng là phù hợp với giá tiền mình bỏ ra mà chất lượng thì cũng rất là ưng ý mọi chức năng đều rất là ok shop tư vấn nhiệt tình mình sẽ ủng hộ thêm lần sau nha tặng shop 5 sao chúc shop mua may bán đắt cảm ơn shop",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "POS",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "POS",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500829.325539
+  },
+  {
+    "review_id": "3082948612_1766500336871_66c53ee7",
+    "original_text": "OK,Shop bán hàng uy tín nhé. ĐT đúng gb, ram, đúng dung lượng. Đóng hàng cẩn thận, có chống sốc. ĐT chạy vù vù, k bị đứng. 5 Sao cho shop",
+    "cleaned_text": "ok,shop bán hàng uy tín nhé. đt đúng gb, ram, đúng dung lượng. đóng hàng cẩn thận, có chống sốc. đt chạy vù vù, k bị đứng. 5 sao cho shop",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "POS",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500950.743284
+  },
+  {
+    "review_id": "3082948612_1766500336871_1a262d39",
+    "original_text": "không có gì để chê, tặng shop 5 saoMáy móc dùng mướt mườn mượt. Ok nha Đúng tiêu chí ngon, bổ mà còn rẻ nữa.. mua máy này quá xứng đáng đồng tiền bát gạo luôn",
+    "cleaned_text": "không có gì để chê, tặng shop 5 saomáy móc dùng mướt mườn mượt. ok nha đúng tiêu chí ngon, bổ mà còn rẻ nữa.. mua máy này quá xứng đáng đồng tiền bát gạo luôn",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "POS",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "POS",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500950.74329
+  },
+  {
+    "review_id": "3082948612_1766500336871_2e9071fc",
+    "original_text": "đặt cái này gửi cái # chắc không uy tín rồi",
+    "cleaned_text": "đặt cái này gửi cái # chắc không uy tín rồi",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEG",
+      "Trải nghiệm sử dụng": "NEG",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEG",
+      "Uy tín & thái độ shop": "NEG",
+      "Dịch vụ chăm sóc khách hàng": "NEG",
+      "Lỗi & bảo hành & hàng giả": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500950.743294
+  },
+  {
+    "review_id": "3082948612_1766500336871_8614d483",
+    "original_text": "Máy móc dùng mướt mườn mượt. Ok nha Đúng tiêu chí ngon, bổ mà còn rẻ nữa.. mua máy này quá xứng đáng đồng tiền bát gạo luôn",
+    "cleaned_text": "máy móc dùng mướt mườn mượt. ok nha đúng tiêu chí ngon, bổ mà còn rẻ nữa.. mua máy này quá xứng đáng đồng tiền bát gạo luôn",
+    "sentiment": {},
+    "rating": 5,
+    "processed_at": 1766500950.7432969
+  },
+  {
+    "review_id": "3082948612_1766500336871_78b2aa35",
+    "original_text": "Cảm ơn shop. Đã nhận được hàng bên shop Máy mới đẹp long lanh luôn. Kk Giá thì mình thấy khá rẻ Máy xài ổn định, mượt chưa gặp tình trạng gì. Mong là sử dụng đc lâu dài..",
+    "cleaned_text": "cảm ơn shop. đã nhận được hàng bên shop máy mới đẹp long lanh luôn. kk giá thì mình thấy khá rẻ máy xài ổn định, mượt chưa gặp tình trạng gì. mong là sử dụng đc lâu dài..",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500950.7433002
+  },
+  {
+    "review_id": "3082948612_1766500336871_7a176e37",
+    "original_text": "shop uy tín , giao điện thoại  như quảng cáo",
+    "cleaned_text": "shop uy tín , giao điện thoại như quảng cáo",
+    "sentiment": {
+      "Chất lượng sản phẩm": "NEU",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Vận chuyển & giao hàng": "POS",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS"
+    },
+    "rating": 5,
+    "processed_at": 1766500950.7433038
+  },
+  {
+    "review_id": "3082948612_1766500336871_e51c1b8b",
+    "original_text": "Tốt hơn mong đợi ,Đã nhận được hàng rồi ạ. Rất ưng ý, mẫu mã đẹp, cấu hình ổn. Nv dễ xương tư vấn nhiệt tình. Cảm ơn shop nhee",
+    "cleaned_text": "tốt hơn mong đợi ,đã nhận được hàng rồi ạ. rất ưng ý, mẫu mã đẹp, cấu hình ổn. nv dễ xương tư vấn nhiệt tình. cảm ơn shop nhee",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "POS",
+      "Đúng mô tả sản phẩm": "POS",
+      "Hiệu năng sản phẩm": "POS",
+      "Giá cả": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "POS",
+      "Dịch vụ chăm sóc khách hàng": "POS",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500950.7433076
+  },
+  {
+    "review_id": "3082948612_1766500336871_34a1a4a8",
+    "original_text": "sản phẩm ổn,giá cả hợp lý.",
+    "cleaned_text": "sản phẩm ổn,giá cả hợp lý.",
+    "sentiment": {
+      "Chất lượng sản phẩm": "POS",
+      "Trải nghiệm sử dụng": "NEU",
+      "Đúng mô tả sản phẩm": "NEU",
+      "Hiệu năng sản phẩm": "NEU",
+      "Giá cả": "POS",
+      "Khuyến mãi & voucher": "NEU",
+      "Vận chuyển & giao hàng": "NEU",
+      "Đóng gói & bao bì": "NEU",
+      "Uy tín & thái độ shop": "NEU",
+      "Dịch vụ chăm sóc khách hàng": "NEU",
+      "Lỗi & bảo hành & hàng giả": "NEU",
+      "Đổi trả & bảo hành": "NEU"
+    },
+    "rating": 5,
+    "processed_at": 1766500950.7433114
+  }
+]
