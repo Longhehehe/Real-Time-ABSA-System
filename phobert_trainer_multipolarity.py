@@ -852,7 +852,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Choose training mode
-    USE_KFOLD = True  # Set to False for standard train/test split
+    USE_KFOLD = False  # Set to False for standard train/test split
     N_FOLDS = 5
     
     if USE_KFOLD:
@@ -870,7 +870,7 @@ if __name__ == "__main__":
         train_model_multipolarity(
             data_path=DATA_PATH,
             output_dir=OUTPUT_DIR,
-            epochs=5,
+            epochs=10,
             batch_size=2,
             learning_rate=3e-5
         )
