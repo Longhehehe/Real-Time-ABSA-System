@@ -20,29 +20,30 @@ MODEL_DIR = os.path.join(BASE_DIR, 'models', 'phobert_absa')
 MODEL_PATH = os.path.join(MODEL_DIR, 'phobert_absa.pt')
 CONFIG_PATH = os.path.join(MODEL_DIR, 'config.json')
 
-# Aspect categories
+# Aspect categories - OPTIMIZED for E-commerce (9 aspects)
 ASPECTS = [
-    'Chất lượng sản phẩm',
-    'Trải nghiệm sử dụng',
-    'Đúng mô tả sản phẩm',
-    'Hiệu năng sản phẩm',
-    'Giá cả',
-    'Khuyến mãi & voucher',
-    'Vận chuyển & giao hàng',
-    'Đóng gói & bao bì',
-    'Uy tín & thái độ shop',
-    'Dịch vụ chăm sóc khách hàng',
-    'Lỗi & bảo hành & hàng giả',
-    'Đổi trả & bảo hành'
+    'Chất lượng sản phẩm',       # Quality, durability, materials
+    'Hiệu năng & Trải nghiệm',   # Performance, user experience  
+    'Đúng mô tả',                # Accuracy of description
+    'Giá cả & Khuyến mãi',       # Price, discounts, value
+    'Vận chuyển',                # Shipping speed, delivery
+    'Đóng gói',                  # Packaging quality
+    'Dịch vụ & Thái độ Shop',    # Customer service, seller attitude
+    'Bảo hành & Đổi trả',        # Warranty, returns
+    'Tính xác thực',             # Authenticity (fake/genuine)
 ]
 
-# Label mapping: model output -> sentiment
-# Model output: 0=Negative, 1=Neutral, 2=Positive, 3=N/A
-LABEL_MAP = {
-    0: -1,  # Negative
-    1: 0,   # Neutral
-    2: 1,   # Positive
-    3: 2    # N/A
+
+# Label mapping for new multi-task format:
+# Mention: 0 (not mentioned), 1 (mentioned)
+# Sentiment: 0 (NEG), 1 (POS), 2 (NEU)
+SENTIMENT_LABELS = {0: 'NEGATIVE', 1: 'POSITIVE', 2: 'NEUTRAL'}
+
+# Map model sentiment to old format for compatibility
+SENTIMENT_TO_OLD = {
+    0: -1,  # NEG
+    1: 1,   # POS
+    2: 0    # NEU
 }
 
 SENTIMENT_MAP = {
@@ -54,30 +55,39 @@ SENTIMENT_MAP = {
 
 
 class PhoBERTForABSA(nn.Module):
-    """PhoBERT model with multiple classification heads for ABSA."""
+    """PhoBERT model with multi-task learning for ABSA.
     
-    def __init__(self, num_aspects: int = 12, num_labels: int = 4, dropout: float = 0.3):
+    Uses hard parameter sharing with two task heads:
+    - Mention detection: Binary classification per aspect
+    - Sentiment classification: 3-class classification per aspect (NEG/POS/NEU)
+    """
+    
+    def __init__(self, num_aspects: int = 12, dropout: float = 0.3):
         super().__init__()
         
         from transformers import AutoModel
         
-        # Load PhoBERT
+        # Load PhoBERT backbone
         self.phobert = AutoModel.from_pretrained("vinai/phobert-base")
         hidden_size = self.phobert.config.hidden_size  # 768
         
-        # Shared layers
+        # Regularization
         self.dropout = nn.Dropout(dropout)
-        self.shared_fc = nn.Linear(hidden_size, 256)
-        self.relu = nn.ReLU()
         
-        # Individual classification heads for each aspect
-        self.aspect_classifiers = nn.ModuleList([
-            nn.Linear(256, num_labels) for _ in range(num_aspects)
-        ])
+        # Task heads
+        self.head_m = nn.Linear(hidden_size, num_aspects)  # Mention detection
+        self.head_s = nn.Linear(hidden_size, num_aspects * 3)  # Sentiment (3 classes per aspect)
         
         self.num_aspects = num_aspects
     
     def forward(self, input_ids, attention_mask):
+        """
+        Forward pass
+        
+        Returns:
+            logits_m: Mention logits (batch_size, num_aspects)
+            logits_s: Sentiment logits (batch_size, num_aspects, 3)
+        """
         outputs = self.phobert(
             input_ids=input_ids,
             attention_mask=attention_mask
@@ -85,21 +95,13 @@ class PhoBERTForABSA(nn.Module):
         
         # Use [CLS] token representation
         cls_output = outputs.last_hidden_state[:, 0, :]
+        h_cls = self.dropout(cls_output)
         
-        # Shared layers
-        x = self.dropout(cls_output)
-        x = self.shared_fc(x)
-        x = self.relu(x)
-        x = self.dropout(x)
+        # Task-specific predictions
+        logits_m = self.head_m(h_cls)
+        logits_s = self.head_s(h_cls).view(-1, self.num_aspects, 3)
         
-        # Individual aspect predictions
-        aspect_logits = []
-        for classifier in self.aspect_classifiers:
-            logits = classifier(x)
-            aspect_logits.append(logits)
-        
-        # Stack: (batch_size, num_aspects, num_labels)
-        return torch.stack(aspect_logits, dim=1)
+        return logits_m, logits_s
 
 
 class PhoBERTPredictor:
@@ -133,17 +135,30 @@ class PhoBERTPredictor:
             # Load checkpoint (weights_only=False for compatibility)
             checkpoint = torch.load(model_path, map_location=self.device, weights_only=False)
             
-            # Load tokenizer
-            self.tokenizer = AutoTokenizer.from_pretrained(
-                checkpoint.get('tokenizer_name', 'vinai/phobert-base')
+            # Load tokenizer - try local first, then HuggingFace
+            tokenizer_local_path = os.path.join(MODEL_DIR, 'tokenizer')
+            if os.path.exists(tokenizer_local_path):
+                print(f"📥 Loading tokenizer from local: {tokenizer_local_path}")
+                self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_local_path)
+            else:
+                try:
+                    print("📥 Downloading tokenizer from HuggingFace (first time only)...")
+                    self.tokenizer = AutoTokenizer.from_pretrained(
+                        checkpoint.get('tokenizer_name', 'vinai/phobert-base') if isinstance(checkpoint, dict) and 'tokenizer_name' in checkpoint else 'vinai/phobert-base'
+                    )
+                except:
+                     self.tokenizer = AutoTokenizer.from_pretrained('vinai/phobert-base')
+            
+            # Load model with new multi-task architecture
+            self.model = PhoBERTForABSA(
+                num_aspects=len(ASPECTS)
             )
             
-            # Load model
-            self.model = PhoBERTForABSA(
-                num_aspects=len(ASPECTS),
-                num_labels=checkpoint.get('num_labels', 4)
-            )
-            self.model.load_state_dict(checkpoint['model_state_dict'])
+            # Handle different checkpoint formats
+            if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
+                self.model.load_state_dict(checkpoint['model_state_dict'])
+            else:
+                self.model.load_state_dict(checkpoint)
             self.model = self.model.to(self.device)
             self.model.eval()
             
@@ -190,7 +205,7 @@ class PhoBERTPredictor:
     def predict_single(self, text: str) -> Dict[str, int]:
         """
         Predict sentiment for a single review.
-        Returns dict mapping aspect to sentiment (-1, 0, 1, 2).
+        Returns dict mapping aspect to sentiment (-1=NEG, 0=NEU, 1=POS, 2=N/A).
         """
         if not self.model_loaded:
             # Try to load/train model
@@ -211,16 +226,24 @@ class PhoBERTPredictor:
             input_ids = encoding['input_ids'].to(self.device)
             attention_mask = encoding['attention_mask'].to(self.device)
             
-            # Predict
+            # Predict with multi-task model
             with torch.no_grad():
-                logits = self.model(input_ids, attention_mask)
-                predictions = torch.argmax(logits, dim=-1).squeeze(0).cpu().numpy()
+                logits_m, logits_s = self.model(input_ids, attention_mask)
+                
+                # Mention predictions (binary)
+                preds_m = (torch.sigmoid(logits_m) > 0.5).squeeze(0).cpu().numpy()
+                
+                # Sentiment predictions (0=NEG, 1=POS, 2=NEU)
+                preds_s = torch.argmax(logits_s, dim=-1).squeeze(0).cpu().numpy()
             
-            # Map to sentiment values
+            # Map to old format for compatibility
             results = {}
             for i, aspect in enumerate(ASPECTS):
-                pred_label = int(predictions[i])
-                results[aspect] = LABEL_MAP.get(pred_label, 2)
+                if preds_m[i]:  # Aspect is mentioned
+                    # Convert sentiment: 0=NEG->-1, 1=POS->1, 2=NEU->0
+                    results[aspect] = SENTIMENT_TO_OLD.get(int(preds_s[i]), 0)
+                else:  # Not mentioned
+                    results[aspect] = 2  # N/A
             
             return results
             

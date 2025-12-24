@@ -1,0 +1,170 @@
+[
+  {
+    "review_id": "2873647702_1765853301968_c76d7db1",
+    "original_text": "Shop giao thùng mì cận date, hương vị loại này thì quá chán k ăn nổi",
+    "cleaned_text": "shop giao thùng mì cận date, hương vị loại này thì quá chán k ăn nổi",
+    "sentiment": {
+      "Chất lượng sản phẩm": -1,
+      "Trải nghiệm sử dụng": -1,
+      "Đúng mô tả sản phẩm": -1,
+      "Hiệu năng sản phẩm": -1,
+      "Giá cả": -1,
+      "Khuyến mãi & voucher": -1,
+      "Vận chuyển & giao hàng": -1,
+      "Đóng gói & bao bì": -1,
+      "Uy tín & thái độ shop": -1,
+      "Dịch vụ chăm sóc khách hàng": -1,
+      "Lỗi & bảo hành & hàng giả": -1,
+      "Đổi trả & bảo hành": -1
+    },
+    "rating": 1,
+    "processed_at": 1765853348.1521358
+  },
+  {
+    "review_id": "2873647702_1765853302075_fd88441c",
+    "original_text": "SHOP GIAO SAI SẢN PHẨM VÀ THIẾU HÀNG!\n\nMình đặt tổng cộng 16 ly mì lẩu cầm tay (12 tomyum + 4 rong biển)\nNhưng Shop lại giao cho mình 6 ly mì + 2 tô phở ???\n\nShop vui lòng kiểm tra lại giúp mình (mã đơn 500698384580214)\n\nShop Mall mà làm ăn kiểu này thì sau này ai mà còn tin tưởng đặt hàng nữa",
+    "cleaned_text": "shop giao sai sản phẩm và thiếu hàng! mình đặt tổng cộng 16 ly mì lẩu cầm tay (12 tomyum + 4 rong biển) nhưng shop lại giao cho mình 6 ly mì + 2 tô phở ??? shop vui lòng kiểm tra lại giúp mình (mã đơn 500698384580214) shop mall mà làm ăn kiểu này thì sau này ai mà còn tin tưởng đặt hàng nữa",
+    "sentiment": {
+      "Chất lượng sản phẩm": -1,
+      "Trải nghiệm sử dụng": -1,
+      "Đúng mô tả sản phẩm": -1,
+      "Hiệu năng sản phẩm": -1,
+      "Giá cả": -1,
+      "Khuyến mãi & voucher": -1,
+      "Vận chuyển & giao hàng": -1,
+      "Đóng gói & bao bì": -1,
+      "Uy tín & thái độ shop": -1,
+      "Dịch vụ chăm sóc khách hàng": -1,
+      "Lỗi & bảo hành & hàng giả": -1,
+      "Đổi trả & bảo hành": -1
+    },
+    "rating": 1,
+    "processed_at": 1765853348.1521428
+  },
+  {
+    "review_id": "2873647702_1765853302075_94c634ec",
+    "original_text": "thiếu hàng",
+    "cleaned_text": "thiếu hàng",
+    "sentiment": {
+      "Chất lượng sản phẩm": -1,
+      "Trải nghiệm sử dụng": -1,
+      "Đúng mô tả sản phẩm": -1,
+      "Hiệu năng sản phẩm": -1,
+      "Giá cả": -1,
+      "Khuyến mãi & voucher": -1,
+      "Vận chuyển & giao hàng": -1,
+      "Đóng gói & bao bì": -1,
+      "Uy tín & thái độ shop": -1,
+      "Dịch vụ chăm sóc khách hàng": -1,
+      "Lỗi & bảo hành & hàng giả": -1,
+      "Đổi trả & bảo hành": -1
+    },
+    "rating": 1,
+    "processed_at": 1765853348.1521482
+  },
+  {
+    "review_id": "2873647702_1765853302075_6cad9dfd",
+    "original_text": "Tệ",
+    "cleaned_text": "tệ",
+    "sentiment": {
+      "Chất lượng sản phẩm": -1,
+      "Trải nghiệm sử dụng": -1,
+      "Đúng mô tả sản phẩm": -1,
+      "Hiệu năng sản phẩm": -1,
+      "Giá cả": -1,
+      "Khuyến mãi & voucher": -1,
+      "Vận chuyển & giao hàng": -1,
+      "Đóng gói & bao bì": -1,
+      "Uy tín & thái độ shop": -1,
+      "Dịch vụ chăm sóc khách hàng": -1,
+      "Lỗi & bảo hành & hàng giả": -1,
+      "Đổi trả & bảo hành": -1
+    },
+    "rating": 1,
+    "processed_at": 1765853348.1521533
+  },
+  {
+    "review_id": "2873647702_1765853302075_2cbff6be",
+    "original_text": "Góp ý thiệt tình càng ngày càng dở lúc đâu ăn ok mà sao càng ăn càng dở mì tomyum j mà ko chua ko cay mà cứ ngọt lờ lợ vị chất bảo quản mong ai muốn mua đọc được bình luận này mà si nghĩ lại mua phí tiền",
+    "cleaned_text": "góp ý thiệt tình càng ngày càng dở lúc đâu ăn ok mà sao càng ăn càng dở mì tomyum j mà ko chua ko cay mà cứ ngọt lờ lợ vị chất bảo quản mong ai muốn mua đọc được bình luận này mà si nghĩ lại mua phí tiền",
+    "sentiment": {
+      "Chất lượng sản phẩm": -1,
+      "Trải nghiệm sử dụng": -1,
+      "Đúng mô tả sản phẩm": -1,
+      "Hiệu năng sản phẩm": -1,
+      "Giá cả": -1,
+      "Khuyến mãi & voucher": -1,
+      "Vận chuyển & giao hàng": -1,
+      "Đóng gói & bao bì": -1,
+      "Uy tín & thái độ shop": -1,
+      "Dịch vụ chăm sóc khách hàng": -1,
+      "Lỗi & bảo hành & hàng giả": -1,
+      "Đổi trả & bảo hành": -1
+    },
+    "rating": 1,
+    "processed_at": 1765853348.1521595
+  },
+  {
+    "review_id": "2873647702_1765853302075_e61bbf50",
+    "original_text": "-4 sao lỗi giao hàng cận date",
+    "cleaned_text": "-4 sao lỗi giao hàng cận date",
+    "sentiment": {
+      "Chất lượng sản phẩm": 0,
+      "Trải nghiệm sử dụng": 0,
+      "Đúng mô tả sản phẩm": 0,
+      "Hiệu năng sản phẩm": 0,
+      "Giá cả": 0,
+      "Khuyến mãi & voucher": 0,
+      "Vận chuyển & giao hàng": 0,
+      "Đóng gói & bao bì": 0,
+      "Uy tín & thái độ shop": 0,
+      "Dịch vụ chăm sóc khách hàng": 0,
+      "Lỗi & bảo hành & hàng giả": 0,
+      "Đổi trả & bảo hành": 0
+    },
+    "rating": 1,
+    "processed_at": 1765853348.1521664
+  },
+  {
+    "review_id": "2873647702_1765853302075_b603ea16",
+    "original_text": "mua 2 loại sản phẩm, shop gọi điện báo nhờ hủy đơn 1 loại vì hết hàng. Trong khi app vẫn hiển thị còn hàng, vẫn đặt được tiếp. rất mất công đặt và chờ hàng.",
+    "cleaned_text": "mua 2 loại sản phẩm, shop gọi điện báo nhờ hủy đơn 1 loại vì hết hàng. trong khi app vẫn hiển thị còn hàng, vẫn đặt được tiếp. rất mất công đặt và chờ hàng.",
+    "sentiment": {
+      "Chất lượng sản phẩm": -1,
+      "Trải nghiệm sử dụng": -1,
+      "Đúng mô tả sản phẩm": -1,
+      "Hiệu năng sản phẩm": -1,
+      "Giá cả": -1,
+      "Khuyến mãi & voucher": -1,
+      "Vận chuyển & giao hàng": -1,
+      "Đóng gói & bao bì": -1,
+      "Uy tín & thái độ shop": -1,
+      "Dịch vụ chăm sóc khách hàng": -1,
+      "Lỗi & bảo hành & hàng giả": -1,
+      "Đổi trả & bảo hành": -1
+    },
+    "rating": 1,
+    "processed_at": 1765853348.1521723
+  },
+  {
+    "review_id": "2873647702_1765853302075_4a898246",
+    "original_text": "Mình nhận hàng ngày 11/10/2025 mà date là 11/12/2025 tức chỉ 2 tháng, sao shop không giao hàng mới hơn vậy ?",
+    "cleaned_text": "mình nhận hàng ngày 11/10/2025 mà date là 11/12/2025 tức chỉ 2 tháng, sao shop không giao hàng mới hơn vậy ?",
+    "sentiment": {
+      "Chất lượng sản phẩm": -1,
+      "Trải nghiệm sử dụng": -1,
+      "Đúng mô tả sản phẩm": -1,
+      "Hiệu năng sản phẩm": -1,
+      "Giá cả": -1,
+      "Khuyến mãi & voucher": -1,
+      "Vận chuyển & giao hàng": -1,
+      "Đóng gói & bao bì": -1,
+      "Uy tín & thái độ shop": -1,
+      "Dịch vụ chăm sóc khách hàng": -1,
+      "Lỗi & bảo hành & hàng giả": -1,
+      "Đổi trả & bảo hành": -1
+    },
+    "rating": 1,
+    "processed_at": 1765853348.152197
+  }
+]

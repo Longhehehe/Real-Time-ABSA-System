@@ -8,3 +8,8 @@ regex
 vncorenlp
 # PhoBERT training dependencies
 transformers
+# Lazada crawler dependencies
+fake-useragent==1.1.3
+requests
+kafka-python
+psycopg2-binary

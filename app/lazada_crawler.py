@@ -190,73 +190,67 @@ def crawl_reviews(
     # Lazada Review API endpoint
     api_url = "https://my.lazada.vn/pdp/review/getReviewList"
     
-    # Filter values based on testing:
-    # 1 = 1-star, 3 = 3-star, 4 = 4-star, 5 = 5-star
-    # Filter 2 seems to also return 1-star reviews
-    rating_filters = [1, 3, 4, 5]  # Focus on 1, 3, 4, 5 star reviews
-    reviews_per_rating = max(max_reviews // 4, 15)  # Distribute across 4 ratings
+    # Update: Use filter="0" (All reviews) to ensure we get data
+    # Previous logic splitting by stars (1,3,4,5) failed for some products
+    rating_filter = 0
+    print(f"⭐ Crawling All reviews (filter={rating_filter})...")
     
-    for rating_filter in rating_filters:
-        if len(all_reviews) >= max_reviews:
+    page = 1
+    
+    while len(all_reviews) < max_reviews:
+        params = {
+            "itemId": item_id,
+            "pageSize": 50,
+            "page": page,
+            "filter": str(rating_filter),
+            "sort": "0"
+        }
+        
+        try:
+            response = session.get(api_url, params=params, timeout=30)
+            
+            if response.status_code != 200:
+                print(f"❌ HTTP {response.status_code}")
+                break
+            
+            data = response.json()
+            items = data.get("model", {}).get("items", [])
+            
+            if not items:
+                break
+            
+            # Process each review
+            for item in items:
+                review = {
+                    'review_id': item.get('reviewId') or item.get('id'),
+                    'reviewContent': item.get('reviewContent', ''),
+                    'rating': item.get('rating', 0),
+                    'reviewTime': item.get('reviewTime', ''),
+                    'buyerName': item.get('buyerName', ''),
+                    'skuInfo': item.get('skuInfo', ''),
+                    'images': item.get('images', []),
+                    'likeCount': item.get('likeCount', 0)
+                }
+                all_reviews.append(review)
+                
+                if len(all_reviews) >= max_reviews:
+                    break
+            
+            print(f"  → Page {page}: lấy được {len(items)} reviews. Tổng: {len(all_reviews)}")
+            page += 1
+            time.sleep(random.uniform(delay_min, delay_max))
+            
+        except requests.exceptions.RequestException as e:
+            print(f"❌ Lỗi request: {e}")
+            break
+        except json.JSONDecodeError as e:
+            print(f"❌ Lỗi parse JSON: {e}")
+            break
+        except Exception as e:
+            print(f"❌ Lỗi không xác định: {e}")
             break
             
-        print(f"⭐ Crawling {rating_filter}-star reviews...")
-        page = 1
-        rating_reviews = 0
-        
-        while rating_reviews < reviews_per_rating and len(all_reviews) < max_reviews:
-            params = {
-                "itemId": item_id,
-                "pageSize": 50,
-                "page": page,
-                "filter": str(rating_filter),  # Filter by star rating
-                "sort": "0"  # Default sort
-            }
-            
-            try:
-                response = session.get(api_url, params=params, timeout=30)
-                
-                if response.status_code != 200:
-                    print(f"❌ HTTP {response.status_code} – Bỏ qua rating {6 - rating_filter}")
-                    break
-                
-                data = response.json()
-                items = data.get("model", {}).get("items", [])
-                
-                if not items:
-                    break
-                
-                # Process each review
-                for item in items:
-                    review = {
-                        'reviewContent': item.get('reviewContent', ''),
-                        'rating': item.get('rating', 0),
-                        'reviewTime': item.get('reviewTime', ''),
-                        'buyerName': item.get('buyerName', ''),
-                        'skuInfo': item.get('skuInfo', ''),
-                        'images': item.get('images', []),
-                        'likeCount': item.get('likeCount', 0)
-                    }
-                    all_reviews.append(review)
-                    rating_reviews += 1
-                    
-                    if len(all_reviews) >= max_reviews:
-                        break
-                
-                page += 1
-                time.sleep(random.uniform(delay_min, delay_max))
-                
-            except requests.exceptions.RequestException as e:
-                print(f"❌ Lỗi request: {e}")
-                break
-            except json.JSONDecodeError as e:
-                print(f"❌ Lỗi parse JSON: {e}")
-                break
-            except Exception as e:
-                print(f"❌ Lỗi không xác định: {e}")
-                break
-        
-        print(f"  → Đã lấy {rating_reviews} reviews {6 - rating_filter} sao")
+    print(f"✅ Đã crawl tổng cộng {len(all_reviews)} reviews.")
     
     if not all_reviews:
         return [], "Không lấy được review nào. Có thể cần cookies hợp lệ."

@@ -1,0 +1,11 @@
+pyspark
+torch --index-url https://download.pytorch.org/whl/cpu
+transformers
+pandas
+pyarrow
+numpy
+scikit-learn
+openpyxl
+tqdm
+kafka-python
+requests

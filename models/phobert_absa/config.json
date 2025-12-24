@@ -13,7 +13,8 @@
     "Lỗi & bảo hành & hàng giả",
     "Đổi trả & bảo hành"
   ],
-  "num_labels": 4,
   "max_length": 256,
-  "best_f1": 0.4130210802822727
+  "best_f1": 0.39243837481848365,
+  "mention_f1": 0.47959183673469385,
+  "sentiment_f1": 0.3052849129022734
 }

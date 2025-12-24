@@ -1,0 +1,19 @@
+{
+  "aspects": [
+    "Chất lượng sản phẩm",
+    "Trải nghiệm sử dụng",
+    "Đúng mô tả sản phẩm",
+    "Hiệu năng sản phẩm",
+    "Giá cả",
+    "Khuyến mãi & voucher",
+    "Vận chuyển & giao hàng",
+    "Đóng gói & bao bì",
+    "Uy tín & thái độ shop",
+    "Dịch vụ chăm sóc khách hàng",
+    "Lỗi & bảo hành & hàng giả",
+    "Đổi trả & bảo hành"
+  ],
+  "num_labels": 4,
+  "max_length": 256,
+  "best_f1": 0.4130210802822727
+}

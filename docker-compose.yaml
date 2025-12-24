@@ -1,18 +1,16 @@
-version: '3'
+version: "3"
 x-airflow-common:
-  &airflow-common
-  # image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.7.1}  <-- REPLACED
+  &airflow-common # image: ${AIRFLOW_IMAGE_NAME:-apache/airflow:2.7.1}  <-- REPLACED
   build:
     context: .
     dockerfile: Dockerfile.airflow
-  environment:
-    &airflow-common-env
+  environment: &airflow-common-env
     AIRFLOW__CORE__EXECUTOR: LocalExecutor
     AIRFLOW__CORE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres/airflow
-    AIRFLOW__CORE__FERNET_KEY: ''
-    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
-    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-    AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
+    AIRFLOW__CORE__FERNET_KEY: ""
+    AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: "true"
+    AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+    AIRFLOW__API__AUTH_BACKENDS: "airflow.api.auth.backend.basic_auth"
     # Ensure Java is available if needed explicitly, but ENV in Dockerfile handles it
   volumes:
     - ./airflow/dags:/opt/airflow/dags
@@ -30,11 +28,9 @@ x-airflow-common:
           - driver: nvidia
             count: all
             capabilities: [gpu]
-  depends_on:
-    &airflow-common-depends-on
+  depends_on: &airflow-common-depends-on
     postgres:
       condition: service_healthy
-
 
 services:
   postgres:
@@ -74,12 +70,12 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
     restart: always
 
   airflow-webserver:
     <<: *airflow-common
-    command: webserver
+    command: airflow webserver
     ports:
       - "8080:8080"
     healthcheck:
@@ -91,9 +87,13 @@ services:
 
   airflow-scheduler:
     <<: *airflow-common
-    command: scheduler
+    command: airflow scheduler
     healthcheck:
-      test: ["CMD-SHELL", 'airflow jobs check --job-type SchedulerJob --hostname "$${HOSTNAME}"']
+      test:
+        [
+          "CMD-SHELL",
+          'airflow jobs check --job-type SchedulerJob --hostname "$${HOSTNAME}"',
+        ]
       interval: 10s
       timeout: 10s
       retries: 5
@@ -101,11 +101,11 @@ services:
 
   airflow-init:
     <<: *airflow-common
-    command: version
+    command: airflow version
     environment:
       <<: *airflow-common-env
-      _AIRFLOW_DB_UPGRADE: 'true'
-      _AIRFLOW_WWW_USER_CREATE: 'true'
+      _AIRFLOW_DB_UPGRADE: "true"
+      _AIRFLOW_WWW_USER_CREATE: "true"
       _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-admin}
       _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-admin}
     user: "0:0"
@@ -127,19 +127,51 @@ services:
   kafka-consumer:
     build:
       context: .
-      dockerfile: Dockerfile.airflow
-    command: python kafka/consumer.py
-    working_dir: /opt/airflow/project
+      dockerfile: Dockerfile.spark
+    command: python /app/app/kafka_absa_consumer.py
     volumes:
-      - ./:/opt/airflow/project
+      - ./:/app
     environment:
-      # Use internal Docker networking
       - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - SPARK_MASTER=spark://spark-master:7077
       - PYTHONUNBUFFERED=1
-      # Path to VnCoreNLP is set in Dockerfile.airflow ENV
     depends_on:
       - kafka
       - zookeeper
+      - spark-master
+    restart: always
+
+  # Spark Master Node
+  spark-master:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    command: /opt/spark/bin/spark-class org.apache.spark.deploy.master.Master
+    environment:
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    ports:
+      - "8081:8080" # Spark Master Web UI
+      - "7077:7077" # Spark Master Port
+    volumes:
+      - ./:/app
+    restart: always
+
+  # Spark Worker Node
+  spark-worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    command: /opt/spark/bin/spark-class org.apache.spark.deploy.worker.Worker spark://spark-master:7077
+    environment:
+      - SPARK_WORKER_MEMORY=2G
+      - SPARK_WORKER_CORES=2
+      - SPARK_RPC_AUTHENTICATION_ENABLED=no
+      - SPARK_SSL_ENABLED=no
+    volumes:
+      - ./:/app
+    depends_on:
+      - spark-master
     restart: always
 
 volumes:

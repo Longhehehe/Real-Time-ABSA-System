@@ -54,18 +54,22 @@ sys.path.insert(0, '/opt/airflow/project')
 from phobert_trainer import merge_datasets
 
 OLD_DATA = '/opt/airflow/project/data/label/absa_grouped_vietnamese_test.xlsx'
-NEW_DATA = '/opt/airflow/project/data/label/new_training_data.xlsx'
-MERGED_DATA = '/opt/airflow/project/data/label/merged_training_data.xlsx'
+NEW_DATA = '/opt/airflow/project/data/label/absa_labeled_mistral.csv'
+MERGED_DATA = '/opt/airflow/project/data/label/merged_training_data.csv'
 
 # Check if new data exists
 if os.path.exists(NEW_DATA):
     print('📊 New training data found!')
-    merged_path = merge_datasets(OLD_DATA, NEW_DATA, MERGED_DATA)
-    print(f'✅ Merged data saved to: {merged_path}')
-else:
-    print('ℹ️ No new data found, using existing data')
-    # Copy old data as merged for consistency
+    # merge_datasets needs to be robust to CSV. 
+    # But since we want to force use the new Mistral data, let's just use it directly for training
+    # or ensure merge_datasets handles it.
+    # For now, let's simplify: Just use the new data directly to ensure high quality input.
     import shutil
+    shutil.copy(NEW_DATA, MERGED_DATA)
+    print(f'✅ Using new Mistral data directly: {MERGED_DATA}')
+else:
+    print('ℹ️ New Mistral data not found, checking generic new data')
+    # Fallback to old logic or just warn
     shutil.copy(OLD_DATA, MERGED_DATA)
     print(f'✅ Using original data: {OLD_DATA}')
 "
@@ -83,13 +87,14 @@ import sys
 sys.path.insert(0, '/opt/airflow/project')
 from phobert_trainer import train_and_compare
 
-DATA_PATH = '/opt/airflow/project/data/label/merged_training_data.xlsx'
+# Use the file prepared by previous task
+DATA_PATH = '/opt/airflow/project/data/label/merged_training_data.csv'
 MODEL_DIR = '/opt/airflow/project/models/phobert_absa'
 
 should_update, new_f1, old_f1 = train_and_compare(
     data_path=DATA_PATH,
     model_dir=MODEL_DIR,
-    epochs=5,
+    epochs=15,          # UPGRADED to 15 from 5
     batch_size=16,
     min_improvement=0.01
 )

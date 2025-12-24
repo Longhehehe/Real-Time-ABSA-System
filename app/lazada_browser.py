@@ -241,12 +241,22 @@ class LazadaBrowser:
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
             options.add_experimental_option("useAutomationExtension", False)
             
-            # Try to create driver
+            # Try to create driver - PRIORITY 1: Native Selenium Manager (Best for Edge)
             try:
-                service = EdgeService(EdgeChromiumDriverManager().install())
-                self.driver = webdriver.Edge(service=service, options=options)
-            except Exception:
+                print("   Attempting to use native Selenium Manager...")
                 self.driver = webdriver.Edge(options=options)
+                print("✅ Native Selenium Manager worked!")
+            except Exception as e1:
+                print(f"⚠️ Native launch failed: {e1}")
+                # PRIORITY 2: WebDriver Manager (Fallback)
+                try:
+                    print("   Attempting to use WebDriver Manager...")
+                    service = EdgeService(EdgeChromiumDriverManager().install())
+                    self.driver = webdriver.Edge(service=service, options=options)
+                    print("✅ WebDriver Manager worked!")
+                except Exception as e2:
+                    print(f"❌ All methods failed. Error: {e2}")
+                    return False
             
             # Load Lazada
             self.driver.get("https://www.lazada.vn")
@@ -390,6 +400,57 @@ def close_lazada_browser():
         _browser = None
 
 
+def save_current_cookies(target_path: str = None) -> Tuple[bool, str]:
+    """Save current browser cookies to file."""
+    global _browser
+    if not _browser or not _browser.driver:
+        return False, "❌ Browser chưa mở! Hãy mở browser và đăng nhập trước."
+    
+    if target_path is None:
+        # Default to project cookie path
+        base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        target_path = os.path.join(base_dir, 'app', 'cookie', 'lazada_cookies.txt')
+        # Also try to save to root cookie/ if exists
+        root_cookie = os.path.join(base_dir, 'cookie', 'lazada_cookies.txt')
+        
+    try:
+        cookies = _browser.driver.get_cookies()
+        if not cookies:
+            return False, "⚠️ Không tìm thấy cookie nào! Đã đăng nhập chưa?"
+            
+        # Format as Netscape/JSON or just simplified list for requests?
+        # The crawler uses `load_cookies` which supports Netscape format usually.
+        # But let's check what verify_cookies expects.
+        # Ideally, we save as Netscape format for compatibility with wget/curl/requests.
+        
+        # Simple Netscape format generator
+        content = "# Netscape HTTP Cookie File\n"
+        for c in cookies:
+            domain = c.get('domain', '')
+            flag = 'TRUE' if domain.startswith('.') else 'FALSE'
+            path = c.get('path', '/')
+            secure = 'TRUE' if c.get('secure') else 'FALSE'
+            expiry = str(int(c.get('expiry', time.time() + 3600)))
+            name = c.get('name', '')
+            value = c.get('value', '')
+            content += f"{domain}\t{flag}\t{path}\t{secure}\t{expiry}\t{name}\t{value}\n"
+            
+        # Save to main path
+        os.makedirs(os.path.dirname(target_path), exist_ok=True)
+        with open(target_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+            
+        # Save to root path if needed
+        if root_cookie and os.path.exists(os.path.dirname(root_cookie)):
+             with open(root_cookie, 'w', encoding='utf-8') as f:
+                f.write(content)
+        
+        return True, f"✅ Đã lưu {len(cookies)} cookies! (Updated: {target_path})"
+        
+    except Exception as e:
+        return False, f"❌ Lỗi khi lưu cookie: {str(e)}"
+
+
 def is_browser_running() -> bool:
     """Check if browser is running."""
     global _browser
@@ -403,6 +464,10 @@ if __name__ == "__main__":
     print(msg)
     
     if success:
-        print("Browser đang chạy. Nhấn Enter để đóng...")
+        print("Browser đang chạy. Nhấn Enter để lưu cookie...")
+        input()
+        s, m = save_current_cookies()
+        print(m)
+        print("Nhấn Enter để đóng...")
         input()
         close_lazada_browser()

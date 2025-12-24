@@ -89,7 +89,8 @@ def run_training():
     
     # Priority: Environment Variable (Docker) > Local Path (Dev)
     env_vncorenlp_path = os.getenv('VNCORENLP_PATH')
-    local_vncorenlp_path = os.path.join(PROJECT_DIR, 'VnCoreNLP', 'VnCoreNLP-1.1.1.jar')
+    # VnCoreNLP-1.1.1.jar is likely at the project root based on file listing
+    local_vncorenlp_path = os.path.join(PROJECT_DIR, 'VnCoreNLP-1.1.1.jar')
     
     if env_vncorenlp_path and os.path.exists(env_vncorenlp_path):
         vncorenlp_path = env_vncorenlp_path

@@ -21,38 +21,39 @@ from sklearn.metrics import f1_score, accuracy_score
 from tqdm import tqdm
 import json
 
-# Aspect names
+# Aspect names - OPTIMIZED for E-commerce (9 aspects)
 ASPECTS = [
-    'Chất lượng sản phẩm',
-    'Trải nghiệm sử dụng',
-    'Đúng mô tả sản phẩm',
-    'Hiệu năng sản phẩm',
-    'Giá cả',
-    'Khuyến mãi & voucher',
-    'Vận chuyển & giao hàng',
-    'Đóng gói & bao bì',
-    'Uy tín & thái độ shop',
-    'Dịch vụ chăm sóc khách hàng',
-    'Lỗi & bảo hành & hàng giả',
-    'Đổi trả & bảo hành'
+    'Chất lượng sản phẩm',       # Quality, durability, materials
+    'Hiệu năng & Trải nghiệm',   # Performance, user experience  
+    'Đúng mô tả',                # Accuracy of description
+    'Giá cả & Khuyến mãi',       # Price, discounts, value
+    'Vận chuyển',                # Shipping speed, delivery
+    'Đóng gói',                  # Packaging quality
+    'Dịch vụ & Thái độ Shop',    # Customer service, seller attitude
+    'Bảo hành & Đổi trả',        # Warranty, returns
+    'Tính xác thực',             # Authenticity (fake/genuine)
 ]
 
-# Label mapping: -1=Negative, 0=Neutral, 1=Positive, 2=N/A (or missing)
-NUM_LABELS = 4  # -1, 0, 1, 2 mapped to 0, 1, 2, 3
+
+# Label mapping for new multi-task format:
+# Mention: 0 (not mentioned), 1 (mentioned)
+# Sentiment: 0 (NEG), 1 (POS), 2 (NEU)
 
 
 class ABSADataset(Dataset):
-    """Dataset for Multi-label ABSA."""
+    """Dataset for Multi-task ABSA."""
     
     def __init__(
         self, 
         texts: List[str], 
-        labels: np.ndarray,
+        labels_m: np.ndarray,  # Mention labels
+        labels_s: np.ndarray,  # Sentiment labels
         tokenizer,
         max_length: int = 256
     ):
         self.texts = texts
-        self.labels = labels
+        self.labels_m = labels_m
+        self.labels_s = labels_s
         self.tokenizer = tokenizer
         self.max_length = max_length
     
@@ -73,33 +74,43 @@ class ABSADataset(Dataset):
         return {
             'input_ids': encoding['input_ids'].squeeze(0),
             'attention_mask': encoding['attention_mask'].squeeze(0),
-            'labels': torch.tensor(self.labels[idx], dtype=torch.long)
+            'labels_m': torch.tensor(self.labels_m[idx], dtype=torch.float),
+            'labels_s': torch.tensor(self.labels_s[idx], dtype=torch.long)
         }
 
 
 class PhoBERTForABSA(nn.Module):
-    """PhoBERT model with multiple classification heads for ABSA."""
+    """PhoBERT model with multi-task learning for ABSA.
     
-    def __init__(self, num_aspects: int = 12, num_labels: int = 4, dropout: float = 0.3):
+    Uses hard parameter sharing with two task heads:
+    - Mention detection: Binary classification per aspect
+    - Sentiment classification: 3-class classification per aspect (NEG/NEU/POS)
+    """
+    
+    def __init__(self, num_aspects: int = 12, dropout: float = 0.3):
         super().__init__()
         
-        # Load PhoBERT
+        # Load PhoBERT backbone
         self.phobert = AutoModel.from_pretrained("vinai/phobert-base")
         hidden_size = self.phobert.config.hidden_size  # 768
         
-        # Shared layers
+        # Regularization
         self.dropout = nn.Dropout(dropout)
-        self.shared_fc = nn.Linear(hidden_size, 256)
-        self.relu = nn.ReLU()
         
-        # Individual classification heads for each aspect
-        self.aspect_classifiers = nn.ModuleList([
-            nn.Linear(256, num_labels) for _ in range(num_aspects)
-        ])
+        # Task heads
+        self.head_m = nn.Linear(hidden_size, num_aspects)  # Mention detection
+        self.head_s = nn.Linear(hidden_size, num_aspects * 3)  # Sentiment (3 classes per aspect)
         
         self.num_aspects = num_aspects
     
     def forward(self, input_ids, attention_mask):
+        """
+        Forward pass
+        
+        Returns:
+            logits_m: Mention logits (batch_size, num_aspects)
+            logits_s: Sentiment logits (batch_size, num_aspects, 3)
+        """
         outputs = self.phobert(
             input_ids=input_ids,
             attention_mask=attention_mask
@@ -107,53 +118,65 @@ class PhoBERTForABSA(nn.Module):
         
         # Use [CLS] token representation
         cls_output = outputs.last_hidden_state[:, 0, :]
+        h_cls = self.dropout(cls_output)
         
-        # Shared layers
-        x = self.dropout(cls_output)
-        x = self.shared_fc(x)
-        x = self.relu(x)
-        x = self.dropout(x)
+        # Task-specific predictions
+        logits_m = self.head_m(h_cls)
+        logits_s = self.head_s(h_cls).view(-1, self.num_aspects, 3)
         
-        # Individual aspect predictions
-        aspect_logits = []
-        for classifier in self.aspect_classifiers:
-            logits = classifier(x)
-            aspect_logits.append(logits)
-        
-        # Stack: (batch_size, num_aspects, num_labels)
-        return torch.stack(aspect_logits, dim=1)
+        return logits_m, logits_s
 
 
-def load_data(data_path: str) -> Tuple[List[str], np.ndarray]:
-    """Load and preprocess data from Excel file."""
-    df = pd.read_excel(data_path)
+def load_data(data_path: str) -> Tuple[List[str], np.ndarray, np.ndarray]:
+    """Load and preprocess data from Excel or CSV file.
+    
+    Returns:
+        texts: List of review texts
+        labels_m: Mention labels (batch_size, num_aspects) - binary
+        labels_s: Sentiment labels (batch_size, num_aspects) - 0/1/2 for NEG/POS/NEU
+    """
+    if data_path.endswith('.csv'):
+        df = pd.read_csv(data_path)
+    else:
+        df = pd.read_excel(data_path)
     
     texts = df['reviewContent'].tolist()
     
     # Extract labels for each aspect
-    labels = []
+    labels_m = []  # Mention labels
+    labels_s = []  # Sentiment labels
+    
     for idx, row in df.iterrows():
-        row_labels = []
+        row_labels_m = []
+        row_labels_s = []
+        
         for aspect in ASPECTS:
             if aspect in df.columns:
                 val = row[aspect]
-                # Map: -1->0, 0->1, 1->2, NaN/other->3
-                if pd.isna(val):
-                    mapped = 3
-                elif val == -1:
-                    mapped = 0
-                elif val == 0:
-                    mapped = 1
-                elif val == 1:
-                    mapped = 2
+                
+                # Convert to multi-task format:
+                # Old: -1 (N/A), 0 (NEG), 1 (POS), 2 (NEU)
+                # New mention: 0 (not mentioned), 1 (mentioned)
+                # New sentiment: 0 (NEG), 1 (POS), 2 (NEU)
+                
+                if pd.isna(val) or val == -1:
+                    # Not mentioned
+                    row_labels_m.append(0)
+                    row_labels_s.append(0)  # Padding (will be ignored in loss)
                 else:
-                    mapped = 3
-                row_labels.append(mapped)
+                    # Mentioned
+                    row_labels_m.append(1)
+                    # Sentiment: keep as is (0=NEG, 1=POS, 2=NEU)
+                    row_labels_s.append(int(val))
             else:
-                row_labels.append(3)  # N/A
-        labels.append(row_labels)
+                # Aspect not in data
+                row_labels_m.append(0)
+                row_labels_s.append(0)
+        
+        labels_m.append(row_labels_m)
+        labels_s.append(row_labels_s)
     
-    return texts, np.array(labels)
+    return texts, np.array(labels_m, dtype=np.float32), np.array(labels_s, dtype=np.int64)
 
 
 def merge_datasets(old_data_path: str, new_data_path: str, output_path: str = None) -> str:
@@ -320,25 +343,25 @@ def train_model(
     
     # Load data
     print(f"📊 Loading data from {data_path}...")
-    texts, labels = load_data(data_path)
+    texts, labels_m, labels_s = load_data(data_path)
     print(f"   Total samples: {len(texts)}")
     
     # Split data
-    train_texts, val_texts, train_labels, val_labels = train_test_split(
-        texts, labels, test_size=0.2, random_state=42
+    train_texts, val_texts, train_labels_m, val_labels_m, train_labels_s, val_labels_s = train_test_split(
+        texts, labels_m, labels_s, test_size=0.2, random_state=42
     )
     print(f"   Train: {len(train_texts)}, Val: {len(val_texts)}")
     
     # Create datasets
-    train_dataset = ABSADataset(train_texts, train_labels, tokenizer, max_length)
-    val_dataset = ABSADataset(val_texts, val_labels, tokenizer, max_length)
+    train_dataset = ABSADataset(train_texts, train_labels_m, train_labels_s, tokenizer, max_length)
+    val_dataset = ABSADataset(val_texts, val_labels_m, val_labels_s, tokenizer, max_length)
     
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=batch_size)
     
     # Create model
     print("🧠 Creating PhoBERT ABSA model...")
-    model = PhoBERTForABSA(num_aspects=len(ASPECTS), num_labels=NUM_LABELS)
+    model = PhoBERTForABSA(num_aspects=len(ASPECTS))
     model = model.to(device)
     
     # Optimizer and scheduler
@@ -350,78 +373,102 @@ def train_model(
         num_training_steps=total_steps
     )
     
-    # Loss function
-    criterion = nn.CrossEntropyLoss()
     
-    # Training loop
+    # Loss functions
+    criterion_m = nn.BCEWithLogitsLoss()  # Binary for mention detection
+    criterion_s = nn.CrossEntropyLoss()  # Multi-class for sentiment
+    
+    # Training loop with early stopping
     best_val_f1 = 0
+    patience = 3  # Early stopping patience
+    patience_counter = 0
     
     for epoch in range(epochs):
         print(f"\n📈 Epoch {epoch + 1}/{epochs}")
         
-        # Training
+        # === TRAINING ===
         model.train()
         train_loss = 0
         train_pbar = tqdm(train_loader, desc="Training")
         
-        for batch in train_pbar:
+        for batch_idx, batch in enumerate(train_pbar):
             input_ids = batch['input_ids'].to(device)
             attention_mask = batch['attention_mask'].to(device)
-            labels = batch['labels'].to(device)
+            labels_m = batch['labels_m'].to(device)
+            labels_s = batch['labels_s'].to(device)
             
+            # Forward pass
+            logits_m, logits_s = model(input_ids, attention_mask)
+            
+            # Compute multi-task loss
+            loss_m = criterion_m(logits_m, labels_m)
+            
+            # For sentiment loss, only compute on mentioned aspects
+            # Flatten and mask
+            loss_s = criterion_s(
+                logits_s.view(-1, 3),  # (batch * num_aspects, 3)
+                labels_s.view(-1)  # (batch * num_aspects)
+            )
+            
+            # Combined loss
+            loss = loss_m + loss_s
+            
+            # Backward pass
             optimizer.zero_grad()
-            
-            logits = model(input_ids, attention_mask)
-            
-            # Compute loss for each aspect
-            loss = 0
-            for i in range(len(ASPECTS)):
-                loss += criterion(logits[:, i, :], labels[:, i])
-            loss /= len(ASPECTS)
-            
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
             scheduler.step()
             
             train_loss += loss.item()
-            train_pbar.set_postfix({'loss': loss.item()})
+            train_pbar.set_postfix({'loss': f'{loss.item():.4f}'})
         
         avg_train_loss = train_loss / len(train_loader)
         print(f"   Train Loss: {avg_train_loss:.4f}")
         
-        # Validation
+        # === VALIDATION ===
         model.eval()
-        val_preds = []
-        val_true = []
+        val_preds_m = []
+        val_true_m = []
+        val_preds_s = []
+        val_true_s = []
         
         with torch.no_grad():
             for batch in tqdm(val_loader, desc="Validation"):
                 input_ids = batch['input_ids'].to(device)
                 attention_mask = batch['attention_mask'].to(device)
-                labels = batch['labels'].to(device)
+                labels_m = batch['labels_m'].to(device)
+                labels_s = batch['labels_s'].to(device)
                 
-                logits = model(input_ids, attention_mask)
-                preds = torch.argmax(logits, dim=-1)
+                logits_m, logits_s = model(input_ids, attention_mask)
                 
-                val_preds.append(preds.cpu().numpy())
-                val_true.append(labels.cpu().numpy())
+                # Predictions
+                preds_m = (torch.sigmoid(logits_m) > 0.5).long()
+                preds_s = torch.argmax(logits_s, dim=-1)
+                
+                val_preds_m.append(preds_m.cpu().numpy())
+                val_true_m.append(labels_m.cpu().numpy())
+                val_preds_s.append(preds_s.cpu().numpy())
+                val_true_s.append(labels_s.cpu().numpy())
         
-        val_preds = np.vstack(val_preds)
-        val_true = np.vstack(val_true)
+        val_preds_m = np.vstack(val_preds_m)
+        val_true_m = np.vstack(val_true_m)
+        val_preds_s = np.vstack(val_preds_s)
+        val_true_s = np.vstack(val_true_s)
         
         # Calculate metrics
-        f1_scores = []
-        for i, aspect in enumerate(ASPECTS):
-            f1 = f1_score(val_true[:, i], val_preds[:, i], average='macro', zero_division=0)
-            f1_scores.append(f1)
+        f1_m = f1_score(val_true_m.flatten(), val_preds_m.flatten(), average='macro', zero_division=0)
+        f1_s = f1_score(val_true_s.flatten(), val_preds_s.flatten(), average='macro', zero_division=0)
+        combined_f1 = (f1_m + f1_s) / 2
         
-        avg_f1 = np.mean(f1_scores)
-        print(f"   Val Macro F1: {avg_f1:.4f}")
+        print(f"   Val Mention F1: {f1_m:.4f}")
+        print(f"   Val Sentiment F1: {f1_s:.4f}")
+        print(f"   Val Combined F1: {combined_f1:.4f}")
         
         # Save best model
-        if avg_f1 > best_val_f1:
-            best_val_f1 = avg_f1
+        if combined_f1 > best_val_f1:
+            best_val_f1 = combined_f1
+            patience_counter = 0
             print(f"   ✅ New best model! Saving...")
             
             os.makedirs(output_dir, exist_ok=True)
@@ -431,19 +478,29 @@ def train_model(
                 'model_state_dict': model.state_dict(),
                 'tokenizer_name': 'vinai/phobert-base',
                 'aspects': ASPECTS,
-                'num_labels': NUM_LABELS,
-                'best_f1': best_val_f1
+                'best_f1': best_val_f1,
+                'mention_f1': f1_m,
+                'sentiment_f1': f1_s
             }, os.path.join(output_dir, 'phobert_absa.pt'))
             
             # Save config
             config = {
                 'aspects': ASPECTS,
-                'num_labels': NUM_LABELS,
                 'max_length': max_length,
-                'best_f1': float(best_val_f1)
+                'best_f1': float(best_val_f1),
+                'mention_f1': float(f1_m),
+                'sentiment_f1': float(f1_s)
             }
             with open(os.path.join(output_dir, 'config.json'), 'w', encoding='utf-8') as f:
                 json.dump(config, f, ensure_ascii=False, indent=2)
+        else:
+            patience_counter += 1
+            print(f"   ⏳ No improvement. Patience: {patience_counter}/{patience}")
+            
+            # Early stopping
+            if patience_counter >= patience:
+                print(f"   🛑 Early stopping triggered!")
+                break
     
     print(f"\n🎉 Training complete! Best F1: {best_val_f1:.4f}")
     print(f"📁 Model saved to: {output_dir}")
@@ -454,12 +511,19 @@ def train_model(
 if __name__ == "__main__":
     # Default paths
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    DATA_PATH = os.path.join(BASE_DIR, 'data', 'label', 'absa_grouped_vietnamese_test.xlsx')
+    # Use the new Mistral labeled dataset
+    DATA_PATH = os.path.join(BASE_DIR, 'data', 'label', 'absa_labeled_mistral.csv')
     OUTPUT_DIR = os.path.join(BASE_DIR, 'models', 'phobert_absa')
     
+    # Check if file exists, if not fall back
+    if not os.path.exists(DATA_PATH):
+        print(f"⚠️ New dataset not found at {DATA_PATH}, falling back to old test data.")
+        DATA_PATH = os.path.join(BASE_DIR, 'data', 'label', 'absa_grouped_vietnamese_test.xlsx')
+
     train_model(
         data_path=DATA_PATH,
         output_dir=OUTPUT_DIR,
-        epochs=5,
-        batch_size=16
+        epochs=15,          # Increased from 5 to 15
+        batch_size=16,      # Standard for Base model
+        learning_rate=3e-5  # Slightly higher for fine-tuning
     )
