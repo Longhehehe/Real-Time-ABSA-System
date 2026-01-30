@@ -44,12 +44,17 @@ def load_data(file_path):
         # Clean column names (strip whitespace)
         df.columns = [str(c).strip() for c in df.columns]
         
-        # List of expected aspects based on user request/file inspection
+        # List of expected aspects - OPTIMIZED for E-commerce (9 aspects)
         expected_aspects = [
-            'Chất lượng sản phẩm', 'Trải nghiệm sử dụng', 'Đúng mô tả sản phẩm', 'Hiệu năng sản phẩm',
-            'Giá cả', 'Khuyến mãi & voucher',
-            'Vận chuyển & giao hàng', 'Đóng gói & bao bì',
-            'Uy tín & thái độ shop', 'Dịch vụ chăm sóc khách hàng', 'Lỗi & bảo hành & hàng giả', 'Đổi trả & bảo hành'
+            'Chất lượng sản phẩm',       # Quality, durability, materials
+            'Hiệu năng & Trải nghiệm',   # Performance, user experience  
+            'Đúng mô tả',                # Accuracy of description
+            'Giá cả & Khuyến mãi',       # Price, discounts, value
+            'Vận chuyển',                # Shipping speed, delivery
+            'Đóng gói',                  # Packaging quality
+            'Dịch vụ & Thái độ Shop',    # Customer service, seller attitude
+            'Bảo hành & Đổi trả',        # Warranty, returns
+            'Tính xác thực',             # Authenticity (fake/genuine)
         ]
         
         # Keep only existing columns

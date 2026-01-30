@@ -12,3 +12,6 @@ transformers
 fake-useragent==1.1.3
 requests
 kafka-python
+# Selenium for balanced crawler
+selenium
+webdriver-manager

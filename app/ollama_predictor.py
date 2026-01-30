@@ -5,21 +5,19 @@ import re
 from typing import Dict, List, Optional
 import os
 
-# Aspects definition (MUST match absa_predictor.py for UI compatibility)
+# Aspects definition - OPTIMIZED for E-commerce (9 aspects)
 ASPECTS = [
-    'Chất lượng sản phẩm',
-    'Trải nghiệm sử dụng',
-    'Đúng mô tả sản phẩm',
-    'Hiệu năng sản phẩm',
-    'Giá cả',
-    'Khuyến mãi & voucher',
-    'Vận chuyển & giao hàng',
-    'Đóng gói & bao bì',
-    'Uy tín & thái độ shop',
-    'Dịch vụ chăm sóc khách hàng',
-    'Lỗi & bảo hành & hàng giả',
-    'Đổi trả & bảo hành'
+    'Chất lượng sản phẩm',       # Quality, durability, materials
+    'Hiệu năng & Trải nghiệm',   # Performance, user experience  
+    'Đúng mô tả',                # Accuracy of description
+    'Giá cả & Khuyến mãi',       # Price, discounts, value
+    'Vận chuyển',                # Shipping speed, delivery
+    'Đóng gói',                  # Packaging quality
+    'Dịch vụ & Thái độ Shop',    # Customer service, seller attitude
+    'Bảo hành & Đổi trả',        # Warranty, returns
+    'Tính xác thực',             # Authenticity (fake/genuine)
 ]
+
 
 class OllamaPredictor:
     def __init__(self, model_name: str = "mistral"):
@@ -58,29 +56,19 @@ class OllamaPredictor:
             "format": "json" # Enforce JSON mode if supported
         }
 
-        # Use session for connection pooling
-        if not hasattr(self, '_session'):
-            self._session = requests.Session()
-            
-        # Retry logic for connection stability
-        max_retries = 2  # Reduced retries
-        for attempt in range(max_retries):
-            try:
-                response = self._session.post(self.api_url, json=payload, timeout=30)  # Reduced timeout
-                if response.status_code == 200:
-                    result = response.json()
-                    raw_response = result.get("response", "")
-                    return self._parse_response(raw_response)
-                else:
-                    print(f"⚠️ Ollama API Error (Attempt {attempt+1}/{max_retries}): {response.status_code}")
-            except Exception as e:
-                print(f"⚠️ Ollama Connection Error (Attempt {attempt+1}/{max_retries}): {e}")
-                import time
-                time.sleep(1)  # Reduced backoff
-        
-        # If all retries fail
-        print(f"❌ Failed to connect to Ollama after {max_retries} attempts.")
-        return {a: None for a in ASPECTS}
+        try:
+            response = requests.post(self.api_url, json=payload, timeout=30)
+            if response.status_code == 200:
+                result = response.json()
+                raw_response = result.get("response", "")
+                return self._parse_response(raw_response)
+            else:
+                print(f"❌ Ollama API Error: {response.status_code} - {response.text}")
+                return {a: None for a in ASPECTS}
+        except Exception as e:
+            print(f"❌ Ollama Connection Error: {e}")
+            # Fallback behavior?
+            return {a: None for a in ASPECTS}
 
     def _parse_response(self, raw_response: str) -> Dict[str, str]:
         """Parse strict JSON from LLM response."""
@@ -109,25 +97,8 @@ class OllamaPredictor:
         return result
 
     def predict_batch(self, texts: List[str]) -> List[Dict[str, str]]:
-        """Predict a batch of reviews using concurrent threads for better throughput."""
-        from concurrent.futures import ThreadPoolExecutor, as_completed
-        
-        max_workers = 4  # Parallel requests to Ollama
-        results = [None] * len(texts)
-        
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
-            future_to_idx = {executor.submit(self.predict_single, text): idx 
-                             for idx, text in enumerate(texts)}
-            
-            for future in as_completed(future_to_idx):
-                idx = future_to_idx[future]
-                try:
-                    results[idx] = future.result()
-                except Exception as e:
-                    print(f"⚠️ Prediction failed for index {idx}: {e}")
-                    results[idx] = {a: None for a in ASPECTS}
-        
-        return results
+        """Predict a batch of reviews (Sequential for Ollama to avoid OOM)."""
+        return [self.predict_single(t) for t in texts]
 
 # Test
 if __name__ == "__main__":

@@ -11,7 +11,17 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 
 class LazadaCrawler:
-    def __init__(self, cookie_list=None, keep_alive=False, debug_mode=False):
+    # Random User Agents để giả lập nhiều trình duyệt khác nhau
+    USER_AGENTS = [
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:121.0) Gecko/20100101 Firefox/121.0",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.0.0 Safari/537.36",
+    ]
+    
+    def __init__(self, cookie_list=None, keep_alive=False, debug_mode=False, headless_mode=False):
         """
         Initializes the crawler with optional cookies.
         
@@ -19,20 +29,60 @@ class LazadaCrawler:
             cookie_list (list): List of dicts [{'name': '...', 'value': '...'}, ...]
             keep_alive (bool): If True, driver is not closed automatically.
             debug_mode (bool): If True, saves screenshots at key points for debugging.
+            headless_mode (bool): If True, runs Chrome in headless mode (for Docker/server).
         """
         chrome_options = Options()
-        # chrome_options.add_argument("--headless") # Comment out for debugging/visibility
-        chrome_options.add_argument("--start-maximized")
+        
+        # Headless mode for Docker/server environments
+        if headless_mode:
+            chrome_options.add_argument("--headless=new")
+            chrome_options.add_argument("--window-size=1920,1080")
+        
+        # === ANTI-BOT DETECTION ===
+        # Random User Agent
+        user_agent = random.choice(self.USER_AGENTS)
+        chrome_options.add_argument(f"--user-agent={user_agent}")
+        
+        # Disable automation flags
         chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+        chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        chrome_options.add_experimental_option("useAutomationExtension", False)
+        
+        # Other stealth options
+        chrome_options.add_argument("--start-maximized")
+        chrome_options.add_argument("--disable-infobars")
+        chrome_options.add_argument("--disable-dev-shm-usage")
+        chrome_options.add_argument("--no-sandbox")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--lang=vi-VN,vi")  # Vietnamese language
+        
         if keep_alive:
             chrome_options.add_experimental_option("detach", True)
         
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
+        
+        # Remove webdriver property (anti-detection)
+        self.driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
+            "source": """
+                Object.defineProperty(navigator, 'webdriver', {
+                    get: () => undefined
+                });
+                Object.defineProperty(navigator, 'plugins', {
+                    get: () => [1, 2, 3, 4, 5]
+                });
+                Object.defineProperty(navigator, 'languages', {
+                    get: () => ['vi-VN', 'vi', 'en-US', 'en']
+                });
+                window.chrome = { runtime: {} };
+            """
+        })
+        
         self.wait = WebDriverWait(self.driver, 10)
         self.cookie_list = cookie_list
         self.keep_alive = keep_alive
         self.debug_mode = debug_mode
         self.debug_counter = 0
+        print(f"[STEALTH] Using User-Agent: {user_agent[:50]}...")
 
     def debug_screenshot(self, label):
         """Saves a screenshot if debug_mode is enabled."""

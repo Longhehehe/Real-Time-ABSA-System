@@ -1,0 +1,278 @@
+[
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1781105492,
+    "httpOnly": false,
+    "name": "tfstk",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "gXPSNkYQl3x5jM2tFX72c0ax0JGCuZ5ZRegLSydyJbhJvHUt0X7kLT0IOmaZL0FQ-BgLJkboYaX4rzcn9GSZA1zurnChLGsq9wUxT2Gv9A9brzcHoiPrAOUlOq06t4hLvjnxWVGppXHRlj3ESXd-pQpvDm0K9X3-9ECxz29Ky2ELkZgnDDhKekHAl2mxvXhKdHTsRTiuPNJHxxrufcU-cBd6m4M-f1mX9BFjPriTyAAp9SgSeSNteOBIUJUiI7PROIcz5-hx7zfWGfU-5uo4X1djMrzYYA2cxCk0cWMLwYYdkmF7c7c849d_fbZIB7HXJBz_k0Gjk5QeImPj4kFSHNRsLjFZBbeVngkENVZLZuTB9lU477D0OGtxx8uiMVzlNIGTy2IzyCo11bJBlAAIlc7flpvn4BqA8GA0J6k-o4MVlZt8KY3mlmQflpxjeq0q_Z_XQpf.."
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1781105492,
+    "httpOnly": false,
+    "name": "epssw",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "11*mmLM2m51kTXDgEbgBoTdMJsr2UErR28OkwwU6AS81b-LavDcQkRhe1cpnX9BV0ZvcdbLkCE6aTkjmtCzaOA2dtvO3tevQrAVommZa3m-0kWyJ_TRanYvMI6JP_MKIqIk-nOQammmarf-xtVMMCAdnDVuncV3gvfiqJr5j_omgKz98AUmDjwiFBTEmCcnKcPEmaRIkzX0V1ksoen4lIzwYKl3VgOgGBH59hwn1_3mmHWmmoWJ2m-3u8FuuK7bnRmm5DamtVHp3jEEBjZ02DaEE90LlDaE0ukYNtuuBjvumeQgyJEYNjPauuBmAr4L_o9isNeUJr3emm.."
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1800113490,
+    "httpOnly": false,
+    "name": "AMCV_126E248D54200F960A4C98C6%40AdobeOrg",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "-1124106680%7CMCIDTS%7C20435%7CMCMID%7C44190743785943941801112815718747626528%7CMCAAMLH-1766158289%7C3%7CMCAAMB-1766158289%7C6G1ynYcLPuiQxYZrsz_pkqfLG9yMXBpb2zX5dvJdYQJzPXImdj0y%7CMCOPTOUT-1765560689s%7CNONE%7CMCSYNCSOP%7C411-20442%7CvVersion%7C5.2.0"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1799249489,
+    "httpOnly": false,
+    "name": "_uetvid",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "a1179f30d76f11f0b26d5b1463d227be"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1800113429,
+    "httpOnly": false,
+    "name": "t_fv",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "1765553429796"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1765639889,
+    "httpOnly": false,
+    "name": "_uetsid",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "a1178550d76f11f093a1af0b7e2bbb9a"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1781105492,
+    "httpOnly": false,
+    "name": "isg",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "BJeXugikstIAtDZe7OFzCsnLJgvh3Gs-d0y-JunEs2bNGLda8az7jlW6fqAG60O2"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1765812630,
+    "httpOnly": false,
+    "name": "xlly_s",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "1"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1797089485,
+    "httpOnly": false,
+    "name": "lzd_login_lastlogintype",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "GOOGLE"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1781105492,
+    "httpOnly": false,
+    "name": "lwrid",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "AgGbEy9YQzFNCU9nE5DaX38RnEC3"
+  },
+  {
+    "domain": ".lazada.vn",
+    "httpOnly": false,
+    "name": "lzd_uti",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "%7B%22fpd%22%3A%229999-99-99%22%2C%22lpd%22%3A%229999-99-99%22%2C%22cnt%22%3A%220%22%7D"
+  },
+  {
+    "domain": ".lazada.vn",
+    "httpOnly": false,
+    "name": "AMCVS_126E248D54200F960A4C98C6%40AdobeOrg",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "1"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1765555292,
+    "httpOnly": false,
+    "name": "utm_channel",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "NA"
+  },
+  {
+    "domain": ".lazada.vn",
+    "httpOnly": true,
+    "name": "lzd_b_csg",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "999eb93a"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1781105430,
+    "httpOnly": false,
+    "name": "lwrtk",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "AAIEaTyllZ27ddklpbCVUW00YGpPTqAmgR3HHQo84j3AF8Ti3O08jq8="
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1768174285,
+    "httpOnly": true,
+    "name": "sgcookie",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "E100L469ZS2Vj8B%2FE4NT07j6RAGV9N2dKqnJwWque0zuIZAZg%2BccmPna7bvtnW6jFmTeXCoLOwgW0CwVAB0pnIaOwAyFCuOfWIs30EgT9sCtnnE%3D"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1766158229,
+    "httpOnly": false,
+    "name": "_m_h5_tk",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "09f42331a6adb7a3acc1be607bc7b86e_1765562789876"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1765841485,
+    "httpOnly": false,
+    "name": "lzd_uid",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "200701808496"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1773329489,
+    "httpOnly": false,
+    "name": "_fbp",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "fb.1.1765553489535.762598396852982692"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1765555292,
+    "httpOnly": false,
+    "name": "t_sid",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "y5dvXD655Hnanz7oUk7QwqzXNPOnKjPW"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1800113429,
+    "httpOnly": false,
+    "name": "t_uid",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "w60ZFKUKPwNKdesLU278ou6T8mPtTMez"
+  },
+  {
+    "domain": ".lazada.vn",
+    "httpOnly": true,
+    "name": "_tb_token_",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "e1e367de54317"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1768145429,
+    "httpOnly": false,
+    "name": "hng",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "VN|en|VND|704"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1765841485,
+    "httpOnly": true,
+    "name": "lzd_sid",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "1ee89eb972d15d64c8567a1524690b47"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1773329487,
+    "httpOnly": false,
+    "name": "_gcl_au",
+    "path": "/",
+    "sameSite": "Lax",
+    "secure": false,
+    "value": "1.1.1652470345.1765553487"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1800113430,
+    "httpOnly": false,
+    "name": "cna",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "FSPDIUyHczoCAav8mWXI7IsM"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1766158229,
+    "httpOnly": false,
+    "name": "_m_h5_tk_enc",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "86bdc3de4de91b65d61ae469eba438c4"
+  },
+  {
+    "domain": ".lazada.vn",
+    "expiry": 1797118228,
+    "httpOnly": false,
+    "name": "lzd_cid",
+    "path": "/",
+    "sameSite": "None",
+    "secure": true,
+    "value": "8aee85d0-9277-4180-a124-1a592fde0856"
+  }
+]

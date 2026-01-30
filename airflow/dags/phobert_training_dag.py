@@ -1,6 +1,6 @@
 """
-PhoBERT ABSA Training DAG with Auto-Retraining and Model Comparison
-Train PhoBERT model, compare with old model, update only if better.
+PhoBERT ABSA Training DAG with Multi-Polarity Support
+Train PhoBERT model with multi-label sentiment classification.
 """
 from airflow import DAG
 from airflow.operators.bash import BashOperator
@@ -25,10 +25,10 @@ default_args = {
 with DAG(
     'phobert_absa_training',
     default_args=default_args,
-    description='Auto-retrain PhoBERT model with new data, compare and update if better',
+    description='Train PhoBERT Multi-Polarity ABSA model from labeled/ folder',
     schedule_interval=None,  # Manual trigger
     start_date=days_ago(1),
-    tags=['nlp', 'sentiment', 'phobert', 'absa', 'training', 'auto-retrain'],
+    tags=['nlp', 'sentiment', 'phobert', 'absa', 'training', 'multipolarity'],
     catchup=False,
 ) as dag:
 
@@ -41,99 +41,68 @@ with DAG(
         ''',
     )
 
-    # Task 2: Check if new data exists, merge with old data
-    merge_data = BashOperator(
-        task_id='merge_training_data',
+    # Task 2: List labeled files
+    check_data = BashOperator(
+        task_id='check_labeled_data',
         bash_command='''
-            echo "Checking and merging training data..."
+            echo "Checking labeled data files..."
             cd /opt/airflow/project
-            python -c "
-import os
-import sys
-sys.path.insert(0, '/opt/airflow/project')
-from phobert_trainer import merge_datasets
-
-OLD_DATA = '/opt/airflow/project/data/label/absa_grouped_vietnamese_test.xlsx'
-NEW_DATA = '/opt/airflow/project/data/label/absa_labeled_mistral.csv'
-MERGED_DATA = '/opt/airflow/project/data/label/merged_training_data.csv'
-
-# Check if new data exists
-if os.path.exists(NEW_DATA):
-    print('📊 New training data found!')
-    # merge_datasets needs to be robust to CSV. 
-    # But since we want to force use the new Mistral data, let's just use it directly for training
-    # or ensure merge_datasets handles it.
-    # For now, let's simplify: Just use the new data directly to ensure high quality input.
-    import shutil
-    shutil.copy(NEW_DATA, MERGED_DATA)
-    print(f'✅ Using new Mistral data directly: {MERGED_DATA}')
-else:
-    print('ℹ️ New Mistral data not found, checking generic new data')
-    # Fallback to old logic or just warn
-    shutil.copy(OLD_DATA, MERGED_DATA)
-    print(f'✅ Using original data: {OLD_DATA}')
-"
+            ls -la labeled/ | head -20
+            echo "Total files:"
+            ls labeled/*.xlsx 2>/dev/null | wc -l
         ''',
     )
 
-    # Task 3: Train new model and compare with old
-    train_and_compare = BashOperator(
-        task_id='train_and_compare_models',
+    # Task 3: Train Multi-Polarity Model (OPTIMIZED PARAMETERS)
+    train_model = BashOperator(
+        task_id='train_multipolarity_model',
         bash_command='''
-            echo "Training new model and comparing..."
+            echo "Training PhoBERT Multi-Polarity ABSA model (FULL TRAINING)..."
             cd /opt/airflow/project
             python -c "
 import sys
 sys.path.insert(0, '/opt/airflow/project')
-from phobert_trainer import train_and_compare
+from phobert_trainer_multipolarity import train_model_multipolarity
 
-# Use the file prepared by previous task
-DATA_PATH = '/opt/airflow/project/data/label/merged_training_data.csv'
-MODEL_DIR = '/opt/airflow/project/models/phobert_absa'
+# Use labeled/ folder directly (contains xlsx files)
+DATA_PATH = '/opt/airflow/project/labeled'
+MODEL_DIR = '/opt/airflow/project/models/phobert_absa_multipolarity'
 
-should_update, new_f1, old_f1 = train_and_compare(
+# OPTIMIZED HYPERPARAMETERS FOR BEST RESULTS:
+# - epochs=25: More epochs for better convergence
+# - batch_size=8: Smaller batch = more updates per epoch (better generalization)
+# - learning_rate=2e-5: Standard for PhoBERT fine-tuning
+# - max_length=256: Full context for reviews
+
+output_dir = train_model_multipolarity(
     data_path=DATA_PATH,
-    model_dir=MODEL_DIR,
-    epochs=15,          # UPGRADED to 15 from 5
-    batch_size=16,
-    min_improvement=0.01
+    output_dir=MODEL_DIR,
+    epochs=25,           # More training epochs
+    batch_size=8,        # Smaller batch for more gradient updates
+    learning_rate=2e-5,  # Standard PhoBERT learning rate
+    max_length=256       # Full context preservation
 )
 
-# Write result to file for next task
-with open('/tmp/model_comparison_result.txt', 'w') as f:
-    f.write(f'{should_update},{new_f1:.4f},{old_f1:.4f}')
-
-print(f'\\n📊 Final Result:')
-print(f'   Should update: {should_update}')
-print(f'   New F1: {new_f1:.4f}')
-print(f'   Old F1: {old_f1:.4f}')
+print(f'Training complete! Model saved to: {output_dir}')
 "
         ''',
-        execution_timeout=timedelta(hours=2),
+        execution_timeout=timedelta(hours=4),  # Increased timeout for full training
     )
 
-    # Task 4: Check comparison result and notify
-    notify_result = BashOperator(
-        task_id='notify_training_result',
+    # Task 4: Verify model was saved
+    verify_model = BashOperator(
+        task_id='verify_model',
         bash_command='''
-            echo "Reading comparison result..."
-            if [ -f /tmp/model_comparison_result.txt ]; then
-                RESULT=$(cat /tmp/model_comparison_result.txt)
-                UPDATED=$(echo $RESULT | cut -d',' -f1)
-                NEW_F1=$(echo $RESULT | cut -d',' -f2)
-                OLD_F1=$(echo $RESULT | cut -d',' -f3)
-                
-                if [ "$UPDATED" = "True" ]; then
-                    echo "🎉 SUCCESS: Model updated!"
-                    echo "   New F1: $NEW_F1 (was: $OLD_F1)"
-                else
-                    echo "ℹ️ Model NOT updated (new model not significantly better)"
-                    echo "   New F1: $NEW_F1, Old F1: $OLD_F1"
-                fi
+            echo "Verifying trained model..."
+            cd /opt/airflow/project
+            ls -la models/phobert_absa_multipolarity/
+            if [ -f models/phobert_absa_multipolarity/phobert_absa_multipolarity.pt ]; then
+                echo "Model file found!"
+                cat models/phobert_absa_multipolarity/config.json
             else
-                echo "⚠️ Comparison result file not found"
+                echo "Model file not found!"
+                exit 1
             fi
-            echo "Training pipeline completed!"
         ''',
     )
 
@@ -145,21 +114,29 @@ print(f'   Old F1: {old_f1:.4f}')
             cd /opt/airflow/project
             python -c "
 import sys
-sys.path.insert(0, 'app')
-from absa_predictor import PhoBERTPredictor, SENTIMENT_MAP
+sys.path.insert(0, '/opt/airflow/project')
+from phobert_trainer_multipolarity import predict_multipolarity
 
-predictor = PhoBERTPredictor()
-if predictor.load_model():
-    result = predictor.predict_single('Sản phẩm tốt, giao hàng nhanh')
-    print('✅ Inference test passed!')
-    for asp, val in list(result.items())[:3]:
-        print(f'  {asp}: {SENTIMENT_MAP.get(val, val)}')
-else:
-    print('❌ Model loading failed!')
-    exit(1)
+test_texts = [
+    'San pham tot, giao hang nhanh, dong goi can than',
+    'Chat luong kem, ship cham, that vong'
+]
+
+results = predict_multipolarity(
+    test_texts,
+    model_path='/opt/airflow/project/models/phobert_absa_multipolarity'
+)
+
+print('Inference test results:')
+for i, res in enumerate(results):
+    print(f'Text {i+1}:')
+    for asp, info in list(res.items())[:3]:
+        if info.get('mentioned'):
+            print(f'  {asp}: {info.get(\"sentiments\", [])}')
+print('Inference test passed!')
 "
         ''',
     )
 
     # Workflow Dependency
-    check_gpu >> merge_data >> train_and_compare >> notify_result >> test_inference
+    check_gpu >> check_data >> train_model >> verify_model >> test_inference

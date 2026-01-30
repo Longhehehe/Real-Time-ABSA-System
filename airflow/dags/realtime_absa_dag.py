@@ -38,11 +38,18 @@ def trigger_producer(**context):
     
     from lazada_producer import send_reviews_to_kafka
     
-    # Get params
-    product_id = context['params'].get('product_id', 'airflow_product')
-    product_url = context['params'].get('product_url', '')
-    max_reviews = context['params'].get('max_reviews', 100)
-    reviews_data = context['params'].get('reviews', [])  # Pre-crawled reviews from Streamlit
+    # Get params - API trigger uses dag_run.conf, manual uses params
+    dag_run = context.get('dag_run')
+    conf = dag_run.conf if dag_run and dag_run.conf else {}
+    params = context.get('params', {})
+    
+    # Merge conf (priority) with params (fallback)
+    product_id = conf.get('product_id') or params.get('product_id', 'airflow_product')
+    product_url = conf.get('product_url') or params.get('product_url', '')
+    max_reviews = conf.get('max_reviews') or params.get('max_reviews', 100)
+    reviews_data = conf.get('reviews') or params.get('reviews', [])  # Pre-crawled reviews
+    
+    print(f"📋 Config received: product_id={product_id}, product_url={product_url[:50] if product_url else 'N/A'}...")
     
     reviews = []
     
@@ -53,20 +60,45 @@ def trigger_producer(**context):
     
     # Option B: Crawl from URL if no reviews provided
     elif product_url and product_url != 'https://www.lazada.vn/products/...':
-        from lazada_crawler import crawl_reviews
         print(f"🔍 Crawling reviews from: {product_url}")
         
-        reviews, error = crawl_reviews(
-            product_url=product_url,
-            cookies_path=os.path.join(PROJECT_DIR, 'cookie', 'lazada_cookies.txt'),
-            max_reviews=60,  # Reduced for faster real-time demo
-            delay_min=1.0,
-            delay_max=2.0,
-            item_id=product_id
-        )
+        # Find cookies path
+        cookies_path = None
+        for path in [
+            os.path.join(PROJECT_DIR, 'cookie', 'lazada_cookies.json'),
+            os.path.join(PROJECT_DIR, 'lazada_crawler', 'lazada_cookies.json'),
+            os.path.join(PROJECT_DIR, 'app', 'cookie', 'lazada_cookies.json'),
+        ]:
+            if os.path.exists(path):
+                cookies_path = path
+                print(f"✅ Found cookies at {cookies_path}")
+                break
         
-        if error:
-            print(f"⚠️ Crawl warning: {error}")
+        # Use simple requests-based crawler with balanced mode
+        try:
+            import sys
+            sys.path.insert(0, os.path.join(PROJECT_DIR, 'app'))
+            from lazada_crawler_simple import crawl_reviews_simple
+            
+            print("⚖️ Using requests-based crawler with BALANCED MODE...")
+            reviews, error = crawl_reviews_simple(
+                product_url=product_url,
+                cookies_path=cookies_path,
+                max_reviews=max_reviews,
+                item_id=product_id,
+                balanced_mode=True  # Enable balanced crawling
+            )
+            
+            if error:
+                print(f"⚠️ Crawler warning: {error}")
+            
+            print(f"✅ Crawled {len(reviews)} reviews with balanced mode")
+                
+        except Exception as e:
+            print(f"❌ Crawler failed: {e}")
+            import traceback
+            traceback.print_exc()
+            reviews = []
     
     if not reviews:
         raise Exception("No reviews to process! Provide either 'reviews' data or a valid 'product_url'.")
@@ -102,8 +134,7 @@ def trigger_producer(**context):
             print(f"⚠️ Removed {initial_count - final_count} duplicate reviews via Pandas.")
             
         # Save to CSV Buffer (User Request)
-        # Save to CSV Buffer (User Request) - Unique per product to allow concurrency
-        buffer_file = os.path.join(PROJECT_DIR, 'data', f'crawled_buffer_{product_id}.csv')
+        buffer_file = os.path.join(PROJECT_DIR, 'data', 'crawled_reviews_buffer.csv')
         os.makedirs(os.path.dirname(buffer_file), exist_ok=True)
         df.to_csv(buffer_file, index=False, encoding='utf-8-sig')
         print(f"💾 Saved unique reviews to buffer: {buffer_file}")
@@ -149,8 +180,8 @@ def wait_for_consumer(**context):
     
     pred_file = os.path.join(PREDICTIONS_DIR, f"{product_id}.json")
     
-    max_wait = 3600  # 60 minutes (Safe for backlog)
-    poll_interval = 2  # Faster polling for quicker UI feedback
+    max_wait = 1800  # 30 minutes (Increased because sequential processing is slow)
+    poll_interval = 5
     elapsed = 0
     
     # Helper to print results
@@ -160,10 +191,11 @@ def wait_for_consumer(**context):
         print(f"📝 DETAILED PREDICTIONS ({len(data_chunk)} reviews)")
         print("="*50)
         
-        ASPECTS = ['Chất lượng sản phẩm', 'Trải nghiệm sử dụng', 'Đúng mô tả sản phẩm', 
-                  'Hiệu năng sản phẩm', 'Giá cả', 'Khuyến mãi & voucher',
-                  'Vận chuyển & giao hàng', 'Đóng gói & bao bì', 'Uy tín & thái độ shop',
-                  'Dịch vụ chăm sóc khách hàng', 'Lỗi & bảo hành & hàng giả', 'Đổi trả & bảo hành']
+        ASPECTS = [
+            'Chất lượng sản phẩm', 'Hiệu năng & Trải nghiệm', 'Đúng mô tả',
+            'Giá cả & Khuyến mãi', 'Vận chuyển', 'Đóng gói',
+            'Dịch vụ & Thái độ Shop', 'Bảo hành & Đổi trả', 'Tính xác thực'
+        ]
         
         # Map labels to text
         LABEL_MAP = {1: 'POS', 0: 'NEU', -1: 'NEG'}
@@ -186,7 +218,15 @@ def wait_for_consumer(**context):
                 for aspect in ASPECTS:
                     label = sentiment.get(aspect)
                     if label is not None:
-                        label_str = LABEL_MAP.get(label, str(label))
+                        # Handle Multi-Polarity Dictionary Format
+                        if isinstance(label, dict):
+                            # e.g., {'mentioned': True, 'sentiments': ['POS', 'NEG']}
+                            sentiments = label.get('sentiments', [])
+                            label_str = ", ".join(sentiments) if sentiments else "NEU"
+                        else:
+                            # Handle Legacy Integer Format
+                            label_str = LABEL_MAP.get(label, str(label))
+                        
                         print(f"  - {aspect}: {label_str}")
         
         print("\n" + "="*50)
@@ -200,13 +240,27 @@ def wait_for_consumer(**context):
         for item in data_chunk:
             sentiment = item.get('sentiment', {})
             for aspect, label in sentiment.items():
-                if label == 1:
-                    aspects[aspect]['POS'] += 1
-                elif label == 0:
-                    aspects[aspect]['NEU'] += 1
-                elif label == -1:
-                    aspects[aspect]['NEG'] += 1
                 
+                # Normalize label to list of sentiments
+                current_sentiments = []
+                if isinstance(label, dict):
+                     current_sentiments = label.get('sentiments') or []
+                elif isinstance(label, int):
+                    # Legacy mapping
+                    if label == 1: current_sentiments = ['POS']
+                    elif label == -1: current_sentiments = ['NEG']
+                    elif label == 0: current_sentiments = ['NEU']
+                
+                # Count
+                if not current_sentiments:
+                     # If mentioned but empty, count as NEU or ignore? 
+                     # Let's count as NEU if structure implies mention
+                     pass 
+                
+                for s in current_sentiments:
+                    if s in ['POS', 'NEG', 'NEU']:
+                        aspects[aspect][s] += 1
+
         print(f"{'ASPECT':<30} | {'POS':<5} | {'NEU':<5} | {'NEG':<5}")
         print("-" * 55)
         for aspect, counts in aspects.items():
@@ -252,30 +306,49 @@ def aggregate_results(**context):
         predictions = json.load(f)
     
     # Count sentiments per aspect
+    # Count sentiments per aspect
     summary = {}
     for pred in predictions:
         sentiment = pred.get('sentiment', {})
-        for aspect, score in sentiment.items():
+        for aspect, label in sentiment.items():
             if aspect not in summary:
                 summary[aspect] = {'positive': 0, 'negative': 0, 'neutral': 0}
             
-            if score == 1:
-                summary[aspect]['positive'] += 1
-            elif score == -1:
-                summary[aspect]['negative'] += 1
-            elif score == 0:
-                summary[aspect]['neutral'] += 1
+            # Normalize label
+            current_sentiments = []
+            if isinstance(label, dict):
+                 current_sentiments = label.get('sentiments') or []
+            elif isinstance(label, int):
+                # Legacy mapping
+                if label == 1: current_sentiments = ['POS']
+                elif label == -1: current_sentiments = ['NEG']
+                elif label == 0: current_sentiments = ['NEU']
+            
+            for s in current_sentiments:
+                if s == 'POS':
+                    summary[aspect]['positive'] += 1
+                elif s == 'NEG':
+                    summary[aspect]['negative'] += 1
+                elif s == 'NEU':
+                    summary[aspect]['neutral'] += 1
     
     # Save summary
     summary_file = os.path.join(PREDICTIONS_DIR, f"{product_id}_summary.json")
     try:
         with open(summary_file, 'w', encoding='utf-8') as f:
             json.dump(summary, f, ensure_ascii=False, indent=2)
-        print(f"✅ Aggregation complete! Summary saved to {summary_file}")
+        
+        # Create .done marker file for API to know process is 100% complete
+        done_file = os.path.join(PREDICTIONS_DIR, f"{product_id}.done")
+        with open(done_file, 'w') as f:
+            f.write("completed")
+            
+        print(f"✅ Aggregation complete. Summary saved to {summary_file}")
+        print(f"✅ Created completion marker: {done_file}")
     except PermissionError:
-        print(f"⚠️ PermissionError: Could not save summary to {summary_file}. Printing to stdout instead.")
+        print(f"⚠️ PermissionError: Could not save summary to {summary_file} or create done file. Printing to stdout instead.")
     except Exception as e:
-        print(f"⚠️ Error saving summary: {e}")
+        print(f"⚠️ Error saving summary or creating done file: {e}")
     
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 
@@ -287,15 +360,14 @@ with DAG(
     schedule_interval=None,  # Manual trigger only
     start_date=days_ago(1),
     catchup=False,
+    max_active_runs=10,  # Allow up to 10 parallel DAG runs
+    concurrency=20,  # Allow up to 20 concurrent tasks across all runs
     tags=['absa', 'kafka', 'realtime', 'crawl'],
     params={
         'product_id': 'lazada_product',
         'product_url': 'https://www.lazada.vn/products/...',  # Paste Lazada URL here
         'max_reviews': 50,
-        'max_reviews': 50,
-    },
-    max_active_runs=16, # Allow multiple concurrent runs
-    concurrency=16,
+    }
 ) as dag:
     
     # Task 1: Trigger Producer

@@ -59,14 +59,16 @@ def get_spark_session():
             print("⚡ Initializing Spark Session...")
             spark = SparkSession.builder \
                 .appName("ABSA_Consumer_Service") \
-                .master(SPARK_MASTER) \
-                .config("spark.sql.execution.arrow.pyspark.enabled", "true") \
-                .config("spark.driver.memory", "2g") \
-                .config("spark.executor.memory", "2g") \
-                .config("spark.executor.cores", "1") \
-                .config("spark.task.cpus", "1") \
-                .getOrCreate()
-            print("⚡ Spark Session Ready")
+        # Optimize for single-machine docker environment
+        print("⚡ Initializing Spark Session...")
+        spark = SparkSession.builder \
+            .appName("ABSAConsumer") \
+            .master(SPARK_MASTER) \
+            .config("spark.executor.memory", "2g") \
+            .config("spark.driver.memory", "1g") \
+            .config("spark.sql.execution.arrow.pyspark.enabled", "true") \
+            .getOrCreate()
+        print("⚡ Spark Session Ready")
     return spark
 
 # --- Define UDFs GLOBALLY to avoid closure/pickling overhead ---
@@ -125,6 +127,7 @@ def _predict_model_logic(texts):
         _predict_model_logic.predictor = None
         _predict_model_logic.model_type = None
         _predict_model_logic.last_config_check = 0
+        print(f"Worker {os.getpid()}: Initializing predictor state")
     
     config_path = os.path.join(project_root, "model_config.json")
     
@@ -152,15 +155,16 @@ def _predict_model_logic(texts):
                      _predict_model_logic.predictor = PhoBERTPredictor()
                  
                  _predict_model_logic.model_type = target_model
-                 print(f"Worker loaded model: {target_model}")
+                 print(f"Worker {os.getpid()}: Loaded model: {target_model}")
              except Exception as e:
-                 print(f"Worker failed load model: {e}")
+                 print(f"Worker {os.getpid()}: Failed load model: {e}")
                  
         _predict_model_logic.last_config_check = now
 
     predictor = _predict_model_logic.predictor
     
     results = []
+    print(f"Worker {os.getpid()}: Processing batch of {len(texts)} texts")
     
     # --- Parallelize the batch on the worker ---
     # Even if texts is small (10), doing 10 * 11s = 110s sequentially is bad.
@@ -171,21 +175,21 @@ def _predict_model_logic(texts):
         if hasattr(predictor, 'predict_batch'):
             # Convert series to list
             text_list = texts.tolist()
-            batch_results = predictor.predict_batch(text_list)
+            # Use 'multipolarity' format for rich sentiment (lists of labels)
+            batch_results = predictor.predict_batch(text_list, format='multipolarity')
             
             # Serialize
             for res in batch_results:
-                # Clean keys
-                clean_res = res # {k: v for k, v in res.items() if v in [1, 0, -1, 'POS', 'NEG', 'NEU']}
-                results.append(json.dumps(clean_res, ensure_ascii=False))
+                results.append(json.dumps(res, ensure_ascii=False))
         else:
             # Manual Threading
             def _predict_single_safe(txt):
                 try:
                     res = predictor.predict_single(txt)
-                    return res # {k: v for k, v in res.items() if v in [1, 0, -1, 'POS', 'NEG', 'NEU']}
+                    return res['multipolarity'] # Return only multipolarity dict
                 except:
-                    return {}
+                    # Return empty default struct
+                    return {asp: {'mentioned': False, 'sentiments': None} for asp in ['Chất lượng sản phẩm', 'Hiệu năng & Trải nghiệm', 'Đúng mô tả', 'Giá cả & Khuyến mãi', 'Vận chuyển', 'Đóng gói', 'Dịch vụ & Thái độ Shop', 'Bảo hành & Đổi trả', 'Tính xác thực']}
 
             with ThreadPoolExecutor(max_workers=5) as executor:
                 futures = [executor.submit(_predict_single_safe, t) for t in texts]
@@ -210,9 +214,12 @@ def run_spark_prediction(product_id: str, reviews: List[Dict]):
         
         spark = get_spark_session()
         
-        # Prepare data
-        data = [(r.get('review_content', ''), r.get('rating', 0), r.get('review_id', '')) 
-                for r in reviews]
+        # Prepare data - Handle multiple possible keys for review text
+        # Producer sends 'review_content', so check that FIRST
+        data = []
+        for r in reviews:
+            text = r.get('review_content') or r.get('review_text') or r.get('reviewContent') or r.get('content') or ''
+            data.append((text, r.get('rating', 0), r.get('review_id', '')))
         df = spark.createDataFrame(data, ["review_text", "rating", "review_id"])
         
         # Register UDFs
@@ -357,12 +364,13 @@ def run_service():
     print(f"   Spark: {SPARK_MASTER}")
     print(f"   Batch Size: {BATCH_SIZE}")
     
+    # Use global batch_start_time to persist across reconnects
+    batch_start_time = {}
+    
     while True:
         try:
             consumer = create_consumer()
             print(f"✅ Subscribed to topic: {INPUT_TOPIC}")
-            
-            batch_start_time = {}
             
             for message in consumer:
                 data = message.value
@@ -373,8 +381,9 @@ def run_service():
                     
                     if product_id not in batch_start_time:
                         batch_start_time[product_id] = time.time()
-                    
-                    # Check if batch is ready
+                
+                # Check if THIS product's batch is ready
+                with buffer_lock:
                     batch_ready = (
                         len(review_buffer[product_id]) >= BATCH_SIZE or
                         time.time() - batch_start_time.get(product_id, 0) > BATCH_TIMEOUT
@@ -384,15 +393,37 @@ def run_service():
                     print(f"📦 Batch ready for {product_id} ({len(review_buffer[product_id])} reviews)")
                     process_batch(product_id)
                     batch_start_time.pop(product_id, None)
+                
+                # CRITICAL FIX: Also check ALL OTHER products for timeout
+                # This prevents reviews from being orphaned when messages interleave
+                current_time = time.time()
+                with buffer_lock:
+                    products_to_process = []
+                    for pid in list(review_buffer.keys()):
+                        if pid != product_id and review_buffer[pid]:  # Skip current, already handled above
+                            if current_time - batch_start_time.get(pid, 0) > BATCH_TIMEOUT:
+                                products_to_process.append(pid)
+                
+                # Process timed-out batches for other products (outside lock)
+                for pid in products_to_process:
+                    print(f"📦 Timeout triggered for {pid} ({len(review_buffer.get(pid, []))} reviews)")
+                    process_batch(pid)
+                    batch_start_time.pop(pid, None)
             
-            # Process remaining batches after timeout
-            for product_id in list(review_buffer.keys()):
-                if review_buffer[product_id]:
-                    print(f"📦 Processing remaining batch for {product_id}")
-                    process_batch(product_id)
+            # Process remaining batches after consumer timeout (no new messages for consumer_timeout_ms)
+            print(f"⏰ Consumer poll timeout. Checking for remaining batches...")
+            with buffer_lock:
+                remaining_products = [pid for pid in list(review_buffer.keys()) if review_buffer[pid]]
+            
+            for product_id in remaining_products:
+                print(f"📦 Processing remaining batch for {product_id} ({len(review_buffer.get(product_id, []))} reviews)")
+                process_batch(product_id)
+                batch_start_time.pop(product_id, None)
                     
         except Exception as e:
             print(f"❌ Consumer error: {e}")
+            import traceback
+            traceback.print_exc()
             time.sleep(5)
 
 

@@ -12,6 +12,9 @@ x-airflow-common:
     AIRFLOW__CORE__FERNET_KEY: ''
     AIRFLOW__CORE__DAGS_ARE_PAUSED_AT_CREATION: 'true'
     AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    AIRFLOW__CORE__PARALLELISM: '32'  # Max parallel tasks across all DAGs
+    AIRFLOW__CORE__DAG_CONCURRENCY: '16'  # Max concurrent tasks per DAG
+    AIRFLOW__CORE__MAX_ACTIVE_RUNS_PER_DAG: '16'  # Max parallel runs per DAG
     AIRFLOW__API__AUTH_BACKENDS: 'airflow.api.auth.backend.basic_auth'
     AIRFLOW__WEBSERVER__SECRET_KEY: 'this_is_a_very_secure_secret_key' # Fix for 403 Forbidden on Logs
     # Ensure Java is available if needed explicitly, but ENV in Dockerfile handles it
@@ -125,6 +128,20 @@ services:
     environment:
       - PYTHONUNBUFFERED=1
     restart: always
+
+  # FastAPI for React Frontend
+  absa-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./:/app
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: always
+
 
   kafka-consumer:
     build:

@@ -47,7 +47,8 @@ def send_reviews_to_kafka(product_id: str, reviews: List[Dict]):
             
         message = {
             'product_id': product_id,
-            'review_content': review.get('reviewContent', ''),
+            # Support multiple field names for review content
+            'review_content': review.get('review_text') or review.get('reviewContent') or review.get('content', ''),
             'rating': review.get('rating', 0),
             'review_id': str(r_id),
             'timestamp': time.time()

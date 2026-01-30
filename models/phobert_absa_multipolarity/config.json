@@ -1,0 +1,23 @@
+{
+  "aspects": [
+    "Chất lượng sản phẩm",
+    "Hiệu năng & Trải nghiệm",
+    "Đúng mô tả",
+    "Giá cả & Khuyến mãi",
+    "Vận chuyển",
+    "Đóng gói",
+    "Dịch vụ & Thái độ Shop",
+    "Bảo hành & Đổi trả",
+    "Tính xác thực"
+  ],
+  "max_length": 256,
+  "best_f1": 0.9793468177420709,
+  "mention_f1": 0.9936203837094855,
+  "sentiment_f1": 0.9650732517746563,
+  "multi_polarity": true,
+  "sentiment_classes": [
+    "NEG",
+    "POS",
+    "NEU"
+  ]
+}

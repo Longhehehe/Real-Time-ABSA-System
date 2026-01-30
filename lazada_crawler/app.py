@@ -387,7 +387,6 @@ máy tính bảng"""
                     # Crawl each product
                     for prod_idx, product in enumerate(top_products):
                         status_text.text(f"📝 [{kw_idx+1}/{total_keywords}] {keyword} - Sản phẩm {prod_idx+1}/{len(top_products)}")
-                        
                         try:
                             df = crawler.crawl_reviews(product['link'], max_pages=-1, balanced_mode=True)
                             if df is not None and not df.empty:
@@ -395,17 +394,35 @@ máy tính bảng"""
                                 df['product_title'] = product.get('title', '')
                                 all_bulk_reviews.append(df)
                                 st.text(f"    ✓ Thu được {len(df)} reviews")
+                                
+                                # === LƯU NGAY SAU MỖI SẢN PHẨM ===
+                                # Update session_state để hiển thị ở Data View
+                                current_df = pd.concat(all_bulk_reviews, ignore_index=True)
+                                st.session_state['crawled_data'] = current_df
+                                
+                                # Lưu file CSV (ghi đè với dữ liệu mới nhất)
+                                current_df.to_csv("bulk_crawl_progress.csv", index=False, encoding='utf-8-sig')
+                                st.text(f"    💾 Đã lưu {len(current_df)} reviews → bulk_crawl_progress.csv")
+                                
                         except Exception as e:
                             st.text(f"    ✗ Lỗi: {str(e)[:50]}")
+                            # Longer delay on error to avoid being blocked
+                            time.sleep(random.uniform(10, 20))
                         
-                        # Random delay between products
-                        time.sleep(random.uniform(2, 5))
+                        # Random delay between products (tránh bị chặn)
+                        delay = random.uniform(5, 12)
+                        status_text.text(f"⏳ Đợi {delay:.1f}s trước sản phẩm tiếp theo...")
+                        time.sleep(delay)
                     
-                    # Random delay between keywords
-                    time.sleep(random.uniform(3, 7))
+                    # Random delay between keywords (dài hơn)
+                    delay = random.uniform(8, 15)
+                    status_text.text(f"⏳ Đợi {delay:.1f}s trước từ khóa tiếp theo...")
+                    time.sleep(delay)
                     
                 except Exception as e:
                     st.warning(f"Lỗi với từ khóa '{keyword}': {e}")
+                    # Longer delay on keyword error
+                    time.sleep(random.uniform(15, 30))
                 
                 progress_bar.progress((kw_idx + 1) / total_keywords)
             

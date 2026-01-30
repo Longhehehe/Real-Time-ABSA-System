@@ -1,7 +1,0 @@
-🚀 Starting Debug Script
-✅ Selenium imported
-
---- Attempt 1: Native Selenium Manager ---
-✅ Attempt 1 Success! Browser should be open.
-   Navigated to Lazada
-   Quit driver

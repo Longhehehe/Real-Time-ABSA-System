@@ -18,7 +18,7 @@ airflow/logs/
 *.pth
 *.pt
 *.h5
-*.pkl
+# *.pkl  # KEEP cookie files
 *.model
 
 # Data files (nếu quá lớn)
@@ -42,8 +42,10 @@ Thumbs.db
 # Byte-compiled files
 *.pyc
 
-# Cookie files
-cookie/
+# Node.js - EXCLUDE when zipping (reinstall on target machine)
+node_modules/
+npm-debug.log
+yarn-error.log
 
 # Compressed files
 *.rar
@@ -54,3 +56,8 @@ cookie/
 *.tmp
 *.temp
 *.log
+
+# Generated prediction files (will be recreated)
+data/predictions/*.json
+data/predictions/*.done
+data/triggers/

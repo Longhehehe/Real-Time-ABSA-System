@@ -68,7 +68,7 @@ def search_lazada(
                         'original_price': item.get('originalPriceShow', ''),
                         'discount': item.get('discount', ''),
                         'url': 'https:' + item.get('productUrl', '') if item.get('productUrl', '').startswith('//') else item.get('productUrl', ''),
-                        'image': item.get('image', ''),
+                        'image': ('https:' + item.get('image', '')) if item.get('image', '').startswith('//') else item.get('image', ''),
                         'rating': item.get('ratingScore', 0),
                         'reviews': item.get('review', 0),
                         'sold': item.get('itemSoldCntShow', ''),
