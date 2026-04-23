@@ -10,6 +10,7 @@ Key difference from original:
 import os
 import sys
 import torch
+import copy
 import torch.nn as nn
 import pandas as pd
 import numpy as np
@@ -262,120 +263,118 @@ def load_data_multipolarity(data_path: str) -> Tuple[List[str], np.ndarray, np.n
 
 
 
+ # Bạn nhớ thêm dòng này vào đầu file cùng các import khác
+
 def train_model_multipolarity(
     data_path: str,
     output_dir: str = "./models/phobert_absa_multipolarity",
-    epochs: int = 5,
+    epochs: int = 1,
     batch_size: int = 16,
     learning_rate: float = 2e-5,
     max_length: int = 256,
     device: str = None
 ):
-    """Train PhoBERT Multi-Polarity ABSA model."""
+    """Train PhoBERT Multi-Polarity: Train ALL epochs, then compare BEST of session vs OLD file."""
     
     if device is None:
         device = "cuda" if torch.cuda.is_available() else "cpu"
     
-    print(f"🚀 PhoBERT Multi-Polarity ABSA Training")
+    print(f"🚀 PhoBERT Multi-Polarity ABSA Training (Full Epoch Check Mode)")
     print(f"📱 Device: {device}")
     
-    # Load tokenizer
+    # Setup paths
+    os.makedirs(output_dir, exist_ok=True)
+    model_save_path = os.path.join(output_dir, 'phobert_absa_multipolarity.pt')
+    
+    # Initialize Model
+    print("🧠 Initializing model...")
+    model = PhoBERTForABSAMultiPolarity(num_aspects=len(ASPECTS))
+    model = model.to(device)
+    
+    # --- BƯỚC 1: LOAD MODEL CŨ (NẾU CÓ) ĐỂ LẤY BASELINE ---
+    global_best_f1 = 0.0
+    
+    if os.path.exists(model_save_path):
+        print(f"🔄 Found existing model at: {model_save_path}")
+        try:
+            checkpoint = torch.load(model_save_path, map_location=device)
+            # Load weights cũ để train tiếp (fine-tune)
+            if 'model_state_dict' in checkpoint:
+                model.load_state_dict(checkpoint['model_state_dict'])
+                print("   ✅ Loaded old weights to fine-tune.")
+            
+            # Lấy thành tích tốt nhất cũ
+            if 'best_f1' in checkpoint:
+                global_best_f1 = checkpoint['best_f1']
+                print(f"   🏆 OLD Record F1: {global_best_f1:.4f}")
+            else:
+                print("   ⚠️ Old file exists but no F1 score found. Setting baseline to 0.")
+        except Exception as e:
+            print(f"   ⚠️ Error loading old model: {e}. Starting fresh.")
+    else:
+        print("🆕 No existing model. Baseline F1 = 0.")
+
+    # Load tokenizer & data (giữ nguyên)
     print("📥 Loading PhoBERT tokenizer...")
     tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base")
     
-    # Load data
     print(f"📊 Loading data from {data_path}...")
     texts, labels_m, labels_s = load_data_multipolarity(data_path)
-    print(f"   Total samples: {len(texts)}")
-    print(f"   Labels shape - Mention: {labels_m.shape}, Sentiment: {labels_s.shape}")
     
-    # Check for multi-polarity samples
-    multi_polarity_count = np.sum(np.sum(labels_s, axis=-1) > 1)
-    print(f"   Multi-polarity samples (>1 sentiment per aspect): {multi_polarity_count}")
-    
-    # Split data
     train_texts, val_texts, train_labels_m, val_labels_m, train_labels_s, val_labels_s = train_test_split(
         texts, labels_m, labels_s, test_size=0.2, random_state=42
     )
-    print(f"   Train: {len(train_texts)}, Val: {len(val_texts)}")
     
-    # Create datasets
     train_dataset = ABSADatasetMultiPolarity(train_texts, train_labels_m, train_labels_s, tokenizer, max_length)
     val_dataset = ABSADatasetMultiPolarity(val_texts, val_labels_m, val_labels_s, tokenizer, max_length)
     
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
     val_loader = DataLoader(val_dataset, batch_size=batch_size)
     
-    # Create model
-    print("🧠 Creating PhoBERT Multi-Polarity ABSA model...")
-    model = PhoBERTForABSAMultiPolarity(num_aspects=len(ASPECTS))
-    model = model.to(device)
-    
-    # Optimizer and scheduler
     optimizer = AdamW(model.parameters(), lr=learning_rate, weight_decay=0.01)
     total_steps = len(train_loader) * epochs
     scheduler = get_linear_schedule_with_warmup(
-        optimizer, 
-        num_warmup_steps=total_steps // 10,
-        num_training_steps=total_steps
+        optimizer, num_warmup_steps=total_steps // 10, num_training_steps=total_steps
     )
     
-    # Loss functions - BOTH use BCE for multi-label!
-    criterion_m = nn.BCEWithLogitsLoss()  # Binary for mention detection
-    criterion_s = nn.BCEWithLogitsLoss()  # Multi-label for sentiment (CHANGED!)
+    criterion_m = nn.BCEWithLogitsLoss()
+    criterion_s = nn.BCEWithLogitsLoss()
     
-    # Training loop with early stopping
-    best_val_f1 = 0
-    patience = 5  # Increased patience for better convergence
-    patience_counter = 0
+    # --- BƯỚC 2: TRAIN TẤT CẢ EPOCH (Lưu kết quả tốt nhất vào RAM) ---
+    session_best_f1 = 0.0
+    session_best_weights = None # Biến này lưu bộ weights tốt nhất TRONG PHIÊN NÀY
+    session_best_metrics = {}
+    
+    print(f"\n🏃 Starting training loop for {epochs} epochs...")
     
     for epoch in range(epochs):
         print(f"\n📈 Epoch {epoch + 1}/{epochs}")
         
-        # === TRAINING ===
+        # Training logic (Giữ nguyên)
         model.train()
         train_loss = 0
         train_pbar = tqdm(train_loader, desc="Training")
         
-        for batch_idx, batch in enumerate(train_pbar):
+        for batch in train_pbar:
             input_ids = batch['input_ids'].to(device)
             attention_mask = batch['attention_mask'].to(device)
             labels_m = batch['labels_m'].to(device)
-            labels_s = batch['labels_s'].to(device)  # Now [batch, aspects, 3]
+            labels_s = batch['labels_s'].to(device)
             
-            # Forward pass
             logits_m, logits_s = model(input_ids, attention_mask)
+            loss = criterion_m(logits_m, labels_m) + criterion_s(logits_s, labels_s)
             
-            # Compute multi-task loss
-            loss_m = criterion_m(logits_m, labels_m)
-            
-            # Multi-label sentiment loss (CHANGED!)
-            # logits_s: [batch, aspects, 3]
-            # labels_s: [batch, aspects, 3]
-            loss_s = criterion_s(logits_s, labels_s)
-            
-            # Combined loss
-            loss = loss_m + loss_s
-            
-            # Backward pass
             optimizer.zero_grad()
             loss.backward()
             torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
             optimizer.step()
             scheduler.step()
-            
             train_loss += loss.item()
             train_pbar.set_postfix({'loss': f'{loss.item():.4f}'})
-        
-        avg_train_loss = train_loss / len(train_loader)
-        print(f"   Train Loss: {avg_train_loss:.4f}")
-        
-        # === VALIDATION ===
+            
+        # Validation logic (Giữ nguyên)
         model.eval()
-        val_preds_m = []
-        val_true_m = []
-        val_preds_s = []
-        val_true_s = []
+        val_preds_m, val_true_m, val_preds_s, val_true_s = [], [], [], []
         
         with torch.no_grad():
             for batch in tqdm(val_loader, desc="Validation"):
@@ -385,14 +384,9 @@ def train_model_multipolarity(
                 labels_s = batch['labels_s'].to(device)
                 
                 logits_m, logits_s = model(input_ids, attention_mask)
-                
-                # Predictions - BOTH use sigmoid threshold for multi-label!
-                preds_m = (torch.sigmoid(logits_m) > 0.5).float()
-                preds_s = (torch.sigmoid(logits_s) > 0.5).float()  # Multi-label!
-                
-                val_preds_m.append(preds_m.cpu().numpy())
+                val_preds_m.append((torch.sigmoid(logits_m) > 0.5).float().cpu().numpy())
                 val_true_m.append(labels_m.cpu().numpy())
-                val_preds_s.append(preds_s.cpu().numpy())
+                val_preds_s.append((torch.sigmoid(logits_s) > 0.5).float().cpu().numpy())
                 val_true_s.append(labels_s.cpu().numpy())
         
         val_preds_m = np.vstack(val_preds_m)
@@ -400,91 +394,95 @@ def train_model_multipolarity(
         val_preds_s = np.concatenate(val_preds_s, axis=0)
         val_true_s = np.concatenate(val_true_s, axis=0)
         
-        # Calculate metrics
         f1_m = f1_score(val_true_m.flatten(), val_preds_m.flatten(), average='macro', zero_division=0)
         
-        # Multi-label F1 for sentiment - ONLY on mentioned aspects!
-        # Filter out non-mentioned samples (where all labels are 0)
-        mentioned_mask = val_true_m.flatten() == 1  # [batch * aspects]
-        
-        # Reshape sentiment arrays
-        true_s_flat = val_true_s.reshape(-1, 3)  # [batch * aspects, 3]
+        mentioned_mask = val_true_m.flatten() == 1
+        true_s_flat = val_true_s.reshape(-1, 3)
         pred_s_flat = val_preds_s.reshape(-1, 3)
-        
-        # Only keep mentioned rows for evaluation
         true_s_mentioned = true_s_flat[mentioned_mask]
         pred_s_mentioned = pred_s_flat[mentioned_mask]
         
-        if len(true_s_mentioned) > 0:
-            # Use samples average for multi-label
-            f1_s = f1_score(
-                true_s_mentioned,
-                pred_s_mentioned,
-                average='samples',
-                zero_division=0
-            )
-            
-            # Also calculate micro F1 as alternative metric
-            f1_s_micro = f1_score(
-                true_s_mentioned.flatten(),
-                pred_s_mentioned.flatten(),
-                average='binary',
-                zero_division=0
-            )
-        else:
-            f1_s = 0.0
-            f1_s_micro = 0.0
-        
+        f1_s = f1_score(true_s_mentioned, pred_s_mentioned, average='samples', zero_division=0) if len(true_s_mentioned) > 0 else 0.0
         combined_f1 = (f1_m + f1_s) / 2
         
-        print(f"   Val Mention F1: {f1_m:.4f}")
-        print(f"   Val Sentiment F1 (multi-label, samples): {f1_s:.4f}")
-        print(f"   Val Sentiment F1 (micro): {f1_s_micro:.4f}")
-        print(f"   Val Combined F1: {combined_f1:.4f}")
+        print(f"   Val Combined F1: {combined_f1:.4f} (Session Best: {session_best_f1:.4f})")
         
-        # Save best model
-        if combined_f1 > best_val_f1:
-            best_val_f1 = combined_f1
-            patience_counter = 0
-            print(f"   ✅ New best model! Saving...")
+        # --- LOGIC CẬP NHẬT SESSION BEST ---
+        # Chỉ so sánh với các epoch khác trong phiên chạy này
+        if combined_f1 > session_best_f1:
+            session_best_f1 = combined_f1
+            # QUAN TRỌNG: Dùng deepcopy để lưu trạng thái model tốt nhất vào RAM
+            session_best_weights = copy.deepcopy(model.state_dict())
+            session_best_metrics = {'mention_f1': f1_m, 'sentiment_f1': f1_s}
+            print(f"   ⭐ New Session Best found! (Kept in memory)")
+    
+    # --- BƯỚC 3: CHECK CUỐI CÙNG VÀ LƯU FILE ---
+    print(f"\n{'='*40}")
+    print(f"🏁 Training Finished. Final Comparison:")
+    print(f"   - Old Record (File): {global_best_f1:.4f}")
+    print(f"   - New Record (This Session): {session_best_f1:.4f}")
+    
+# ... (Đoạn so sánh if session_best_f1 > global_best_f1 ở cuối hàm) ...
+    
+    if session_best_f1 > global_best_f1:
+        improvement = session_best_f1 - global_best_f1
+        print(f"   ✅ SUCCESS: New model is better (+{improvement:.4f}). Saving to disk...")
+        
+        if session_best_weights is not None:
+            # === ĐOẠN CODE SỬA ĐỔI ===
+            try:
+                # 1. Đảm bảo thư mục tồn tại
+                save_dir = os.path.dirname(model_save_path)
+                if not os.path.exists(save_dir):
+                    print(f"   Creating directory: {save_dir}")
+                    os.makedirs(save_dir, exist_ok=True)
+                
+                # 2. Xóa file cũ nếu tồn tại (để tránh lỗi permission khi ghi đè)
+                if os.path.exists(model_save_path):
+                    try:
+                        os.remove(model_save_path)
+                        print("   Removed old model file to overwrite.")
+                    except OSError:
+                        print("   ⚠️ Could not remove old file (might be permission issue), trying to overwrite directly...")
+
+                # 3. Lưu model mới
+                torch.save({
+                    'model_state_dict': session_best_weights,
+                    'tokenizer_name': 'vinai/phobert-base',
+                    'aspects': ASPECTS,
+                    'best_f1': session_best_f1,
+                    'mention_f1': session_best_metrics['mention_f1'],
+                    'sentiment_f1': session_best_metrics['sentiment_f1'],
+                    'multi_polarity': True
+                }, model_save_path)
+                
+                # 4. Lưu config
+                config = {
+                    'aspects': ASPECTS,
+                    'max_length': max_length,
+                    'best_f1': float(session_best_f1),
+                    'mention_f1': float(session_best_metrics['mention_f1']),
+                    'sentiment_f1': float(session_best_metrics['sentiment_f1']),
+                    'multi_polarity': True
+                }
+                with open(os.path.join(output_dir, 'config.json'), 'w', encoding='utf-8') as f:
+                    json.dump(config, f, ensure_ascii=False, indent=2)
+                    
+                print(f"   📁 Saved successfully to {model_save_path}")
+                
+            except Exception as e:
+                print(f"\n   ❌ CRITICAL ERROR: Could not save model!")
+                print(f"   Error details: {e}")
+                print(f"   👉 SUGGESTION: Run 'sudo chmod -R 777 models/' on your host machine terminal.")
+            # =========================
             
-            os.makedirs(output_dir, exist_ok=True)
-            
-            # Save model
-            torch.save({
-                'model_state_dict': model.state_dict(),
-                'tokenizer_name': 'vinai/phobert-base',
-                'aspects': ASPECTS,
-                'best_f1': best_val_f1,
-                'mention_f1': f1_m,
-                'sentiment_f1': f1_s,
-                'multi_polarity': True  # Flag for inference
-            }, os.path.join(output_dir, 'phobert_absa_multipolarity.pt'))
-            
-            # Save config
-            config = {
-                'aspects': ASPECTS,
-                'max_length': max_length,
-                'best_f1': float(best_val_f1),
-                'mention_f1': float(f1_m),
-                'sentiment_f1': float(f1_s),
-                'multi_polarity': True,
-                'sentiment_classes': ['NEG', 'POS', 'NEU']
-            }
-            with open(os.path.join(output_dir, 'config.json'), 'w', encoding='utf-8') as f:
-                json.dump(config, f, ensure_ascii=False, indent=2)
         else:
-            patience_counter += 1
-            print(f"   ⏳ No improvement. Patience: {patience_counter}/{patience}")
+            print("   ⚠️ Error: Session best weights is None.")
             
-            # Early stopping
-            if patience_counter >= patience:
-                print(f"   🛑 Early stopping triggered!")
-                break
-    
-    print(f"\n🎉 Training complete! Best F1: {best_val_f1:.4f}")
-    print(f"📁 Model saved to: {output_dir}")
-    
+    else:
+        print(f"   ❌ FAILURE: New model ({session_best_f1:.4f}) is NOT better than old one ({global_best_f1:.4f}).")
+        print("   🗑️ Discarding new training results. Keeping old file.")
+
     return output_dir
 
 
@@ -494,7 +492,7 @@ def train_model_kfold(
     n_folds: int = 5,
     epochs: int = 5,
     batch_size: int = 16,
-    learning_rate: float = 2e-5,
+    learning_rate: float = 2e-6,
     max_length: int = 256,
     device: str = None
 ):

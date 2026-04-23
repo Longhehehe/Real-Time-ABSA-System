@@ -217,9 +217,26 @@ def run_spark_prediction(product_id: str, reviews: List[Dict]):
         # Prepare data - Handle multiple possible keys for review text
         # Producer sends 'review_content', so check that FIRST
         data = []
+        skipped_empty = 0
         for r in reviews:
             text = r.get('review_content') or r.get('review_text') or r.get('reviewContent') or r.get('content') or ''
+            text = str(text).strip() if text else ''
+            
+            # Log and skip empty reviews
+            if not text:
+                skipped_empty += 1
+                print(f"⚠️ Skipping empty review: id={r.get('review_id', 'N/A')}")
+                continue
+                
             data.append((text, r.get('rating', 0), r.get('review_id', '')))
+        
+        if skipped_empty > 0:
+            print(f"⚠️ Skipped {skipped_empty} empty reviews out of {len(reviews)}")
+        
+        if not data:
+            print(f"⚠️ No valid reviews to process after filtering!")
+            return
+            
         df = spark.createDataFrame(data, ["review_text", "rating", "review_id"])
         
         # Register UDFs

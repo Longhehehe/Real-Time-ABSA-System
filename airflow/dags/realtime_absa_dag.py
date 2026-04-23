@@ -158,22 +158,30 @@ def trigger_producer(**context):
             except:
                 print("❌ Could not truncate file either. Old data may persist.")
     
-    # Send to Kafka
-    success = send_reviews_to_kafka(product_id, reviews)
+    # Send to Kafka (returns tuple: success, sent_count)
+    result = send_reviews_to_kafka(product_id, reviews)
+    
+    # Handle both old (bool) and new (tuple) return format
+    if isinstance(result, tuple):
+        success, sent_count = result
+    else:
+        success = result
+        sent_count = len(reviews)
     
     if not success:
         raise Exception("Failed to send reviews to Kafka!")
     
-    # Store info for downstream tasks
+    # Store info for downstream tasks - use actual sent count, not original count
     context['ti'].xcom_push(key='product_id', value=product_id)
-    context['ti'].xcom_push(key='review_count', value=len(reviews))
+    context['ti'].xcom_push(key='review_count', value=sent_count)
     
-    print(f"✅ Sent {len(reviews)} reviews for product {product_id}")
+    print(f"✅ Sent {sent_count} reviews for product {product_id}")
 
 
 def wait_for_consumer(**context):
     """
     Task 2: Poll and wait for Consumer to finish processing.
+    Includes stale detection - if no progress for STALE_TIMEOUT, assume done.
     """
     product_id = context['ti'].xcom_pull(key='product_id')
     expected_count = context['ti'].xcom_pull(key='review_count')
@@ -182,7 +190,10 @@ def wait_for_consumer(**context):
     
     max_wait = 1800  # 30 minutes (Increased because sequential processing is slow)
     poll_interval = 5
+    stale_timeout = 60  # If no progress for 60 seconds, consider consumer done
     elapsed = 0
+    last_count = 0
+    stale_timer = 0
     
     # Helper to print results
     def print_results(data_chunk):
@@ -269,17 +280,37 @@ def wait_for_consumer(**context):
 
     elapsed = 0
     while elapsed < max_wait:
+        current_count = 0
         if os.path.exists(pred_file):
             try:
                 with open(pred_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
+                current_count = len(data)
                 
-                if len(data) >= expected_count:
-                    print(f"✅ Consumer finished! Processed {len(data)} reviews.")
+                if current_count >= expected_count:
+                    print(f"✅ Consumer finished! Processed {current_count} reviews.")
                     print_results(data)
                     return True
+                
+                # Stale detection: check if progress has stopped
+                if current_count > last_count:
+                    # Progress made, reset stale timer
+                    last_count = current_count
+                    stale_timer = 0
+                else:
+                    # No progress
+                    stale_timer += poll_interval
+                
+                # If stale for too long and we have SOME data, accept partial results
+                if stale_timer >= stale_timeout and current_count > 0:
+                    print(f"⚠️ No progress for {stale_timeout}s. Consumer appears idle.")
+                    print(f"📊 Accepting partial results: {current_count}/{expected_count} reviews")
+                    print_results(data)
+                    # Store actual count for downstream tasks
+                    context['ti'].xcom_push(key='actual_count', value=current_count)
+                    return True  # Accept partial instead of failing
                     
-                print(f"⏳ Processed {len(data)}/{expected_count}...")
+                print(f"⏳ Processed {current_count}/{expected_count}... (stale: {stale_timer}s)")
             except json.JSONDecodeError:
                 pass
         
@@ -288,11 +319,11 @@ def wait_for_consumer(**context):
         elapsed += poll_interval
     
     # Timeout occurred
-    print(f"⚠️ Timeout! Printing partial results ({len(data) if 'data' in locals() else 0}/{expected_count})...")
+    print(f"⚠️ Timeout! Printing partial results ({current_count if 'current_count' in locals() else 0}/{expected_count})...")
     if 'data' in locals() and data:
         print_results(data)
         
-    raise Exception(f"Timeout waiting for Consumer! Only got {len(data) if 'data' in locals() else 0}/{expected_count}")
+    raise Exception(f"Timeout waiting for Consumer! Only got {current_count if 'current_count' in locals() else 0}/{expected_count}")
 
 
 def aggregate_results(**context):

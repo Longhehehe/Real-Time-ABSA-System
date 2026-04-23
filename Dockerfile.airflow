@@ -56,6 +56,14 @@ ENV VNCORENLP_PATH=/opt/vncorenlp/VnCoreNLP-1.1.1.jar
 ENV CHROME_BIN=/usr/bin/google-chrome
 ENV DISPLAY=:99
 
+USER root
+
+# Copy and set up entrypoint script to fix mounted volume permissions
+COPY entrypoint.airflow.sh /opt/entrypoint.sh
+RUN chmod +x /opt/entrypoint.sh
+
+ENTRYPOINT ["/opt/entrypoint.sh"]
+
 USER airflow
 
 # Install Python dependencies

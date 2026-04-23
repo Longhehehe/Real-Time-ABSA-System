@@ -11,13 +11,8 @@
     "Tính xác thực"
   ],
   "max_length": 256,
-  "best_f1": 0.9793468177420709,
-  "mention_f1": 0.9936203837094855,
-  "sentiment_f1": 0.9650732517746563,
-  "multi_polarity": true,
-  "sentiment_classes": [
-    "NEG",
-    "POS",
-    "NEU"
-  ]
+  "best_f1": 0.9834274926898681,
+  "mention_f1": 0.9940600903487741,
+  "sentiment_f1": 0.9727948950309622,
+  "multi_polarity": true
 }

@@ -78,7 +78,7 @@ output_dir = train_model_multipolarity(
     data_path=DATA_PATH,
     output_dir=MODEL_DIR,
     epochs=25,           # More training epochs
-    batch_size=8,        # Smaller batch for more gradient updates
+    batch_size=16,        # Smaller batch for more gradient updates
     learning_rate=2e-5,  # Standard PhoBERT learning rate
     max_length=256       # Full context preservation
 )
@@ -132,7 +132,7 @@ for i, res in enumerate(results):
     print(f'Text {i+1}:')
     for asp, info in list(res.items())[:3]:
         if info.get('mentioned'):
-            print(f'  {asp}: {info.get(\"sentiments\", [])}')
+            print(f'  {asp}: {info.get(\\\"sentiments\\\", [])}')
 print('Inference test passed!')
 "
         ''',

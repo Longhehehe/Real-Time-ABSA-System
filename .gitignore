@@ -17,12 +17,21 @@ airflow/logs/
 # Model files (quá lớn cho GitHub - 540MB)
 *.pth
 *.pt
+*.pkl
+*.pickle
+*.joblib
+*.bin
+*.onnx
+*.safetensors
 *.h5
 # *.pkl  # KEEP cookie files
 *.model
 
 # Data files (nếu quá lớn)
-# data/
+# Large datasets / exports / notebooks
+*.csv
+*.ipynb
+data/
 # rawdata/
 
 # IDE
