@@ -34,9 +34,8 @@ def trigger_producer(**context):
     """
     import sys
     sys.path.insert(0, PROJECT_DIR)
-    sys.path.insert(0, os.path.join(PROJECT_DIR, 'app'))
     
-    from lazada_producer import send_reviews_to_kafka
+    from app.lazada_producer import send_reviews_to_kafka
     
     # Get params - API trigger uses dag_run.conf, manual uses params
     dag_run = context.get('dag_run')
@@ -47,6 +46,7 @@ def trigger_producer(**context):
     product_id = conf.get('product_id') or params.get('product_id', 'airflow_product')
     product_url = conf.get('product_url') or params.get('product_url', '')
     max_reviews = conf.get('max_reviews') or params.get('max_reviews', 100)
+    model = conf.get('model') or params.get('model', 'phobert_multipolarity')
     reviews_data = conf.get('reviews') or params.get('reviews', [])  # Pre-crawled reviews
     
     print(f"📋 Config received: product_id={product_id}, product_url={product_url[:50] if product_url else 'N/A'}...")
@@ -77,8 +77,7 @@ def trigger_producer(**context):
         # Use simple requests-based crawler with balanced mode
         try:
             import sys
-            sys.path.insert(0, os.path.join(PROJECT_DIR, 'app'))
-            from lazada_crawler_simple import crawl_reviews_simple
+            from app.lazada_crawler_simple import crawl_reviews_simple
             
             print("⚖️ Using requests-based crawler with BALANCED MODE...")
             reviews, error = crawl_reviews_simple(
@@ -159,7 +158,7 @@ def trigger_producer(**context):
                 print("❌ Could not truncate file either. Old data may persist.")
     
     # Send to Kafka (returns tuple: success, sent_count)
-    result = send_reviews_to_kafka(product_id, reviews)
+    result = send_reviews_to_kafka(product_id, reviews, model=model)
     
     # Handle both old (bool) and new (tuple) return format
     if isinstance(result, tuple):

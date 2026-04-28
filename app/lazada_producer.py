@@ -27,7 +27,7 @@ def create_producer():
         print(f"❌ Error creating producer: {e}")
         return None
 
-def send_reviews_to_kafka(product_id: str, reviews: List[Dict]):
+def send_reviews_to_kafka(product_id: str, reviews: List[Dict], model: str = None):
     """
     Send a batch of reviews to Kafka.
     Returns tuple: (success, sent_count)
@@ -64,7 +64,8 @@ def send_reviews_to_kafka(product_id: str, reviews: List[Dict]):
             'review_content': content,
             'rating': review.get('rating', 0),
             'review_id': str(r_id),
-            'timestamp': time.time()
+            'timestamp': time.time(),
+            'model': model
         }
         producer.send(TOPIC_NAME, value=message)
         sent_count += 1

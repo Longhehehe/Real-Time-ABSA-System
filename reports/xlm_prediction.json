@@ -1,0 +1,55 @@
+{
+  "model_dir": "./models/xlm_roberta_absa",
+  "checkpoint": "./models/xlm_roberta_absa/xlmrobertaforabsa_absa.pt",
+  "text": "Hang chinh hang. Check thong tin ro rang. Hang mall ma thay danh gia nhieu nguoi noi hang gia cung hoang mang. Giao hang nhanh.",
+  "predictions": {
+    "Chất lượng sản phẩm": {
+      "mentioned": true,
+      "sentiments": [
+        "NEU"
+      ]
+    },
+    "Hiệu năng & Trải nghiệm": {
+      "mentioned": true,
+      "sentiments": [
+        "POS"
+      ]
+    },
+    "Đúng mô tả": {
+      "mentioned": false,
+      "sentiments": []
+    },
+    "Giá cả & Khuyến mãi": {
+      "mentioned": false,
+      "sentiments": []
+    },
+    "Vận chuyển": {
+      "mentioned": true,
+      "sentiments": [
+        "POS"
+      ]
+    },
+    "Đóng gói": {
+      "mentioned": false,
+      "sentiments": []
+    },
+    "Dịch vụ & Thái độ Shop": {
+      "mentioned": false,
+      "sentiments": []
+    },
+    "Bảo hành & Đổi trả": {
+      "mentioned": false,
+      "sentiments": []
+    },
+    "Tính xác thực": {
+      "mentioned": false,
+      "sentiments": []
+    }
+  },
+  "timing": {
+    "seconds": 5.3333,
+    "start_time": "2026-04-28T15:40:07.431386+00:00",
+    "end_time": "2026-04-28T15:40:12.764671+00:00",
+    "device": "cuda"
+  }
+}

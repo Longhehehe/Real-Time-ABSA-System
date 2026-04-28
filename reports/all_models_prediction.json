@@ -1,0 +1,346 @@
+{
+  "text": "Hàng chính hãng. Check thông tin rõ ràng. Hãng mall mà thấy đánh giá nhiều người nói hàng giả cũng hoang mang. Giao hàng nhanh.",
+  "models": {
+    "logistic_regression": {
+      "model_dir": "./models/logistic_regression_absa",
+      "predictions": {
+        "Chất lượng sản phẩm": {
+          "mentioned": true,
+          "sentiments": [
+            "NEG"
+          ]
+        },
+        "Hiệu năng & Trải nghiệm": {
+          "mentioned": true,
+          "sentiments": [
+            "POS"
+          ]
+        },
+        "Đúng mô tả": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Giá cả & Khuyến mãi": {
+          "mentioned": true,
+          "sentiments": [
+            "POS"
+          ]
+        },
+        "Vận chuyển": {
+          "mentioned": true,
+          "sentiments": [
+            "POS"
+          ]
+        },
+        "Đóng gói": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Dịch vụ & Thái độ Shop": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Bảo hành & Đổi trả": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Tính xác thực": {
+          "mentioned": true,
+          "sentiments": [
+            "NEG",
+            "POS"
+          ]
+        }
+      },
+      "timing": {
+        "seconds": 0.01
+      },
+      "name": "logistic_regression"
+    },
+    "naive_bayes": {
+      "model_dir": "./models/naive_bayes_absa",
+      "predictions": {
+        "Chất lượng sản phẩm": {
+          "mentioned": true,
+          "sentiments": [
+            "NEG",
+            "POS"
+          ]
+        },
+        "Hiệu năng & Trải nghiệm": {
+          "mentioned": true,
+          "sentiments": [
+            "POS"
+          ]
+        },
+        "Đúng mô tả": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Giá cả & Khuyến mãi": {
+          "mentioned": true,
+          "sentiments": [
+            "POS"
+          ]
+        },
+        "Vận chuyển": {
+          "mentioned": true,
+          "sentiments": [
+            "POS"
+          ]
+        },
+        "Đóng gói": {
+          "mentioned": true,
+          "sentiments": [
+            "POS"
+          ]
+        },
+        "Dịch vụ & Thái độ Shop": {
+          "mentioned": true,
+          "sentiments": [
+            "POS"
+          ]
+        },
+        "Bảo hành & Đổi trả": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Tính xác thực": {
+          "mentioned": true,
+          "sentiments": [
+            "NEG",
+            "POS"
+          ]
+        }
+      },
+      "timing": {
+        "seconds": 0.0199
+      },
+      "name": "naive_bayes"
+    },
+    "bilstm": {
+      "model_dir": "./models/bilstm_absa",
+      "checkpoint": "./models/bilstm_absa/bilstmforabsa_absa.pt",
+      "predictions": {
+        "Chất lượng sản phẩm": {
+          "mentioned": true,
+          "sentiments": [
+            "NEG",
+            "POS"
+          ]
+        },
+        "Hiệu năng & Trải nghiệm": {
+          "mentioned": true,
+          "sentiments": [
+            "NEU"
+          ]
+        },
+        "Đúng mô tả": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Giá cả & Khuyến mãi": {
+          "mentioned": true,
+          "sentiments": [
+            "POS",
+            "NEU"
+          ]
+        },
+        "Vận chuyển": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Đóng gói": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Dịch vụ & Thái độ Shop": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Bảo hành & Đổi trả": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Tính xác thực": {
+          "mentioned": true,
+          "sentiments": [
+            "NEU"
+          ]
+        }
+      },
+      "timing": {
+        "seconds": 2.0855
+      },
+      "name": "bilstm"
+    },
+    "cnn_bilstm": {
+      "model_dir": "./models/cnn_bilstm_absa",
+      "checkpoint": "./models/cnn_bilstm_absa/cnnbilstmforabsa_absa.pt",
+      "predictions": {
+        "Chất lượng sản phẩm": {
+          "mentioned": true,
+          "sentiments": [
+            "NEU"
+          ]
+        },
+        "Hiệu năng & Trải nghiệm": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Đúng mô tả": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Giá cả & Khuyến mãi": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Vận chuyển": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Đóng gói": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Dịch vụ & Thái độ Shop": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Bảo hành & Đổi trả": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Tính xác thực": {
+          "mentioned": false,
+          "sentiments": []
+        }
+      },
+      "timing": {
+        "seconds": 1.854
+      },
+      "name": "cnn_bilstm"
+    },
+    "phobert": {
+      "model_dir": "./models/phobert_absa",
+      "checkpoint": "./models/phobert_absa/phobertforabsamultipolarity_absa.pt",
+      "predictions": {
+        "Chất lượng sản phẩm": {
+          "mentioned": true,
+          "sentiments": [
+            "NEG"
+          ]
+        },
+        "Hiệu năng & Trải nghiệm": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Đúng mô tả": {
+          "mentioned": true,
+          "sentiments": [
+            "NEU"
+          ]
+        },
+        "Giá cả & Khuyến mãi": {
+          "mentioned": true,
+          "sentiments": [
+            "NEU"
+          ]
+        },
+        "Vận chuyển": {
+          "mentioned": true,
+          "sentiments": [
+            "NEU"
+          ]
+        },
+        "Đóng gói": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Dịch vụ & Thái độ Shop": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Bảo hành & Đổi trả": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Tính xác thực": {
+          "mentioned": true,
+          "sentiments": [
+            "POS"
+          ]
+        }
+      },
+      "timing": {
+        "seconds": 3.2868
+      },
+      "name": "phobert"
+    },
+    "xlm_roberta": {
+      "model_dir": "./models/xlm_roberta_absa",
+      "checkpoint": "./models/xlm_roberta_absa/xlmrobertaforabsa_absa.pt",
+      "predictions": {
+        "Chất lượng sản phẩm": {
+          "mentioned": true,
+          "sentiments": [
+            "NEG",
+            "POS"
+          ]
+        },
+        "Hiệu năng & Trải nghiệm": {
+          "mentioned": true,
+          "sentiments": [
+            "POS"
+          ]
+        },
+        "Đúng mô tả": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Giá cả & Khuyến mãi": {
+          "mentioned": true,
+          "sentiments": [
+            "NEU"
+          ]
+        },
+        "Vận chuyển": {
+          "mentioned": true,
+          "sentiments": [
+            "POS"
+          ]
+        },
+        "Đóng gói": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Dịch vụ & Thái độ Shop": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Bảo hành & Đổi trả": {
+          "mentioned": false,
+          "sentiments": []
+        },
+        "Tính xác thực": {
+          "mentioned": true,
+          "sentiments": [
+            "NEG",
+            "POS"
+          ]
+        }
+      },
+      "timing": {
+        "seconds": 4.8743
+      },
+      "name": "xlm_roberta"
+    }
+  },
+  "timing": {
+    "seconds": 12.1306,
+    "start_time": "2026-04-28T15:47:02.874000+00:00",
+    "end_time": "2026-04-28T15:47:15.004638+00:00",
+    "device": "cuda"
+  }
+}

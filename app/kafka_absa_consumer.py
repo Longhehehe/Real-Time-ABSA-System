@@ -27,8 +27,21 @@ PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PREDICTIONS_DIR = os.path.join(PROJECT_DIR, 'data', 'predictions')
 SPARK_MASTER = os.environ.get('SPARK_MASTER', 'spark://spark-master:7077')
 
+ASPECTS = [
+    'Chất lượng sản phẩm',
+    'Hiệu năng & Trải nghiệm',
+    'Đúng mô tả',
+    'Giá cả & Khuyến mãi',
+    'Vận chuyển',
+    'Đóng gói',
+    'Dịch vụ & Thái độ Shop',
+    'Bảo hành & Đổi trả',
+    'Tính xác thực',
+]
+SENTIMENT_NAMES = ['NEG', 'POS', 'NEU']
+
 # Buffer for batching
-review_buffer = defaultdict(list)  # product_id -> [reviews]
+review_buffer = defaultdict(list)  # (product_id, model) -> [reviews]
 buffer_lock = threading.Lock()
 
 
@@ -86,123 +99,254 @@ def _preprocess_text_logic(texts):
         return text
     return texts.apply(clean)
 
-def _predict_model_logic(texts):
+def _predict_model_logic(texts, models=None):
     import pandas as pd
     import json
     import os
     import sys
-    import time
-    from concurrent.futures import ThreadPoolExecutor, as_completed
 
-    # Setup Project Root for imports
-    # __file__ might be different on worker, but we need relative path to project root
-    # Usually /app/app/kafka_absa_consumer.py -> /app
-    
-    # Try to find 'app' module
-    current_dir = os.getcwd() # Likely /app
-    if current_dir not in sys.path:
-        sys.path.append(current_dir)
-        
-    # Also try typical structure
-    project_root = "/app"
-    if project_root not in sys.path:
-        sys.path.append(project_root)
+    def _ensure_paths():
+        current_dir = os.getcwd()
+        project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+        for path in [current_dir, project_root]:
+            if path not in sys.path:
+                sys.path.append(path)
+        return project_root if os.path.isdir(project_root) else current_dir
+
+    project_root = _ensure_paths()
+
+    def _normalize_model_name(raw):
+        if not raw:
+            return None
+        key = str(raw).strip().lower()
+        aliases = {
+            'phobert': 'phobert_multipolarity',
+            'phobert_multipolarity': 'phobert_multipolarity',
+            'phobert_legacy': 'phobert_legacy',
+            'logistic': 'logistic_regression',
+            'logistic_regression': 'logistic_regression',
+            'naive': 'naive_bayes',
+            'naive_bayes': 'naive_bayes',
+            'bilstm': 'bilstm',
+            'cnn_bilstm': 'cnn_bilstm',
+            'xlm': 'xlm_roberta',
+            'xlm_roberta': 'xlm_roberta',
+            'ollama': 'ollama',
+        }
+        return aliases.get(key, key)
+
+    def _get_target_model():
+        if models is not None and len(models) > 0:
+            candidate_value = models.iloc[0]
+            try:
+                if pd.isna(candidate_value):
+                    candidate_value = None
+            except Exception:
+                pass
+            candidate = _normalize_model_name(candidate_value)
+            if candidate:
+                return candidate
+
+        config_path = os.path.join(project_root, "model_config.json")
+        if os.path.exists(config_path):
+            try:
+                with open(config_path, 'r', encoding='utf-8') as f:
+                    cfg = json.load(f)
+                candidate = _normalize_model_name(cfg.get("active_model"))
+                if candidate:
+                    return candidate
+            except Exception:
+                pass
+
+        return "phobert_multipolarity"
+
+    def _format_aspect_predictions(mention_scores, sentiment_scores, threshold: float = 0.5):
+        results = {}
+        for idx, aspect in enumerate(ASPECTS):
+            mentioned = float(mention_scores[idx]) > threshold
+            sentiments = []
+            if mentioned:
+                for s_idx, score in enumerate(sentiment_scores[idx]):
+                    if float(score) > threshold:
+                        sentiments.append(SENTIMENT_NAMES[s_idx])
+                if not sentiments:
+                    sentiments = ['NEU']
+
+            results[aspect] = {
+                'mentioned': bool(mentioned),
+                'sentiments': sentiments,
+            }
+        return results
+
+    if not hasattr(_predict_model_logic, 'state'):
+        _predict_model_logic.state = {
+            'ml': {},
+            'torch': {},
+            'phobert': {},
+            'ollama': None,
+        }
+
+    state = _predict_model_logic.state
+    model_key = _get_target_model()
 
     try:
-        from app.absa_predictor import PhoBERTPredictor
-        from app.ollama_predictor import OllamaPredictor
-    except ImportError:
-        # Fallback for worker path issues
-        try:
-           sys.path.append('/opt/airflow/project') 
-           from app.absa_predictor import PhoBERTPredictor
-           from app.ollama_predictor import OllamaPredictor
-        except Exception as e:
-            return pd.Series([json.dumps({'error': f'ImportError on worker: {e}'})] * len(texts))
+        if model_key in ('logistic_regression', 'naive_bayes'):
+            import pickle
+            from methods.ml_models import LogisticRegressionABSA, NaiveBayesABSA
 
-    # --- Worker-Global Singleton State ---
-    # We use a trick: attach to the function object itself to persist across batches on the same worker
-    
-    if not hasattr(_predict_model_logic, 'predictor'):
-        _predict_model_logic.predictor = None
-        _predict_model_logic.model_type = None
-        _predict_model_logic.last_config_check = 0
-        print(f"Worker {os.getpid()}: Initializing predictor state")
-    
-    config_path = os.path.join(project_root, "model_config.json")
-    
-    # Check config occasionally (every 30s) to avoid IO spam
-    now = time.time()
-    if now - _predict_model_logic.last_config_check > 30:
-        file_mtime = 0
-        target_model = "phobert"
-        if os.path.exists(config_path):
-             try:
-                 with open(config_path, 'r') as f:
-                     cfg = json.load(f)
-                     target_model = cfg.get("active_model", "phobert")
-             except: pass
-        
-        # Switch if needed
-        if target_model != _predict_model_logic.model_type or _predict_model_logic.predictor is None:
-             try:
-                 if target_model == "ollama":
-                     # Use our own internal logic or the imported one
-                     # Note: OllamaPredictor is imported
-                     _predict_model_logic.predictor = OllamaPredictor()
-                 else:
-                     # Use default path defined in absa_predictor.py
-                     _predict_model_logic.predictor = PhoBERTPredictor()
-                 
-                 _predict_model_logic.model_type = target_model
-                 print(f"Worker {os.getpid()}: Loaded model: {target_model}")
-             except Exception as e:
-                 print(f"Worker {os.getpid()}: Failed load model: {e}")
-                 
-        _predict_model_logic.last_config_check = now
+            ml_paths = {
+                'logistic_regression': os.path.join(project_root, 'models', 'logistic_regression_absa', 'logistic_regression_model.pkl'),
+                'naive_bayes': os.path.join(project_root, 'models', 'naive_bayes_absa', 'naive_bayes_model.pkl'),
+            }
+            ml_classes = {
+                'logistic_regression': LogisticRegressionABSA,
+                'naive_bayes': NaiveBayesABSA,
+            }
 
-    predictor = _predict_model_logic.predictor
-    
-    results = []
-    print(f"Worker {os.getpid()}: Processing batch of {len(texts)} texts")
-    
-    # --- Parallelize the batch on the worker ---
-    # Even if texts is small (10), doing 10 * 11s = 110s sequentially is bad.
-    # We use threads to hit Ollama concurrently.
-    
-    if predictor:
-        # If predictor supports batch, usage that
-        if hasattr(predictor, 'predict_batch'):
-            # Convert series to list
+            if model_key not in state['ml']:
+                model_path = ml_paths[model_key]
+                if not os.path.exists(model_path):
+                    raise FileNotFoundError(f"Missing ML model: {model_path}")
+                with open(model_path, 'rb') as f:
+                    payload = pickle.load(f)
+                model = ml_classes[model_key]()
+                model.tfidf = payload['tfidf']
+                model.mention_clfs = payload['mention_clfs']
+                model.sentiment_clfs = payload['sentiment_clfs']
+                state['ml'][model_key] = model
+
+            model = state['ml'][model_key]
             text_list = texts.tolist()
-            # Use 'multipolarity' format for rich sentiment (lists of labels)
-            batch_results = predictor.predict_batch(text_list, format='multipolarity')
-            
-            # Serialize
-            for res in batch_results:
-                results.append(json.dumps(res, ensure_ascii=False))
-        else:
-            # Manual Threading
-            def _predict_single_safe(txt):
+            X = model.tfidf.transform(text_list)
+            pred_m, pred_s, _, _ = model.predict(X)
+            results = [_format_aspect_predictions(pred_m[i], pred_s[i]) for i in range(len(text_list))]
+
+        elif model_key in ('bilstm', 'cnn_bilstm', 'xlm_roberta'):
+            import torch
+            from transformers import AutoTokenizer
+            from methods.deep_models import BiLSTMForABSA, CNNBiLSTMForABSA
+            from methods.transformer_models import XLMRoBERTaForABSA
+
+            torch_specs = {
+                'bilstm': {
+                    'path': os.path.join(project_root, 'models', 'bilstm_absa', 'bilstmforabsa_absa.pt'),
+                    'class': BiLSTMForABSA,
+                    'tokenizer': 'vinai/phobert-base',
+                    'needs_vocab': True,
+                },
+                'cnn_bilstm': {
+                    'path': os.path.join(project_root, 'models', 'cnn_bilstm_absa', 'cnnbilstmforabsa_absa.pt'),
+                    'class': CNNBiLSTMForABSA,
+                    'tokenizer': 'vinai/phobert-base',
+                    'needs_vocab': True,
+                },
+                'xlm_roberta': {
+                    'path': os.path.join(project_root, 'models', 'xlm_roberta_absa', 'xlmrobertaforabsa_absa.pt'),
+                    'class': XLMRoBERTaForABSA,
+                    'tokenizer': 'xlm-roberta-base',
+                    'needs_vocab': False,
+                },
+            }
+
+            if model_key not in state['torch']:
+                spec = torch_specs[model_key]
+                if not os.path.exists(spec['path']):
+                    raise FileNotFoundError(f"Missing torch model: {spec['path']}")
+
+                device = "cuda" if torch.cuda.is_available() else "cpu"
+                tokenizer = AutoTokenizer.from_pretrained(spec['tokenizer'])
+                if spec['needs_vocab']:
+                    model = spec['class'](vocab_size=tokenizer.vocab_size)
+                else:
+                    model = spec['class'](num_aspects=len(ASPECTS))
+
                 try:
-                    res = predictor.predict_single(txt)
-                    return res['multipolarity'] # Return only multipolarity dict
-                except:
-                    # Return empty default struct
-                    return {asp: {'mentioned': False, 'sentiments': None} for asp in ['Chất lượng sản phẩm', 'Hiệu năng & Trải nghiệm', 'Đúng mô tả', 'Giá cả & Khuyến mãi', 'Vận chuyển', 'Đóng gói', 'Dịch vụ & Thái độ Shop', 'Bảo hành & Đổi trả', 'Tính xác thực']}
+                    checkpoint = torch.load(spec['path'], map_location=device, weights_only=False)
+                except TypeError:
+                    checkpoint = torch.load(spec['path'], map_location=device)
+                state_dict = checkpoint['model_state_dict'] if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint else checkpoint
+                model.load_state_dict(state_dict)
+                model = model.to(device)
+                model.eval()
 
-            with ThreadPoolExecutor(max_workers=5) as executor:
-                futures = [executor.submit(_predict_single_safe, t) for t in texts]
-                for f in futures:
-                    results.append(json.dumps(f.result(), ensure_ascii=False))
-        
-    else:
-        results = [json.dumps({'error': 'No predictor loaded'})] * len(texts)
+                state['torch'][model_key] = {
+                    'model': model,
+                    'tokenizer': tokenizer,
+                    'device': device,
+                }
 
-    return pd.Series(results)
+            payload = state['torch'][model_key]
+            tokenizer = payload['tokenizer']
+            model = payload['model']
+            device = payload['device']
+
+            text_list = texts.tolist()
+            encoding = tokenizer(
+                text_list,
+                truncation=True,
+                max_length=256,
+                padding='max_length',
+                return_tensors='pt',
+            )
+            input_ids = encoding['input_ids'].to(device)
+            attention_mask = encoding['attention_mask'].to(device)
+
+            with torch.no_grad():
+                logits_m, logits_s = model(input_ids, attention_mask)
+                probs_m = torch.sigmoid(logits_m).cpu().numpy()
+                probs_s = torch.sigmoid(logits_s).cpu().numpy()
+
+            results = [_format_aspect_predictions(probs_m[i], probs_s[i]) for i in range(len(text_list))]
+
+        elif model_key == 'ollama':
+            if state['ollama'] is None:
+                from app.ollama_predictor import OllamaPredictor
+                state['ollama'] = OllamaPredictor()
+
+            predictor = state['ollama']
+            text_list = texts.tolist()
+            results = []
+            for text in text_list:
+                try:
+                    res = predictor.predict_single(text)
+                    if isinstance(res, dict) and 'multipolarity' in res:
+                        results.append(res['multipolarity'])
+                    else:
+                        results.append(res)
+                except Exception:
+                    results.append({asp: {'mentioned': False, 'sentiments': []} for asp in ASPECTS})
+
+        else:
+            from app.absa_predictor import PhoBERTPredictor, MODEL_PATH, MODEL_PATH_OLD
+
+            phobert_key = model_key if model_key in ('phobert_legacy', 'phobert_multipolarity') else 'phobert_multipolarity'
+            if phobert_key not in state['phobert']:
+                model_path = MODEL_PATH_OLD if phobert_key == 'phobert_legacy' else MODEL_PATH
+                predictor = PhoBERTPredictor(model_path=model_path, use_multipolarity=phobert_key != 'phobert_legacy')
+                state['phobert'][phobert_key] = predictor
+
+            predictor = state['phobert'][phobert_key]
+            text_list = texts.tolist()
+            if hasattr(predictor, 'predict_batch'):
+                batch_results = predictor.predict_batch(text_list, format='multipolarity')
+                results = [res if isinstance(res, dict) else {} for res in batch_results]
+            else:
+                results = []
+                for text in text_list:
+                    try:
+                        res = predictor.predict_single(text)
+                        results.append(res.get('multipolarity', res))
+                    except Exception:
+                        results.append({asp: {'mentioned': False, 'sentiments': []} for asp in ASPECTS})
+
+        return pd.Series([json.dumps(res, ensure_ascii=False) for res in results])
+
+    except Exception as e:
+        error_payload = json.dumps({'error': f'Inference failure: {e}'})
+        return pd.Series([error_payload] * len(texts))
 
 
-def run_spark_prediction(product_id: str, reviews: List[Dict]):
+def run_spark_prediction(product_id: str, reviews: List[Dict], model: str):
     """
     Trigger Spark job to predict batch of reviews using Pandas UDF.
     """
@@ -228,7 +372,7 @@ def run_spark_prediction(product_id: str, reviews: List[Dict]):
                 print(f"⚠️ Skipping empty review: id={r.get('review_id', 'N/A')}")
                 continue
                 
-            data.append((text, r.get('rating', 0), r.get('review_id', '')))
+            data.append((text, r.get('rating', 0), r.get('review_id', ''), model))
         
         if skipped_empty > 0:
             print(f"⚠️ Skipped {skipped_empty} empty reviews out of {len(reviews)}")
@@ -237,7 +381,7 @@ def run_spark_prediction(product_id: str, reviews: List[Dict]):
             print(f"⚠️ No valid reviews to process after filtering!")
             return
             
-        df = spark.createDataFrame(data, ["review_text", "rating", "review_id"])
+        df = spark.createDataFrame(data, ["review_text", "rating", "review_id", "model"])
         
         # Register UDFs
         # Note: Using decorators works, but assigning function prevents re-decoration overhead issue sometimes
@@ -251,7 +395,7 @@ def run_spark_prediction(product_id: str, reviews: List[Dict]):
         df_result = df \
             .repartition(1) \
             .withColumn("cleaned_text", preprocess_udf(col("review_text"))) \
-            .withColumn("sentiment_json", predict_model_udf(col("cleaned_text")))
+            .withColumn("sentiment_json", predict_model_udf(col("cleaned_text"), col("model")))
         
         # Collect results
         predictions = []
@@ -346,15 +490,16 @@ def save_predictions(product_id: str, new_predictions: List[Dict]):
             os.remove(temp_path)
 
 
-def process_batch(product_id: str):
-    """Process buffered reviews for a product."""
+def process_batch(buffer_key):
+    """Process buffered reviews for a product/model pair."""
     global review_buffer
     
     with buffer_lock:
-        reviews = review_buffer.pop(product_id, [])
+        reviews = review_buffer.pop(buffer_key, [])
     
     if reviews:
-        run_spark_prediction(product_id, reviews)
+        product_id, model = buffer_key
+        run_spark_prediction(product_id, reviews, model)
 
 
 def create_consumer():
@@ -392,50 +537,54 @@ def run_service():
             for message in consumer:
                 data = message.value
                 product_id = data.get('product_id', 'unknown')
+                model = data.get('model') or 'phobert_multipolarity'
+                buffer_key = (product_id, model)
                 
                 with buffer_lock:
-                    review_buffer[product_id].append(data)
+                    review_buffer[buffer_key].append(data)
                     
-                    if product_id not in batch_start_time:
-                        batch_start_time[product_id] = time.time()
+                    if buffer_key not in batch_start_time:
+                        batch_start_time[buffer_key] = time.time()
                 
                 # Check if THIS product's batch is ready
                 with buffer_lock:
                     batch_ready = (
-                        len(review_buffer[product_id]) >= BATCH_SIZE or
-                        time.time() - batch_start_time.get(product_id, 0) > BATCH_TIMEOUT
+                        len(review_buffer[buffer_key]) >= BATCH_SIZE or
+                        time.time() - batch_start_time.get(buffer_key, 0) > BATCH_TIMEOUT
                     )
                 
                 if batch_ready:
-                    print(f"📦 Batch ready for {product_id} ({len(review_buffer[product_id])} reviews)")
-                    process_batch(product_id)
-                    batch_start_time.pop(product_id, None)
+                    print(f"📦 Batch ready for {product_id} | {model} ({len(review_buffer[buffer_key])} reviews)")
+                    process_batch(buffer_key)
+                    batch_start_time.pop(buffer_key, None)
                 
                 # CRITICAL FIX: Also check ALL OTHER products for timeout
                 # This prevents reviews from being orphaned when messages interleave
                 current_time = time.time()
                 with buffer_lock:
                     products_to_process = []
-                    for pid in list(review_buffer.keys()):
-                        if pid != product_id and review_buffer[pid]:  # Skip current, already handled above
-                            if current_time - batch_start_time.get(pid, 0) > BATCH_TIMEOUT:
-                                products_to_process.append(pid)
+                    for key in list(review_buffer.keys()):
+                        if key != buffer_key and review_buffer[key]:  # Skip current, already handled above
+                            if current_time - batch_start_time.get(key, 0) > BATCH_TIMEOUT:
+                                products_to_process.append(key)
                 
                 # Process timed-out batches for other products (outside lock)
-                for pid in products_to_process:
-                    print(f"📦 Timeout triggered for {pid} ({len(review_buffer.get(pid, []))} reviews)")
-                    process_batch(pid)
-                    batch_start_time.pop(pid, None)
+                for key in products_to_process:
+                    pid, model_name = key
+                    print(f"📦 Timeout triggered for {pid} | {model_name} ({len(review_buffer.get(key, []))} reviews)")
+                    process_batch(key)
+                    batch_start_time.pop(key, None)
             
             # Process remaining batches after consumer timeout (no new messages for consumer_timeout_ms)
             print(f"⏰ Consumer poll timeout. Checking for remaining batches...")
             with buffer_lock:
-                remaining_products = [pid for pid in list(review_buffer.keys()) if review_buffer[pid]]
+                remaining_products = [key for key in list(review_buffer.keys()) if review_buffer[key]]
             
-            for product_id in remaining_products:
-                print(f"📦 Processing remaining batch for {product_id} ({len(review_buffer.get(product_id, []))} reviews)")
-                process_batch(product_id)
-                batch_start_time.pop(product_id, None)
+            for key in remaining_products:
+                pid, model_name = key
+                print(f"📦 Processing remaining batch for {pid} | {model_name} ({len(review_buffer.get(key, []))} reviews)")
+                process_batch(key)
+                batch_start_time.pop(key, None)
                     
         except Exception as e:
             print(f"❌ Consumer error: {e}")

@@ -219,7 +219,7 @@ def evaluate_current_model():
     print_table(data)
     
     # Save as CSV
-    csv_path = os.path.join(PROJECT_DIR, 'evaluation_results.csv')
+    csv_path = os.path.join(REPORTS_DIR, 'evaluation_results.csv')
     with open(csv_path, 'w', encoding='utf-8-sig') as f:
         f.write('Khía cạnh,Precision,Recall,F1-Score\n')
         for row in data:
@@ -227,7 +227,7 @@ def evaluate_current_model():
     print(f"\n💾 Results saved to: {csv_path}")
     
     # Save as Markdown
-    md_path = os.path.join(PROJECT_DIR, 'EVALUATION.md')
+    md_path = os.path.join(REPORTS_DIR, 'EVALUATION_RESULTS.md')
     markdown_content = generate_markdown_table(data)
     with open(md_path, 'w', encoding='utf-8') as f:
         f.write(markdown_content)
@@ -244,7 +244,7 @@ def evaluate_current_model():
         'per_aspect_metrics': metrics_dict
     }
     
-    summary_path = os.path.join(PROJECT_DIR, 'evaluation_summary.json')
+    summary_path = os.path.join(REPORTS_DIR, 'evaluation_metrics.json')
     with open(summary_path, 'w', encoding='utf-8') as f:
         json.dump(summary, f, ensure_ascii=False, indent=2)
     print(f"📊 Summary saved to: {summary_path}")
@@ -262,7 +262,7 @@ if __name__ == '__main__':
         print("\n✅ Evaluation complete!")
         print("\nGenerated files:")
         print(f"   1. evaluation_results.csv - Per-aspect metrics in CSV format")
-        print(f"   2. EVALUATION.md - Markdown table for documentation")
-        print(f"   3. evaluation_summary.json - Complete metrics in JSON format")
+        print(f"   2. EVALUATION_RESULTS.md - Markdown table for documentation")
+        print(f"   3. evaluation_metrics.json - Complete metrics in JSON format")
     else:
         print("\n❌ Evaluation failed!")

@@ -9,24 +9,24 @@ import plotly.express as px
 import plotly.graph_objects as go
 import time
 
-# Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add project root to path for package imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-import product_manager as pm
+from app import product_manager as pm
 import json
-from lazada_crawler import crawl_reviews
+from app.lazada_crawler import crawl_reviews
 # from lazada_producer import send_reviews_to_kafka  # Now using Airflow
 try:
-    from airflow_client import trigger_dag, get_dag_run_status, get_task_instances
+    from app.airflow_client import trigger_dag, get_dag_run_status, get_task_instances
 except ImportError:
     from app.airflow_client import trigger_dag, get_dag_run_status, get_task_instances
-from absa_predictor import (
+from app.absa_predictor import (
     aggregate_scores,
     # get_predictor, # Handled by consumer
     ASPECTS, 
     SENTIMENT_MAP
 )
-import utils
+from app import utils
 
 # Page Config
 st.set_page_config(

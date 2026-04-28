@@ -6,11 +6,11 @@ import os
 import sys
 import tempfile
 
-# Add parent directory to path for imports
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+# Add project root to path for package imports
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 
-import product_manager as pm
-from lazada_crawler import extract_item_id, get_product_info, create_session
+from app import product_manager as pm
+from app.lazada_crawler import extract_item_id, get_product_info, create_session
 
 # Page Config
 st.set_page_config(

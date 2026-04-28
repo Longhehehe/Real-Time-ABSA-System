@@ -5,6 +5,7 @@ Supports multi-polarity sentiment predictions
 """
 import os
 import json
+import pickle
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -15,20 +16,229 @@ import sys
 # Add project paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
-sys.path.insert(0, os.path.join(BASE_DIR, 'app'))
 
 # Import the shared predictor from app/
-try:
-    from absa_predictor import PhoBERTPredictor, ASPECTS
-except ImportError:
-    # Fallback if run from different cwd
-    from app.absa_predictor import PhoBERTPredictor, ASPECTS
+from app.absa_predictor import PhoBERTPredictor, ASPECTS, MODEL_PATH, MODEL_PATH_OLD
 
 # Paths
 PREDICTIONS_DIR = os.path.join(BASE_DIR, 'data', 'predictions')
+SENTIMENT_NAMES = ['NEG', 'POS', 'NEU']
+
+ML_MODEL_PATHS = {
+    'logistic_regression': os.path.join(BASE_DIR, 'models', 'logistic_regression_absa', 'logistic_regression_model.pkl'),
+    'naive_bayes': os.path.join(BASE_DIR, 'models', 'naive_bayes_absa', 'naive_bayes_model.pkl'),
+}
 
 # Global predictor instance
 predictor = None
+_ml_predictors = {}
+_torch_predictors = {}
+_phobert_predictors = {}
+
+TORCH_MODEL_SPECS = {
+    'bilstm': {
+        'dir': os.path.join(BASE_DIR, 'models', 'bilstm_absa'),
+        'tokenizer': 'vinai/phobert-base',
+        'class_name': 'BiLSTMForABSA',
+        'needs_vocab': True,
+        'label': 'BiLSTM',
+    },
+    'cnn_bilstm': {
+        'dir': os.path.join(BASE_DIR, 'models', 'cnn_bilstm_absa'),
+        'tokenizer': 'vinai/phobert-base',
+        'class_name': 'CNNBiLSTMForABSA',
+        'needs_vocab': True,
+        'label': 'CNN-BiLSTM',
+    },
+    'xlm_roberta': {
+        'dir': os.path.join(BASE_DIR, 'models', 'xlm_roberta_absa'),
+        'tokenizer': 'xlm-roberta-base',
+        'class_name': 'XLMRoBERTaForABSA',
+        'needs_vocab': False,
+        'label': 'XLM-RoBERTa',
+    },
+}
+
+
+def _get_torch():
+    try:
+        import torch
+    except Exception as exc:
+        raise RuntimeError("torch is required for this model") from exc
+    return torch
+
+
+def _get_device() -> str:
+    torch = _get_torch()
+    return "cuda" if torch.cuda.is_available() else "cpu"
+
+
+def _load_ml_predictor(model_key: str):
+    from methods import LogisticRegressionABSA, NaiveBayesABSA
+
+    if model_key in _ml_predictors:
+        return _ml_predictors[model_key]
+
+    model_path = ML_MODEL_PATHS.get(model_key)
+    if not model_path or not os.path.exists(model_path):
+        raise FileNotFoundError(f"Model not found: {model_path}")
+
+    with open(model_path, 'rb') as f:
+        payload = pickle.load(f)
+
+    if model_key == 'naive_bayes':
+        model = NaiveBayesABSA()
+    else:
+        model = LogisticRegressionABSA()
+
+    model.tfidf = payload['tfidf']
+    model.mention_clfs = payload['mention_clfs']
+    model.sentiment_clfs = payload['sentiment_clfs']
+
+    _ml_predictors[model_key] = model
+    return model
+
+
+def _find_checkpoint(model_dir: str) -> Optional[str]:
+    if not os.path.isdir(model_dir):
+        return None
+    candidates = [f for f in os.listdir(model_dir) if f.endswith('.pt')]
+    if not candidates:
+        return None
+    candidates.sort()
+    return os.path.join(model_dir, candidates[0])
+
+
+def _load_torch_predictor(model_key: str, device: str):
+    torch = _get_torch()
+    from transformers import AutoTokenizer
+
+    if model_key in _torch_predictors and _torch_predictors[model_key]['device'] == device:
+        return _torch_predictors[model_key]
+
+    spec = TORCH_MODEL_SPECS[model_key]
+    checkpoint_path = _find_checkpoint(spec['dir'])
+    if not checkpoint_path:
+        raise FileNotFoundError(f"No checkpoint found for {model_key} in {spec['dir']}")
+
+    from methods import BiLSTMForABSA, CNNBiLSTMForABSA, XLMRoBERTaForABSA
+    class_map = {
+        'BiLSTMForABSA': BiLSTMForABSA,
+        'CNNBiLSTMForABSA': CNNBiLSTMForABSA,
+        'XLMRoBERTaForABSA': XLMRoBERTaForABSA,
+    }
+    model_class = class_map[spec['class_name']]
+
+    tokenizer = AutoTokenizer.from_pretrained(spec['tokenizer'])
+    if spec['needs_vocab']:
+        model = model_class(vocab_size=tokenizer.vocab_size)
+    else:
+        model = model_class(num_aspects=len(ASPECTS))
+
+    checkpoint = torch.load(checkpoint_path, map_location=device, weights_only=False)
+    state = checkpoint['model_state_dict'] if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint else checkpoint
+    model.load_state_dict(state)
+    model = model.to(device)
+    model.eval()
+
+    payload = {
+        'model': model,
+        'tokenizer': tokenizer,
+        'checkpoint': checkpoint_path,
+        'device': device,
+    }
+    _torch_predictors[model_key] = payload
+    return payload
+
+
+def _load_phobert_predictor(model_key: str):
+    if model_key in _phobert_predictors:
+        return _phobert_predictors[model_key]
+
+    if model_key == 'phobert_legacy':
+        model_path = MODEL_PATH_OLD
+    else:
+        model_path = MODEL_PATH
+
+    if not os.path.exists(model_path):
+        raise FileNotFoundError(f"Model not found: {model_path}")
+
+    predictor_instance = PhoBERTPredictor(model_path=model_path, use_multipolarity=model_key != 'phobert_legacy')
+    if not predictor_instance.model_loaded:
+        raise RuntimeError("PhoBERT model failed to load")
+
+    _phobert_predictors[model_key] = predictor_instance
+    return predictor_instance
+
+
+def _format_aspect_predictions(mention_scores, sentiment_scores, threshold: float = 0.5) -> Dict[str, Dict]:
+    results = {}
+    for idx, aspect in enumerate(ASPECTS):
+        mentioned = mention_scores[idx] > threshold
+        sentiments = []
+        if mentioned:
+            for s_idx, score in enumerate(sentiment_scores[idx]):
+                if score > threshold:
+                    sentiments.append(SENTIMENT_NAMES[s_idx])
+            if not sentiments:
+                sentiments = ['NEU']
+
+        results[aspect] = {
+            'mentioned': bool(mentioned),
+            'sentiments': sentiments,
+        }
+    return results
+
+
+def _predict_with_ml(model_key: str, text: str) -> Dict[str, Dict]:
+    model = _load_ml_predictor(model_key)
+    X = model.tfidf.transform([text])
+    pred_m, pred_s, _, _ = model.predict(X)
+    return _format_aspect_predictions(pred_m[0], pred_s[0])
+
+
+def _predict_with_torch(model_key: str, text: str, device: str, max_length: int = 256) -> Dict[str, Dict]:
+    torch = _get_torch()
+    predictor_payload = _load_torch_predictor(model_key, device)
+    tokenizer = predictor_payload['tokenizer']
+    model = predictor_payload['model']
+
+    encoding = tokenizer(
+        text,
+        truncation=True,
+        max_length=max_length,
+        padding='max_length',
+        return_tensors='pt',
+    )
+    input_ids = encoding['input_ids'].to(device)
+    attention_mask = encoding['attention_mask'].to(device)
+
+    with torch.no_grad():
+        logits_m, logits_s = model(input_ids, attention_mask)
+        probs_m = torch.sigmoid(logits_m)[0].cpu().numpy()
+        probs_s = torch.sigmoid(logits_s)[0].cpu().numpy()
+
+    return _format_aspect_predictions(probs_m, probs_s)
+
+
+def _list_available_models() -> List[Dict[str, str]]:
+    available = []
+
+    if os.path.exists(MODEL_PATH):
+        available.append({'id': 'phobert_multipolarity', 'label': 'PhoBERT (Multi-Polarity)'})
+    if os.path.exists(MODEL_PATH_OLD):
+        available.append({'id': 'phobert_legacy', 'label': 'PhoBERT (Legacy)'})
+
+    if os.path.exists(ML_MODEL_PATHS['logistic_regression']):
+        available.append({'id': 'logistic_regression', 'label': 'Logistic Regression (TF-IDF)'})
+    if os.path.exists(ML_MODEL_PATHS['naive_bayes']):
+        available.append({'id': 'naive_bayes', 'label': 'Naive Bayes (TF-IDF)'})
+
+    for key, spec in TORCH_MODEL_SPECS.items():
+        if _find_checkpoint(spec['dir']):
+            available.append({'id': key, 'label': spec['label']})
+
+    return available
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -37,13 +247,7 @@ async def lifespan(app: FastAPI):
     print(f"🚀 Starting ABSA API...")
     
     predictor = PhoBERTPredictor()
-    # It will automatically find the best model in ./models/
-    success = predictor.load_model()
-    
-    if success:
-        print("✅ Shared PhoBERT Predictor loaded successfully!")
-    else:
-        print("❌ Failed to load Shared PhoBERT Predictor.")
+    print("✅ Predictor initialized (model loads on first request)")
     
     yield
     
@@ -88,11 +292,13 @@ class ProductPrediction(BaseModel):
 
 class TextPredictionRequest(BaseModel):
     text: str
+    model: Optional[str] = None
 
 
 class TriggerRequest(BaseModel):
     product_url: str
     max_reviews: int = 50
+    model: Optional[str] = None
 
 
 class TriggerResponse(BaseModel):
@@ -121,7 +327,8 @@ def get_model_info():
         "aspects": ASPECTS,
         "sentiment_classes": ["NEG", "POS", "NEU"],
         "multi_polarity": True,
-        "description": "PhoBERT ABSA Multi-Polarity Model",
+        "description": "ABSA model registry",
+        "available_models": _list_available_models(),
         "loaded": predictor.model_loaded if predictor else False
     }
 
@@ -156,20 +363,57 @@ def run_model_evaluation():
 @app.post("/api/predict-text")
 def predict_text(request: TextPredictionRequest):
     """Predict aspects and sentiments for a single text using shared predictor"""
-    if not predictor or not predictor.model_loaded:
-        raise HTTPException(status_code=503, detail="Model is not loaded. Please verify ./models folder.")
-        
+    model_choice = (request.model or "phobert").lower()
+
     try:
-        # Use simple legacy prediction for now or clean up result
-        # The frontend expects { text: str, aspects: { name: { mentioned: bool, sentiments: [] } } }
-        
-        raw_result = predictor.predict_single(request.text)
-        multipolarity_result = raw_result.get('multipolarity', {})
-        
-        return {
-            "text": request.text,
-            "aspects": multipolarity_result
-        }
+        if model_choice == "phobert":
+            if not predictor:
+                raise HTTPException(status_code=503, detail="Predictor is not available.")
+
+            if not predictor.model_loaded:
+                if not predictor.load_model():
+                    raise HTTPException(status_code=503, detail="Model is not loaded. Please verify ./models folder.")
+
+            raw_result = predictor.predict_single(request.text)
+            multipolarity_result = raw_result.get('multipolarity', {})
+
+            return {
+                "text": request.text,
+                "model": "phobert",
+                "aspects": multipolarity_result
+            }
+
+        if model_choice in ["phobert_multipolarity", "phobert_legacy"]:
+            local_predictor = _load_phobert_predictor(model_choice)
+            raw_result = local_predictor.predict_single(request.text)
+            multipolarity_result = raw_result.get('multipolarity', {})
+            return {
+                "text": request.text,
+                "model": model_choice,
+                "aspects": multipolarity_result
+            }
+
+        if model_choice in ["logistic_regression", "naive_bayes"]:
+            aspects = _predict_with_ml(model_choice, request.text)
+            return {
+                "text": request.text,
+                "model": model_choice,
+                "aspects": aspects
+            }
+
+        if model_choice in TORCH_MODEL_SPECS:
+            device = _get_device()
+            aspects = _predict_with_torch(model_choice, request.text, device)
+            return {
+                "text": request.text,
+                "model": model_choice,
+                "aspects": aspects
+            }
+
+        raise HTTPException(status_code=400, detail=f"Unsupported model: {model_choice}")
+
+    except HTTPException:
+        raise
     except Exception as e:
         print(f"Prediction error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
@@ -179,7 +423,7 @@ def predict_text(request: TextPredictionRequest):
 def search_products(keyword: str, limit: int = 20):
     """Search Lazada products"""
     try:
-        from lazada_search import search_lazada
+        from app.lazada_search import search_lazada
         
         cookies_path = None
         possible_paths = [
@@ -383,7 +627,8 @@ async def trigger_absa_pipeline(request: TriggerRequest):
                         "product_url": request.product_url,
                         "product_id": product_id,
                         "max_reviews": request.max_reviews,
-                        "source": "react_frontend"
+                        "source": "react_frontend",
+                        "model": request.model
                     }
                 },
                 headers=headers
@@ -408,6 +653,7 @@ async def trigger_absa_pipeline(request: TriggerRequest):
                 "product_url": request.product_url,
                 "product_id": product_id,
                 "max_reviews": request.max_reviews,
+                "model": request.model,
                 "triggered_at": datetime.now().isoformat(),
                 "error": str(e)
             }, f, ensure_ascii=False)

@@ -216,6 +216,8 @@ def main():
     print("🚀 " * 25)
     
     PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+    REPORTS_DIR = os.path.join(PROJECT_DIR, 'reports')
+    os.makedirs(REPORTS_DIR, exist_ok=True)
     
     # Generate metrics
     table_data = generate_metrics_table()
@@ -229,9 +231,9 @@ def main():
     
     # Save in multiple formats
     print("\n📁 Saving results...")
-    save_csv(table_data, PROJECT_DIR)
-    save_markdown(table_data, PROJECT_DIR)
-    save_json(table_data, PROJECT_DIR)
+    save_csv(table_data, REPORTS_DIR)
+    save_markdown(table_data, REPORTS_DIR)
+    save_json(table_data, REPORTS_DIR)
     
     print("\n✅ Evaluation complete!")
     print("\n📌 Generated files:")

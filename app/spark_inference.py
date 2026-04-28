@@ -10,6 +10,8 @@ from pyspark.sql.types import ArrayType, FloatType, StructType, StructField, Str
 import pandas as pd
 from typing import Iterator
 
+PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 # Define schema for output (Sentiment scores for 9 aspects)
 ASPECTS = [
     'Chất lượng sản phẩm',       # Quality, durability, materials
@@ -43,21 +45,21 @@ def load_model_on_worker():
     global model, tokenizer, device
     if model is None:
         import sys
-        sys.path.insert(0, '/app')  # Ensure app modules are visible
+        sys.path.insert(0, PROJECT_DIR)  # Ensure project modules are visible
         from transformers import AutoTokenizer
         from phobert_trainer import PhoBERTForABSA
         
         device = torch.device('cpu')  # Use CPU on Spark workers (unless GPU config)
         
         # Load tokenizer
-        tokenizer_path = "/app/models/phobert_absa/tokenizer"
+        tokenizer_path = os.path.join(PROJECT_DIR, "models", "phobert_absa", "tokenizer")
         if os.path.exists(tokenizer_path):
             tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
         else:
             tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base")
             
         # Load Model with new multi-task architecture
-        model_path = "/app/models/phobert_absa/phobert_absa.pt"
+        model_path = os.path.join(PROJECT_DIR, "models", "phobert_absa", "phobert_absa.pt")
         if os.path.exists(model_path):
             checkpoint = torch.load(model_path, map_location=device)
             state_dict = checkpoint['model_state_dict'] if 'model_state_dict' in checkpoint else checkpoint
