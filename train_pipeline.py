@@ -1,8 +1,13 @@
 import sys
 import os
 import pandas as pd
+import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
+
+from sklearn.metrics import log_loss
+
+from training_plots import save_loss_plot, save_metric_bars
 
 # Determine base directory (works for both local Windows and Docker)
 # In Docker: /opt/airflow/project
@@ -123,7 +128,7 @@ def run_training():
         
         preprocessed_texts = preprocess_text(texts, use_parallel=False, vncorenlp_path=vncorenlp_path) 
         
-        results, _, _, _ = model.train_model_with_preprocessed(
+        results, X_test, y_test, _ = model.train_model_with_preprocessed(
             train_df, 
             preprocessed_texts, 
             use_count=True, 
@@ -139,6 +144,36 @@ def run_training():
         # I'll modify the save logic or just rename after.
         saved_path = model.save_model(output_dir)
         print(f"💾 Model saved to: {saved_path}")
+
+        metrics = {
+            'Accuracy': float(results.get('accuracy', 0.0)),
+            'Precision': float(results.get('precision', 0.0)),
+            'Recall': float(results.get('recall', 0.0)),
+            'F1': float(results.get('f1', 0.0)),
+        }
+        save_metric_bars(
+            metrics,
+            saved_path,
+            filename='metrics_comparison.png',
+            title='MultinomialNB Metrics Comparison',
+        )
+
+        loss_value = None
+        try:
+            X_test_processed = np.maximum(X_test, 0)
+            if hasattr(model.model, 'predict_proba'):
+                y_proba = model.model.predict_proba(X_test_processed)
+                loss_value = log_loss(y_test, y_proba, labels=np.unique(y_test))
+        except Exception as e:
+            print(f"Loss plot skipped: {e}")
+
+        if loss_value is not None:
+            save_loss_plot(
+                [float(loss_value)],
+                saved_path,
+                filename='training_loss_by_epoch.png',
+                title='Training Loss by Epoch (Single Fit)',
+            )
         
         # Save a 'latest' pointer or copy files to a fixed 'latest' dir for the dashboard?
         # For simplicity, let dashboard pick the latest or valid one.

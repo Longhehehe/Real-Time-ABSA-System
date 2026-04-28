@@ -26,6 +26,7 @@ from sklearn.model_selection import train_test_split, KFold
 from sklearn.metrics import f1_score, accuracy_score
 from tqdm import tqdm
 import json
+from training_plots import save_metric_bars
 
 # Aspect names - OPTIMIZED for E-commerce (9 aspects)
 ASPECTS = [
@@ -262,6 +263,40 @@ def load_data_multipolarity(data_path: str) -> Tuple[List[str], np.ndarray, np.n
     return texts, np.array(labels_m, dtype=np.float32), np.array(labels_s, dtype=np.float32)
 
 
+def save_training_loss_plot(epoch_losses: List[float], output_dir: str) -> Optional[str]:
+    """Save training loss per epoch as a PNG image.
+
+    Returns:
+        Path to saved plot if successful, otherwise None.
+    """
+    if not epoch_losses:
+        print("⚠️ No epoch losses found, skipping loss plot export.")
+        return None
+
+    try:
+        import matplotlib.pyplot as plt
+    except ImportError:
+        print("⚠️ matplotlib is not installed, skipping loss plot export.")
+        return None
+
+    plot_path = os.path.join(output_dir, 'training_loss_by_epoch.png')
+    epochs = list(range(1, len(epoch_losses) + 1))
+
+    plt.figure(figsize=(10, 6))
+    plt.plot(epochs, epoch_losses, marker='o', linewidth=2)
+    plt.title('Training Loss by Epoch')
+    plt.xlabel('Epoch')
+    plt.ylabel('Loss')
+    plt.grid(True, alpha=0.3)
+    plt.xticks(epochs)
+    plt.tight_layout()
+    plt.savefig(plot_path, dpi=150)
+    plt.close()
+
+    print(f"📉 Saved training loss plot to: {plot_path}")
+    return plot_path
+
+
 
  # Bạn nhớ thêm dòng này vào đầu file cùng các import khác
 
@@ -344,6 +379,7 @@ def train_model_multipolarity(
     session_best_f1 = 0.0
     session_best_weights = None # Biến này lưu bộ weights tốt nhất TRONG PHIÊN NÀY
     session_best_metrics = {}
+    epoch_losses = []
     
     print(f"\n🏃 Starting training loop for {epochs} epochs...")
     
@@ -371,6 +407,10 @@ def train_model_multipolarity(
             scheduler.step()
             train_loss += loss.item()
             train_pbar.set_postfix({'loss': f'{loss.item():.4f}'})
+
+        avg_train_loss = train_loss / len(train_loader) if len(train_loader) > 0 else 0.0
+        epoch_losses.append(avg_train_loss)
+        print(f"   Avg Train Loss: {avg_train_loss:.4f}")
             
         # Validation logic (Giữ nguyên)
         model.eval()
@@ -482,6 +522,20 @@ def train_model_multipolarity(
     else:
         print(f"   ❌ FAILURE: New model ({session_best_f1:.4f}) is NOT better than old one ({global_best_f1:.4f}).")
         print("   🗑️ Discarding new training results. Keeping old file.")
+
+    save_training_loss_plot(epoch_losses, output_dir)
+
+    metrics = {
+        'Mention F1': float(session_best_metrics.get('mention_f1', 0.0)),
+        'Sentiment F1': float(session_best_metrics.get('sentiment_f1', 0.0)),
+        'Combined F1': float(session_best_f1),
+    }
+    save_metric_bars(
+        metrics,
+        output_dir,
+        filename='metrics_comparison.png',
+        title='PhoBERT Multi-Polarity Metrics',
+    )
 
     return output_dir
 

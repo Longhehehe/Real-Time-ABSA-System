@@ -20,6 +20,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import f1_score, accuracy_score
 from tqdm import tqdm
 import json
+from training_plots import save_loss_plot, save_metric_bars
 
 # Aspect names - OPTIMIZED for E-commerce (9 aspects)
 ASPECTS = [
@@ -382,6 +383,8 @@ def train_model(
     best_val_f1 = 0
     patience = 3  # Early stopping patience
     patience_counter = 0
+    epoch_losses = []
+    best_metrics = None
     
     for epoch in range(epochs):
         print(f"\n📈 Epoch {epoch + 1}/{epochs}")
@@ -425,6 +428,7 @@ def train_model(
         
         avg_train_loss = train_loss / len(train_loader)
         print(f"   Train Loss: {avg_train_loss:.4f}")
+        epoch_losses.append(avg_train_loss)
         
         # === VALIDATION ===
         model.eval()
@@ -470,6 +474,11 @@ def train_model(
             best_val_f1 = combined_f1
             patience_counter = 0
             print(f"   ✅ New best model! Saving...")
+            best_metrics = {
+                'Mention F1': float(f1_m),
+                'Sentiment F1': float(f1_s),
+                'Combined F1': float(combined_f1),
+            }
             
             os.makedirs(output_dir, exist_ok=True)
             
@@ -504,6 +513,20 @@ def train_model(
     
     print(f"\n🎉 Training complete! Best F1: {best_val_f1:.4f}")
     print(f"📁 Model saved to: {output_dir}")
+
+    save_loss_plot(
+        epoch_losses,
+        output_dir,
+        filename='training_loss_by_epoch.png',
+        title='PhoBERT Training Loss by Epoch',
+    )
+    if best_metrics:
+        save_metric_bars(
+            best_metrics,
+            output_dir,
+            filename='metrics_comparison.png',
+            title='PhoBERT Metrics Comparison',
+        )
     
     return output_dir
 
