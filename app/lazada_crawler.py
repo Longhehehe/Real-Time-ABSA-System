@@ -24,11 +24,9 @@ from selenium.webdriver.common.keys import Keys
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.service import Service
 
-
 class LazadaCrawler:
     """Selenium-based Lazada Review Crawler with anti-bot detection."""
     
-    # Random User Agents để giả lập nhiều trình duyệt khác nhau
     USER_AGENTS = [
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
@@ -49,30 +47,25 @@ class LazadaCrawler:
         """
         chrome_options = Options()
         
-        # === ANTI-BOT DETECTION ===
-        # Random User Agent
         user_agent = random.choice(self.USER_AGENTS)
         chrome_options.add_argument(f"--user-agent={user_agent}")
         
-        # Disable automation flags
         chrome_options.add_argument("--disable-blink-features=AutomationControlled")
         chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
         chrome_options.add_experimental_option("useAutomationExtension", False)
         
-        # Other stealth options
         chrome_options.add_argument("--start-maximized")
         chrome_options.add_argument("--disable-infobars")
         chrome_options.add_argument("--disable-dev-shm-usage")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-gpu")
-        chrome_options.add_argument("--lang=vi-VN,vi")  # Vietnamese language
+        chrome_options.add_argument("--lang=vi-VN,vi")                       
         
         if keep_alive:
             chrome_options.add_experimental_option("detach", True)
         
         self.driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=chrome_options)
         
-        # Remove webdriver property (anti-detection)
         self.driver.execute_cdp_cmd("Page.addScriptToEvaluateOnNewDocument", {
             "source": """
                 Object.defineProperty(navigator, 'webdriver', {
@@ -119,11 +112,11 @@ class LazadaCrawler:
             self.driver.quit()
 
     def load_cookies(self, url="https://www.lazada.vn"):
-        # If cookies are already loaded/session is active, skip logic
-        if self.driver.current_url != "data:,": # Check if driver has loaded something
+                                                                     
+        if self.driver.current_url != "data:,":                                       
              curr_domain = self.driver.current_url
              if "lazada" in curr_domain:
-                 return # Already on Laz, assume session is good or manual login handled it
+                 return                                                                    
 
         print("Navigating to domain to set cookies...")
         self.driver.get(url)
@@ -137,7 +130,7 @@ class LazadaCrawler:
                      pass
             
             self.driver.refresh()
-            time.sleep(1) # Reduced from 3
+            time.sleep(1)                 
 
     def search_product(self, keyword):
         """Search for products on Lazada."""
@@ -154,29 +147,25 @@ class LazadaCrawler:
             search_box.send_keys(keyword)
             search_box.send_keys(Keys.RETURN)
             
-            # SCROLL TO LOAD MORE PRODUCTS
             print("Scrolling to load more products...")
-            for i in range(5): # Scroll 5 times
+            for i in range(5):                 
                 self.driver.execute_script(f"window.scrollTo(0, {(i+1)*1000});")
-                # Random wait
+                             
                 time.sleep(random.uniform(0.8, 1.5))
             
-            # Wait for results visibility
             try:
                 self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div[data-qa-locator='product-item']")))
             except:
-                time.sleep(random.uniform(2, 3)) # Fallback wait
+                time.sleep(random.uniform(2, 3))                
             
-            # Scrape results
             products = []
             
-            # Try multiple generic selectors for product items
             items = self.driver.find_elements(By.CSS_SELECTOR, "div[data-qa-locator='product-item']")
             if not items:
                 items = self.driver.find_elements(By.CSS_SELECTOR, "div[class*='GridItem']")
             
             if not items:
-                 # Try finding via links directly
+                                                 
                  links = self.driver.find_elements(By.XPATH, "//a[contains(@href, '/products/') and string-length(text()) > 5]")
                  seen_links = set()
                  unique_links = []
@@ -186,7 +175,7 @@ class LazadaCrawler:
                          unique_links.append(l)
                          seen_links.add(href)
                  
-                 for link_el in unique_links[:50]: # Limit to 50
+                 for link_el in unique_links[:50]:              
                       try:
                           products.append({
                               "title": link_el.text,
@@ -199,9 +188,9 @@ class LazadaCrawler:
                  return products
 
             print(f"Found {len(items)} items. Parsing top 50...")
-            for item in items[:50]: # Increased limit from 10 to 50
+            for item in items[:50]:                                
                 try:
-                    # Title
+                           
                     try:
                         title_el = item.find_element(By.CSS_SELECTOR, "a[title]")
                         title = title_el.get_attribute("title")
@@ -212,30 +201,25 @@ class LazadaCrawler:
                         except:
                             title = "Unknown Product"
                             
-                    # Link
                     try:
                         link = item.find_element(By.TAG_NAME, "a").get_attribute("href")
                     except:
                         link = "#"
 
-                    # Price
                     try:
                          price = item.find_element(By.CSS_SELECTOR, "span[class*='price']").text
                     except:
                          price = "N/A"
                          
-                    # Review Count
                     review_count = 0
                     try:
-                        # Often looks like "(123)" or "123 Reviews"
-                        # Selectors: .c3XbGJ (rating count), or span containing '('
+                                                                   
                         review_text_el = item.find_element(By.CSS_SELECTOR, "span[class*='rating__review']") 
                         review_text = review_text_el.text.replace("(", "").replace(")", "").replace(".", "").replace(",", "")
                         review_count = int(review_text)
                     except:
                         try:
-                             # Fallback: look for text with parentheses inside the item
-                             # item content usually has structure.
+                                                                                       
                              spans = item.find_elements(By.TAG_NAME, "span")
                              for s in spans:
                                  t = s.text.strip()
@@ -281,25 +265,22 @@ class LazadaCrawler:
             
         self.driver.get(product_url)
         
-        # WAIT 3 SECONDS for page to fully load
         print("Waiting 3 seconds for page to fully load...")
         time.sleep(3)
         
-        # SCROLL DOWN GRADUALLY until review module is found
         print("Scrolling down to find review section...")
         found_review_module = False
         
-        for scroll_attempt in range(30):  # Max 30 attempts (~ 9000px down)
-            # Scroll down by 300px each time
+        for scroll_attempt in range(30):                                   
+                                            
             self.driver.execute_script("window.scrollBy(0, 400);")
             time.sleep(0.3)
             
-            # Check if review module is visible
             try:
                 review_module = self.driver.find_element(By.ID, "module_product_review")
                 if review_module.is_displayed():
                     print(f"Review section found after {scroll_attempt + 1} scrolls!")
-                    # Center it in view
+                                       
                     self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", review_module)
                     time.sleep(1)
                     found_review_module = True
@@ -310,19 +291,18 @@ class LazadaCrawler:
         if not found_review_module:
             print("Could not find review section after scrolling. Continuing anyway...")
         else:
-            # WAIT for reviews/filter to actually load (content is lazy-loaded)
+                                                                               
             print("Waiting for review content to load...")
             try:
                 self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[@id='module_product_review']//*[contains(text(), 'Filter') or contains(text(), 'star') or contains(text(), 'Sao')]")))
-                time.sleep(3)  # Wait 3 seconds for reviews to fully load
+                time.sleep(3)                                            
                 print("Review content loaded!")
             except:
                 print("Review content didn't load in time, continuing anyway...")
-                time.sleep(3)  # Fallback extra wait
+                time.sleep(3)                       
 
         all_reviews = []
         
-        # Define groups
         if balanced_mode:
             crawl_order = [1, 2, 3, 4, 5]
             low_star_count = 0
@@ -330,7 +310,7 @@ class LazadaCrawler:
         else:
             crawl_order = [5, 4, 3, 2, 1]
         
-        first_star_done = False  # Track if first star has been processed
+        first_star_done = False                                          
         
         for star in crawl_order:
             print(f"\n{'='*50}")
@@ -338,11 +318,9 @@ class LazadaCrawler:
             print(f"{'='*50}")
             self.debug_screenshot(f"start_star_{star}")
             
-            # Check limits for balanced mode
-            # PRIORITY: Exhaust all 1,2,3 star reviews first, then add 4,5 stars to match
             if balanced_mode:
                 if star in [4, 5]:
-                    # Only skip if we already have enough high stars to match low stars
+                                                                                       
                     if low_star_count == 0:
                         print(f"Skipping {star} Star: No low star reviews collected yet")
                         continue
@@ -352,12 +330,10 @@ class LazadaCrawler:
                     print(f"Crawling {star} Star: Need more to balance (high={high_star_count}, target={low_star_count})")
 
             try:
-                # SCROLL BACK UP to filter - ONLY if we've already processed at least one star
-                # On the first star, we're already at the review section from initial scroll
+                                                                                              
                 if first_star_done:
                     print(f"Returning to review module for {star} Star filter...")
                     
-                    # DIRECT SCROLL to review module top (don't use incremental scroll which overshoots)
                     try:
                         review_module = self.driver.find_element(By.ID, "module_product_review")
                         self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'start'});", review_module)
@@ -368,10 +344,8 @@ class LazadaCrawler:
                         self.driver.execute_script("window.scrollBy(0, -500);")
                         time.sleep(1)
                     
-                # 1. Click "Filter by" dropdown
-                # CORRECT SELECTOR from browser inspection: .pdp-mod-filterSort-v2 .oper (first one is Filter)
                 try:
-                    # Find filter buttons - there are 2: "Filter by" and "Sort by"
+                                                                                  
                     filter_opers = self.driver.find_elements(By.CSS_SELECTOR, ".pdp-mod-filterSort-v2 .oper")
                     filter_btn = None
                     
@@ -385,11 +359,11 @@ class LazadaCrawler:
                         self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", filter_btn)
                         time.sleep(0.5)
                         filter_btn.click()
-                        time.sleep(1.5)  # Wait for dropdown to appear
+                        time.sleep(1.5)                               
                         self.debug_screenshot(f"after_filter_click_star_{star}")
                     else:
                         print("Filter button not found with CSS selector. Trying XPath fallback...")
-                        # Fallback to old XPath method
+                                                      
                         filter_triggers = self.driver.find_elements(By.XPATH, "//*[(contains(text(), 'Filter') or contains(text(), 'All stars') or contains(text(), 'Tất cả'))]")
                         for trig in filter_triggers:
                             if trig.is_displayed():
@@ -400,23 +374,19 @@ class LazadaCrawler:
                     print(f"Error clicking filter: {e}")
                     self.debug_screenshot(f"filter_error_star_{star}")
 
-                # 2. Click specific star rating from dropdown
-                # CORRECT SELECTOR from browser inspection: .next-menu-item (li elements in dropdown)
                 filter_found = False
-                for attempt in range(2): # Retry logic
+                for attempt in range(2):              
                     try:
-                        # Wait for dropdown to fully render
+                                                           
                         time.sleep(1)
                         
-                        # Use the correct CSS selector: .next-menu-item
                         star_options = self.driver.find_elements(By.CSS_SELECTOR, ".next-menu-item")
                         print(f"Found {len(star_options)} menu items in dropdown")
                         
-                        # Star text formats: "1 star", "2 star", etc. (English) or "1 sao", "2 sao" (Vietnamese)
                         target_texts = [f"{star} star", f"{star} sao", f"{star} Star", f"{star} Sao"]
                         
                         if not star_options:
-                            # Dropdown may not have opened, try re-clicking filter
+                                                                                  
                             if attempt == 0:
                                 print(f"No dropdown items found. Re-opening filter menu...")
                                 try:
@@ -439,17 +409,14 @@ class LazadaCrawler:
                                 opt_text = opt.text.strip() if opt.text else ""
                                 print(f"  Menu item: '{opt_text}'")
                                 
-                                # Check if this option matches our target star
                                 if opt_text in target_texts or any(t.lower() == opt_text.lower() for t in target_texts):
                                     print(f"  >>> MATCHED target: {star} star <<<")
                                     
-                                    # Use JavaScript click for reliability (dropdown elements can be tricky)
                                     self.driver.execute_script("arguments[0].click();", opt)
                                     
                                     clicked_star = True
                                     filter_found = True
                                     
-                                    # Wait for the review list to refresh
                                     print(f"Clicked {star} Star. Waiting for reviews to reload...")
                                     time.sleep(1.5)
                                     
@@ -478,7 +445,6 @@ class LazadaCrawler:
                 if not filter_found:
                     continue
 
-                # Pagination Loop
                 page = 1
                 while True:
                     if max_pages != -1 and page > max_pages:
@@ -490,11 +456,9 @@ class LazadaCrawler:
                             break
                         
                     print(f"Page {page} of {star} stars")
-                    # Wait for content load
+                                           
                     time.sleep(random.uniform(1, 2))
                     
-                    # Extract visible reviews - IMPROVED SELECTORS
-                    # 1. Look for container first
                     container = None
                     try:
                         container = self.driver.find_element(By.CSS_SELECTOR, ".mod-reviews")
@@ -504,7 +468,7 @@ class LazadaCrawler:
                     if container:
                         review_items = container.find_elements(By.CSS_SELECTOR, ".item")
                     else:
-                        # Fallback global search
+                                                
                         review_items = self.driver.find_elements(By.CSS_SELECTOR, "div[class*='item-content']")
                     
                     if not review_items:
@@ -515,7 +479,7 @@ class LazadaCrawler:
                              break
 
                         try:
-                            # Extract review content
+                                                    
                             try:
                                 content = item.find_element(By.CSS_SELECTOR, "div[class*='content']").text
                             except:
@@ -524,7 +488,6 @@ class LazadaCrawler:
                                 except:
                                     content = ""
                             
-                            # Extract author/buyer name
                             try:
                                 author = item.find_element(By.CSS_SELECTOR, "div[class*='middle'] span").text
                             except:
@@ -533,17 +496,15 @@ class LazadaCrawler:
                                 except:
                                     author = "Anonymous"
                             
-                            # Extract review time
                             try:
                                 review_time = item.find_element(By.CSS_SELECTOR, "span[class*='date'], span[class*='time']").text
                             except:
                                 review_time = ""
                             
-                            # Extract rating (star count)
-                            rating = star  # Default from filter
+                            rating = star                       
                             try:
                                 star_container = item.find_element(By.CSS_SELECTOR, "div[class*='star'], span[class*='star']")
-                                # Try to extract from class like "star-5" or "rate-5"
+                                                                                     
                                 star_class = star_container.get_attribute("class") or ""
                                 for i in range(5, 0, -1):
                                     if str(i) in star_class:
@@ -552,26 +513,23 @@ class LazadaCrawler:
                             except:
                                 pass
                             
-                            # Extract like count
                             like_count = 0
                             try:
                                 like_elem = item.find_element(By.CSS_SELECTOR, "span[class*='like'], div[class*='like']")
                                 like_text = like_elem.text
-                                # Extract number from text like "12 likes" or "(12)"
+                                                                                    
                                 numbers = re.findall(r'\d+', like_text)
                                 if numbers:
                                     like_count = int(numbers[0])
                             except:
                                 pass
                             
-                            # Extract SKU info (variant info)
                             sku_info = ""
                             try:
                                 sku_info = item.find_element(By.CSS_SELECTOR, "div[class*='sku'], span[class*='sku'], div[class*='variant']").text
                             except:
                                 pass
                             
-                            # Extract images
                             images = []
                             try:
                                 img_elements = item.find_elements(By.CSS_SELECTOR, "img[src*='lazada'], img[src*='slatic']")
@@ -579,21 +537,19 @@ class LazadaCrawler:
                             except:
                                 pass
 
-                            # Detect if review has actual text content (not just SKU info)
-                            # Empty reviews look like: "Nhóm màu: X\nKích thước: Y\nHelpful(0)"
                             has_text_content = True
                             if content:
-                                # Remove SKU patterns and Helpful(N) to check for actual content
+                                                                                                
                                 cleaned = content
-                                # Remove patterns like "Nhóm màu: X", "Size: Y", "Kích thước: Z"
+                                                                                                
                                 cleaned = re.sub(r'(Nhóm\s*[Mm]àu|Size|Kích\s*thước|Color|Màu\s*sắc)\s*:\s*[^\n]+', '', cleaned)
-                                # Remove Helpful(N) pattern
+                                                           
                                 cleaned = re.sub(r'Helpful\s*\(\d+\)', '', cleaned)
-                                # Remove Material: pattern
+                                                          
                                 cleaned = re.sub(r'Material\s*:\s*[^\n]+', '', cleaned)
-                                # Remove remaining whitespace and newlines
+                                                                          
                                 cleaned = cleaned.strip()
-                                # If nothing left after cleaning, it's an empty review
+                                                                                      
                                 has_text_content = len(cleaned) > 0
                             else:
                                 has_text_content = False
@@ -607,10 +563,10 @@ class LazadaCrawler:
                                 "skuInfo": sku_info,
                                 "images": str(images) if images else "",
                                 "star_filter": star,
-                                "has_text_content": has_text_content  # True if review has actual text
+                                "has_text_content": has_text_content                                  
                             })
                             
-                            if balanced_mode and has_text_content:  # Only count reviews WITH actual text
+                            if balanced_mode and has_text_content:                                       
                                 if star in [1, 2, 3]: low_star_count += 1
                                 elif star in [4, 5]: high_star_count += 1
                                 
@@ -621,30 +577,27 @@ class LazadaCrawler:
                         print(f"✓ Balanced reached for {star} Star! high={high_star_count}, low={low_star_count}. Moving to next star...")
                         break
 
-                    # Go to next page by clicking page numbers (2, 3, 4...)
-                    reached_last_page = False  # Flag to track if we should exit pagination
+                    reached_last_page = False                                              
                     try:
-                        # CRITICAL: Scroll to pagination area by finding "Page x out of Y" text
+                                                                                               
                         try:
                             page_info = self.driver.find_element(By.XPATH, "//*[contains(text(), 'Page') and contains(text(), 'out of')]")
                             self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", page_info)
                             time.sleep(1)
                             
-                            # Parse "Page X out of Y" to get total pages (Y)
                             page_text = page_info.text
                             match = re.search(r'Page\s*(\d+)\s*out of\s*(\d+)', page_text)
                             if match:
                                 total_pages = int(match.group(2))
                                 print(f"Total pages: {total_pages}, Current page variable: {page}")
                                 
-                                # Check if we've clicked all pages (page variable is 1-based)
                                 if page >= total_pages:
                                     print(f"=== COMPLETED all pages for {star} Star ({page}/{total_pages}). Will move to next star. ===")
                                     self.debug_screenshot(f"completed_star_{star}_page_{page}_of_{total_pages}")
                                     reached_last_page = True
                         except Exception as e:
                             print(f"Could not parse pagination: {e}")
-                            # Fallback: Scroll to bottom of review module
+                                                                         
                             try:
                                 module = self.driver.find_element(By.ID, 'module_product_review')
                                 self.driver.execute_script("arguments[0].scrollIntoView(false);", module)
@@ -652,11 +605,9 @@ class LazadaCrawler:
                             except:
                                 pass
                         
-                        # If we reached last page, break out of pagination loop
                         if reached_last_page:
                             break
 
-                        # Click NEXT page number (page + 1)
                         next_page_num = page + 1
                         print(f"Looking for page number: {next_page_num}")
                         
@@ -671,20 +622,17 @@ class LazadaCrawler:
                             print(f"Page number {next_page_num} element not found.")
                             break
                         
-                        # Check if disabled
                         btn_class = (page_num_btn.get_attribute("class") or "").lower()
                         if "disabled" in btn_class:
                             print(f"Page {next_page_num} is disabled. End of pages.")
                             break
                         
-                        # Scroll to and click the page number
                         self.driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", page_num_btn)
                         time.sleep(random.uniform(0.5, 1))
                         
                         print(f"Clicking page number {next_page_num}...")
                         page_num_btn.click()
                         
-                        # Wait for page update - simplified check
                         try:
                              self.wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "div[class*='item'][class*='review']")))
                         except:
@@ -692,10 +640,8 @@ class LazadaCrawler:
                              
                         time.sleep(random.uniform(1, 2))
                         
-                        # Base wait (reduced for speed)
                         sleep_time = random.uniform(1.5, 3)
                         
-                        # Occasional "Long Pause" - 5% chance (reduced from 15%)
                         if random.random() < 0.05:
                              long_pause = random.uniform(2, 4)
                              print(f"Taking a short break... ({long_pause:.1f}s)")
@@ -711,10 +657,8 @@ class LazadaCrawler:
                 print(f"Error processing star {star}: {e}")
                 self.debug_screenshot(f"error_star_{star}")
             
-            # Log completion of this star rating
             print(f"=== FINISHED processing {star} Star. Total reviews collected so far: {len(all_reviews)} ===")
             
-            # Mark first star as done so subsequent stars will scroll up first
             first_star_done = True
         
         if not self.keep_alive:        
@@ -739,8 +683,7 @@ class LazadaCrawler:
         """
         reviews = []
         try:
-            # Similar selector to crawl_reviews
-            # Look for review items
+                                               
             review_items = self.driver.find_elements(By.CSS_SELECTOR, "div[class*='item'][class*='review']")
             if not review_items:
                 review_items = self.driver.find_elements(By.CSS_SELECTOR, "div[class*='review-item']")
@@ -770,12 +713,6 @@ class LazadaCrawler:
             
         return pd.DataFrame(reviews)
 
-
-# ============================================
-# WRAPPER FUNCTIONS for backward compatibility
-# with old request-based interface
-# ============================================
-
 def extract_item_id(url: str) -> Optional[str]:
     """
     Extract product item_id from Lazada URL.
@@ -785,14 +722,14 @@ def extract_item_id(url: str) -> Optional[str]:
         return None
     
     patterns = [
-        r'-i(\d+)-s',           # Format: -i123456-s
-        r'-i(\d+)\.',           # Format: -i123456.html
-        r'-i(\d+)$',            # Format: ends with -i123456
-        r'-i(\d+)\?',           # Format: -i123456?
-        r'itemId=(\d+)',        # Query param: itemId=123456
-        r'/i(\d+)\?',           # Format: /i123456?
-        r'/i(\d+)$',            # Format: /i123456
-        r'products/.*?-(\d+)\.html',  # Format: products/xxx-123456.html
+        r'-i(\d+)-s',                               
+        r'-i(\d+)\.',                                  
+        r'-i(\d+)$',                                        
+        r'-i(\d+)\?',                              
+        r'itemId=(\d+)',                                    
+        r'/i(\d+)\?',                              
+        r'/i(\d+)$',                              
+        r'products/.*?-(\d+)\.html',                                    
     ]
     
     for pattern in patterns:
@@ -800,13 +737,11 @@ def extract_item_id(url: str) -> Optional[str]:
         if match:
             return match.group(1)
     
-    # Fallback: find any 6+ digit number in URL
     all_numbers = re.findall(r'(\d{6,})', url)
     if all_numbers:
         return all_numbers[0]
     
     return None
-
 
 def crawl_reviews(
     product_url: str,
@@ -832,7 +767,7 @@ def crawl_reviews(
         Tuple of (list of reviews as dicts, error message)
     """
     try:
-        # Load cookies from JSON if provided
+                                            
         cookie_list = None
         if cookies_path:
             json_path = cookies_path
@@ -847,20 +782,16 @@ def crawl_reviews(
                 except Exception as e:
                     print(f"⚠️ Could not load cookies: {e}")
         
-        # Calculate max pages based on max_reviews (approx 10 reviews per page)
         max_pages = max(1, max_reviews // 10)
         
-        # Create crawler and run
         crawler = LazadaCrawler(cookie_list=cookie_list, keep_alive=False, debug_mode=False)
         df = crawler.crawl_reviews(product_url, max_pages=max_pages, balanced_mode=balanced_mode)
         
         if df.empty:
             return [], "Không lấy được review nào. Có thể Lazada chặn bot."
         
-        # Convert DataFrame to list of dicts
         reviews = df.to_dict('records')
         
-        # Limit to max_reviews
         reviews = reviews[:max_reviews]
         
         print(f"✅ Đã crawl {len(reviews)} reviews")
@@ -871,7 +802,6 @@ def crawl_reviews(
         traceback.print_exc()
         return [], f"Lỗi: {str(e)}"
 
-
 def reviews_to_dataframe(reviews: List[Dict]) -> pd.DataFrame:
     """
     Convert list of reviews to pandas DataFrame.
@@ -880,9 +810,7 @@ def reviews_to_dataframe(reviews: List[Dict]) -> pd.DataFrame:
         return pd.DataFrame()
     return pd.DataFrame(reviews)
 
-
-# Test
 if __name__ == "__main__":
     print("=== Lazada Selenium Crawler Test ===")
     crawler = LazadaCrawler(keep_alive=True, debug_mode=True)
-    # crawler.search_product("iphone")
+                                      

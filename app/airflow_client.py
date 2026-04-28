@@ -6,20 +6,16 @@ import requests
 import time
 from typing import Dict, Optional, Tuple
 
-# Airflow API Configuration
 AIRFLOW_BASE_URL = "http://airflow-webserver:8080"
 AIRFLOW_API_URL = f"{AIRFLOW_BASE_URL}/api/v1"
 AIRFLOW_USERNAME = "admin"
 AIRFLOW_PASSWORD = "admin"
 
-# DAG Configuration
 DAG_ID = "realtime_absa_pipeline"
-
 
 def get_auth():
     """Get authentication tuple for requests."""
     return (AIRFLOW_USERNAME, AIRFLOW_PASSWORD)
-
 
 def trigger_dag(product_id: str, product_url: str = "", max_reviews: int = 50, reviews: list = None) -> Tuple[bool, str]:
     """
@@ -41,7 +37,7 @@ def trigger_dag(product_id: str, product_url: str = "", max_reviews: int = 50, r
             "product_id": product_id,
             "product_url": product_url,
             "max_reviews": max_reviews,
-            "reviews": reviews or []  # Send pre-crawled reviews
+            "reviews": reviews or []                            
         }
     }
     
@@ -68,7 +64,6 @@ def trigger_dag(product_id: str, product_url: str = "", max_reviews: int = 50, r
         print(f"❌ Connection error: {e}")
         return False, str(e)
 
-
 def get_dag_run_status(dag_run_id: str) -> Dict:
     """
     Get the status of a DAG run.
@@ -93,7 +88,6 @@ def get_dag_run_status(dag_run_id: str) -> Dict:
     except requests.exceptions.RequestException:
         return {}
 
-
 def wait_for_dag_completion(dag_run_id: str, timeout: int = 300, poll_interval: int = 5) -> Tuple[bool, str]:
     """
     Wait for DAG run to complete.
@@ -117,11 +111,9 @@ def wait_for_dag_completion(dag_run_id: str, timeout: int = 300, poll_interval: 
         elif state in ["failed", "upstream_failed"]:
             return False, state
         
-        # Still running
         time.sleep(poll_interval)
     
     return False, "timeout"
-
 
 def get_task_instances(dag_run_id: str) -> list:
     """

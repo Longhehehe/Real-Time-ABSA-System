@@ -38,14 +38,12 @@ from training_plots import (
     save_models_metrics_comparison,
 )
 
-# Import shared utilities (constants, data loading, dataset)
 from absa_dataset import (
     load_data_multipolarity,
     ABSADatasetMultiPolarity,
     ASPECTS,
 )
 
-# Import all models from methods package
 from methods import (
     compute_all_metrics, print_fold_summary, build_comparison_table,
     LogisticRegressionABSA, NaiveBayesABSA,
@@ -64,10 +62,6 @@ MODEL_REGISTRY = {
     'xlm_roberta':         ('Transformer', XLMRoBERTaForABSA),
 }
 
-
-# ============================================================
-# TRAINING ENGINES
-# ============================================================
 def train_ml_kfold(
     model_class,
     texts: List[str],
@@ -109,7 +103,6 @@ def train_ml_kfold(
 
     print_fold_summary(all_fold_metrics, name)
     return _save_results(name, all_fold_metrics, best_fold, best_f1, n_folds, output_dir)
-
 
 def train_deep_kfold(
     model_class,
@@ -184,7 +177,6 @@ def train_deep_kfold(
         if epoch_losses:
             fold_epoch_losses.append(epoch_losses)
 
-        # Validation
         model.eval()
         pm, tm, ps, ts, prm, prs = [], [], [], [], [], []
         with torch.no_grad():
@@ -224,7 +216,6 @@ def train_deep_kfold(
 
     print_fold_summary(all_fold_metrics, name)
 
-    # Save best model
     os.makedirs(output_dir, exist_ok=True)
     if best_state:
         torch.save({
@@ -246,7 +237,6 @@ def train_deep_kfold(
         )
 
     return _save_results(name, all_fold_metrics, best_fold, best_f1, n_folds, output_dir)
-
 
 def _save_results(name, all_fold_metrics, best_fold, best_f1, n_folds, output_dir):
     """Compute averages and save results.json."""
@@ -270,10 +260,6 @@ def _save_results(name, all_fold_metrics, best_fold, best_f1, n_folds, output_di
         json.dump(results, f, ensure_ascii=False, indent=2)
     return results
 
-
-# ============================================================
-# MAIN ORCHESTRATOR
-# ============================================================
 def train_selected_models(
     data_path: str,
     model_names: List[str],
@@ -295,7 +281,6 @@ def train_selected_models(
     print(f"  Device: {device} | Folds: {n_folds} | Epochs: {epochs}")
     print(f"{'#'*70}")
 
-    # Load data once
     print("\n Loading data...")
     texts, labels_m, labels_s = load_data_multipolarity(data_path)
     clean_texts = []
@@ -383,7 +368,6 @@ def train_selected_models(
             title=f"{display_name} Metrics Comparison",
         )
 
-    # Comparison table if multiple models
     if len(all_results) > 1:
         build_comparison_table(all_results)
 
@@ -405,7 +389,6 @@ def train_selected_models(
             metric_order=metric_order,
         )
 
-    # Save combined
     combined_path = os.path.join(base_output_dir, 'all_models_comparison.json')
     serializable = {name: {'model': r['model'], 'best_fold': r['best_fold'],
                            'best_combined_f1': r['best_combined_f1'], 'avg_metrics': r['avg_metrics']}
@@ -416,10 +399,6 @@ def train_selected_models(
 
     return all_results
 
-
-# ============================================================
-# CLI
-# ============================================================
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Multi-Method ABSA Training")
     parser.add_argument('--data', type=str, default=None, help='Path to labeled data')

@@ -7,7 +7,6 @@ from transformers import AutoModel
 
 NUM_ASPECTS = 9
 
-
 class PhoBERTForABSAMultiPolarity(nn.Module):
     """PhoBERT model with multi-task learning for Multi-Polarity ABSA.
 
@@ -20,7 +19,7 @@ class PhoBERTForABSAMultiPolarity(nn.Module):
         super().__init__()
 
         self.phobert = AutoModel.from_pretrained("vinai/phobert-base")
-        hidden_size = self.phobert.config.hidden_size  # 768
+        hidden_size = self.phobert.config.hidden_size       
 
         self.dropout = nn.Dropout(dropout)
         self.head_m = nn.Linear(hidden_size, num_aspects)
@@ -35,14 +34,13 @@ class PhoBERTForABSAMultiPolarity(nn.Module):
         logits_s = self.head_s(h).view(-1, self.num_aspects, 3)
         return logits_m, logits_s
 
-
 class XLMRoBERTaForABSA(nn.Module):
     """XLM-RoBERTa model for multi-task multi-polarity ABSA."""
 
     def __init__(self, num_aspects: int = NUM_ASPECTS, dropout: float = 0.3):
         super().__init__()
         self.backbone = AutoModel.from_pretrained("xlm-roberta-base")
-        hidden_size = self.backbone.config.hidden_size  # 768
+        hidden_size = self.backbone.config.hidden_size       
         self.dropout = nn.Dropout(dropout)
         self.head_m = nn.Linear(hidden_size, num_aspects)
         self.head_s = nn.Linear(hidden_size, num_aspects * 3)

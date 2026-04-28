@@ -6,14 +6,12 @@ import time
 import plotly.express as px
 import json
 
-# Page Config
 st.set_page_config(
     page_title="Real-Time Product Analytics",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# Custom CSS
 st.markdown("""
 <style>
     .main { background-color: #0E1117; }
@@ -37,22 +35,20 @@ st.markdown("""
 def main():
     st.title("Real-Time Product Analytics")
 
-    # --- 1. Data Loading (Cached) ---
     @st.cache_data
     def load_cached_data():
-        # Dynamic path: project/app/dashboard.py -> project/data/label/...
+                                                                          
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         default_path = os.path.join(base_dir, 'data', 'label', 'absa_grouped_vietnamese.xlsx')
         
         if not os.path.exists(default_path):
-            # Fallback for Docker mounting structure if needed
+                                                              
             return None, None, f"File not found at {default_path}"
         
         df, aspects = utils.load_data(default_path)
         if df is None:
             return None, None, aspects
             
-        # Assign Fake Product IDs for simulation
         df = utils.assign_fake_product_ids(df, ['Product A', 'Product B'])
         return df, aspects, None
 
@@ -62,18 +58,15 @@ def main():
         st.error(f"Error: {error}")
         return
 
-    # --- 2. Session State Initialization ---
     if 'stream_data' not in st.session_state:
-        # Initial state: Start with a small sample (e.g., 20 rows)
+                                                                  
         st.session_state['stream_data'] = df_pool.sample(20).copy()
     
     if 'is_streaming' not in st.session_state:
         st.session_state['is_streaming'] = False
 
-    # --- 3. Sidebar Controls ---
     st.sidebar.header("Streaming Control")
     
-    # Data Source Mode
     data_mode = st.sidebar.radio(
         "Data Source",
         ["File Simulation", "Live Predictions"],
@@ -82,7 +75,7 @@ def main():
     
     selected_live_file = None
     if data_mode == "Live Predictions":
-        # Scan for prediction files
+                                   
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         pred_dir = os.path.join(base_dir, 'data', 'predictions')
         
@@ -95,7 +88,6 @@ def main():
         else:
              st.sidebar.error("Predictions directory not found.")
     
-    # Toggle Streaming
     if st.session_state['is_streaming']:
         if st.sidebar.button("Stop Polling", type="primary"):
             st.session_state['is_streaming'] = False
@@ -110,14 +102,11 @@ def main():
         st.session_state['is_streaming'] = False
         st.rerun()
 
-    # Debug: Show Raw Data
     with st.sidebar.expander("🔍 Debug Raw Data"):
         st.write(st.session_state['stream_data'].tail(5))
 
-    # Simulation Speed
     speed_factor = st.sidebar.slider("Updates per second", 0.1, 2.0, 0.5)
     
-    # --- 4. Main Layout ---
     col1, col2 = st.columns([2, 1])
 
     with col1:
@@ -149,17 +138,16 @@ def main():
         else:
             st.info("Price/Quality aspects not detected for scatter plot")
 
-    # --- 5. Data Update Logic ---
     if st.session_state['is_streaming']:
         with st.empty():
             if data_mode == "File Simulation":
-                 # Simulate new data
+                                    
                  new_row = df_pool.sample(1)
                  st.session_state['stream_data'] = pd.concat([st.session_state['stream_data'], new_row], ignore_index=True).tail(50)
                  time.sleep(1/speed_factor)
                  st.rerun()
             elif data_mode == "Live Predictions" and selected_live_file:
-                # Read from JSON file
+                                     
                 base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
                 file_path = os.path.join(base_dir, 'data', 'predictions', selected_live_file)
                 
@@ -168,19 +156,17 @@ def main():
                         data = json.load(f)
                         
                     if data:
-                        # Get File Timestamp
+                                            
                         mod_time = os.path.getmtime(file_path)
                         mod_time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(mod_time))
                         st.sidebar.info(f"🕒 File updated: {mod_time_str}")
 
-                        # Convert JSON list to DataFrame
-                        # Structure: [{'sentiment': {'Price': 'POS', ...}}, 'rating': 5, ...]
                         rows = []
                         for item in data:
                             row = {}
-                            # Flatten sentiment dict
+                                                    
                             sentiments = item.get('sentiment', {})
-                            if isinstance(sentiments, str): # Handle potential double serialization
+                            if isinstance(sentiments, str):                                        
                                 try: sentiments = json.loads(sentiments)
                                 except: sentiments = {}
                                 
@@ -193,9 +179,7 @@ def main():
                             
                         new_df = pd.DataFrame(rows)
                         
-                        # Only update if we have new data or just refreshing
-                        # Ideally, compare length or timestamp. For now, just reload.
-                        st.session_state['stream_data'] = new_df.tail(100) # Keep last 100
+                        st.session_state['stream_data'] = new_df.tail(100)                
                         
                     time.sleep(1/speed_factor)
                     st.rerun()

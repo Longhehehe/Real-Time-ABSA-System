@@ -9,17 +9,12 @@ import time
 from kafka import KafkaConsumer, KafkaProducer
 from kafka.errors import NoBrokersAvailable
 
-# Add path for model imports
-# Add path for model imports
-# Relative: parent -> prepro/...
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 base_path = os.path.join(BASE_DIR, 'prepro', '23520932_23520903_20520692_src', '23520932_23520903_20520692_src')
 sys.path.insert(0, base_path)
 
-# Configuration
-# Configuration
 import os
-# Support Docker networking
+                           
 default_bootstrap = 'localhost:9092'
 if os.path.exists('/.dockerenv'):
     default_bootstrap = 'kafka:29092'
@@ -29,7 +24,6 @@ INPUT_TOPIC = 'raw_reviews'
 OUTPUT_TOPIC = 'predictions'
 CONSUMER_GROUP = 'ml_prediction_group'
 
-# Path handling
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_PATH = os.path.join(BASE_DIR, 'models', 'best_model')
 
@@ -37,7 +31,6 @@ def check_and_train_model():
     """Check if model exists, train if not."""
     model_file = os.path.join(MODEL_PATH, 'model.pkl')
     
-    # Find the latest timestamped model folder if exists
     if os.path.exists(MODEL_PATH):
         subdirs = [d for d in os.listdir(MODEL_PATH) if os.path.isdir(os.path.join(MODEL_PATH, d))]
         for subdir in subdirs:
@@ -48,16 +41,14 @@ def check_and_train_model():
     
     if not os.path.exists(model_file):
         print("⚠️ No model found. Running training pipeline...")
-        # Import and run training
-        # Import and run training
+                                 
         sys.path.insert(0, BASE_DIR)
         from train_pipeline import run_training
         run_training()
         
-        # After training, find the new model
         if os.path.exists(MODEL_PATH):
             subdirs = [d for d in os.listdir(MODEL_PATH) if os.path.isdir(os.path.join(MODEL_PATH, d))]
-            for subdir in sorted(subdirs, reverse=True):  # Get latest
+            for subdir in sorted(subdirs, reverse=True):              
                 potential_model = os.path.join(MODEL_PATH, subdir, 'model.pkl')
                 if os.path.exists(potential_model):
                     return potential_model
@@ -91,13 +82,9 @@ def create_output_producer():
 
 def run_consumer():
     """Main consumer loop."""
-    # Step 1: Ensure model exists
+                                 
     model_path = check_and_train_model()
     print(f"🧠 Using model: {model_path}")
-    
-    # Load model
-    # NOTE: In a real scenario, we'd load the model here
-    # For demo, we'll simulate prediction
     
     consumer = create_consumer()
     producer = create_output_producer()
@@ -108,25 +95,19 @@ def run_consumer():
     for message in consumer:
         data = message.value
         
-        # Extract ONLY the review content for prediction (hide Product info)
         review_content = data.get('reviewContent', '')
         
-        # --- PREDICTION STEP ---
-        # In real implementation, you'd call: model.predict(review_content)
-        # For demo, we simulate prediction based on keywords
         sentiment = simulate_prediction(review_content)
         
-        # --- RE-ATTACH PRODUCT INFO ---
         result = {
             'review_id': data.get('review_id'),
             'reviewContent': review_content,
-            'Product_ID': data.get('Product_ID'),  # Re-attach
-            'Product_Category': data.get('Product_Category'),  # Re-attach
+            'Product_ID': data.get('Product_ID'),             
+            'Product_Category': data.get('Product_Category'),             
             'predicted_sentiment': sentiment,
             'processed_at': time.time()
         }
         
-        # Publish to output topic
         producer.send(OUTPUT_TOPIC, value=result)
         
         processed_count += 1

@@ -6,19 +6,16 @@ import os
 import sys
 import tempfile
 
-# Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import product_manager as pm
 from lazada_crawler import extract_item_id, get_product_info, create_session
 
-# Page Config
 st.set_page_config(
     page_title="Danh Sách Sản Phẩm",
     layout="wide"
 )
 
-# Custom CSS
 st.markdown("""
 <style>
     .main { background-color: #0E1117; }
@@ -36,19 +33,13 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-
 def main():
     st.title("Danh Sách Sản Phẩm So Sánh")
     
-    # Initialize session state
     pm.init_session_state()
     
-    # --- Sidebar: Cookies Configuration ---
     st.sidebar.header("Cấu hình Cookies")
     
-    # Check if cookies already exist
-    # In Docker: __file__ = /app/app/pages/1_xxx.py, project root = /app
-    # We need to go up 3 levels: pages -> app -> project root
     cookies_dir = os.path.join(
         os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))),
         'cookie'
@@ -60,7 +51,6 @@ def main():
         st.sidebar.success("Đã có cookies Lazada!")
         st.sidebar.caption(f"{default_cookies}")
     
-    # Option 1: Auto login with Selenium
     st.sidebar.markdown("### Đăng nhập tự động")
     st.sidebar.markdown("Mở browser để đăng nhập Lazada, cookies sẽ tự động được lưu.")
     
@@ -86,7 +76,6 @@ def main():
     
     st.sidebar.markdown("---")
     
-    # Option 2: Manual upload
     st.sidebar.markdown("### Hoặc upload cookies thủ công")
     
     uploaded_file = st.sidebar.file_uploader(
@@ -106,20 +95,16 @@ def main():
         st.sidebar.success("Đã upload cookies!")
         st.rerun()
     
-    # Show current status
     st.sidebar.markdown("---")
     if pm.is_cookies_uploaded():
         st.sidebar.info(f"Cookies: OK")
     else:
         st.sidebar.warning("Chưa có cookies - có thể không crawl được")
     
-    # --- Main Content ---
     st.markdown("---")
     
-    # ===== Lazada Search Section =====
     st.subheader("Tìm Kiếm Sản Phẩm Lazada")
     
-    # Search input
     search_col1, search_col2 = st.columns([4, 1])
     
     with search_col1:
@@ -130,10 +115,9 @@ def main():
         )
     
     with search_col2:
-        st.write("")  # Spacing
+        st.write("")           
         search_button = st.button("Tìm kiếm", type="primary", use_container_width=True)
     
-    # Search and display results
     if search_button and search_keyword:
         try:
             from lazada_search import search_lazada
@@ -144,7 +128,6 @@ def main():
             if results:
                 st.success(f"Tìm thấy {len(results)} sản phẩm")
                 
-                # Store results in session state
                 st.session_state['search_results'] = results
             else:
                 st.warning("Không tìm thấy sản phẩm nào. Thử từ khóa khác.")
@@ -154,19 +137,17 @@ def main():
         except Exception as e:
             st.error(f"Lỗi tìm kiếm: {e}")
     
-    # Display search results
     if 'search_results' in st.session_state and st.session_state['search_results']:
         st.markdown("### Kết quả tìm kiếm")
         st.caption("Click **Thêm** để thêm sản phẩm vào danh sách so sánh")
         
         results = st.session_state['search_results']
         
-        # Display in grid
         cols = st.columns(3)
         for idx, product in enumerate(results):
             with cols[idx % 3]:
                 with st.container():
-                    # Product card
+                                  
                     st.markdown(f"""
                     <div style="
                         background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -187,7 +168,6 @@ def main():
                     </div>
                     """, unsafe_allow_html=True)
                     
-                    # Add button
                     item_id = product.get('item_id', '')
                     if item_id and item_id not in pm.get_products():
                         if st.button("Thêm", key=f"add_search_{idx}", use_container_width=True):
@@ -203,14 +183,12 @@ def main():
                     elif item_id in pm.get_products():
                         st.info("✓ Đã có trong danh sách")
         
-        # Clear results button
         if st.button("Xóa kết quả tìm kiếm"):
             st.session_state['search_results'] = []
             st.rerun()
     
     st.markdown("---")
     
-    # ===== Manual Add Product Section =====
     st.subheader("Thêm Sản Phẩm Bằng URL")
     
     col1, col2 = st.columns([3, 1])
@@ -222,7 +200,7 @@ def main():
         )
     
     with col2:
-        st.write("")  # Spacing
+        st.write("")           
         st.write("")
         add_button = st.button("Thêm", type="primary", use_container_width=True)
     
@@ -235,11 +213,10 @@ def main():
             st.warning("Sản phẩm này đã có trong danh sách!")
         else:
             with st.spinner("Đang lấy thông tin sản phẩm..."):
-                # Get product info
+                                  
                 session = create_session(pm.get_cookies_path())
                 info = get_product_info(product_url, session)
                 
-                # Add to list
                 pm.add_product(
                     item_id=item_id,
                     name=info.get('name', f'Sản phẩm {item_id}'),
@@ -253,7 +230,6 @@ def main():
     
     st.markdown("---")
     
-    # Product List
     st.subheader("Danh Sách Sản Phẩm")
     
     products = pm.get_products()
@@ -261,7 +237,7 @@ def main():
     if not products:
         st.info("Chưa có sản phẩm nào. Hãy thêm ít nhất 2 sản phẩm để so sánh!")
     else:
-        # Display products
+                          
         for item_id, product in products.items():
             with st.container():
                 col1, col2, col3 = st.columns([1, 3, 1])
@@ -285,7 +261,6 @@ def main():
                 
                 st.markdown("---")
     
-    # Compare Button
     st.subheader("So Sánh Sản Phẩm")
     
     product_count = pm.get_product_count()

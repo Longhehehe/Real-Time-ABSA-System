@@ -12,22 +12,18 @@ from typing import List, Dict, Optional
 from pydantic import BaseModel
 import sys
 
-# Add project paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 sys.path.insert(0, os.path.join(BASE_DIR, 'app'))
 
-# Import the shared predictor from app/
 try:
     from absa_predictor import PhoBERTPredictor, ASPECTS
 except ImportError:
-    # Fallback if run from different cwd
+                                        
     from app.absa_predictor import PhoBERTPredictor, ASPECTS
 
-# Paths
 PREDICTIONS_DIR = os.path.join(BASE_DIR, 'data', 'predictions')
 
-# Global predictor instance
 predictor = None
 
 @asynccontextmanager
@@ -37,7 +33,7 @@ async def lifespan(app: FastAPI):
     print(f"🚀 Starting ABSA API...")
     
     predictor = PhoBERTPredictor()
-    # It will automatically find the best model in ./models/
+                                                            
     success = predictor.load_model()
     
     if success:
@@ -50,10 +46,8 @@ async def lifespan(app: FastAPI):
     print("🛑 Shutting down ABSA API...")
     predictor = None
 
-
 app = FastAPI(title="ABSA Prediction API", version="2.1.0", lifespan=lifespan)
 
-# CORS for React frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:3000", "http://localhost:5173", "*"],
@@ -62,14 +56,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# === DATA MODELS ===
-
 class PredictionFile(BaseModel):
     product_id: str
     file_name: str
     review_count: int
     last_modified: float
-
 
 class AspectScore(BaseModel):
     aspect: str
@@ -78,31 +69,24 @@ class AspectScore(BaseModel):
     sentiment_distribution: Optional[Dict[str, float]] = None
     has_mixed: Optional[bool] = False
 
-
 class ProductPrediction(BaseModel):
     product_id: str
     reviews: List[Dict]
     aspect_scores: List[AspectScore]
     total_reviews: int
 
-
 class TextPredictionRequest(BaseModel):
     text: str
-
 
 class TriggerRequest(BaseModel):
     product_url: str
     max_reviews: int = 50
-
 
 class TriggerResponse(BaseModel):
     success: bool
     message: str
     dag_run_id: Optional[str] = None
     product_id: Optional[str] = None
-
-
-# === ENDPOINTS ===
 
 @app.get("/")
 def root():
@@ -112,7 +96,6 @@ def root():
         "message": "ABSA Prediction API v2.1 (Shared Predictor)", 
         "model_loaded": model_status
     }
-
 
 @app.get("/api/model-info")
 def get_model_info():
@@ -124,7 +107,6 @@ def get_model_info():
         "description": "PhoBERT ABSA Multi-Polarity Model",
         "loaded": predictor.model_loaded if predictor else False
     }
-
 
 @app.post("/api/evaluate-model")
 def run_model_evaluation():
@@ -152,7 +134,6 @@ def run_model_evaluation():
         print(f"Evaluation error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-
 @app.post("/api/predict-text")
 def predict_text(request: TextPredictionRequest):
     """Predict aspects and sentiments for a single text using shared predictor"""
@@ -160,9 +141,7 @@ def predict_text(request: TextPredictionRequest):
         raise HTTPException(status_code=503, detail="Model is not loaded. Please verify ./models folder.")
         
     try:
-        # Use simple legacy prediction for now or clean up result
-        # The frontend expects { text: str, aspects: { name: { mentioned: bool, sentiments: [] } } }
-        
+                                                                 
         raw_result = predictor.predict_single(request.text)
         multipolarity_result = raw_result.get('multipolarity', {})
         
@@ -173,7 +152,6 @@ def predict_text(request: TextPredictionRequest):
     except Exception as e:
         print(f"Prediction error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
-
 
 @app.get("/api/search")
 def search_products(keyword: str, limit: int = 20):
@@ -222,12 +200,10 @@ def search_products(keyword: str, limit: int = 20):
         traceback.print_exc()
         return {"error": str(e), "products": []}
 
-
 @app.get("/api/aspects", response_model=List[str])
 def get_aspects():
     """Get list of aspects"""
     return ASPECTS
-
 
 @app.delete("/api/predictions/clear")
 def clear_predictions():
@@ -250,7 +226,6 @@ def clear_predictions():
         "deleted_count": deleted_count,
         "errors": errors
     }
-
 
 @app.get("/api/predictions", response_model=List[PredictionFile])
 def list_predictions():
@@ -276,7 +251,6 @@ def list_predictions():
     
     return sorted(files, key=lambda x: x.last_modified, reverse=True)
 
-
 @app.get("/api/predictions/{product_id}", response_model=ProductPrediction)
 def get_prediction(product_id: str):
     """Get predictions for a specific product"""
@@ -291,10 +265,8 @@ def get_prediction(product_id: str):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error reading file: {e}")
     
-    # Calculate aspect scores using robust logic
     from app.absa_predictor import aggregate_multipolarity_scores
     
-    # Pre-process sentiments to ensure compatibility with aggregate_multipolarity_scores
     formatted_preds = []
     
     for r in reviews:
@@ -304,7 +276,6 @@ def get_prediction(product_id: str):
         raw_sentiment = r['sentiment']
         processed = {}
         
-        # Check if legacy format (integers)
         is_legacy = False
         for k, v in raw_sentiment.items():
             if isinstance(v, int):
@@ -312,8 +283,7 @@ def get_prediction(product_id: str):
                 break
         
         if is_legacy:
-            # Convert legacy int to multipolarity dict
-            # 1 -> POS, -1 -> NEG, 0 -> NEU, 2 -> Not mentioned
+                                                      
             label_map = {1: ['POS'], -1: ['NEG'], 0: ['NEU']}
             
             for aspect, val in raw_sentiment.items():
@@ -326,12 +296,11 @@ def get_prediction(product_id: str):
                     }
             formatted_preds.append(processed)
         else:
-            # Already in multipolarity format
+                                             
             formatted_preds.append(raw_sentiment)
              
     aspect_scores_dict = aggregate_multipolarity_scores(formatted_preds)
     
-    # Convert dict to AspectScore objects
     final_scores = []
     for aspect, data in aspect_scores_dict.items():
         final_scores.append(AspectScore(

@@ -13,7 +13,6 @@ st.set_page_config(page_title="Lazada Crawler", layout="wide")
 
 st.title("🛒 Lazada Review Crawler")
 
-# Helper to load cookies from file
 def load_cookies_from_file():
     if os.path.exists(COOKIE_FILE):
         try:
@@ -23,14 +22,11 @@ def load_cookies_from_file():
             return None
     return None
 
-# Sidebar for Configuration
 with st.sidebar:
     st.header("1. Configuration")
     
-    # Debug mode toggle
     debug_mode = st.checkbox("🐛 Debug Mode (Save screenshots)", value=False, help="When enabled, saves screenshots at key points to help diagnose issues.")
     
-    # Auto-load cookies on start
     if 'cookies' not in st.session_state:
         saved_cookies = load_cookies_from_file()
         if saved_cookies:
@@ -39,7 +35,7 @@ with st.sidebar:
     
     st.markdown("### Option A: Manual Login (Recommended)")
     if st.button("Open Browser to Login"):
-        # Helper to safely get or create crawler
+                                                
         if 'crawler' not in st.session_state:
             st.session_state.crawler = LazadaCrawler(keep_alive=True, debug_mode=debug_mode)
         
@@ -58,7 +54,6 @@ with st.sidebar:
                 cookies = st.session_state.crawler.get_cookies()
                 st.session_state['cookies'] = cookies
                 
-                # Save to file
                 with open(COOKIE_FILE, 'w') as f:
                     json.dump(cookies, f)
                     
@@ -76,24 +71,20 @@ with st.sidebar:
             cookies = parse_cookie_string(cookie_input)
             st.session_state['cookies'] = cookies
             
-            # Save to file
             with open(COOKIE_FILE, 'w') as f:
                 json.dump(cookies, f)
                 
             st.success(f"Parsed and SAVED {len(cookies)} cookies!")
 
-# Main Area
 tab1, tab2, tab3 = st.tabs(["Search & Crawl", "Data View", "Assisted Mode (Manual)"])
 
 with tab2:
     st.header("📊 Data View")
     
-    # Show current session data
     if 'crawled_data' in st.session_state and st.session_state['crawled_data'] is not None:
         df = st.session_state['crawled_data']
         st.success(f"✅ Có {len(df)} reviews trong session hiện tại")
         
-        # Stats
         col1, col2, col3 = st.columns(3)
         with col1:
             st.metric("Tổng reviews", len(df))
@@ -105,10 +96,8 @@ with tab2:
             if 'keyword' in df.columns:
                 st.metric("Số từ khóa", df['keyword'].nunique())
         
-        # Show dataframe
         st.dataframe(df, use_container_width=True)
         
-        # Download button
         csv = df.to_csv(index=False).encode('utf-8')
         st.download_button(
             label="📥 Download CSV",
@@ -119,7 +108,6 @@ with tab2:
     else:
         st.info("Chưa có dữ liệu crawl. Hãy chạy Bulk Crawl hoặc crawl sản phẩm trước!")
     
-    # Show saved files
     st.write("---")
     st.subheader("📁 File đã lưu")
     
@@ -127,7 +115,7 @@ with tab2:
     csv_files = glob.glob("*_reviews.csv") + glob.glob("bulk_crawl_*.csv")
     
     if csv_files:
-        for f in csv_files[-10:]:  # Show last 10 files
+        for f in csv_files[-10:]:                      
             with st.expander(f"📄 {f}"):
                 try:
                     df_file = pd.read_csv(f)
@@ -137,7 +125,6 @@ with tab2:
                     st.error(f"Không đọc được file: {e}")
     else:
         st.info("Chưa có file CSV nào được lưu.")
-
 
 with tab3:
     st.header("3. Assisted Mode (Semi-Automatic)")
@@ -158,20 +145,17 @@ with tab3:
     if st.button("📸 Scrape Visible Reviews (No Clicks)"):
         if 'crawler' in st.session_state and st.session_state.crawler:
             try:
-                # Call the new extraction method
+                                                
                 df_manual = st.session_state.crawler.extract_visible_reviews(override_star=manual_star)
                 
                 if not df_manual.empty:
                     st.success(f"Successfully scraped {len(df_manual)} reviews!")
                     
-                    # Store in temporary session state
                     if 'manual_reviews' not in st.session_state:
                         st.session_state['manual_reviews'] = []
                     
-                    # Add to temp list
                     st.session_state['manual_reviews'].extend(df_manual.to_dict('records'))
                     
-                    # Show preview
                     st.dataframe(df_manual)
                 else:
                     st.warning("No reviews found on current screen. Did you scroll down?")
@@ -180,7 +164,6 @@ with tab3:
         else:
             st.error("Please Open Browser first (Sidebar Option A).")
 
-    # Display collected manual reviews
     if 'manual_reviews' in st.session_state and st.session_state['manual_reviews']:
         st.markdown("### Collected Data (Session)")
         df_collected = pd.DataFrame(st.session_state['manual_reviews'])
@@ -191,12 +174,8 @@ with tab3:
             if 'products' not in st.session_state:
                 st.session_state.products = []
             
-            # Create a 'Manual Crawl' product entry or append to existing?
-            # Append rows to a CSV?
-            # Let's save to a specific "Manual_Crawl.csv"
             save_to_csv(df_collected, "Manual_Crawl")
             
-            # Also add to display session state
             st.success("Saved to `Manual_Crawl_reviews.csv`!")
 
 with tab1:
@@ -206,16 +185,15 @@ with tab1:
     if st.button("Search"):
         with st.spinner("Searching..."):
             try:
-                # Use existing crawler if available, otherwise create new
+                                                                         
                 if 'crawler' in st.session_state:
                     crawler = st.session_state.crawler
-                    # Check if alive by simple call
+                                                   
                     try:
                         _ = crawler.driver.current_url
                     except:
                         raise NoSuchWindowException("Driver died")
                         
-                    # Update cookies if we have them in session state
                     if 'cookies' in st.session_state:
                         crawler.cookie_list = st.session_state['cookies']
                 else:
@@ -232,20 +210,16 @@ with tab1:
             
             except (NoSuchWindowException, WebDriverException):
                 st.error("Browser was closed or disconnected. Please click Search again to restart.")
-                st.session_state.pop('crawler', None) # Clear invalid crawler
+                st.session_state.pop('crawler', None)                        
                 if 'products' in st.session_state:
                     del st.session_state.products
             except Exception as e:
                 st.error(f"An error occurred during search: {e}")
 
-    # ============================================
-    # BULK KEYWORDS AUTO-CRAWL SECTION
-    # ============================================
     st.write("---")
     st.header("🔄 Bulk Keywords Auto-Crawl")
     st.markdown("Nhập danh sách từ khóa (mỗi dòng 1 từ khóa), app sẽ tự động crawl lần lượt.")
     
-    # Default keywords - 80 popular Vietnamese products
     default_keywords = """áo thun nam
 quần jean
 giày sneaker
@@ -347,7 +321,6 @@ máy tính bảng"""
         else:
             st.info(f"Sẽ crawl {len(keywords_list)} từ khóa × {products_per_keyword} sản phẩm = {len(keywords_list) * products_per_keyword} sản phẩm (Balanced Mode)")
             
-            # Initialize crawler
             if 'crawler' in st.session_state:
                 crawler = st.session_state.crawler
                 try:
@@ -371,20 +344,18 @@ máy tính bảng"""
                 status_text.text(f"🔍 [{kw_idx+1}/{total_keywords}] Đang tìm kiếm: {keyword}")
                 
                 try:
-                    # Search for this keyword
+                                             
                     results = crawler.search_product(keyword)
                     
                     if not results:
                         st.warning(f"Không tìm thấy sản phẩm cho: {keyword}")
                         continue
                     
-                    # Sort by reviews and take top N
                     sorted_results = sorted(results, key=lambda x: x.get('reviews', 0), reverse=True)
                     top_products = sorted_results[:products_per_keyword]
                     
                     st.text(f"  → Tìm thấy {len(results)} sản phẩm, crawl top {len(top_products)}")
                     
-                    # Crawl each product
                     for prod_idx, product in enumerate(top_products):
                         status_text.text(f"📝 [{kw_idx+1}/{total_keywords}] {keyword} - Sản phẩm {prod_idx+1}/{len(top_products)}")
                         try:
@@ -395,43 +366,36 @@ máy tính bảng"""
                                 all_bulk_reviews.append(df)
                                 st.text(f"    ✓ Thu được {len(df)} reviews")
                                 
-                                # === LƯU NGAY SAU MỖI SẢN PHẨM ===
-                                # Update session_state để hiển thị ở Data View
                                 current_df = pd.concat(all_bulk_reviews, ignore_index=True)
                                 st.session_state['crawled_data'] = current_df
                                 
-                                # Lưu file CSV (ghi đè với dữ liệu mới nhất)
                                 current_df.to_csv("bulk_crawl_progress.csv", index=False, encoding='utf-8-sig')
                                 st.text(f"    💾 Đã lưu {len(current_df)} reviews → bulk_crawl_progress.csv")
                                 
                         except Exception as e:
                             st.text(f"    ✗ Lỗi: {str(e)[:50]}")
-                            # Longer delay on error to avoid being blocked
+                                                                          
                             time.sleep(random.uniform(10, 20))
                         
-                        # Random delay between products (tránh bị chặn)
                         delay = random.uniform(5, 12)
                         status_text.text(f"⏳ Đợi {delay:.1f}s trước sản phẩm tiếp theo...")
                         time.sleep(delay)
                     
-                    # Random delay between keywords (dài hơn)
                     delay = random.uniform(8, 15)
                     status_text.text(f"⏳ Đợi {delay:.1f}s trước từ khóa tiếp theo...")
                     time.sleep(delay)
                     
                 except Exception as e:
                     st.warning(f"Lỗi với từ khóa '{keyword}': {e}")
-                    # Longer delay on keyword error
+                                                   
                     time.sleep(random.uniform(15, 30))
                 
                 progress_bar.progress((kw_idx + 1) / total_keywords)
             
-            # Save all results
             if all_bulk_reviews:
                 final_df = pd.concat(all_bulk_reviews, ignore_index=True)
                 st.session_state['crawled_data'] = final_df
                 
-                # Save to file
                 from datetime import datetime
                 timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
                 filename = f"bulk_crawl_{timestamp}"
@@ -444,11 +408,9 @@ máy tính bảng"""
     
     st.write("---")
 
-    # Display Search Results
     if 'products' in st.session_state and st.session_state.products:
         st.write("---")
         
-        # --- AUTO CRAWL SECTION ---
         st.header("🚀 Auto-Crawl")
         col_auto, col_config = st.columns([2, 2])
         
@@ -457,7 +419,7 @@ máy tính bảng"""
             
             if st.button("Auto-Crawl Top 10 Products (Highest Reviews)"):
                 st.info("Sorting products by review count...")
-                # Sort products
+                               
                 sorted_products = sorted(st.session_state.products, key=lambda x: x.get('reviews', 0), reverse=True)
                 top_10 = sorted_products[:10]
                 
@@ -467,7 +429,6 @@ máy tính bảng"""
                     
                 st.info("Starting Batch Crawl... This may take a while.")
                 
-                # Initialize crawler if needed
                 if 'crawler' in st.session_state:
                     crawler = st.session_state.crawler
                 else:
@@ -477,24 +438,18 @@ máy tính bảng"""
                 progress_bar = st.progress(0)
                 all_crawled_reviews = []
                 
-                # Checkbox inside the column or use the one from manual section? No, distinct config.
-                # Actually, we can't add a checkbox inside the button click event logic easily for *config* 
-                # meant to be set BEFORE clicking. 
-                # But I will look at where the button is.
-                
-                import random # Import locally if needed or ensure top level
+                import random                                               
                 
                 for i, product in enumerate(top_10):
                     st.text(f"Crawling {i+1}/10: {product['title']}...")
                     
-                    # Random delay BEFORE crawling each product (except the first one maybe, or just always)
                     if i > 0:
                         wait_time = random.uniform(5, 10)
                         st.text(f"Waiting {wait_time:.1f}s before next product...")
                         time.sleep(wait_time)
                         
                     try:
-                        # Use the auto_balanced_mode value
+                                                          
                         df = crawler.crawl_reviews(product['link'], max_pages=5, balanced_mode=auto_balanced_mode)
                         if not df.empty:
                             df['product_title'] = product['title']
@@ -521,7 +476,6 @@ máy tính bảng"""
             with st.expander(f"{product['title']} - {price} - ({reviews_count} reviews)"):
                 st.write(f"Link: {product['link']}")
                 
-                # Input for pages to crawl
                 col1, col2 = st.columns([2, 1])
                 with col1:
                     max_pages = st.number_input(f"Max Pages (per star rating)", min_value=1, max_value=2000, value=5, key=f"pages_{i}")
@@ -545,8 +499,7 @@ máy tính bảng"""
                     st.info("Starting crawl...")
                     
                     progress_bar = st.progress(0)
-                    # status_text = st.empty()
-                    
+                                              
                     try:
                         if 'crawler' in st.session_state:
                             crawler = st.session_state.crawler
@@ -558,8 +511,6 @@ máy tính bảng"""
                             crawler = LazadaCrawler(cookie_list=st.session_state.get('cookies'), keep_alive=True)
                             st.session_state.crawler = crawler
                         
-                        # Run crawling
-                        # status_text.text("Navigating to product page...")
                         reviews_df = crawler.crawl_reviews(product['link'], max_pages=final_pages, balanced_mode=balanced_mode)
                         
                         if not reviews_df.empty:

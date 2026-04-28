@@ -19,29 +19,23 @@ from typing import Dict, List, Tuple
 from torch.utils.data import Dataset
 from transformers import AutoTokenizer
 
-# Aspect names - OPTIMIZED for E-commerce (9 aspects)
 ASPECTS = [
-    'Chất lượng sản phẩm',       # Quality, durability, materials
-    'Hiệu năng & Trải nghiệm',   # Performance, user experience
-    'Đúng mô tả',                # Accuracy of description
-    'Giá cả & Khuyến mãi',       # Price, discounts, value
-    'Vận chuyển',                # Shipping speed, delivery
-    'Đóng gói',                  # Packaging quality
-    'Dịch vụ & Thái độ Shop',    # Customer service, seller attitude
-    'Bảo hành & Đổi trả',        # Warranty, returns
-    'Tính xác thực',             # Authenticity (fake/genuine)
+    'Chất lượng sản phẩm',                                       
+    'Hiệu năng & Trải nghiệm',                                 
+    'Đúng mô tả',                                         
+    'Giá cả & Khuyến mãi',                                
+    'Vận chuyển',                                          
+    'Đóng gói',                                     
+    'Dịch vụ & Thái độ Shop',                                       
+    'Bảo hành & Đổi trả',                           
+    'Tính xác thực',                                          
 ]
 
-# Label mapping for MULTI-POLARITY format:
-# Raw: -1=NEG, 1=POS, 0=NEU, 2=Not mentioned, '-1,1'=Both NEG and POS
-# Internal multi-hot vector [NEG, POS, NEU]:
-#   [1,0,0]=NEG, [0,1,0]=POS, [0,0,1]=NEU, [1,1,0]=NEG+POS, [0,0,0]=Not mentioned
 LABEL_TO_INDEX = {
-    -1: 0,   # NEG -> index 0
-    1: 1,    # POS -> index 1
-    0: 2,    # NEU -> index 2
+    -1: 0,                   
+    1: 1,                    
+    0: 2,                    
 }
-
 
 class ABSADatasetMultiPolarity(Dataset):
     """PyTorch Dataset for Multi-Polarity ABSA.
@@ -70,7 +64,6 @@ class ABSADatasetMultiPolarity(Dataset):
             'labels_m': torch.tensor(self.labels_m[idx], dtype=torch.float),
             'labels_s': torch.tensor(self.labels_s[idx], dtype=torch.float),
         }
-
 
 def load_data_multipolarity(data_path: str) -> Tuple[List[str], np.ndarray, np.ndarray]:
     """Load and preprocess data from Excel/CSV for MULTI-POLARITY format.

@@ -9,32 +9,29 @@ import plotly.express as px
 import plotly.graph_objects as go
 import time
 
-# Add parent directory to path for imports
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 import product_manager as pm
 import json
 from lazada_crawler import crawl_reviews
-# from lazada_producer import send_reviews_to_kafka  # Now using Airflow
+                                                                        
 try:
     from airflow_client import trigger_dag, get_dag_run_status, get_task_instances
 except ImportError:
     from app.airflow_client import trigger_dag, get_dag_run_status, get_task_instances
 from absa_predictor import (
     aggregate_scores,
-    # get_predictor, # Handled by consumer
+                                          
     ASPECTS, 
     SENTIMENT_MAP
 )
 import utils
 
-# Page Config
 st.set_page_config(
     page_title="So Sánh Sản Phẩm",
     layout="wide"
 )
 
-# Custom CSS
 st.markdown("""
 <style>
     .main { background-color: #0E1117; }
@@ -46,9 +43,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ---------------------------------------------------------
-# Sidebar: Cookie Management (Auto-update Feature)
-# ---------------------------------------------------------
 st.sidebar.markdown("### Quản lý Cookie")
 col_c1, col_c2 = st.sidebar.columns(2)
 
@@ -62,7 +56,7 @@ if col_c1.button("Mở Login"):
 
 if col_c2.button("Lưu Cookie"):
     from app.lazada_browser import save_current_cookies
-    # Use default crawler path
+                              
     success, msg = save_current_cookies()
     if success:
         st.sidebar.success("Đã cập nhật!")
@@ -71,30 +65,20 @@ if col_c2.button("Lưu Cookie"):
         st.sidebar.error(msg)
         
 st.sidebar.markdown("---")
-# ---------------------------------------------------------
-# Sidebar: AI Model Selection (REMOVED - Defaulting to Ollama)
-# ---------------------------------------------------------
-# Default set via model_config.json
-
-# ---------------------------------------------------------
-
-
+                                                           
 def run_comparison():
     """Execute the comparison workflow: crawl -> predict -> display."""
     products = pm.get_products()
     cookies_path = pm.get_cookies_path()
     
-    # Initialize PhoBERT predictor handled by Consumer
     pass
     
-    # Progress tracking
-    total_steps = len(products) * 2  # crawl + predict for each
+    total_steps = len(products) * 2                            
     progress_bar = st.progress(0)
     status_text = st.empty()
     
     step = 0
     
-    # === NEW: Clean old prediction files for current products ===
     predictions_dir = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data', 'predictions')
     for item_id in products.keys():
         pred_file = os.path.join(predictions_dir, f"{item_id}.json")
@@ -105,43 +89,37 @@ def run_comparison():
             except Exception as e:
                 print(f"⚠️ Could not delete {pred_file}: {e}")
     
-    # Phase 1: Parallel DAG Triggering
     active_tasks = []
     
-    # Session state guard: prevent re-triggering on Streamlit reruns
     current_product_ids = frozenset(products.keys())
     if 'triggered_products' not in st.session_state:
         st.session_state.triggered_products = set()
     if 'active_dag_runs' not in st.session_state:
         st.session_state.active_dag_runs = []
     
-    # Check if these products were already triggered in this session
     already_triggered = current_product_ids.issubset(st.session_state.triggered_products)
     
     if already_triggered and st.session_state.active_dag_runs:
-        # Reuse existing DAG runs instead of re-triggering
+                                                          
         active_tasks = st.session_state.active_dag_runs
         st.info("Đang tiếp tục theo dõi các pipeline đã kích hoạt...")
     else:
-        # Fresh trigger
+                       
         status_text.text("Đang kích hoạt phân tích song song cho tất cả sản phẩm...")
         progress_bar.progress(0.0)
     
-        # Trigger all DAGs first
         for item_id, product in products.items():
             p_url = product.url
             
-            # Fallback if URL is missing
             if not p_url:
                 st.warning(f"Sản phẩm '{product.name}' thiếu URL. Đang tạo URL dự phòng...")
                 p_url = f"https://www.lazada.vn/products/-i{item_id}.html"
                 
-            # Trigger Airflow DAG (Let Airflow handle crawling)
             success, dag_run_id = trigger_dag(
                 product_id=item_id,
                 product_url=p_url,
-                max_reviews=150, # Request slightly more to ensure safety
-                reviews=None     # Let Airflow crawl
+                max_reviews=150,                                         
+                reviews=None                        
             )
             
             if success:
@@ -159,15 +137,13 @@ def run_comparison():
         st.error("Không có sản phẩm nào được xử lý.")
         return False
     
-    # Store active tasks in session state to prevent re-triggering
     st.session_state.active_dag_runs = active_tasks
     st.session_state.triggered_products = set(products.keys())
         
     st.info(f"Đã kích hoạt {len(active_tasks)} pipeline. Đang chờ kết quả dự đoán (Real-time)...")
     
-    # Phase 2: Live Polling & Visualization
     results_container = st.empty()
-    max_retries = 900  # 30 minutes timeout (900 x 2s = 1800s)
+    max_retries = 900                                         
     completed_task_ids = set()
     
     step = 0
@@ -176,27 +152,23 @@ def run_comparison():
         any_data_update = False
         current_processing_count = 0
         
-        # 2a. Check prediction files for updates
         for task in active_tasks:
             pid = task['product_id']
             
-            # Read prediction file (if exists)
             pred_file = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), 'data', 'predictions', f"{pid}.json")
             
             if os.path.exists(pred_file):
                 try:
-                    # Use 'rb' to avoid encoding issues during partial writes, then decode
+                                                                                          
                     with open(pred_file, 'r', encoding='utf-8', errors='ignore') as f:
-                        # Attempt to load even if partial (robustness)
+                                                                      
                         content = f.read()
                         if content.strip():
-                            # Fix potentially broken JSON if writing isn't atomic (though we fixed atomic writes)
-                            # But standard json.loads is strict. 
-                            # Since we have atomic writes, we trust the file is valid JSON or renamed recently.
+                                                                                                                 
                             data = json.loads(content)
                             
                             if data:
-                                # Store text AND sentiment
+                                                          
                                 predictions = [
                                     {
                                         'text': d.get('original_text', ''),
@@ -206,7 +178,6 @@ def run_comparison():
                                 ]
                                 pm.update_product_predictions(pid, predictions)
                                 
-                                # Aggregate scores (need to extract sentiment dict)
                                 sentiment_only = [p['sentiment'] for p in predictions]
                                 scores = aggregate_scores(sentiment_only)
                                 pm.update_product_scores(pid, scores)
@@ -215,13 +186,10 @@ def run_comparison():
                 except (json.JSONDecodeError, OSError):
                     pass
         
-        
-        # 2b. Update UI
         if any_data_update:
             with results_container.container():
                 display_results(key_prefix=f"step_{step}")
         
-        # 2c. Check Task Completion (Airflow Status)
         finished_newly = False
         running_tasks = []
         
@@ -230,7 +198,6 @@ def run_comparison():
             if pid in completed_task_ids:
                 continue
             
-            # Check Airflow status
             dag_status = get_dag_run_status(task['dag_run_id'])
             state = dag_status.get('state')
             
@@ -244,13 +211,12 @@ def run_comparison():
             else:
                 running_tasks.append(task['name'])
         
-        # Update progress bar
         total_tasks = len(active_tasks)
         finished_count = len(completed_task_ids)
         progress = finished_count / total_tasks
         
         status_text.text(f"Real-time: Đã xử lý {current_processing_count} reviews tổng hợp... ({finished_count}/{total_tasks} Xong)")
-        progress_bar.progress(min(progress + 0.05, 1.0)) # Show activity
+        progress_bar.progress(min(progress + 0.05, 1.0))                
         
         step += 1
         
@@ -259,7 +225,6 @@ def run_comparison():
             
         time.sleep(2)
     
-    # Final render
     progress_bar.progress(1.0)
     status_text.success("Phân tích hoàn tất!")
     time.sleep(1)
@@ -271,7 +236,6 @@ def run_comparison():
         
     return True
 
-
 def display_results(key_prefix: str = ""):
     """
     Display comparison results.
@@ -280,34 +244,29 @@ def display_results(key_prefix: str = ""):
     """
     products = pm.get_products()
     
-    # Prepare data for charts
     product_scores = pm.get_products_for_comparison()
     
     if not product_scores:
         st.warning("Chưa có dữ liệu để hiển thị. Vui lòng chạy so sánh trước.")
         return
     
-    # --- Section 1: Radar Chart ---
     st.subheader("Biểu đồ Radar So Sánh")
     
     fig_radar = utils.create_radar_chart_multi(product_scores)
     st.plotly_chart(fig_radar, use_container_width=True, key=f"{key_prefix}_radar")
     
-    # --- Section 2: detailed Streaming Table (Live Feed) ---
     st.subheader("Live Feed: Chi Tiết Bình Luận & Dự Đoán")
     
     all_reviews_data = []
-    seen_reviews = set() # Track (Product, ReducedContent) to prevent visual dupes
+    seen_reviews = set()                                                          
     
-    # Collect all reviews from all products
     for product_name, product in products.items():
-        # Get predictions (Live or Cached)
+                                          
         preds = product.predictions if product.predictions else []
         
         for p in preds:
             text = p.get('text') or ""
-            # Create a simple signature for visual dedup
-            # Lowercase + no whitespace
+                                                        
             sig = (product.name, "".join(text.split()).lower())
             
             if sig in seen_reviews:
@@ -321,11 +280,9 @@ def display_results(key_prefix: str = ""):
                 "Nội dung": text
             }
             
-            # Add each aspect
             for aspect in ASPECTS:
                 val = sentiment.get(aspect)
-                # Map value to readable label if needed, or keep raw
-                # Assuming val is 1 (POS), 0 (NEU), -1 (NEG) or "POS"..."
+                                                                    
                 if val == 1 or val == 'POS':
                     display_val = "POS"
                 elif val == -1 or val == 'NEG':
@@ -340,7 +297,7 @@ def display_results(key_prefix: str = ""):
             all_reviews_data.append(row)
             
     if all_reviews_data:
-        # Show newest first
+                           
         df_feed = pd.DataFrame(all_reviews_data[::-1])
         st.dataframe(
             df_feed, 
@@ -354,12 +311,10 @@ def display_results(key_prefix: str = ""):
     else:
         st.info("Đang chờ dữ liệu từ Consumer...")
     
-    # --- Section 3: Overall Winner ---
     st.subheader("Kết Quả Tổng Hợp")
     
     col1, col2 = st.columns(2)
     
-    # Calculate overall scores
     overall_scores = {}
     for product_name, scores in product_scores.items():
         avg = sum(scores.values()) / len(scores) if scores else 0
@@ -374,15 +329,13 @@ def display_results(key_prefix: str = ""):
             )
     
     with col2:
-        # Winner
+                
         if overall_scores:
             winner = max(overall_scores, key=overall_scores.get)
             st.success(f"Sản phẩm tốt nhất: **{winner}**")
     
-    # --- Section 4: Aspect-wise Bar Chart ---
     st.subheader("So Sánh Theo Từng Khía Cạnh")
     
-    # Prepare data for bar chart
     bar_data = []
     for product_name, scores in product_scores.items():
         for aspect, score in scores.items():
@@ -411,7 +364,6 @@ def display_results(key_prefix: str = ""):
         )
         st.plotly_chart(fig_bar, use_container_width=True, key=f"{key_prefix}_bar")
     
-    # --- Section 5: Live Review Feed ---
     st.subheader("Live Reviews Feed (Real-time)")
     
     cols = st.columns(len(products))
@@ -420,29 +372,25 @@ def display_results(key_prefix: str = ""):
         with cols[idx]:
             st.markdown(f"#### {product.name[:30]}...")
             
-            # Use predictions which contain text+sentiment from live feed
-            # Fallback to product.reviews if predictions empty (client-side crawl case)
             feed_data = product.predictions if product.predictions else [{'text': r.get('reviewContent'), 'sentiment': {}} for r in product.reviews]
             
             if feed_data:
-                # Show latest 50 reviews, scrollable
+                                                    
                 with st.container(height=400):
-                    for i, item in enumerate(reversed(feed_data)): # Show newest first
+                    for i, item in enumerate(reversed(feed_data)):                    
                         content = item.get('text', 'N/A')
                         sentiment = item.get('sentiment', {})
                         
-                        # Determine overall sentiment color
-                        # Basic logic: majority class
                         pos = sum(1 for v in sentiment.values() if v == 2)
                         neg = sum(1 for v in sentiment.values() if v == 0)
                         if pos > neg: 
-                            color = "#e6fffa" # Light green
+                            color = "#e6fffa"              
                             icon = ""
                         elif neg > pos: 
-                            color = "#fff5f5" # Light red
+                            color = "#fff5f5"            
                             icon = ""
                         else: 
-                            color = "#f7fafc" # Grey
+                            color = "#f7fafc"       
                             icon = ""
                             
                         st.markdown(f"""
@@ -462,15 +410,12 @@ def display_results(key_prefix: str = ""):
             else:
                 st.info("Chưa có reviews...")
 
-
 def main():
     st.title("So Sánh Sản Phẩm ABSA")
     
-    # Initialize
     pm.init_session_state()
     products = pm.get_products()
     
-    # Check if we have products
     if not pm.can_compare():
         st.error("Cần ít nhất 2 sản phẩm để so sánh!")
         st.info("Vui lòng quay lại trang **Danh Sách Sản Phẩm** để thêm sản phẩm.")
@@ -479,23 +424,20 @@ def main():
             st.switch_page("pages/1_Danh_Sách_Sản_Phẩm.py")
         return
     
-    # Show current products
     st.markdown("**Sản phẩm so sánh:**")
     for item_url, product in products.items():
          st.markdown(f"- {product.name}")
     
-    # === NEW: Reset button to clear stale session state ===
     col1, col2 = st.columns([1, 4])
     with col1:
         if st.button("🔄 Reset & Chạy Lại"):
-            # Clear session state for fresh comparison
+                                                      
             if 'triggered_products' in st.session_state:
                 del st.session_state.triggered_products
             if 'active_dag_runs' in st.session_state:
                 del st.session_state.active_dag_runs
             st.rerun()
          
-    # Run comparison
     run_comparison()
 
 if __name__ == "__main__":

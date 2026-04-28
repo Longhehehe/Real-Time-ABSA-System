@@ -10,7 +10,6 @@ import re
 from typing import Optional, Tuple, List
 from threading import Thread
 
-# Selenium imports
 try:
     from selenium import webdriver
     from selenium.webdriver.edge.service import Service as EdgeService
@@ -23,11 +22,9 @@ try:
 except ImportError:
     SELENIUM_AVAILABLE = False
 
-# File to store selected products
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 SELECTED_PRODUCTS_FILE = os.path.join(BASE_DIR, 'selected_products.json')
 
-# JavaScript to inject floating button
 INJECT_BUTTON_JS = """
 (function() {
     // Check if button already exists
@@ -179,7 +176,6 @@ INJECT_BUTTON_JS = """
 })();
 """
 
-
 def extract_item_id(url: str) -> Optional[str]:
     """Extract item ID from Lazada URL."""
     patterns = [
@@ -193,7 +189,6 @@ def extract_item_id(url: str) -> Optional[str]:
             return match.group(1)
     return None
 
-
 def get_selected_products() -> List[dict]:
     """Get list of products selected from browser."""
     if os.path.exists(SELECTED_PRODUCTS_FILE):
@@ -204,18 +199,15 @@ def get_selected_products() -> List[dict]:
             return []
     return []
 
-
 def save_selected_products(products: List[dict]):
     """Save selected products to file."""
     with open(SELECTED_PRODUCTS_FILE, 'w', encoding='utf-8') as f:
         json.dump(products, f, ensure_ascii=False, indent=2)
 
-
 def clear_selected_products():
     """Clear all selected products."""
     if os.path.exists(SELECTED_PRODUCTS_FILE):
         os.remove(SELECTED_PRODUCTS_FILE)
-
 
 class LazadaBrowser:
     """Selenium browser for Lazada with product selection."""
@@ -234,27 +226,23 @@ class LazadaBrowser:
         try:
             print("🚀 Starting Lazada Browser...")
             
-            # Setup Edge options
             options = EdgeOptions()
             options.add_argument("--start-maximized")
             options.add_argument("--disable-notifications")
             options.add_experimental_option("excludeSwitches", ["enable-automation"])
             options.add_experimental_option("useAutomationExtension", False)
             
-            # Anti-detection: Disable hydration of 'navigator.webdriver'
             options.add_argument("--disable-blink-features=AutomationControlled")
             
-            # Anti-detection: Spoof User-Agent
             options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0")
             
-            # Try to create driver - PRIORITY 1: Native Selenium Manager (Best for Edge)
             try:
                 print("   Attempting to use native Selenium Manager...")
                 self.driver = webdriver.Edge(options=options)
                 print("✅ Native Selenium Manager worked!")
             except Exception as e1:
                 print(f"⚠️ Native launch failed: {e1}")
-                # PRIORITY 2: WebDriver Manager (Fallback)
+                                                          
                 try:
                     print("   Attempting to use WebDriver Manager...")
                     service = EdgeService(EdgeChromiumDriverManager().install())
@@ -264,17 +252,14 @@ class LazadaBrowser:
                     print(f"❌ All methods failed. Error: {e2}")
                     return False
             
-            # Load Lazada
             self.driver.get("https://www.lazada.vn")
             print("✅ Browser opened!")
             
-            # Load cookies if provided
             if cookies_path and os.path.exists(cookies_path):
                 self._load_cookies(cookies_path)
             
             self.running = True
             
-            # Start monitoring thread
             monitor_thread = Thread(target=self._monitor_loop, daemon=True)
             monitor_thread.start()
             
@@ -287,7 +272,7 @@ class LazadaBrowser:
     def _load_cookies(self, cookies_path: str):
         """Load cookies from file."""
         try:
-            # Try JSON format first
+                                   
             json_path = cookies_path.replace('.txt', '.json')
             if os.path.exists(json_path):
                 with open(json_path, 'r', encoding='utf-8') as f:
@@ -314,13 +299,11 @@ class LazadaBrowser:
             try:
                 current_url = self.driver.current_url
                 
-                # Inject button on new pages
                 if current_url != last_url:
                     last_url = current_url
-                    time.sleep(1)  # Wait for page load
+                    time.sleep(1)                      
                     self._inject_button()
                 
-                # Check for selected products
                 self._check_selected_products()
                 
                 time.sleep(0.5)
@@ -375,8 +358,6 @@ class LazadaBrowser:
             self.running = False
             return False
 
-
-# Global browser instance
 _browser = None
 
 def open_lazada_browser(cookies_path: Optional[str] = None) -> Tuple[bool, str]:
@@ -397,14 +378,12 @@ def open_lazada_browser(cookies_path: Optional[str] = None) -> Tuple[bool, str]:
     else:
         return False, "❌ Không thể mở browser!"
 
-
 def close_lazada_browser():
     """Close the Lazada browser."""
     global _browser
     if _browser:
         _browser.stop()
         _browser = None
-
 
 def save_current_cookies(target_path: str = None) -> Tuple[bool, str]:
     """Save current browser cookies to file."""
@@ -413,10 +392,10 @@ def save_current_cookies(target_path: str = None) -> Tuple[bool, str]:
         return False, "❌ Browser chưa mở! Hãy mở browser và đăng nhập trước."
     
     if target_path is None:
-        # Default to project cookie path
+                                        
         base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
         target_path = os.path.join(base_dir, 'app', 'cookie', 'lazada_cookies.txt')
-        # Also try to save to root cookie/ if exists
+                                                    
         root_cookie = os.path.join(base_dir, 'cookie', 'lazada_cookies.txt')
         
     try:
@@ -424,12 +403,6 @@ def save_current_cookies(target_path: str = None) -> Tuple[bool, str]:
         if not cookies:
             return False, "⚠️ Không tìm thấy cookie nào! Đã đăng nhập chưa?"
             
-        # Format as Netscape/JSON or just simplified list for requests?
-        # The crawler uses `load_cookies` which supports Netscape format usually.
-        # But let's check what verify_cookies expects.
-        # Ideally, we save as Netscape format for compatibility with wget/curl/requests.
-        
-        # Simple Netscape format generator
         content = "# Netscape HTTP Cookie File\n"
         for c in cookies:
             domain = c.get('domain', '')
@@ -441,12 +414,10 @@ def save_current_cookies(target_path: str = None) -> Tuple[bool, str]:
             value = c.get('value', '')
             content += f"{domain}\t{flag}\t{path}\t{secure}\t{expiry}\t{name}\t{value}\n"
             
-        # Save to main path
         os.makedirs(os.path.dirname(target_path), exist_ok=True)
         with open(target_path, 'w', encoding='utf-8') as f:
             f.write(content)
             
-        # Save to root path if needed
         if root_cookie and os.path.exists(os.path.dirname(root_cookie)):
              with open(root_cookie, 'w', encoding='utf-8') as f:
                 f.write(content)
@@ -456,14 +427,11 @@ def save_current_cookies(target_path: str = None) -> Tuple[bool, str]:
     except Exception as e:
         return False, f"❌ Lỗi khi lưu cookie: {str(e)}"
 
-
 def is_browser_running() -> bool:
     """Check if browser is running."""
     global _browser
     return _browser is not None and _browser.is_running()
 
-
-# Test
 if __name__ == "__main__":
     print("=== Lazada Browser Test ===")
     success, msg = open_lazada_browser()

@@ -11,36 +11,30 @@ import torch.nn as nn
 from typing import Dict, List, Optional
 import numpy as np
 
-# Add project root to path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 
-# Model paths - Using NEW multipolarity model
 MODEL_DIR = os.path.join(BASE_DIR, 'models', 'phobert_absa_multipolarity')
 MODEL_PATH = os.path.join(MODEL_DIR, 'phobert_absa_multipolarity.pt')
 CONFIG_PATH = os.path.join(MODEL_DIR, 'config.json')
 
-# Fallback to old model if multipolarity not available
 MODEL_DIR_OLD = os.path.join(BASE_DIR, 'models', 'phobert_absa')
 MODEL_PATH_OLD = os.path.join(MODEL_DIR_OLD, 'phobert_absa.pt')
 
-# Aspect categories - OPTIMIZED for E-commerce (9 aspects)
 ASPECTS = [
-    'Chất lượng sản phẩm',       # Quality, durability, materials
-    'Hiệu năng & Trải nghiệm',   # Performance, user experience  
-    'Đúng mô tả',                # Accuracy of description
-    'Giá cả & Khuyến mãi',       # Price, discounts, value
-    'Vận chuyển',                # Shipping speed, delivery
-    'Đóng gói',                  # Packaging quality
-    'Dịch vụ & Thái độ Shop',    # Customer service, seller attitude
-    'Bảo hành & Đổi trả',        # Warranty, returns
-    'Tính xác thực',             # Authenticity (fake/genuine)
+    'Chất lượng sản phẩm',                                       
+    'Hiệu năng & Trải nghiệm',                                   
+    'Đúng mô tả',                                         
+    'Giá cả & Khuyến mãi',                                
+    'Vận chuyển',                                          
+    'Đóng gói',                                     
+    'Dịch vụ & Thái độ Shop',                                       
+    'Bảo hành & Đổi trả',                           
+    'Tính xác thực',                                          
 ]
 
-# Sentiment label indices for multi-label format
-SENTIMENT_NAMES = ['NEG', 'POS', 'NEU']  # Index 0, 1, 2
+SENTIMENT_NAMES = ['NEG', 'POS', 'NEU']                 
 
-# Map multi-label to old format for compatibility
 SENTIMENT_MAP = {
     'POS': 1,
     'NEU': 0,
@@ -55,7 +49,6 @@ SENTIMENT_MAP_REVERSE = {
     2: 'N/A'
 }
 
-
 class PhoBERTForABSAMultiPolarity(nn.Module):
     """PhoBERT model with multi-task learning for Multi-Polarity ABSA.
     
@@ -69,16 +62,13 @@ class PhoBERTForABSAMultiPolarity(nn.Module):
         
         from transformers import AutoModel
         
-        # Load PhoBERT backbone
         self.phobert = AutoModel.from_pretrained("vinai/phobert-base")
-        hidden_size = self.phobert.config.hidden_size  # 768
+        hidden_size = self.phobert.config.hidden_size       
         
-        # Regularization
         self.dropout = nn.Dropout(dropout)
         
-        # Task heads
-        self.head_m = nn.Linear(hidden_size, num_aspects)  # Mention detection
-        self.head_s = nn.Linear(hidden_size, num_aspects * 3)  # Sentiment (3 classes per aspect)
+        self.head_m = nn.Linear(hidden_size, num_aspects)                     
+        self.head_s = nn.Linear(hidden_size, num_aspects * 3)                                    
         
         self.num_aspects = num_aspects
     
@@ -95,18 +85,14 @@ class PhoBERTForABSAMultiPolarity(nn.Module):
             attention_mask=attention_mask
         )
         
-        # Use [CLS] token representation
         cls_output = outputs.last_hidden_state[:, 0, :]
         h_cls = self.dropout(cls_output)
         
-        # Task-specific predictions
         logits_m = self.head_m(h_cls)
         logits_s = self.head_s(h_cls).view(-1, self.num_aspects, 3)
         
         return logits_m, logits_s
 
-
-# Legacy model class for backward compatibility
 class PhoBERTForABSA(nn.Module):
     """PhoBERT model (old single-label version)."""
     
@@ -131,7 +117,6 @@ class PhoBERTForABSA(nn.Module):
         logits_s = self.head_s(h_cls).view(-1, self.num_aspects, 3)
         return logits_m, logits_s
 
-
 class PhoBERTPredictor:
     """PhoBERT ABSA Predictor - loads model and makes predictions.
     Supports multi-polarity (multi-label) sentiment prediction.
@@ -144,7 +129,7 @@ class PhoBERTPredictor:
         self.model_loaded = False
         self.max_length = 256
         self.is_multipolarity = use_multipolarity
-        self.threshold = 0.5  # Threshold for sigmoid predictions
+        self.threshold = 0.5                                     
         
         if model_path:
             self.load_model(model_path)
@@ -152,7 +137,6 @@ class PhoBERTPredictor:
     def load_model(self, model_path: Optional[str] = None) -> bool:
         """Load trained PhoBERT model (multipolarity or legacy)."""
         
-        # Try multipolarity model first
         if model_path is None:
             if os.path.exists(MODEL_PATH):
                 model_path = MODEL_PATH
@@ -177,10 +161,8 @@ class PhoBERTPredictor:
             mode_str = "Multi-Polarity" if self.is_multipolarity else "Legacy"
             print(f"📥 Loading PhoBERT {mode_str} model from {model_path}...")
             
-            # Load checkpoint
             checkpoint = torch.load(model_path, map_location=self.device, weights_only=False)
             
-            # Load tokenizer
             tokenizer_local_path = os.path.join(model_dir, 'tokenizer')
             if os.path.exists(tokenizer_local_path):
                 self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_local_path)
@@ -190,13 +172,11 @@ class PhoBERTPredictor:
                     tokenizer_name = checkpoint['tokenizer_name']
                 self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
             
-            # Load model with appropriate architecture
             if self.is_multipolarity:
                 self.model = PhoBERTForABSAMultiPolarity(num_aspects=len(ASPECTS))
             else:
                 self.model = PhoBERTForABSA(num_aspects=len(ASPECTS))
             
-            # Load weights
             if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
                 self.model.load_state_dict(checkpoint['model_state_dict'])
             else:
@@ -205,7 +185,6 @@ class PhoBERTPredictor:
             self.model = self.model.to(self.device)
             self.model.eval()
             
-            # Load config if exists
             config_path = os.path.join(model_dir, 'config.json')
             if os.path.exists(config_path):
                 with open(config_path, 'r', encoding='utf-8') as f:
@@ -245,7 +224,7 @@ class PhoBERTPredictor:
                 }
         
         try:
-            # Tokenize
+                      
             encoding = self.tokenizer(
                 text,
                 truncation=True,
@@ -257,21 +236,18 @@ class PhoBERTPredictor:
             input_ids = encoding['input_ids'].to(self.device)
             attention_mask = encoding['attention_mask'].to(self.device)
             
-            # Predict
             with torch.no_grad():
                 logits_m, logits_s = self.model(input_ids, attention_mask)
                 
-                # Mention predictions (binary)
                 preds_m = (torch.sigmoid(logits_m) > self.threshold).squeeze(0).cpu().numpy()
                 
                 if self.is_multipolarity:
-                    # Multi-label: apply sigmoid and threshold
+                                                              
                     preds_s = (torch.sigmoid(logits_s) > self.threshold).squeeze(0).cpu().numpy()
                 else:
-                    # Single-label: argmax
+                                          
                     preds_s = torch.argmax(logits_s, dim=-1).squeeze(0).cpu().numpy()
             
-            # Build results
             legacy_result = {}
             multi_result = {}
             
@@ -280,17 +256,15 @@ class PhoBERTPredictor:
                 
                 if mentioned:
                     if self.is_multipolarity:
-                        # Multi-label: get all sentiments above threshold
+                                                                         
                         sentiments = [SENTIMENT_NAMES[j] for j in range(3) if preds_s[i, j]]
                         
-                        # Default to NEU if no sentiment detected
                         if not sentiments:
                             sentiments = ['NEU']
                         
-                        # For legacy format, pick primary sentiment (POS > NEG > NEU priority)
                         if 'POS' in sentiments and 'NEG' in sentiments:
-                            # Mixed sentiment - could show as Neutral or pick one
-                            legacy_result[aspect] = 0  # Neutral
+                                                                                 
+                            legacy_result[aspect] = 0           
                         elif 'POS' in sentiments:
                             legacy_result[aspect] = 1
                         elif 'NEG' in sentiments:
@@ -298,9 +272,9 @@ class PhoBERTPredictor:
                         else:
                             legacy_result[aspect] = 0
                     else:
-                        # Single-label
+                                      
                         sentiment_idx = int(preds_s[i])
-                        # Map: 0=NEG->-1, 1=POS->1, 2=NEU->0
+                                                            
                         sentiment_to_legacy = {0: -1, 1: 1, 2: 0}
                         legacy_result[aspect] = sentiment_to_legacy.get(sentiment_idx, 0)
                         sentiments = [SENTIMENT_NAMES[sentiment_idx]]
@@ -310,7 +284,7 @@ class PhoBERTPredictor:
                         'sentiments': sentiments
                     }
                 else:
-                    legacy_result[aspect] = 2  # N/A
+                    legacy_result[aspect] = 2       
                     multi_result[aspect] = {
                         'mentioned': False,
                         'sentiments': None
@@ -359,7 +333,6 @@ class PhoBERTPredictor:
                 results.append(pred)
         return results
 
-
 def aggregate_scores(predictions: List[Dict[str, int]], aspects: List[str] = None) -> Dict[str, float]:
     """
     Aggregate predictions across multiple reviews into scores (0-100).
@@ -377,7 +350,6 @@ def aggregate_scores(predictions: List[Dict[str, int]], aspects: List[str] = Non
     if not predictions:
         return {asp: 50.0 for asp in aspects}
     
-    # Value mapping: 1 -> 100, 0 -> 50, -1 -> 0, 2 -> NaN
     value_map = {1: 100, 0: 50, -1: 0, 2: np.nan}
     
     scores = {}
@@ -392,10 +364,9 @@ def aggregate_scores(predictions: List[Dict[str, int]], aspects: List[str] = Non
         if values:
             scores[aspect] = np.mean(values)
         else:
-            scores[aspect] = 50.0  # Default to neutral
+            scores[aspect] = 50.0                      
     
     return scores
-
 
 def aggregate_multipolarity_scores(predictions: List[Dict], aspects: List[str] = None) -> Dict[str, Dict]:
     """
@@ -433,16 +404,14 @@ def aggregate_multipolarity_scores(predictions: List[Dict], aspects: List[str] =
                     if s in sentiment_counts:
                         sentiment_counts[s] += 1
         
-        # Calculate score based on sentiment distribution
         if total_mentioned > 0:
-            # Weighted score: POS=100, NEU=50, NEG=0
+                                                    
             total_votes = sum(sentiment_counts.values())
             if total_votes > 0:
                 score = (sentiment_counts['POS'] * 100 + sentiment_counts['NEU'] * 50) / total_votes
             else:
                 score = 50.0
             
-            # Calculate percentages
             distribution = {k: round(v / total_votes * 100, 1) if total_votes > 0 else 0 for k, v in sentiment_counts.items()}
         else:
             score = 50.0
@@ -457,8 +426,6 @@ def aggregate_multipolarity_scores(predictions: List[Dict], aspects: List[str] =
     
     return result
 
-
-# Global predictor instance
 _predictor = None
 
 def get_predictor() -> PhoBERTPredictor:
@@ -468,8 +435,6 @@ def get_predictor() -> PhoBERTPredictor:
         _predictor = PhoBERTPredictor()
     return _predictor
 
-
-# Test function
 if __name__ == "__main__":
     print("=== PhoBERT ABSA Multi-Polarity Predictor Test ===")
     print(f"Device: {'CUDA' if torch.cuda.is_available() else 'CPU'}")
@@ -480,8 +445,8 @@ if __name__ == "__main__":
         test_reviews = [
             "Sản phẩm chất lượng tốt, giao hàng nhanh, đóng gói cẩn thận",
             "Sản phẩm kém chất lượng, giao hàng chậm, shop thái độ tệ",
-            "Áo đẹp nhưng vải hơi mỏng. Giao hàng nhanh!",  # Mixed sentiment
-            "Giá rẻ nhưng chất lượng không tương xứng",  # Conflicting
+            "Áo đẹp nhưng vải hơi mỏng. Giao hàng nhanh!",                   
+            "Giá rẻ nhưng chất lượng không tương xứng",               
         ]
         
         print(f"\n🔍 Testing {len(test_reviews)} reviews...\n")
@@ -497,7 +462,7 @@ if __name__ == "__main__":
             
             print("  [Legacy Format]:")
             for asp, val in result['legacy'].items():
-                if val != 2:  # Skip N/A
+                if val != 2:            
                     sentiment = SENTIMENT_MAP_REVERSE.get(val, 'N/A')
                     print(f"    {asp}: {sentiment}")
             print()

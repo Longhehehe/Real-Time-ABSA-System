@@ -15,14 +15,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 
-
-# Cookie storage directory
 COOKIE_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'cookie')
 
-# Lazada URLs
 LAZADA_LOGIN_URL = "https://member.lazada.vn/user/login"
 LAZADA_HOME_URL = "https://www.lazada.vn/"
-
 
 def setup_edge_driver(headless: bool = False) -> webdriver.Edge:
     """
@@ -39,7 +35,6 @@ def setup_edge_driver(headless: bool = False) -> webdriver.Edge:
     if headless:
         options.add_argument("--headless")
     
-    # Common options to avoid detection
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("--disable-blink-features=AutomationControlled")
@@ -47,18 +42,17 @@ def setup_edge_driver(headless: bool = False) -> webdriver.Edge:
     options.add_argument("--window-size=1280,800")
     
     try:
-        # Try using webdriver-manager first
+                                           
         from webdriver_manager.microsoft import EdgeChromiumDriverManager
         service = Service(EdgeChromiumDriverManager().install())
         driver = webdriver.Edge(service=service, options=options)
     except Exception as e:
         print(f"⚠️ webdriver-manager failed: {e}")
         print("🔄 Trying default Edge driver...")
-        # Fallback: let Selenium find EdgeDriver automatically
+                                                              
         driver = webdriver.Edge(options=options)
     
     return driver
-
 
 def open_login_page(driver: webdriver.Chrome) -> bool:
     """
@@ -72,12 +66,11 @@ def open_login_page(driver: webdriver.Chrome) -> bool:
     """
     try:
         driver.get(LAZADA_LOGIN_URL)
-        time.sleep(2)  # Wait for page load
+        time.sleep(2)                      
         return True
     except Exception as e:
         print(f"❌ Error opening login page: {e}")
         return False
-
 
 def wait_for_login(driver: webdriver.Chrome, timeout: int = 300) -> bool:
     """
@@ -97,11 +90,10 @@ def wait_for_login(driver: webdriver.Chrome, timeout: int = 300) -> bool:
         try:
             current_url = driver.current_url
             
-            # Check if redirected to home or member page
             if "lazada.vn" in current_url and "/user/login" not in current_url:
-                # Additional check for logged-in state
+                                                      
                 cookies = driver.get_cookies()
-                # Look for session cookies
+                                          
                 session_cookies = [c for c in cookies if 'JSESSIONID' in c['name'] or 'lwid' in c['name']]
                 if session_cookies:
                     print("✅ Login detected!")
@@ -115,7 +107,6 @@ def wait_for_login(driver: webdriver.Chrome, timeout: int = 300) -> bool:
     
     return False
 
-
 def extract_cookies(driver: webdriver.Chrome) -> list:
     """
     Extract all cookies from the browser.
@@ -127,7 +118,6 @@ def extract_cookies(driver: webdriver.Chrome) -> list:
         List of cookie dictionaries
     """
     return driver.get_cookies()
-
 
 def save_cookies_json(cookies: list, filepath: str) -> bool:
     """
@@ -150,7 +140,6 @@ def save_cookies_json(cookies: list, filepath: str) -> bool:
         print(f"❌ Error saving cookies: {e}")
         return False
 
-
 def save_cookies_netscape(cookies: list, filepath: str) -> bool:
     """
     Save cookies in Netscape format (compatible with requests).
@@ -171,7 +160,7 @@ def save_cookies_netscape(cookies: list, filepath: str) -> bool:
             
             for cookie in cookies:
                 domain = cookie.get('domain', '')
-                # Netscape format: domain, flag, path, secure, expiry, name, value
+                                                                                  
                 flag = "TRUE" if domain.startswith('.') else "FALSE"
                 path = cookie.get('path', '/')
                 secure = "TRUE" if cookie.get('secure', False) else "FALSE"
@@ -186,7 +175,6 @@ def save_cookies_netscape(cookies: list, filepath: str) -> bool:
     except Exception as e:
         print(f"❌ Error saving cookies: {e}")
         return False
-
 
 def login_and_get_cookies(timeout: int = 300) -> Tuple[bool, str]:
     """
@@ -214,16 +202,13 @@ def login_and_get_cookies(timeout: int = 300) -> Tuple[bool, str]:
         if not wait_for_login(driver, timeout):
             return False, "Timeout - không phát hiện đăng nhập"
         
-        # Wait a bit more to ensure all cookies are set
         time.sleep(3)
         
-        # Extract and save cookies
         cookies = extract_cookies(driver)
         
         if not cookies:
             return False, "Không lấy được cookies"
         
-        # Save in both formats
         json_path = os.path.join(COOKIE_DIR, 'lazada_cookies.json')
         netscape_path = os.path.join(COOKIE_DIR, 'lazada_cookies.txt')
         
@@ -242,7 +227,6 @@ def login_and_get_cookies(timeout: int = 300) -> Tuple[bool, str]:
                 driver.quit()
             except:
                 pass
-
 
 def load_cookies_to_session(cookies_path: str, session) -> bool:
     """
@@ -268,7 +252,7 @@ def load_cookies_to_session(cookies_path: str, session) -> bool:
                     path=cookie.get('path', '/')
                 )
         else:
-            # Netscape format
+                             
             from http.cookiejar import MozillaCookieJar
             jar = MozillaCookieJar(cookies_path)
             jar.load(ignore_discard=True, ignore_expires=True)
@@ -279,8 +263,6 @@ def load_cookies_to_session(cookies_path: str, session) -> bool:
         print(f"❌ Error loading cookies: {e}")
         return False
 
-
-# Test function
 if __name__ == "__main__":
     print("=== Lazada Cookie Extractor ===")
     success, result = login_and_get_cookies()

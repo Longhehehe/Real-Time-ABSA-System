@@ -10,7 +10,6 @@ from sklearn.metrics import (
     roc_auc_score, average_precision_score
 )
 
-
 def compute_all_metrics(
     true_m: np.ndarray,
     pred_m: np.ndarray,
@@ -35,7 +34,6 @@ def compute_all_metrics(
     """
     metrics = {}
 
-    # --- Mention Detection Metrics ---
     m_true_flat = true_m.flatten()
     m_pred_flat = pred_m.flatten()
 
@@ -45,7 +43,6 @@ def compute_all_metrics(
     metrics['mention_f1_micro'] = f1_score(m_true_flat, m_pred_flat, average='micro', zero_division=0)
     metrics['mention_f1_weighted'] = f1_score(m_true_flat, m_pred_flat, average='weighted', zero_division=0)
 
-    # Mention AUC-ROC & AUC-PR
     if prob_m is not None:
         try:
             metrics['mention_auc_roc'] = roc_auc_score(m_true_flat, prob_m.flatten())
@@ -59,7 +56,6 @@ def compute_all_metrics(
         metrics['mention_auc_roc'] = 0.0
         metrics['mention_auc_pr'] = 0.0
 
-    # --- Sentiment Metrics (only on mentioned aspects) ---
     mentioned_mask = true_m.flatten() == 1
     true_s_flat = true_s.reshape(-1, 3)
     pred_s_flat = pred_s.reshape(-1, 3)
@@ -95,11 +91,9 @@ def compute_all_metrics(
                    'sentiment_f1_samples', 'sentiment_auc_roc', 'sentiment_auc_pr']:
             metrics[k] = 0.0
 
-    # Combined F1
     metrics['combined_f1'] = (metrics['mention_f1_macro'] + metrics['sentiment_f1_samples']) / 2
 
     return metrics
-
 
 def print_fold_summary(all_fold_metrics: List[Dict], model_name: str):
     """Print per-fold table similar to Bảng 5.1 & 5.3."""
@@ -145,7 +139,6 @@ def print_fold_summary(all_fold_metrics: List[Dict], model_name: str):
             std = np.std(vals)
             row = f"  {display_name:<22}" + "".join(f"{v:>10.4f}" for v in vals) + f"{avg:>10.4f}{std:>10.5f}"
             print(row)
-
 
 def build_comparison_table(all_results: Dict[str, Dict]):
     """Print final comparison table across all models."""

@@ -11,17 +11,13 @@ from kafka.errors import NoBrokersAvailable
 
 import os
 
-# Configuration
-# Support Docker networking (kafka:9092) vs Localhost
 default_bootstrap = 'localhost:9092'
-if os.path.exists('/.dockerenv'): # Simple check, or just rely on env var
+if os.path.exists('/.dockerenv'):                                        
     default_bootstrap = 'kafka:29092'
 
 KAFKA_BOOTSTRAP_SERVERS = os.getenv('KAFKA_BOOTSTRAP_SERVERS', default_bootstrap)
 TOPIC_NAME = 'raw_reviews'
 
-# Path handling: Relative to this script's location
-# kafka/producer.py -> parent -> data/label/absa_enriched.xlsx
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENRICHED_DATA_PATH = os.path.join(BASE_DIR, 'data', 'label', 'absa_enriched.xlsx')
 
@@ -57,7 +53,6 @@ def stream_reviews(delay_min=0.5, delay_max=2.0, limit=None):
     producer = create_producer()
     df = load_data()
     
-    # Shuffle to simulate random order
     df = df.sample(frac=1).reset_index(drop=True)
     
     if limit:
@@ -66,8 +61,7 @@ def stream_reviews(delay_min=0.5, delay_max=2.0, limit=None):
     print(f"🚀 Starting to stream {len(df)} reviews to topic '{TOPIC_NAME}'...")
     
     for idx, row in df.iterrows():
-        # Prepare message payload
-        # Only include necessary fields for the consumer
+                                 
         message = {
             'review_id': idx,
             'reviewContent': str(row.get('reviewContent', '')),
@@ -76,7 +70,6 @@ def stream_reviews(delay_min=0.5, delay_max=2.0, limit=None):
             'timestamp': time.time()
         }
         
-        # Use Product_ID as key for partitioning
         key = message['Product_ID']
         
         producer.send(TOPIC_NAME, key=key, value=message)
@@ -84,7 +77,6 @@ def stream_reviews(delay_min=0.5, delay_max=2.0, limit=None):
         if (idx + 1) % 10 == 0:
             print(f"📤 Sent {idx + 1} reviews...")
         
-        # Simulate real-time delay
         time.sleep(random.uniform(delay_min, delay_max))
     
     producer.flush()
@@ -92,5 +84,5 @@ def stream_reviews(delay_min=0.5, delay_max=2.0, limit=None):
     print(f"✅ Completed! Sent {len(df)} reviews to Kafka topic '{TOPIC_NAME}'")
 
 if __name__ == "__main__":
-    # Stream a limited number for testing
+                                         
     stream_reviews(delay_min=0.5, delay_max=1.0, limit=50)

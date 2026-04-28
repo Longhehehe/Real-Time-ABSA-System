@@ -1,10 +1,9 @@
-#!/usr/bin/env python
+                     
 """Debug script to check model loading in Streamlit container."""
 import os
 import sys
 import pickle
 
-# Setup paths
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 MODEL_DIR = os.path.join(BASE_DIR, 'models', 'best_model')
 
@@ -12,7 +11,6 @@ print(f"BASE_DIR: {BASE_DIR}")
 print(f"MODEL_DIR: {MODEL_DIR}")
 print(f"MODEL_DIR exists: {os.path.exists(MODEL_DIR)}")
 
-# Find model folders
 if os.path.exists(MODEL_DIR):
     print(f"\nContents of MODEL_DIR:")
     for item in os.listdir(MODEL_DIR):
@@ -24,7 +22,6 @@ if os.path.exists(MODEL_DIR):
             for subitem in os.listdir(item_path):
                 print(f"      - {subitem}")
             
-            # Try to load model
             model_file = os.path.join(item_path, 'model.pkl')
             vectorizer_file = os.path.join(item_path, 'vectorizer.pkl')
             

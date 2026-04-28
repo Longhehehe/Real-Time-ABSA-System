@@ -9,7 +9,6 @@ from airflow.utils.dates import days_ago
 from datetime import timedelta
 import os
 
-# Default args for the DAG
 default_args = {
     'owner': 'nlp_team',
     'depends_on_past': False,
@@ -21,18 +20,16 @@ default_args = {
     'execution_timeout': timedelta(hours=3),
 }
 
-# Define the DAG
 with DAG(
     'phobert_absa_training',
     default_args=default_args,
     description='Train PhoBERT Multi-Polarity ABSA model from labeled/ folder',
-    schedule_interval=None,  # Manual trigger
+    schedule_interval=None,                  
     start_date=days_ago(1),
     tags=['nlp', 'sentiment', 'phobert', 'absa', 'training', 'multipolarity'],
     catchup=False,
 ) as dag:
 
-    # Task 1: Check GPU availability
     check_gpu = BashOperator(
         task_id='check_gpu',
         bash_command='''
@@ -41,7 +38,6 @@ with DAG(
         ''',
     )
 
-    # Task 2: List labeled files
     check_data = BashOperator(
         task_id='check_labeled_data',
         bash_command='''
@@ -53,7 +49,6 @@ with DAG(
         ''',
     )
 
-    # Task 3: Train Multi-Polarity Model (OPTIMIZED PARAMETERS)
     train_model = BashOperator(
         task_id='train_multipolarity_model',
         bash_command='''
@@ -86,10 +81,9 @@ output_dir = train_model_multipolarity(
 print(f'Training complete! Model saved to: {output_dir}')
 "
         ''',
-        execution_timeout=timedelta(hours=4),  # Increased timeout for full training
+        execution_timeout=timedelta(hours=4),                                       
     )
 
-    # Task 4: Verify model was saved
     verify_model = BashOperator(
         task_id='verify_model',
         bash_command='''
@@ -106,7 +100,6 @@ print(f'Training complete! Model saved to: {output_dir}')
         ''',
     )
 
-    # Task 5: Test model inference
     test_inference = BashOperator(
         task_id='test_model_inference',
         bash_command='''
@@ -138,5 +131,4 @@ print('Inference test passed!')
         ''',
     )
 
-    # Workflow Dependency
     check_gpu >> check_data >> train_model >> verify_model >> test_inference

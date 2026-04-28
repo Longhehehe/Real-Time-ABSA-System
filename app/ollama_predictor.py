@@ -5,26 +5,24 @@ import re
 from typing import Dict, List, Optional
 import os
 
-# Aspects definition - OPTIMIZED for E-commerce (9 aspects)
 ASPECTS = [
-    'Chất lượng sản phẩm',       # Quality, durability, materials
-    'Hiệu năng & Trải nghiệm',   # Performance, user experience  
-    'Đúng mô tả',                # Accuracy of description
-    'Giá cả & Khuyến mãi',       # Price, discounts, value
-    'Vận chuyển',                # Shipping speed, delivery
-    'Đóng gói',                  # Packaging quality
-    'Dịch vụ & Thái độ Shop',    # Customer service, seller attitude
-    'Bảo hành & Đổi trả',        # Warranty, returns
-    'Tính xác thực',             # Authenticity (fake/genuine)
+    'Chất lượng sản phẩm',                                       
+    'Hiệu năng & Trải nghiệm',                                   
+    'Đúng mô tả',                                         
+    'Giá cả & Khuyến mãi',                                
+    'Vận chuyển',                                          
+    'Đóng gói',                                     
+    'Dịch vụ & Thái độ Shop',                                       
+    'Bảo hành & Đổi trả',                           
+    'Tính xác thực',                                          
 ]
-
 
 class OllamaPredictor:
     def __init__(self, model_name: str = "mistral"):
         self.model_name = model_name
-        # Docker internal host if running in container, else localhost
+                                                                      
         self.api_base = os.getenv("OLLAMA_HOST", "http://host.docker.internal:11434")
-        if os.name == 'nt': # Windows/Local
+        if os.name == 'nt':                
              self.api_base = "http://localhost:11434"
              
         self.api_url = f"{self.api_base}/api/generate"
@@ -53,7 +51,7 @@ class OllamaPredictor:
             "model": self.model_name,
             "prompt": prompt,
             "stream": False,
-            "format": "json" # Enforce JSON mode if supported
+            "format": "json"                                 
         }
 
         try:
@@ -67,16 +65,16 @@ class OllamaPredictor:
                 return {a: None for a in ASPECTS}
         except Exception as e:
             print(f"❌ Ollama Connection Error: {e}")
-            # Fallback behavior?
+                                
             return {a: None for a in ASPECTS}
 
     def _parse_response(self, raw_response: str) -> Dict[str, str]:
         """Parse strict JSON from LLM response."""
         try:
-            # Try direct JSON parse
+                                   
             data = json.loads(raw_response)
         except json.JSONDecodeError:
-            # Try to extract JSON from potential markdown
+                                                         
             match = re.search(r'\{.*\}', raw_response, re.DOTALL)
             if match:
                 try:
@@ -86,21 +84,19 @@ class OllamaPredictor:
             else:
                 return {a: None for a in ASPECTS}
 
-        # Normalize and fill missing
         result = {}
         for aspect in ASPECTS:
             val = data.get(aspect)
             if val in ["POS", "NEG", "NEU"]:
                 result[aspect] = val
             else:
-                result[aspect] = None # Map 'None' or missing to valid Python None
+                result[aspect] = None                                             
         return result
 
     def predict_batch(self, texts: List[str]) -> List[Dict[str, str]]:
         """Predict a batch of reviews (Sequential for Ollama to avoid OOM)."""
         return [self.predict_single(t) for t in texts]
 
-# Test
 if __name__ == "__main__":
     predictor = OllamaPredictor()
     sample = "Dầu gội này thơm nhưng giá hơi chát."

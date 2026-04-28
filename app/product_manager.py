@@ -7,7 +7,6 @@ from dataclasses import dataclass, field
 from datetime import datetime
 import streamlit as st
 
-
 @dataclass
 class Product:
     """Product data class."""
@@ -21,7 +20,6 @@ class Product:
     predictions: List[Dict] = field(default_factory=list)
     scores: Dict[str, float] = field(default_factory=dict)
 
-
 def init_session_state():
     """Initialize session state for product management."""
     if 'comparison_products' not in st.session_state:
@@ -32,7 +30,6 @@ def init_session_state():
     
     if 'cookies_path' not in st.session_state:
         st.session_state['cookies_path'] = None
-
 
 def add_product(
     item_id: str,
@@ -57,7 +54,7 @@ def add_product(
     init_session_state()
     
     if item_id in st.session_state['comparison_products']:
-        return False  # Already exists
+        return False                  
     
     product = Product(
         item_id=item_id,
@@ -69,7 +66,6 @@ def add_product(
     
     st.session_state['comparison_products'][item_id] = product
     return True
-
 
 def remove_product(item_id: str) -> bool:
     """
@@ -88,7 +84,6 @@ def remove_product(item_id: str) -> bool:
         return True
     return False
 
-
 def get_products() -> Dict[str, Product]:
     """
     Get all products in the comparison list.
@@ -98,7 +93,6 @@ def get_products() -> Dict[str, Product]:
     """
     init_session_state()
     return st.session_state['comparison_products']
-
 
 def get_product(item_id: str) -> Optional[Product]:
     """
@@ -113,23 +107,19 @@ def get_product(item_id: str) -> Optional[Product]:
     init_session_state()
     return st.session_state['comparison_products'].get(item_id)
 
-
 def get_product_count() -> int:
     """Get number of products in comparison list."""
     init_session_state()
     return len(st.session_state['comparison_products'])
 
-
 def can_compare() -> bool:
     """Check if comparison is possible (>= 2 products)."""
     return get_product_count() >= 2
-
 
 def clear_products():
     """Clear all products from comparison list."""
     init_session_state()
     st.session_state['comparison_products'] = {}
-
 
 def update_product_reviews(item_id: str, reviews: List[Dict]) -> bool:
     """
@@ -148,7 +138,6 @@ def update_product_reviews(item_id: str, reviews: List[Dict]) -> bool:
         return True
     return False
 
-
 def update_product_predictions(item_id: str, predictions: List[Dict]) -> bool:
     """
     Update predictions for a product.
@@ -165,7 +154,6 @@ def update_product_predictions(item_id: str, predictions: List[Dict]) -> bool:
         product.predictions = predictions
         return True
     return False
-
 
 def update_product_scores(item_id: str, scores: Dict[str, float]) -> bool:
     """
@@ -184,25 +172,21 @@ def update_product_scores(item_id: str, scores: Dict[str, float]) -> bool:
         return True
     return False
 
-
 def set_cookies_path(path: str):
     """Set the path to uploaded cookies file."""
     init_session_state()
     st.session_state['cookies_path'] = path
     st.session_state['cookies_uploaded'] = True
 
-
 def get_cookies_path() -> Optional[str]:
     """Get the path to cookies file."""
     init_session_state()
     return st.session_state['cookies_path']
 
-
 def is_cookies_uploaded() -> bool:
     """Check if cookies have been uploaded."""
     init_session_state()
     return st.session_state['cookies_uploaded']
-
 
 def get_products_for_comparison() -> Dict[str, Dict[str, float]]:
     """

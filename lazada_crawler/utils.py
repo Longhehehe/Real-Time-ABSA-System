@@ -12,20 +12,18 @@ def parse_cookie_string(cookie_str):
     """
     cookies = []
     
-    # Try parsing as JSON first (if user pasted JSON)
     try:
         loaded = json.loads(cookie_str)
         if isinstance(loaded, list):
             return loaded
         elif isinstance(loaded, dict):
-             # If it's a single dict, wrap it? Or maybe it's a key-value dict
+                                                                             
              for k, v in loaded.items():
                  cookies.append({'name': k, 'value': str(v)})
              return cookies
     except json.JSONDecodeError:
         pass
 
-    # Try parsing as HTTP Header string "key=value; key2=value2"
     if ';' in cookie_str or '=' in cookie_str:
         pairs = cookie_str.split(';')
         for pair in pairs:
