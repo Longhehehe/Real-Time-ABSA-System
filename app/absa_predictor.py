@@ -14,8 +14,8 @@ import numpy as np
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 
-MODEL_DIR = os.path.join(BASE_DIR, 'models', 'phobert_absa_multipolarity')
-MODEL_PATH = os.path.join(MODEL_DIR, 'phobert_absa_multipolarity.pt')
+MODEL_DIR = os.path.join(BASE_DIR, 'models', 'phobert_absa')
+MODEL_PATH = os.path.join(MODEL_DIR, 'phobertforabsamultipolarity_absa.pt')
 CONFIG_PATH = os.path.join(MODEL_DIR, 'config.json')
 
 MODEL_DIR_OLD = os.path.join(BASE_DIR, 'models', 'phobert_absa')
@@ -427,8 +427,69 @@ def aggregate_multipolarity_scores(predictions: List[Dict], aspects: List[str] =
     
     return result
 
-_predictor = None
+class XLMPredictor(PhoBERTPredictor):
+    """XLM-RoBERTa ABSA Predictor - inherits from PhoBERTPredictor and overrides model loading."""
+    
+    def load_model(self, model_path: Optional[str] = None) -> bool:
+        if model_path is None:
+            model_path = os.path.join(BASE_DIR, 'models', 'xlm_roberta_absa', 'xlm_robertaforabsa_absa.pt')
+            if not os.path.exists(model_path):
+                # Try fallback
+                model_path = os.path.join(BASE_DIR, 'models', 'xlm_roberta_absa', 'xlm_roberta_absa.pt')
+                
+        model_dir = os.path.dirname(model_path)
+        self.is_multipolarity = True
+        
+        try:
+            from transformers import AutoTokenizer
+            from methods.transformer_models import XLMRoBERTaForABSA
+            
+            print(f"Loading XLM-RoBERTa model from {model_path}...")
+            
+            checkpoint = torch.load(model_path, map_location=self.device, weights_only=False)
+            
+            tokenizer_local_path = os.path.join(model_dir, 'tokenizer')
+            if os.path.exists(tokenizer_local_path):
+                self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_local_path)
+            else:
+                tokenizer_name = 'xlm-roberta-base'
+                if isinstance(checkpoint, dict) and 'tokenizer_name' in checkpoint:
+                    tokenizer_name = checkpoint['tokenizer_name']
+                self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
+            
+            self.model = XLMRoBERTaForABSA(num_aspects=len(ASPECTS))
+            
+            if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
+                self.model.load_state_dict(checkpoint['model_state_dict'])
+            else:
+                self.model.load_state_dict(checkpoint)
+            
+            self.model = self.model.to(self.device)
+            self.model.eval()
+            
+            config_path = os.path.join(model_dir, 'config.json')
+            if os.path.exists(config_path):
+                with open(config_path, 'r', encoding='utf-8') as f:
+                    config = json.load(f)
+                self.max_length = config.get('max_length', 256)
+            
+            self.model_loaded = True
+            
+            f1_score = checkpoint.get('best_f1', 'N/A') if isinstance(checkpoint, dict) else 'N/A'
+            if isinstance(f1_score, (int, float)):
+                print(f"XLM-RoBERTa Model loaded successfully! (F1: {f1_score:.4f})")
+            else:
+                print(f"XLM-RoBERTa Model loaded successfully!")
+                
+            return True
+            
+        except Exception as e:
+            print(f"Error loading model: {e}")
+            import traceback
+            traceback.print_exc()
+            return False
 
+_predictor = None
 def get_predictor() -> PhoBERTPredictor:
     """Get or create global predictor instance."""
     global _predictor

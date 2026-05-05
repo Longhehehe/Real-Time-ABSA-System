@@ -18,7 +18,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 # ──────────────────────────────────────────────────────────────────────────────
 # CONFIGURATION
 # ──────────────────────────────────────────────────────────────────────────────
-NVIDIA_API_KEY = "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"
+NVIDIA_API_KEY = "YOUR_API_KEY"
 INVOKE_URL = "https://integrate.api.nvidia.com/v1/chat/completions"
 MODEL = "mistralai/mistral-medium-3.5-128b"
 

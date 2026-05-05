@@ -58,8 +58,8 @@ def normalize_label(val):
         return "2"
 
 def main():
-    true_file = os.path.join(ROOT, 'True_Test_Data', 'dev_cleaned_cleaned_cleaned.xlsx')
-    pred_file = os.path.join(ROOT, 'True_Test_Data', 'dev_predicted.xlsx')
+    true_file = os.path.join(ROOT, 'True_Test_Data', 'dev_augmented_500.xlsx')
+    pred_file = os.path.join(ROOT, 'True_Test_Data', 'dev_predicted_xlm.xlsx')
     viz_dir = os.path.join(ROOT, 'visualizations', 'confusion_matrices')
     os.makedirs(viz_dir, exist_ok=True)
     
