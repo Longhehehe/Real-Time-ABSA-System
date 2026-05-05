@@ -102,7 +102,7 @@ def main():
         st.session_state['is_streaming'] = False
         st.rerun()
 
-    with st.sidebar.expander("🔍 Debug Raw Data"):
+    with st.sidebar.expander(" Debug Raw Data"):
         st.write(st.session_state['stream_data'].tail(5))
 
     speed_factor = st.sidebar.slider("Updates per second", 0.1, 2.0, 0.5)

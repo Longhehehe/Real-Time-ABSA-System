@@ -778,9 +778,9 @@ def crawl_reviews(
                 try:
                     with open(json_path, 'r', encoding='utf-8') as f:
                         cookie_list = json.load(f)
-                    print(f"✅ Loaded {len(cookie_list)} cookies from {json_path}")
+                    print(f" Loaded {len(cookie_list)} cookies from {json_path}")
                 except Exception as e:
-                    print(f"⚠️ Could not load cookies: {e}")
+                    print(f" Could not load cookies: {e}")
         
         max_pages = max(1, max_reviews // 10)
         
@@ -794,7 +794,7 @@ def crawl_reviews(
         
         reviews = reviews[:max_reviews]
         
-        print(f"✅ Đã crawl {len(reviews)} reviews")
+        print(f" Đã crawl {len(reviews)} reviews")
         return reviews, ""
         
     except Exception as e:

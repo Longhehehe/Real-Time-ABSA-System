@@ -30,15 +30,15 @@ if os.path.exists(MODEL_DIR):
                 try:
                     with open(model_file, 'rb') as f:
                         model = pickle.load(f)
-                    print(f"    ✅ Model loaded successfully! Type: {type(model)}")
+                    print(f"     Model loaded successfully! Type: {type(model)}")
                 except Exception as e:
-                    print(f"    ❌ Error loading model: {e}")
+                    print(f"     Error loading model: {e}")
             
             if os.path.exists(vectorizer_file):
                 print(f"\n    Trying to load {vectorizer_file}...")
                 try:
                     with open(vectorizer_file, 'rb') as f:
                         vectorizer = pickle.load(f)
-                    print(f"    ✅ Vectorizer loaded successfully! Type: {type(vectorizer)}")
+                    print(f"     Vectorizer loaded successfully! Type: {type(vectorizer)}")
                 except Exception as e:
-                    print(f"    ❌ Error loading vectorizer: {e}")
+                    print(f"     Error loading vectorizer: {e}")

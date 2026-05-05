@@ -30,17 +30,17 @@ def create_producer(max_retries=5, retry_delay=5):
                 value_serializer=lambda v: json.dumps(v, ensure_ascii=False).encode('utf-8'),
                 key_serializer=lambda k: k.encode('utf-8') if k else None
             )
-            print(f"✅ Connected to Kafka at {KAFKA_BOOTSTRAP_SERVERS}")
+            print(f" Connected to Kafka at {KAFKA_BOOTSTRAP_SERVERS}")
             return producer
         except NoBrokersAvailable:
-            print(f"⏳ Attempt {attempt + 1}/{max_retries}: Kafka not ready, retrying in {retry_delay}s...")
+            print(f" Attempt {attempt + 1}/{max_retries}: Kafka not ready, retrying in {retry_delay}s...")
             time.sleep(retry_delay)
-    raise Exception("❌ Could not connect to Kafka after multiple attempts")
+    raise Exception(" Could not connect to Kafka after multiple attempts")
 
 def load_data():
     """Load enriched data."""
     df = pd.read_excel(ENRICHED_DATA_PATH)
-    print(f"📥 Loaded {len(df)} reviews from enriched dataset")
+    print(f" Loaded {len(df)} reviews from enriched dataset")
     return df
 
 def stream_reviews(delay_min=0.5, delay_max=2.0, limit=None):
@@ -58,7 +58,7 @@ def stream_reviews(delay_min=0.5, delay_max=2.0, limit=None):
     if limit:
         df = df.head(limit)
     
-    print(f"🚀 Starting to stream {len(df)} reviews to topic '{TOPIC_NAME}'...")
+    print(f" Starting to stream {len(df)} reviews to topic '{TOPIC_NAME}'...")
     
     for idx, row in df.iterrows():
                                  
@@ -75,13 +75,13 @@ def stream_reviews(delay_min=0.5, delay_max=2.0, limit=None):
         producer.send(TOPIC_NAME, key=key, value=message)
         
         if (idx + 1) % 10 == 0:
-            print(f"📤 Sent {idx + 1} reviews...")
+            print(f" Sent {idx + 1} reviews...")
         
         time.sleep(random.uniform(delay_min, delay_max))
     
     producer.flush()
     producer.close()
-    print(f"✅ Completed! Sent {len(df)} reviews to Kafka topic '{TOPIC_NAME}'")
+    print(f" Completed! Sent {len(df)} reviews to Kafka topic '{TOPIC_NAME}'")
 
 if __name__ == "__main__":
                                          

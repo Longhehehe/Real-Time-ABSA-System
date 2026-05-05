@@ -80,8 +80,8 @@ INJECT_BUTTON_JS = """
         var productInfo = extractProductInfo();
         if (productInfo) {
             saveProduct(productInfo);
-            showNotification('✅ Đã thêm sản phẩm!');
-            btn.innerHTML = '✅ Đã chọn!';
+            showNotification(' Đã thêm sản phẩm!');
+            btn.innerHTML = ' Đã chọn!';
             btn.style.background = 'linear-gradient(135deg, #00C851, #007E33)';
             setTimeout(function() {
                 btn.innerHTML = '📌 Chọn sản phẩm này';
@@ -220,11 +220,11 @@ class LazadaBrowser:
     def start(self, cookies_path: Optional[str] = None) -> bool:
         """Start the browser."""
         if not SELENIUM_AVAILABLE:
-            print("❌ Selenium not installed!")
+            print(" Selenium not installed!")
             return False
         
         try:
-            print("🚀 Starting Lazada Browser...")
+            print(" Starting Lazada Browser...")
             
             options = EdgeOptions()
             options.add_argument("--start-maximized")
@@ -239,21 +239,21 @@ class LazadaBrowser:
             try:
                 print("   Attempting to use native Selenium Manager...")
                 self.driver = webdriver.Edge(options=options)
-                print("✅ Native Selenium Manager worked!")
+                print(" Native Selenium Manager worked!")
             except Exception as e1:
-                print(f"⚠️ Native launch failed: {e1}")
+                print(f" Native launch failed: {e1}")
                                                           
                 try:
                     print("   Attempting to use WebDriver Manager...")
                     service = EdgeService(EdgeChromiumDriverManager().install())
                     self.driver = webdriver.Edge(service=service, options=options)
-                    print("✅ WebDriver Manager worked!")
+                    print(" WebDriver Manager worked!")
                 except Exception as e2:
-                    print(f"❌ All methods failed. Error: {e2}")
+                    print(f" All methods failed. Error: {e2}")
                     return False
             
             self.driver.get("https://www.lazada.vn")
-            print("✅ Browser opened!")
+            print(" Browser opened!")
             
             if cookies_path and os.path.exists(cookies_path):
                 self._load_cookies(cookies_path)
@@ -266,7 +266,7 @@ class LazadaBrowser:
             return True
             
         except Exception as e:
-            print(f"❌ Error starting browser: {e}")
+            print(f" Error starting browser: {e}")
             return False
     
     def _load_cookies(self, cookies_path: str):
@@ -287,9 +287,9 @@ class LazadaBrowser:
                     except:
                         pass
                 self.driver.refresh()
-                print("✅ Cookies loaded!")
+                print(" Cookies loaded!")
         except Exception as e:
-            print(f"⚠️ Could not load cookies: {e}")
+            print(f" Could not load cookies: {e}")
     
     def _monitor_loop(self):
         """Monitor browser and inject button on product pages."""
@@ -345,7 +345,7 @@ class LazadaBrowser:
             except:
                 pass
             self.driver = None
-        print("🛑 Browser closed")
+        print(" Browser closed")
     
     def is_running(self) -> bool:
         """Check if browser is still running."""
@@ -374,9 +374,9 @@ def open_lazada_browser(cookies_path: Optional[str] = None) -> Tuple[bool, str]:
     
     _browser = LazadaBrowser()
     if _browser.start(cookies_path):
-        return True, "✅ Đã mở browser Lazada! Duyệt và click nút để chọn sản phẩm."
+        return True, " Đã mở browser Lazada! Duyệt và click nút để chọn sản phẩm."
     else:
-        return False, "❌ Không thể mở browser!"
+        return False, " Không thể mở browser!"
 
 def close_lazada_browser():
     """Close the Lazada browser."""
@@ -389,7 +389,7 @@ def save_current_cookies(target_path: str = None) -> Tuple[bool, str]:
     """Save current browser cookies to file."""
     global _browser
     if not _browser or not _browser.driver:
-        return False, "❌ Browser chưa mở! Hãy mở browser và đăng nhập trước."
+        return False, " Browser chưa mở! Hãy mở browser và đăng nhập trước."
     
     if target_path is None:
                                         
@@ -401,7 +401,7 @@ def save_current_cookies(target_path: str = None) -> Tuple[bool, str]:
     try:
         cookies = _browser.driver.get_cookies()
         if not cookies:
-            return False, "⚠️ Không tìm thấy cookie nào! Đã đăng nhập chưa?"
+            return False, " Không tìm thấy cookie nào! Đã đăng nhập chưa?"
             
         content = "# Netscape HTTP Cookie File\n"
         for c in cookies:
@@ -422,10 +422,10 @@ def save_current_cookies(target_path: str = None) -> Tuple[bool, str]:
              with open(root_cookie, 'w', encoding='utf-8') as f:
                 f.write(content)
         
-        return True, f"✅ Đã lưu {len(cookies)} cookies! (Updated: {target_path})"
+        return True, f" Đã lưu {len(cookies)} cookies! (Updated: {target_path})"
         
     except Exception as e:
-        return False, f"❌ Lỗi khi lưu cookie: {str(e)}"
+        return False, f" Lỗi khi lưu cookie: {str(e)}"
 
 def is_browser_running() -> bool:
     """Check if browser is running."""

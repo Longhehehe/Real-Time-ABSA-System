@@ -87,7 +87,7 @@ def run_comparison():
                 os.remove(pred_file)
                 print(f"🧹 Deleted old predictions: {pred_file}")
             except Exception as e:
-                print(f"⚠️ Could not delete {pred_file}: {e}")
+                print(f" Could not delete {pred_file}: {e}")
     
     active_tasks = []
     
@@ -430,7 +430,7 @@ def main():
     
     col1, col2 = st.columns([1, 4])
     with col1:
-        if st.button("🔄 Reset & Chạy Lại"):
+        if st.button(" Reset & Chạy Lại"):
                                                       
             if 'triggered_products' in st.session_state:
                 del st.session_state.triggered_products

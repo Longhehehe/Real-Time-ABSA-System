@@ -47,8 +47,8 @@ def setup_edge_driver(headless: bool = False) -> webdriver.Edge:
         service = Service(EdgeChromiumDriverManager().install())
         driver = webdriver.Edge(service=service, options=options)
     except Exception as e:
-        print(f"⚠️ webdriver-manager failed: {e}")
-        print("🔄 Trying default Edge driver...")
+        print(f" webdriver-manager failed: {e}")
+        print(" Trying default Edge driver...")
                                                               
         driver = webdriver.Edge(options=options)
     
@@ -69,7 +69,7 @@ def open_login_page(driver: webdriver.Chrome) -> bool:
         time.sleep(2)                      
         return True
     except Exception as e:
-        print(f"❌ Error opening login page: {e}")
+        print(f" Error opening login page: {e}")
         return False
 
 def wait_for_login(driver: webdriver.Chrome, timeout: int = 300) -> bool:
@@ -96,13 +96,13 @@ def wait_for_login(driver: webdriver.Chrome, timeout: int = 300) -> bool:
                                           
                 session_cookies = [c for c in cookies if 'JSESSIONID' in c['name'] or 'lwid' in c['name']]
                 if session_cookies:
-                    print("✅ Login detected!")
+                    print(" Login detected!")
                     return True
             
             time.sleep(2)
             
         except Exception as e:
-            print(f"⚠️ Check error: {e}")
+            print(f" Check error: {e}")
             time.sleep(2)
     
     return False
@@ -134,10 +134,10 @@ def save_cookies_json(cookies: list, filepath: str) -> bool:
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
         with open(filepath, 'w', encoding='utf-8') as f:
             json.dump(cookies, f, indent=2)
-        print(f"✅ Cookies saved to {filepath}")
+        print(f" Cookies saved to {filepath}")
         return True
     except Exception as e:
-        print(f"❌ Error saving cookies: {e}")
+        print(f" Error saving cookies: {e}")
         return False
 
 def save_cookies_netscape(cookies: list, filepath: str) -> bool:
@@ -170,10 +170,10 @@ def save_cookies_netscape(cookies: list, filepath: str) -> bool:
                 
                 f.write(f"{domain}\t{flag}\t{path}\t{secure}\t{expiry}\t{name}\t{value}\n")
         
-        print(f"✅ Cookies saved to {filepath} (Netscape format)")
+        print(f" Cookies saved to {filepath} (Netscape format)")
         return True
     except Exception as e:
-        print(f"❌ Error saving cookies: {e}")
+        print(f" Error saving cookies: {e}")
         return False
 
 def login_and_get_cookies(timeout: int = 300) -> Tuple[bool, str]:
@@ -189,14 +189,14 @@ def login_and_get_cookies(timeout: int = 300) -> Tuple[bool, str]:
     driver = None
     
     try:
-        print("🚀 Khởi động trình duyệt Edge...")
+        print(" Khởi động trình duyệt Edge...")
         driver = setup_edge_driver(headless=False)
         
         print("📄 Mở trang đăng nhập Lazada...")
         if not open_login_page(driver):
             return False, "Không thể mở trang đăng nhập"
         
-        print("⏳ Đợi bạn đăng nhập... (tối đa 5 phút)")
+        print(" Đợi bạn đăng nhập... (tối đa 5 phút)")
         print("   Sau khi đăng nhập xong, cookie sẽ tự động được lưu.")
         
         if not wait_for_login(driver, timeout):
@@ -215,7 +215,7 @@ def login_and_get_cookies(timeout: int = 300) -> Tuple[bool, str]:
         save_cookies_json(cookies, json_path)
         save_cookies_netscape(cookies, netscape_path)
         
-        print(f"✅ Đã lưu {len(cookies)} cookies!")
+        print(f" Đã lưu {len(cookies)} cookies!")
         return True, netscape_path
         
     except Exception as e:
@@ -260,7 +260,7 @@ def load_cookies_to_session(cookies_path: str, session) -> bool:
         
         return True
     except Exception as e:
-        print(f"❌ Error loading cookies: {e}")
+        print(f" Error loading cookies: {e}")
         return False
 
 if __name__ == "__main__":
@@ -268,6 +268,6 @@ if __name__ == "__main__":
     success, result = login_and_get_cookies()
     
     if success:
-        print(f"\n✅ Thành công! Cookies đã lưu tại: {result}")
+        print(f"\n Thành công! Cookies đã lưu tại: {result}")
     else:
-        print(f"\n❌ Thất bại: {result}")
+        print(f"\n Thất bại: {result}")

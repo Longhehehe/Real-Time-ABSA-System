@@ -20,10 +20,10 @@ def create_producer():
             value_serializer=lambda v: json.dumps(v, ensure_ascii=False).encode('utf-8')
         )
     except NoBrokersAvailable:
-        print("⚠️ Kafka not ready, cannot create producer.")
+        print(" Kafka not ready, cannot create producer.")
         return None
     except Exception as e:
-        print(f"❌ Error creating producer: {e}")
+        print(f" Error creating producer: {e}")
         return None
 
 def send_reviews_to_kafka(product_id: str, reviews: List[Dict]):
@@ -35,7 +35,7 @@ def send_reviews_to_kafka(product_id: str, reviews: List[Dict]):
     if not producer:
         return False, 0
     
-    print(f"📤 Sending {len(reviews)} reviews for Product {product_id} to Kafka...")
+    print(f" Sending {len(reviews)} reviews for Product {product_id} to Kafka...")
     
     import uuid
     sent_count = 0
@@ -48,7 +48,7 @@ def send_reviews_to_kafka(product_id: str, reviews: List[Dict]):
         
         if not content:
             skipped_count += 1
-            print(f"⚠️ Skipping review {idx}: empty content")
+            print(f" Skipping review {idx}: empty content")
             continue
         
         r_id = review.get('review_id')
@@ -69,6 +69,6 @@ def send_reviews_to_kafka(product_id: str, reviews: List[Dict]):
     producer.close()
     
     if skipped_count > 0:
-        print(f"⚠️ Skipped {skipped_count} empty reviews")
-    print(f"✅ Sent {sent_count}/{len(reviews)} reviews successfully!")
+        print(f" Skipped {skipped_count} empty reviews")
+    print(f" Sent {sent_count}/{len(reviews)} reviews successfully!")
     return True, sent_count

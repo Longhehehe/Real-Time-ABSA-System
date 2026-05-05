@@ -61,10 +61,10 @@ class OllamaPredictor:
                 raw_response = result.get("response", "")
                 return self._parse_response(raw_response)
             else:
-                print(f"❌ Ollama API Error: {response.status_code} - {response.text}")
+                print(f" Ollama API Error: {response.status_code} - {response.text}")
                 return {a: None for a in ASPECTS}
         except Exception as e:
-            print(f"❌ Ollama Connection Error: {e}")
+            print(f" Ollama Connection Error: {e}")
                                 
             return {a: None for a in ASPECTS}
 

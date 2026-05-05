@@ -50,11 +50,11 @@ def trigger_producer(**context):
     reviews = []
     
     if reviews_data:
-        print(f"📦 Received {len(reviews_data)} pre-crawled reviews from Streamlit")
+        print(f" Received {len(reviews_data)} pre-crawled reviews from Streamlit")
         reviews = reviews_data
     
     elif product_url and product_url != 'https://www.lazada.vn/products/...':
-        print(f"🔍 Crawling reviews from: {product_url}")
+        print(f" Crawling reviews from: {product_url}")
         
         cookies_path = None
         for path in [
@@ -64,7 +64,7 @@ def trigger_producer(**context):
         ]:
             if os.path.exists(path):
                 cookies_path = path
-                print(f"✅ Found cookies at {cookies_path}")
+                print(f" Found cookies at {cookies_path}")
                 break
         
         try:
@@ -72,7 +72,7 @@ def trigger_producer(**context):
             sys.path.insert(0, os.path.join(PROJECT_DIR, 'app'))
             from lazada_crawler_simple import crawl_reviews_simple
             
-            print("⚖️ Using requests-based crawler with BALANCED MODE...")
+            print(" Using requests-based crawler with BALANCED MODE...")
             reviews, error = crawl_reviews_simple(
                 product_url=product_url,
                 cookies_path=cookies_path,
@@ -82,12 +82,12 @@ def trigger_producer(**context):
             )
             
             if error:
-                print(f"⚠️ Crawler warning: {error}")
+                print(f" Crawler warning: {error}")
             
-            print(f"✅ Crawled {len(reviews)} reviews with balanced mode")
+            print(f" Crawled {len(reviews)} reviews with balanced mode")
                 
         except Exception as e:
-            print(f"❌ Crawler failed: {e}")
+            print(f" Crawler failed: {e}")
             import traceback
             traceback.print_exc()
             reviews = []
@@ -115,16 +115,16 @@ def trigger_producer(**context):
         
         final_count = len(df)
         if final_count < initial_count:
-            print(f"⚠️ Removed {initial_count - final_count} duplicate reviews via Pandas.")
+            print(f" Removed {initial_count - final_count} duplicate reviews via Pandas.")
             
         buffer_file = os.path.join(PROJECT_DIR, 'data', 'crawled_reviews_buffer.csv')
         os.makedirs(os.path.dirname(buffer_file), exist_ok=True)
         df.to_csv(buffer_file, index=False, encoding='utf-8-sig')
-        print(f"💾 Saved unique reviews to buffer: {buffer_file}")
+        print(f" Saved unique reviews to buffer: {buffer_file}")
         
         reviews = df.to_dict('records')
 
-    print(f"📊 Processing {len(reviews)} unique reviews")
+    print(f" Processing {len(reviews)} unique reviews")
     
     os.makedirs(PREDICTIONS_DIR, exist_ok=True)
     pred_file = os.path.join(PREDICTIONS_DIR, f"{product_id}.json")
@@ -132,13 +132,13 @@ def trigger_producer(**context):
         try:
             os.remove(pred_file)
         except OSError as e:
-            print(f"⚠️ Could not remove old predictions (PermissionError): {e}")
+            print(f" Could not remove old predictions (PermissionError): {e}")
             try:
                                                  
                 with open(pred_file, 'w'): pass
-                print("✅ Truncated old prediction file instead.")
+                print(" Truncated old prediction file instead.")
             except:
-                print("❌ Could not truncate file either. Old data may persist.")
+                print(" Could not truncate file either. Old data may persist.")
     
     result = send_reviews_to_kafka(product_id, reviews)
     
@@ -154,7 +154,7 @@ def trigger_producer(**context):
     context['ti'].xcom_push(key='product_id', value=product_id)
     context['ti'].xcom_push(key='review_count', value=sent_count)
     
-    print(f"✅ Sent {sent_count} reviews for product {product_id}")
+    print(f" Sent {sent_count} reviews for product {product_id}")
 
 def wait_for_consumer(**context):
     """
@@ -176,7 +176,7 @@ def wait_for_consumer(**context):
     def print_results(data_chunk):
                                                  
         print("\n" + "="*50)
-        print(f"📝 DETAILED PREDICTIONS ({len(data_chunk)} reviews)")
+        print(f" DETAILED PREDICTIONS ({len(data_chunk)} reviews)")
         print("="*50)
         
         ASPECTS = [
@@ -218,7 +218,7 @@ def wait_for_consumer(**context):
         
         print("\n" + "="*50)
         
-        print(f"📊 PREDICTION RESULTS SUMMARY")
+        print(f" PREDICTION RESULTS SUMMARY")
         print("="*50)
         
         aspects = defaultdict(lambda: {'POS': 0, 'NEU': 0, 'NEG': 0})
@@ -259,7 +259,7 @@ def wait_for_consumer(**context):
                 current_count = len(data)
                 
                 if current_count >= expected_count:
-                    print(f"✅ Consumer finished! Processed {current_count} reviews.")
+                    print(f" Consumer finished! Processed {current_count} reviews.")
                     print_results(data)
                     return True
                 
@@ -272,21 +272,21 @@ def wait_for_consumer(**context):
                     stale_timer += poll_interval
                 
                 if stale_timer >= stale_timeout and current_count > 0:
-                    print(f"⚠️ No progress for {stale_timeout}s. Consumer appears idle.")
-                    print(f"📊 Accepting partial results: {current_count}/{expected_count} reviews")
+                    print(f" No progress for {stale_timeout}s. Consumer appears idle.")
+                    print(f" Accepting partial results: {current_count}/{expected_count} reviews")
                     print_results(data)
                                                              
                     context['ti'].xcom_push(key='actual_count', value=current_count)
                     return True                                     
                     
-                print(f"⏳ Processed {current_count}/{expected_count}... (stale: {stale_timer}s)")
+                print(f" Processed {current_count}/{expected_count}... (stale: {stale_timer}s)")
             except json.JSONDecodeError:
                 pass
         
         time.sleep(poll_interval)
         elapsed += poll_interval
     
-    print(f"⚠️ Timeout! Printing partial results ({current_count if 'current_count' in locals() else 0}/{expected_count})...")
+    print(f" Timeout! Printing partial results ({current_count if 'current_count' in locals() else 0}/{expected_count})...")
     if 'data' in locals() and data:
         print_results(data)
         
@@ -335,12 +335,12 @@ def aggregate_results(**context):
         with open(done_file, 'w') as f:
             f.write("completed")
             
-        print(f"✅ Aggregation complete. Summary saved to {summary_file}")
-        print(f"✅ Created completion marker: {done_file}")
+        print(f" Aggregation complete. Summary saved to {summary_file}")
+        print(f" Created completion marker: {done_file}")
     except PermissionError:
-        print(f"⚠️ PermissionError: Could not save summary to {summary_file} or create done file. Printing to stdout instead.")
+        print(f" PermissionError: Could not save summary to {summary_file} or create done file. Printing to stdout instead.")
     except Exception as e:
-        print(f"⚠️ Error saving summary or creating done file: {e}")
+        print(f" Error saving summary or creating done file: {e}")
     
     print(json.dumps(summary, indent=2, ensure_ascii=False))
 

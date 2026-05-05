@@ -61,7 +61,7 @@ class BulkCrawler:
         
     def search_product(self, keyword):
         """Search for a product and return top product links"""
-        print(f"\n🔍 Searching for: {keyword}")
+        print(f"\n Searching for: {keyword}")
         
         self.driver.get("https://www.lazada.vn")
         time.sleep(2)
@@ -94,7 +94,7 @@ class BulkCrawler:
     
     def crawl_reviews(self, product_url, max_reviews=20):
         """Crawl reviews from a product page"""
-        print(f"  📝 Crawling reviews from: {product_url[:60]}...")
+        print(f"   Crawling reviews from: {product_url[:60]}...")
         
         try:
             self.driver.get(product_url)
@@ -167,7 +167,7 @@ class BulkCrawler:
         keywords_to_crawl = KEYWORDS[start_index:end_index]
         
         print(f"\n{'='*60}")
-        print(f"🚀 BULK CRAWLER - Starting crawl for {len(keywords_to_crawl)} keywords")
+        print(f" BULK CRAWLER - Starting crawl for {len(keywords_to_crawl)} keywords")
         print(f"{'='*60}\n")
         
         all_reviews = []
@@ -190,18 +190,18 @@ class BulkCrawler:
                 
                 if i % 10 == 0:
                     self.save_results(all_reviews, f"progress_{i}")
-                    print(f"\n💾 Progress saved! Total reviews: {len(all_reviews)}")
+                    print(f"\n Progress saved! Total reviews: {len(all_reviews)}")
                 
                 time.sleep(random.uniform(2, 5))
                 
             except Exception as e:
-                print(f"  ❌ Error with keyword '{keyword}': {e}")
+                print(f"   Error with keyword '{keyword}': {e}")
                 continue
         
         self.save_results(all_reviews, "final")
         
         print(f"\n{'='*60}")
-        print(f"✅ COMPLETE! Total reviews collected: {len(all_reviews)}")
+        print(f" COMPLETE! Total reviews collected: {len(all_reviews)}")
         print(f"{'='*60}")
         
         return all_reviews
@@ -240,9 +240,9 @@ if __name__ == "__main__":
         reviews = crawler.run(START_INDEX, END_INDEX)
         
     except KeyboardInterrupt:
-        print("\n\n⚠️ Interrupted by user!")
+        print("\n\n Interrupted by user!")
     except Exception as e:
-        print(f"\n❌ Error: {e}")
+        print(f"\n Error: {e}")
     finally:
         print("\nClosing browser...")
                                                                          

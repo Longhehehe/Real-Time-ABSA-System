@@ -1,0 +1,83 @@
+HƯỚNG DẪN ĐÁNH NHÃN DỮ LIỆU (DATA LABELING GUIDELINE)
+CHO BÀI TOÁN ABSA MULTI-POLARITY (HỆ THỐNG KẾT HỢP NHIỀU CẢM XÚC TRÊN MỘT KHÍA CẠNH)
+
+================================================================================
+1. TỔNG QUAN BÀI TOÁN VÀ ĐỊNH NGHĨA ABSA CỦA HỆ THỐNG
+================================================================================
+Khác với phân tích cảm xúc chung của cả một câu (Sentence-level Sentiment), hệ thống ABSA của chúng ta đi sâu vào 9 KHÍA CẠNH (ASPECT CATEGORIES) cốt lõi của e-commerce.
+
+Hệ thống của chúng ta là MULTI-POLARITY:
+Điểm đột phá của hệ thống này là khả năng ghi nhận NHIỀU LUỒNG CẢM XÚC TRÁI NGƯỢC (Conflict/Mixed Sentiment) ngay trên CÙNG MỘT KHÍA CẠNH trong cùng một đánh giá. Thay vì bắt buộc phải chọn 1 nhãn, mô hình cho phép một khía cạnh vừa có thể nhận nhãn Tích cực (1) vừa nhận nhãn Tiêu cực (-1) đồng thời.
+
+================================================================================
+2. CÁC ĐỊNH NGHĨA CỤ THỂ CỦA BÀI TOÁN ABSA HIỆN TẠI
+================================================================================
+2.1. 9 Nhóm Khía Cạnh (Aspect Categories):
+Bạn sẽ thao tác trên một file Excel, mỗi dòng là 1 câu Review, và có 9 cột tương ứng với 9 nhóm khía cạnh cần đánh giá:
+1. Chất lượng sản phẩm (Chất liệu, độ bền, độ hoàn thiện chung)
+2. Hiệu năng & Trải nghiệm (Sản phẩm hoạt động có tốt không, mượt không, pin thế nào)
+3. Đúng mô tả (Hàng nhận được có giống hình ảnh/mô tả trên mạng không, sai màu/size)
+4. Giá cả & Khuyến mãi (Giá đắt/rẻ, có mã giảm giá, đáng tiền)
+5. Vận chuyển (Giao hàng nhanh/chậm, phí ship, thái độ shipper)
+6. Đóng gói (Bọc kỹ, hộp móp méo, chống sốc)
+7. Dịch vụ & Thái độ Shop (Shop tư vấn nhiệt tình, phản hồi chậm, chu đáo)
+8. Bảo hành & Đổi trả (Chính sách hậu mãi, quá trình trả hàng, hỗ trợ sau mua)
+9. Tính xác thực (Hàng real/fake, chính hãng)
+
+2.2. Nhãn Cảm Xúc (Polarity Labels):
+Mỗi ô (cell) trong Excel tương ứng với 1 khía cạnh sẽ được gán các giá trị số sau:
+-  1 : Tích cực (Khen ngợi, hài lòng)
+- -1 : Tiêu cực (Chê bai, lỗi, phàn nàn)
+-  0 : Trung tính (Chỉ trần thuật, không bộc lộ rõ khen chê)
+- Ô trống (hoặc 2/NaN): Không được nhắc đến trong câu.
+
+================================================================================
+3. HƯỚNG DẪN CẢI TIẾN: ĐÁNH NHÃN MULTI-POLARITY NHƯ THẾ NÀO?
+================================================================================
+Trong các hệ thống cũ, nếu người dùng viết: "Đóng gói đẹp nhưng hộp bị rách một góc", annotator thường lúng túng không biết chọn Tích cực hay Tiêu cực cho phần "Đóng gói". 
+Trong hệ thống của chúng ta, BẠN CÓ THỂ ĐÁNH NHÃN CẢ HAI!
+
+Quy tắc gán nhãn Multi-Polarity:
+Nếu trong 1 câu có nhiều vế, đánh giá về CÙNG 1 nhóm khía cạnh nhưng mang cảm xúc trái ngược, bạn hãy điền nhiều số vào ô Excel, cách nhau bởi dấu phẩy.
+
+Ví dụ cách điền dữ liệu Multi-Polarity:
+- "1, -1" : Vừa tích cực vừa tiêu cực (Conflict/Mixed).
+
+--------------------------------------------------------------------------------
+VÍ DỤ THỰC TẾ TRÊN FILE EXCEL:
+--------------------------------------------------------------------------------
+[Câu 1]: "Shop giao hàng siêu nhanh, cơ mà đóng gói bọc xốp cẩn thận nhưng hộp vẫn bị móp móp."
+-> Phân tích Multi-Polarity:
+   - Cột [Vận chuyển]: 1 (giao nhanh)
+   - Cột [Đóng gói]  : 1, -1 (Có ý khen "bọc cẩn thận" (1), nhưng lại chê "hộp bị móp" (-1)). BẠN ĐIỀN CHUỖI "1, -1" VÀO Ô ĐÓNG GÓI.
+
+[Câu 2]: "Điện thoại cầm đầm tay, màn hình đẹp nhưng pin thì tụt nhanh như tụt quần, giá 5 triệu là quá đắt."
+-> Phân tích Multi-Polarity:
+   - Cột [Chất lượng sản phẩm]  : 1 (đầm tay, màn đẹp)
+   - Cột [Hiệu năng & Trải nghiệm]: -1 (pin tụt nhanh)
+   - Cột [Giá cả & Khuyến mãi]  : -1 (quá đắt)
+-> Mở rộng Multi-Polarity: Giả sử câu là "Máy chơi mượt nhưng thỉnh thoảng hơi giật lag" -> Cột [Hiệu năng] sẽ điền: 1, -1
+
+[Câu 3]: "Tư vấn nhiệt tình, mua áo màu xanh mà giao nhầm màu đỏ nhưng mặc vẫn đẹp."
+-> Phân tích Multi-Polarity:
+   - Cột [Dịch vụ & Thái độ Shop]: 1 (tư vấn nhiệt tình)
+   - Cột [Đúng mô tả]           : -1 (giao nhầm màu đỏ)
+   - Cột [Chất lượng sản phẩm]  : 1 (mặc vẫn đẹp)
+*Chú ý: Việc giao sai hàng thuộc về lỗi "Đúng mô tả" / "Dịch vụ", chứ không phải sản phẩm tệ.
+
+================================================================================
+4. QUY TRÌNH THỰC HIỆN ĐÁNH NHÃN BƯỚC QUA BƯỚC
+================================================================================
+BƯỚC 1: Đọc kỹ dòng review (cột reviewContent).
+BƯỚC 2: Quét qua 9 cột khía cạnh (từ Chất lượng đến Tính xác thực).
+BƯỚC 3: Nếu khía cạnh nào KHÔNG ĐƯỢC NHẮC ĐẾN, bỏ trống ô đó (hoặc điền số 2 theo quy định của team).
+BƯỚC 4: Nếu khía cạnh ĐƯỢC NHẮC ĐẾN:
+   - Xác định cảm xúc (1, -1, 0).
+   - Nếu có nhiều cảm xúc xung đột nhau cho chính khía cạnh đó, hãy áp dụng chuẩn Multi-Polarity bằng cách gõ: 1, -1
+BƯỚC 5: Rà soát lại xem có ý nào trong câu bị bỏ sót chưa xếp vào 9 cột không. Sau đó chuyển sang dòng tiếp theo.
+
+================================================================================
+5. TIÊU CHÍ CHẤT LƯỢNG CHO ĐỘI NGŨ
+================================================================================
+- KHÔNG gộp chung cảm xúc. Một khách chê Giá đắt (-1) không có nghĩa là Chất lượng cũng là (-1). Phải đánh giá độc lập từng cột.
+- Bắt buộc tận dụng Multi-Polarity ("1, -1") ở những câu review mang tính "quay xe" (ví dụ: "chất vải ok nhưng chỉ thừa nhiều" -> Chất lượng: 1, -1). Đừng bắt ép vào 1 nhãn duy nhất để tránh làm mất mát dữ liệu đào tạo (Data Loss).

@@ -49,7 +49,7 @@ def crawl_reviews_simple(
     if not item_id:
         return [], "Could not extract item ID from URL"
     
-    print(f"📦 Crawling reviews for item: {item_id} (Balanced: {balanced_mode})")
+    print(f" Crawling reviews for item: {item_id} (Balanced: {balanced_mode})")
     
     session = requests.Session()
     session.headers.update({
@@ -68,22 +68,22 @@ def crawl_reviews_simple(
                     cookies = json.load(f)
                 for c in cookies:
                     session.cookies.set(c.get('name', ''), c.get('value', ''), domain=c.get('domain', '.lazada.vn'))
-                print(f"✅ Loaded cookies from {json_path}")
+                print(f" Loaded cookies from {json_path}")
             elif os.path.exists(cookies_path):
                 with open(cookies_path, 'r', encoding='utf-8') as f:
                     cookies = json.load(f)
                 for c in cookies:
                     session.cookies.set(c.get('name', ''), c.get('value', ''), domain=c.get('domain', '.lazada.vn'))
-                print(f"✅ Loaded cookies from {cookies_path}")
+                print(f" Loaded cookies from {cookies_path}")
         except Exception as e:
-            print(f"⚠️ Could not load cookies: {e}")
+            print(f" Could not load cookies: {e}")
     
     if balanced_mode:
         reviews = _crawl_balanced(session, item_id, max_reviews)
     else:
         reviews, error = _crawl_all_reviews(session, item_id, max_reviews)
     
-    print(f"✅ Total reviews crawled: {len(reviews)}")
+    print(f" Total reviews crawled: {len(reviews)}")
     
     return reviews[:max_reviews], error
 
@@ -108,13 +108,13 @@ def _fetch_reviews_by_rating(session, item_id: str, rating: int, max_count: int,
             response = session.get(api_url, params=params, timeout=30)
             
             if response.status_code != 200:
-                print(f"⚠️ API returned status {response.status_code} for {rating} star")
+                print(f" API returned status {response.status_code} for {rating} star")
                 break
             
             try:
                 data = response.json()
             except:
-                print(f"⚠️ Could not parse JSON for {rating} star")
+                print(f" Could not parse JSON for {rating} star")
                 break
             
             model = data.get('model', {})
@@ -150,7 +150,7 @@ def _fetch_reviews_by_rating(session, item_id: str, rating: int, max_count: int,
             time.sleep(random.uniform(0.5, 1.5))
             
         except Exception as e:
-            print(f"❌ Error fetching {rating} star reviews: {e}")
+            print(f" Error fetching {rating} star reviews: {e}")
             break
     
     return reviews[:max_count]
@@ -161,7 +161,7 @@ def _crawl_balanced(session, item_id: str, max_reviews: int) -> List[Dict]:
     1. First crawl low-star reviews (1, 2, 3 stars)
     2. Then crawl high-star reviews (4, 5 stars) but limit to match low-star count
     """
-    print("⚖️ Using BALANCED MODE: Prioritizing low-star reviews first")
+    print(" Using BALANCED MODE: Prioritizing low-star reviews first")
     
     all_reviews = []
     low_star_reviews = []
@@ -169,25 +169,25 @@ def _crawl_balanced(session, item_id: str, max_reviews: int) -> List[Dict]:
     
     per_rating_target = max(10, max_reviews // 5)
     
-    print("\n📉 Phase 1: Crawling LOW star reviews (1-3 stars)...")
+    print("\n Phase 1: Crawling LOW star reviews (1-3 stars)...")
     for star in [1, 2, 3]:
-        print(f"\n🔍 Fetching {star}⭐ reviews...")
+        print(f"\n Fetching {star}⭐ reviews...")
         star_reviews = _fetch_reviews_by_rating(session, item_id, star, per_rating_target)
         low_star_reviews.extend(star_reviews)
         print(f"  ✓ Got {len(star_reviews)} reviews for {star}⭐")
         time.sleep(random.uniform(1, 2))
     
     low_star_count = len(low_star_reviews)
-    print(f"\n📊 Total LOW star reviews collected: {low_star_count}")
+    print(f"\n Total LOW star reviews collected: {low_star_count}")
     
     if low_star_count == 0:
-        print("⚠️ No low-star reviews found. Crawling all reviews instead...")
+        print(" No low-star reviews found. Crawling all reviews instead...")
         return _crawl_all_reviews(session, item_id, max_reviews)[0]
     
     high_star_target = low_star_count                                      
     per_high_star = max(5, high_star_target // 2)
     
-    print(f"\n📈 Phase 2: Crawling HIGH star reviews (4-5 stars), target: {high_star_target} total...")
+    print(f"\n Phase 2: Crawling HIGH star reviews (4-5 stars), target: {high_star_target} total...")
     for star in [4, 5]:
         remaining = high_star_target - len(high_star_reviews)
         if remaining <= 0:
@@ -195,18 +195,18 @@ def _crawl_balanced(session, item_id: str, max_reviews: int) -> List[Dict]:
             break
             
         target = min(per_high_star, remaining)
-        print(f"\n🔍 Fetching {star}⭐ reviews (target: {target})...")
+        print(f"\n Fetching {star}⭐ reviews (target: {target})...")
         star_reviews = _fetch_reviews_by_rating(session, item_id, star, target)
         high_star_reviews.extend(star_reviews)
         print(f"  ✓ Got {len(star_reviews)} reviews for {star}⭐")
         time.sleep(random.uniform(1, 2))
     
     high_star_count = len(high_star_reviews)
-    print(f"\n📊 Total HIGH star reviews collected: {high_star_count}")
+    print(f"\n Total HIGH star reviews collected: {high_star_count}")
     
     all_reviews = low_star_reviews + high_star_reviews
     
-    print(f"\n✅ BALANCED RESULTS:")
+    print(f"\n BALANCED RESULTS:")
     print(f"   Low stars (1-3): {low_star_count}")
     print(f"   High stars (4-5): {high_star_count}")
     print(f"   Total: {len(all_reviews)}")

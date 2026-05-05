@@ -53,15 +53,15 @@ def trigger_dag(product_id: str, product_url: str = "", max_reviews: int = 50, r
         if response.status_code in [200, 201]:
             data = response.json()
             dag_run_id = data.get("dag_run_id", "")
-            print(f"✅ DAG triggered successfully: {dag_run_id}")
+            print(f" DAG triggered successfully: {dag_run_id}")
             return True, dag_run_id
         else:
             error = response.text
-            print(f"❌ Failed to trigger DAG: {error}")
+            print(f" Failed to trigger DAG: {error}")
             return False, error
             
     except requests.exceptions.RequestException as e:
-        print(f"❌ Connection error: {e}")
+        print(f" Connection error: {e}")
         return False, str(e)
 
 def get_dag_run_status(dag_run_id: str) -> Dict:

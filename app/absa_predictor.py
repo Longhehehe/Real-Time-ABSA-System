@@ -129,7 +129,8 @@ class PhoBERTPredictor:
         self.model_loaded = False
         self.max_length = 256
         self.is_multipolarity = use_multipolarity
-        self.threshold = 0.5                                     
+        self.mention_threshold = 0.6                              
+        self.sentiment_threshold = 0.5                            
         
         if model_path:
             self.load_model(model_path)
@@ -147,7 +148,7 @@ class PhoBERTPredictor:
                 self.is_multipolarity = False
                 model_dir = MODEL_DIR_OLD
             else:
-                print(f"❌ No model found!")
+                print(f"No model found!")
                 print(f"   Checked: {MODEL_PATH}")
                 print(f"   Checked: {MODEL_PATH_OLD}")
                 return False
@@ -159,7 +160,7 @@ class PhoBERTPredictor:
             from transformers import AutoTokenizer
             
             mode_str = "Multi-Polarity" if self.is_multipolarity else "Legacy"
-            print(f"📥 Loading PhoBERT {mode_str} model from {model_path}...")
+            print(f"Loading PhoBERT {mode_str} model from {model_path}...")
             
             checkpoint = torch.load(model_path, map_location=self.device, weights_only=False)
             
@@ -194,14 +195,14 @@ class PhoBERTPredictor:
             self.model_loaded = True
             f1_score = checkpoint.get('best_f1', 'N/A')
             if isinstance(f1_score, (int, float)):
-                print(f"✅ Model loaded successfully! (F1: {f1_score:.4f})")
+                print(f"Model loaded successfully! (F1: {f1_score:.4f})")
             else:
-                print(f"✅ Model loaded successfully!")
+                print(f"Model loaded successfully!")
             
             return True
             
         except Exception as e:
-            print(f"❌ Error loading model: {e}")
+            print(f"Error loading model: {e}")
             import traceback
             traceback.print_exc()
             return False
@@ -217,7 +218,7 @@ class PhoBERTPredictor:
         """
         if not self.model_loaded:
             if not self.load_model():
-                print("❌ Cannot make prediction - model not available")
+                print("Cannot make prediction - model not available")
                 return {
                     'legacy': {asp: 2 for asp in ASPECTS},
                     'multipolarity': {asp: {'mentioned': False, 'sentiments': None} for asp in ASPECTS}
@@ -239,11 +240,11 @@ class PhoBERTPredictor:
             with torch.no_grad():
                 logits_m, logits_s = self.model(input_ids, attention_mask)
                 
-                preds_m = (torch.sigmoid(logits_m) > self.threshold).squeeze(0).cpu().numpy()
+                preds_m = (torch.sigmoid(logits_m) > self.mention_threshold).squeeze(0).cpu().numpy()
                 
                 if self.is_multipolarity:
                                                               
-                    preds_s = (torch.sigmoid(logits_s) > self.threshold).squeeze(0).cpu().numpy()
+                    preds_s = (torch.sigmoid(logits_s) > self.sentiment_threshold).squeeze(0).cpu().numpy()
                 else:
                                           
                     preds_s = torch.argmax(logits_s, dim=-1).squeeze(0).cpu().numpy()
@@ -296,7 +297,7 @@ class PhoBERTPredictor:
             }
             
         except Exception as e:
-            print(f"⚠️ Prediction error: {e}")
+            print(f"Prediction error: {e}")
             import traceback
             traceback.print_exc()
             return {
@@ -449,7 +450,7 @@ if __name__ == "__main__":
             "Giá rẻ nhưng chất lượng không tương xứng",               
         ]
         
-        print(f"\n🔍 Testing {len(test_reviews)} reviews...\n")
+        print(f"\n Testing {len(test_reviews)} reviews...\n")
         
         for review in test_reviews:
             print(f"Review: {review[:60]}...")

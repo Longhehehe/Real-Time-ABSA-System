@@ -79,11 +79,11 @@ with st.sidebar:
 tab1, tab2, tab3 = st.tabs(["Search & Crawl", "Data View", "Assisted Mode (Manual)"])
 
 with tab2:
-    st.header("📊 Data View")
+    st.header(" Data View")
     
     if 'crawled_data' in st.session_state and st.session_state['crawled_data'] is not None:
         df = st.session_state['crawled_data']
-        st.success(f"✅ Có {len(df)} reviews trong session hiện tại")
+        st.success(f" Có {len(df)} reviews trong session hiện tại")
         
         col1, col2, col3 = st.columns(3)
         with col1:
@@ -100,7 +100,7 @@ with tab2:
         
         csv = df.to_csv(index=False).encode('utf-8')
         st.download_button(
-            label="📥 Download CSV",
+            label=" Download CSV",
             data=csv,
             file_name="crawled_reviews.csv",
             mime="text/csv"
@@ -170,7 +170,7 @@ with tab3:
         st.dataframe(df_collected)
         st.text(f"Total collected: {len(df_collected)}")
         
-        if st.button("💾 Save to Main Dataset"):
+        if st.button(" Save to Main Dataset"):
             if 'products' not in st.session_state:
                 st.session_state.products = []
             
@@ -217,7 +217,7 @@ with tab1:
                 st.error(f"An error occurred during search: {e}")
 
     st.write("---")
-    st.header("🔄 Bulk Keywords Auto-Crawl")
+    st.header(" Bulk Keywords Auto-Crawl")
     st.markdown("Nhập danh sách từ khóa (mỗi dòng 1 từ khóa), app sẽ tự động crawl lần lượt.")
     
     default_keywords = """áo thun nam
@@ -301,7 +301,7 @@ bàn học sinh
 ghế văn phòng
 máy tính bảng"""
     
-    keywords_input = st.text_area("📝 Danh sách từ khóa (mỗi dòng 1 từ khóa)", 
+    keywords_input = st.text_area(" Danh sách từ khóa (mỗi dòng 1 từ khóa)", 
                                    value=default_keywords, 
                                    height=200,
                                    help="Nhập nhiều từ khóa, mỗi từ khóa 1 dòng")
@@ -311,9 +311,9 @@ máy tính bảng"""
         products_per_keyword = st.number_input("Số sản phẩm/từ khóa", min_value=1, max_value=20, value=3, 
                                                 help="Số sản phẩm có nhiều reviews nhất sẽ được crawl")
     with col_bulk2:
-        st.info("⚖️ **Balanced Mode**: Crawl 1,2,3 sao trước → sau đó 4,5 sao (số lượng bằng nhau)")
+        st.info(" **Balanced Mode**: Crawl 1,2,3 sao trước → sau đó 4,5 sao (số lượng bằng nhau)")
     
-    if st.button("🚀 Bắt đầu Bulk Crawl", type="primary"):
+    if st.button(" Bắt đầu Bulk Crawl", type="primary"):
         keywords_list = [kw.strip() for kw in keywords_input.strip().split('\n') if kw.strip()]
         
         if not keywords_list:
@@ -341,7 +341,7 @@ máy tính bảng"""
             status_text = st.empty()
             
             for kw_idx, keyword in enumerate(keywords_list):
-                status_text.text(f"🔍 [{kw_idx+1}/{total_keywords}] Đang tìm kiếm: {keyword}")
+                status_text.text(f" [{kw_idx+1}/{total_keywords}] Đang tìm kiếm: {keyword}")
                 
                 try:
                                              
@@ -357,7 +357,7 @@ máy tính bảng"""
                     st.text(f"  → Tìm thấy {len(results)} sản phẩm, crawl top {len(top_products)}")
                     
                     for prod_idx, product in enumerate(top_products):
-                        status_text.text(f"📝 [{kw_idx+1}/{total_keywords}] {keyword} - Sản phẩm {prod_idx+1}/{len(top_products)}")
+                        status_text.text(f" [{kw_idx+1}/{total_keywords}] {keyword} - Sản phẩm {prod_idx+1}/{len(top_products)}")
                         try:
                             df = crawler.crawl_reviews(product['link'], max_pages=-1, balanced_mode=True)
                             if df is not None and not df.empty:
@@ -370,7 +370,7 @@ máy tính bảng"""
                                 st.session_state['crawled_data'] = current_df
                                 
                                 current_df.to_csv("bulk_crawl_progress.csv", index=False, encoding='utf-8-sig')
-                                st.text(f"    💾 Đã lưu {len(current_df)} reviews → bulk_crawl_progress.csv")
+                                st.text(f"     Đã lưu {len(current_df)} reviews → bulk_crawl_progress.csv")
                                 
                         except Exception as e:
                             st.text(f"    ✗ Lỗi: {str(e)[:50]}")
@@ -378,11 +378,11 @@ máy tính bảng"""
                             time.sleep(random.uniform(10, 20))
                         
                         delay = random.uniform(5, 12)
-                        status_text.text(f"⏳ Đợi {delay:.1f}s trước sản phẩm tiếp theo...")
+                        status_text.text(f" Đợi {delay:.1f}s trước sản phẩm tiếp theo...")
                         time.sleep(delay)
                     
                     delay = random.uniform(8, 15)
-                    status_text.text(f"⏳ Đợi {delay:.1f}s trước từ khóa tiếp theo...")
+                    status_text.text(f" Đợi {delay:.1f}s trước từ khóa tiếp theo...")
                     time.sleep(delay)
                     
                 except Exception as e:
@@ -401,7 +401,7 @@ máy tính bảng"""
                 filename = f"bulk_crawl_{timestamp}"
                 save_to_csv(final_df, filename)
                 
-                st.success(f"✅ Hoàn thành! Thu được {len(final_df)} reviews từ {len(keywords_list)} từ khóa")
+                st.success(f" Hoàn thành! Thu được {len(final_df)} reviews từ {len(keywords_list)} từ khóa")
                 st.balloons()
             else:
                 st.warning("Không thu được reviews nào.")
@@ -411,7 +411,7 @@ máy tính bảng"""
     if 'products' in st.session_state and st.session_state.products:
         st.write("---")
         
-        st.header("🚀 Auto-Crawl")
+        st.header(" Auto-Crawl")
         col_auto, col_config = st.columns([2, 2])
         
         with col_auto:

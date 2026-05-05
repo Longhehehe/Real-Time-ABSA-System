@@ -30,20 +30,20 @@ predictor = None
 async def lifespan(app: FastAPI):
     """Load model on startup using the shared Predictor class"""
     global predictor
-    print(f"🚀 Starting ABSA API...")
+    print(f" Starting ABSA API...")
     
     predictor = PhoBERTPredictor()
                                                             
     success = predictor.load_model()
     
     if success:
-        print("✅ Shared PhoBERT Predictor loaded successfully!")
+        print(" Shared PhoBERT Predictor loaded successfully!")
     else:
-        print("❌ Failed to load Shared PhoBERT Predictor.")
+        print(" Failed to load Shared PhoBERT Predictor.")
     
     yield
     
-    print("🛑 Shutting down ABSA API...")
+    print(" Shutting down ABSA API...")
     predictor = None
 
 app = FastAPI(title="ABSA Prediction API", version="2.1.0", lifespan=lifespan)

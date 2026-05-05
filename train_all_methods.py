@@ -23,7 +23,7 @@ from typing import Dict, List
 import torch
 import torch.nn as nn
 import numpy as np
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, WeightedRandomSampler
 from torch.optim import AdamW
 from transformers import AutoTokenizer, get_linear_schedule_with_warmup
 from sklearn.model_selection import KFold
@@ -52,6 +52,56 @@ from methods import (
 )
 
 NUM_ASPECTS = len(ASPECTS)
+
+class BCEFocalLoss(nn.Module):
+    """
+    Focal Loss for Multi-label classification with Alpha balancing and Label Smoothing.
+    Helps the model focus on hard examples and minority classes.
+    """
+    def __init__(self, gamma=2.0, alpha=None, reduction='mean', label_smoothing=0.0):
+        super().__init__()
+        self.gamma = gamma
+        self.alpha = alpha # Can be a float or a tensor of shape (num_classes,)
+        self.reduction = reduction
+        self.label_smoothing = label_smoothing
+
+    def forward(self, logits, targets, mask=None):
+        # Apply label smoothing
+        if self.label_smoothing > 0:
+            targets = targets * (1 - self.label_smoothing) + 0.5 * self.label_smoothing
+
+        bce_loss = torch.nn.functional.binary_cross_entropy_with_logits(logits, targets, reduction='none')
+        pt = torch.exp(-bce_loss)
+        focal_term = (1 - pt) ** self.gamma
+
+        if self.alpha is not None:
+            # If alpha is a tensor, we need to apply it per-class
+            if torch.is_tensor(self.alpha):
+                # Ensure alpha is on the same device as logits
+                alpha = self.alpha.to(logits.device)
+                # alpha_term: if target > 0.5 use alpha, else use 1-alpha
+                alpha_term = torch.where(targets > 0.5, alpha, 1 - alpha)
+            else:
+                alpha_term = torch.where(targets > 0.5, self.alpha, 1 - self.alpha)
+            focal_loss = alpha_term * focal_term * bce_loss
+        else:
+            focal_loss = focal_term * bce_loss
+
+        if mask is not None:
+            # If mask is (batch, num_aspects), expand to (batch, num_aspects, 3) for sentiment
+            if mask.dim() < targets.dim():
+                mask = mask.unsqueeze(-1)
+            focal_loss = focal_loss * mask
+
+        if self.reduction == 'mean':
+            if mask is not None:
+                # Average only over masked (mentioned) aspects
+                return focal_loss.sum() / (mask.sum() * targets.size(-1) + 1e-9)
+            return focal_loss.mean()
+        elif self.reduction == 'sum':
+            return focal_loss.sum()
+        else:
+            return focal_loss
 
 MODEL_REGISTRY = {
     'logistic_regression': ('ML-Based', LogisticRegressionABSA),
@@ -118,6 +168,10 @@ def train_deep_kfold(
     max_length: int = 256,
     device: str = "cpu",
     is_transformer: bool = False,
+    mention_weight: float = 2.0,
+    sentiment_weight: float = 5.0,
+    label_smoothing: float = 0.1,
+    gamma: float = 2.0,
 ) -> Dict:
     """Train Deep/Transformer model with K-Fold CV."""
     name = model_class.__name__
@@ -137,7 +191,28 @@ def train_deep_kfold(
 
         train_ds = ABSADatasetMultiPolarity(texts[train_idx].tolist(), labels_m[train_idx], labels_s[train_idx], tokenizer, max_length)
         val_ds = ABSADatasetMultiPolarity(texts[val_idx].tolist(), labels_m[val_idx], labels_s[val_idx], tokenizer, max_length)
-        train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True)
+        
+        # Calculate weights for WeightedRandomSampler based on minority aspects
+        train_labels_m = labels_m[train_idx]
+        aspect_counts = train_labels_m.sum(axis=0) + 1e-6 # Tránh chia cho 0
+        aspect_weights = len(train_labels_m) / aspect_counts
+        
+        # Gán trọng số cho từng sample dựa trên aspect hiếm nhất mà nó chứa
+        sample_weights = np.zeros(len(train_labels_m))
+        for i in range(len(train_labels_m)):
+            present = np.where(train_labels_m[i] == 1)[0]
+            if len(present) > 0:
+                sample_weights[i] = aspect_weights[present].max()
+            else:
+                sample_weights[i] = 1.0 # Trọng số cơ bản cho mẫu "Không nhắc đến"
+
+        sampler = WeightedRandomSampler(
+            weights=torch.DoubleTensor(sample_weights),
+            num_samples=len(sample_weights),
+            replacement=True
+        )
+
+        train_loader = DataLoader(train_ds, batch_size=batch_size, sampler=sampler)
         val_loader = DataLoader(val_ds, batch_size=batch_size)
 
         model = model_class(num_aspects=NUM_ASPECTS) if is_transformer else model_class(vocab_size=vocab_size)
@@ -146,8 +221,25 @@ def train_deep_kfold(
         optimizer = AdamW(model.parameters(), lr=learning_rate, weight_decay=0.01)
         total_steps = len(train_loader) * epochs
         scheduler = get_linear_schedule_with_warmup(optimizer, num_warmup_steps=total_steps // 10, num_training_steps=total_steps)
-        crit_m = nn.BCEWithLogitsLoss()
-        crit_s = nn.BCEWithLogitsLoss()
+        
+        # Calculate alpha weights dynamically for this fold to handle class imbalance.
+        # For mention detection:
+        m_pos_counts = torch.tensor(labels_m[train_idx].sum(axis=0))
+        m_total = len(train_idx)
+        # alpha = (total - pos) / total -> gives more weight to positive class if it's rare
+        # But standard alpha is weight for positive class. Let's use: alpha_pos = 1 - (pos/total)
+        alpha_m = 1.0 - (m_pos_counts / m_total).clamp(min=0.05, max=0.95)
+
+        # For sentiment:
+        s_labels = labels_s[train_idx] # (N, 9, 3)
+        s_pos_counts = torch.tensor(s_labels.sum(axis=(0))) # (9, 3)
+        # Only count mentions for the denominator
+        s_mentions = torch.tensor(labels_m[train_idx].sum(axis=0)).unsqueeze(-1).expand(-1, 3)
+        alpha_s = 1.0 - (s_pos_counts / (s_mentions + 1e-6)).clamp(min=0.05, max=0.95)
+
+        # Initialize Focal Loss with dynamic alpha and label smoothing
+        crit_m = BCEFocalLoss(gamma=gamma, alpha=alpha_m, label_smoothing=label_smoothing)
+        crit_s = BCEFocalLoss(gamma=gamma, alpha=alpha_s, label_smoothing=label_smoothing)
 
         epoch_losses = []
         for epoch in range(epochs):
@@ -161,7 +253,16 @@ def train_deep_kfold(
                 ls = batch['labels_s'].to(device)
 
                 logits_m, logits_s = model(ids, mask)
-                loss = crit_m(logits_m, lm) + crit_s(logits_s, ls)
+                
+                # Task weighting: keep mention loss at `mention_weight` (default 2.0).
+                # Use a larger `sentiment_weight` for Transformer models so the
+                # sentiment task receives stronger punishment when incorrect.
+                loss_m = crit_m(logits_m, lm)
+
+                # Masked Sentiment Loss: Only compute sentiment loss for mentioned aspects
+                loss_s = crit_s(logits_s, ls, mask=lm)
+
+                loss = mention_weight * loss_m + sentiment_weight * loss_s
 
                 optimizer.zero_grad()
                 loss.backward()
@@ -270,6 +371,9 @@ def train_selected_models(
     learning_rate: float = 3e-5,
     max_length: int = 256,
     device: str = None,
+    label_smoothing: float = 0.1,
+    gamma: float = 2.0,
+    sentiment_weight: float = 5.0,
 ):
     """Train selected models and produce comparison if >1."""
     if device is None:
@@ -329,6 +433,7 @@ def train_selected_models(
                 model_class, tok, texts_np, labels_m, labels_s, out_dir,
                 n_folds, epochs, batch_size, learning_rate=1e-3,
                 max_length=max_length, device=device, is_transformer=False,
+                label_smoothing=0.0, gamma=gamma, sentiment_weight=sentiment_weight
             )
 
         elif category == 'Transformer':
@@ -348,6 +453,8 @@ def train_selected_models(
                 model_class, tok, texts_np, labels_m, labels_s, out_dir,
                 n_folds, epochs, batch_size, learning_rate=learning_rate,
                 max_length=max_length, device=device, is_transformer=True,
+                mention_weight=2.0, sentiment_weight=sentiment_weight,
+                label_smoothing=label_smoothing, gamma=gamma
             )
 
         display_name = model_key.replace('_', ' ').title()
@@ -411,11 +518,14 @@ if __name__ == "__main__":
     parser.add_argument('--batch_size', type=int, default=16, help='Batch size')
     parser.add_argument('--lr', type=float, default=3e-5, help='Learning rate')
     parser.add_argument('--max_length', type=int, default=256, help='Max sequence length')
+    parser.add_argument('--label_smoothing', type=float, default=0.1, help='Label smoothing for transformers')
+    parser.add_argument('--gamma', type=float, default=2.0, help='Gamma for Focal Loss')
+    parser.add_argument('--sentiment_weight', type=float, default=5.0, help='Weight for sentiment loss')
 
     args = parser.parse_args()
 
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-    data_path = args.data or os.path.join(BASE_DIR, 'data', 'labeled')
+    data_path = args.data or os.path.join(BASE_DIR, 'New database')
 
     if not os.path.exists(data_path):
         print(f" Data not found: {data_path}")
@@ -432,4 +542,7 @@ if __name__ == "__main__":
         batch_size=args.batch_size,
         learning_rate=args.lr,
         max_length=args.max_length,
+        label_smoothing=args.label_smoothing,
+        gamma=args.gamma,
+        sentiment_weight=args.sentiment_weight,
     )

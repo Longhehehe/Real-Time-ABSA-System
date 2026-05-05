@@ -50,11 +50,11 @@ def get_spark_session():
              pass                                                                                   
         
         if spark is None or spark.sparkContext.isStopped:
-            print("⚡ Initializing Spark Session...")
+            print(" Initializing Spark Session...")
             spark = SparkSession.builder                .appName("ABSA_Consumer_Service")                                                        
-        print("⚡ Initializing Spark Session...")
+        print(" Initializing Spark Session...")
         spark = SparkSession.builder            .appName("ABSAConsumer")            .master(SPARK_MASTER)            .config("spark.executor.memory", "2g")            .config("spark.driver.memory", "1g")            .config("spark.sql.execution.arrow.pyspark.enabled", "true")            .getOrCreate()
-        print("⚡ Spark Session Ready")
+        print(" Spark Session Ready")
     return spark
 
 def _preprocess_text_logic(texts):
@@ -175,7 +175,7 @@ def run_spark_prediction(product_id: str, reviews: List[Dict]):
         from pyspark.sql.functions import pandas_udf, col
         from pyspark.sql.types import StringType
         
-        print(f"🚀 Starting Spark job for {len(reviews)} reviews (Product: {product_id})")
+        print(f" Starting Spark job for {len(reviews)} reviews (Product: {product_id})")
         
         spark = get_spark_session()
         
@@ -187,16 +187,16 @@ def run_spark_prediction(product_id: str, reviews: List[Dict]):
             
             if not text:
                 skipped_empty += 1
-                print(f"⚠️ Skipping empty review: id={r.get('review_id', 'N/A')}")
+                print(f" Skipping empty review: id={r.get('review_id', 'N/A')}")
                 continue
                 
             data.append((text, r.get('rating', 0), r.get('review_id', '')))
         
         if skipped_empty > 0:
-            print(f"⚠️ Skipped {skipped_empty} empty reviews out of {len(reviews)}")
+            print(f" Skipped {skipped_empty} empty reviews out of {len(reviews)}")
         
         if not data:
-            print(f"⚠️ No valid reviews to process after filtering!")
+            print(f" No valid reviews to process after filtering!")
             return
             
         df = spark.createDataFrame(data, ["review_text", "rating", "review_id"])
@@ -208,7 +208,7 @@ def run_spark_prediction(product_id: str, reviews: List[Dict]):
         
         predictions = []
         rows = df_result.collect()
-        print(f"📊 Collected {len(rows)} results from Spark")
+        print(f" Collected {len(rows)} results from Spark")
         
         for row in rows:
             predictions.append({
@@ -221,10 +221,10 @@ def run_spark_prediction(product_id: str, reviews: List[Dict]):
             })
         
         save_predictions(product_id, predictions)
-        print(f"✅ Prediction processing complete for {len(predictions)} reviews")
+        print(f" Prediction processing complete for {len(predictions)} reviews")
         
     except Exception as e:
-        print(f"❌ Spark job failed: {e}")
+        print(f" Spark job failed: {e}")
         import traceback
         traceback.print_exc()
 
@@ -245,7 +245,7 @@ def save_predictions(product_id: str, new_predictions: List[Dict]):
                 break           
             except json.JSONDecodeError:
                 if i == max_read_retries - 1:
-                    print(f"⚠️ Could not read existing file {file_path} after {max_read_retries} attempts. Starting fresh.")
+                    print(f" Could not read existing file {file_path} after {max_read_retries} attempts. Starting fresh.")
                     existing_data = []
                 else:
                     time.sleep(0.1)
@@ -273,19 +273,19 @@ def save_predictions(product_id: str, new_predictions: List[Dict]):
                 try:
                     os.chmod(file_path, 0o666)                                                 
                 except Exception as ex:
-                    print(f"⚠️ Could not chmod {file_path}: {ex}")
+                    print(f" Could not chmod {file_path}: {ex}")
                     
-                print(f"💾 Saved {len(existing_data)} predictions (Added {added_count} new) to {file_path}")
+                print(f" Saved {len(existing_data)} predictions (Added {added_count} new) to {file_path}")
                 break
             except OSError as e:
                                                                                                                                 
                 if i == max_rename_retries - 1:
                     raise e
-                print(f"⚠️ Rename failed (process lock?), retrying {i+1}/{max_rename_retries}...")
+                print(f" Rename failed (process lock?), retrying {i+1}/{max_rename_retries}...")
                 time.sleep(0.5)
         
     except Exception as e:
-        print(f"❌ Failed to save predictions atomically: {e}")
+        print(f" Failed to save predictions atomically: {e}")
         if os.path.exists(temp_path):
             os.remove(temp_path)
 
@@ -312,12 +312,12 @@ def create_consumer():
                 consumer_timeout_ms=BATCH_TIMEOUT * 1000
             )
         except NoBrokersAvailable:
-            print("⏳ Kafka not ready, retrying in 5s...")
+            print(" Kafka not ready, retrying in 5s...")
             time.sleep(5)
 
 def run_service():
     """Main consumer loop with batching."""
-    print(f"🚀 Starting Kafka Consumer (Spark Pandas UDF mode)")
+    print(f" Starting Kafka Consumer (Spark Pandas UDF mode)")
     print(f"   Kafka: {KAFKA_BOOTSTRAP_SERVERS}")
     print(f"   Spark: {SPARK_MASTER}")
     print(f"   Batch Size: {BATCH_SIZE}")
@@ -327,7 +327,7 @@ def run_service():
     while True:
         try:
             consumer = create_consumer()
-            print(f"✅ Subscribed to topic: {INPUT_TOPIC}")
+            print(f" Subscribed to topic: {INPUT_TOPIC}")
             
             for message in consumer:
                 data = message.value
@@ -346,7 +346,7 @@ def run_service():
                     )
                 
                 if batch_ready:
-                    print(f"📦 Batch ready for {product_id} ({len(review_buffer[product_id])} reviews)")
+                    print(f" Batch ready for {product_id} ({len(review_buffer[product_id])} reviews)")
                     process_batch(product_id)
                     batch_start_time.pop(product_id, None)
                 
@@ -359,21 +359,21 @@ def run_service():
                                 products_to_process.append(pid)
                 
                 for pid in products_to_process:
-                    print(f"📦 Timeout triggered for {pid} ({len(review_buffer.get(pid, []))} reviews)")
+                    print(f" Timeout triggered for {pid} ({len(review_buffer.get(pid, []))} reviews)")
                     process_batch(pid)
                     batch_start_time.pop(pid, None)
             
-            print(f"⏰ Consumer poll timeout. Checking for remaining batches...")
+            print(f" Consumer poll timeout. Checking for remaining batches...")
             with buffer_lock:
                 remaining_products = [pid for pid in list(review_buffer.keys()) if review_buffer[pid]]
             
             for product_id in remaining_products:
-                print(f"📦 Processing remaining batch for {product_id} ({len(review_buffer.get(product_id, []))} reviews)")
+                print(f" Processing remaining batch for {product_id} ({len(review_buffer.get(product_id, []))} reviews)")
                 process_batch(product_id)
                 batch_start_time.pop(product_id, None)
                     
         except Exception as e:
-            print(f"❌ Consumer error: {e}")
+            print(f" Consumer error: {e}")
             import traceback
             traceback.print_exc()
             time.sleep(5)
