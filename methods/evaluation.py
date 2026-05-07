@@ -91,7 +91,30 @@ def compute_all_metrics(
                    'sentiment_f1_samples', 'sentiment_auc_roc', 'sentiment_auc_pr']:
             metrics[k] = 0.0
 
-    metrics['combined_f1'] = (metrics['mention_f1_macro'] + metrics['sentiment_f1_samples']) / 2
+    # ── Combined Score (Comprehensive) ──────────────────────────────────────
+    # Weights reflect task importance and metric quality:
+    #   Mention Detection  (40%): F1-macro (20%) + AUC-ROC (10%) + AUC-PR (10%)
+    #   Sentiment          (60%): F1-samples (20%) + F1-macro (15%) + AUC-ROC (15%) + AUC-PR (10%)
+    # AUC metrics are clipped to 0 when not available (e.g. single-class folds).
+    m_f1_macro   = metrics['mention_f1_macro']
+    m_auc_roc    = metrics['mention_auc_roc']
+    m_auc_pr     = metrics['mention_auc_pr']
+    s_f1_samples = metrics['sentiment_f1_samples']
+    s_f1_macro   = metrics['sentiment_f1_macro']
+    s_auc_roc    = metrics['sentiment_auc_roc']
+    s_auc_pr     = metrics['sentiment_auc_pr']
+
+    metrics['combined_score'] = (
+        0.20 * m_f1_macro   +
+        0.10 * m_auc_roc    +
+        0.10 * m_auc_pr     +
+        0.20 * s_f1_samples +
+        0.15 * s_f1_macro   +
+        0.15 * s_auc_roc    +
+        0.10 * s_auc_pr
+    )
+    # Keep backward-compatible key pointing to the comprehensive score
+    metrics['combined_f1'] = metrics['combined_score']
 
     return metrics
 
@@ -123,7 +146,7 @@ def print_fold_summary(all_fold_metrics: List[Dict], model_name: str):
             ('AUC-PR', 'sentiment_auc_pr'),
         ],
         'Combined': [
-            ('Combined F1', 'combined_f1'),
+            ('Combined Score (*)', 'combined_score'),
         ],
     }
 
@@ -134,11 +157,14 @@ def print_fold_summary(all_fold_metrics: List[Dict], model_name: str):
         print("  " + "-" * (22 + 10 * n + 20))
 
         for display_name, key in keys:
-            vals = [m[key] for m in all_fold_metrics]
+            vals = [m.get(key, 0.0) for m in all_fold_metrics]
             avg = np.mean(vals)
             std = np.std(vals)
             row = f"  {display_name:<22}" + "".join(f"{v:>10.4f}" for v in vals) + f"{avg:>10.4f}{std:>10.5f}"
             print(row)
+
+    print(f"\n  (*) Combined Score = 0.20×Mention-F1-macro + 0.10×Mention-AUC-ROC + 0.10×Mention-AUC-PR")
+    print(f"                     + 0.20×Sentiment-F1-samples + 0.15×Sentiment-F1-macro + 0.15×Sentiment-AUC-ROC + 0.10×Sentiment-AUC-PR")
 
 def build_comparison_table(all_results: Dict[str, Dict]):
     """Print final comparison table across all models."""

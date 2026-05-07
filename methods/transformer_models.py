@@ -37,9 +37,9 @@ class PhoBERTForABSAMultiPolarity(nn.Module):
 class XLMRoBERTaForABSA(nn.Module):
     """XLM-RoBERTa model for multi-task multi-polarity ABSA."""
 
-    def __init__(self, num_aspects: int = NUM_ASPECTS, dropout: float = 0.3):
+    def __init__(self, num_aspects: int = NUM_ASPECTS, dropout: float = 0.3, model_name: str = "xlm-roberta-base"):
         super().__init__()
-        self.backbone = AutoModel.from_pretrained("xlm-roberta-base")
+        self.backbone = AutoModel.from_pretrained(model_name)
         hidden_size = self.backbone.config.hidden_size       
         self.dropout = nn.Dropout(dropout)
         self.head_m = nn.Linear(hidden_size, num_aspects)
