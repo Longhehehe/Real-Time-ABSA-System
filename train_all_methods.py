@@ -37,6 +37,7 @@ from training_plots import (
     save_loss_plot,
     save_metric_bars,
     save_models_metrics_comparison,
+    save_fold_scores_plot,
 )
 
 from absa_dataset import (
@@ -191,8 +192,13 @@ def train_ml_kfold(
     labels_s: np.ndarray,
     output_dir: str,
     n_folds: int = 5,
+    threshold_min: float = 0.1,
+    threshold_max: float = 0.9,
+    threshold_steps: int = 17,
 ) -> Dict:
-    """Train ML model with K-Fold CV."""
+    """Train ML model with K-Fold CV + Dynamic Threshold Tuning.
+    Note: Early Stopping does not apply to ML models (no epochs).
+    """
     name = model_class.__name__
     print(f"\n{'='*70}")
     print(f"  Training {name} with {n_folds}-Fold CV")
@@ -201,9 +207,11 @@ def train_ml_kfold(
     tfidf = TfidfVectorizer(max_features=10000, ngram_range=(1, 2), sublinear_tf=True)
     X = tfidf.fit_transform(texts)
 
+    grid  = _threshold_grid(threshold_min, threshold_max, threshold_steps)
     kfold = KFold(n_splits=n_folds, shuffle=True, random_state=42)
     all_fold_metrics = []
-    best_fold, best_f1 = 0, 0
+    best_fold, best_f1 = 0, -1.0
+    best_th_m, best_th_s = None, None
 
     for fold, (train_idx, val_idx) in enumerate(kfold.split(X)):
         print(f"\n  FOLD {fold+1}/{n_folds} — Train: {len(train_idx)}, Val: {len(val_idx)}")
@@ -212,16 +220,50 @@ def train_ml_kfold(
         model.tfidf = tfidf
         model.fit(X[train_idx], labels_m[train_idx], labels_s[train_idx])
 
-        pred_m, pred_s, prob_m, prob_s = model.predict(X[val_idx])
-        fm = compute_all_metrics(labels_m[val_idx], pred_m, labels_s[val_idx], pred_s, prob_m, prob_s)
+        # Get raw probabilities from ML model
+        _, _, prob_m, prob_s = model.predict(X[val_idx])
+        true_m = labels_m[val_idx]
+        true_s = labels_s[val_idx]
+
+        # Dynamic threshold tuning on val set
+        th_m = _tune_thresholds_m(prob_m, true_m, grid)
+        th_s = _tune_thresholds_s(prob_s, true_s, true_m, grid)
+        pred_m, pred_s = _apply_thresholds(prob_m, prob_s, th_m, th_s)
+
+        fm = compute_all_metrics(true_m, pred_m, true_s, pred_s, prob_m, prob_s)
         all_fold_metrics.append(fm)
 
-        print(f"    F1-macro(M): {fm['mention_f1_macro']:.4f} | F1-samples(S): {fm['sentiment_f1_samples']:.4f} | Combined: {fm['combined_f1']:.4f}")
+        score = fm['combined_score']
+        print(f"    M-F1={fm['mention_f1_macro']:.4f} | S-F1s={fm['sentiment_f1_samples']:.4f} "
+              f"| M-AUC={fm['mention_auc_roc']:.4f} | S-AUC={fm['sentiment_auc_roc']:.4f} "
+              f"| Combined={score:.4f}")
 
-        if fm['combined_f1'] > best_f1:
-            best_f1 = fm['combined_f1']
+        if score > best_f1:
+            best_f1   = score
             best_fold = fold + 1
+            best_th_m = th_m
+            best_th_s = th_s
             model.save(output_dir)
+            print(f"      ✓ New best (fold {fold+1}, score={score:.4f})")
+
+    # Persist best thresholds alongside the saved ML model
+    os.makedirs(output_dir, exist_ok=True)
+    if best_th_m is not None:
+        import json as _json
+        th_path = os.path.join(output_dir, 'thresholds.json')
+        _json.dump(
+            {'thresholds_m': best_th_m.tolist(), 'thresholds_s': best_th_s.tolist()},
+            open(th_path, 'w')
+        )
+        print(f"  Thresholds saved → {th_path}")
+
+    # Save per-fold scores chart (substitute for training loss, since ML has no epochs)
+    save_fold_scores_plot(
+        all_fold_metrics,
+        output_dir,
+        filename='fold_scores.png',
+        title=f"{name} — Per-Fold Validation Scores ({n_folds}-Fold CV)",
+    )
 
     print_fold_summary(all_fold_metrics, name)
     return _save_results(name, all_fold_metrics, best_fold, best_f1, n_folds, output_dir)
@@ -534,7 +576,11 @@ def train_selected_models(
         out_dir = os.path.join(base_output_dir, f'{model_key}_absa')
 
         if category == 'ML-Based':
-            result = train_ml_kfold(model_class, texts, labels_m, labels_s, out_dir, n_folds)
+            result = train_ml_kfold(
+                model_class, texts, labels_m, labels_s, out_dir, n_folds,
+                threshold_min=threshold_min, threshold_max=threshold_max,
+                threshold_steps=threshold_steps,
+            )
 
         elif category == 'Deep-Based':
             if 'phobert' not in tokenizers_cache:

@@ -1,0 +1,35 @@
+# =============================================================================
+# ABSA Training & Evaluation Requirements
+# Covers: train_all_methods.py, train_colab_best.py, absa_dataset.py,
+#         methods/, training_plots.py, scripts/, predict_example.py
+#
+# Install: pip install -r requirements_training.txt
+# GPU note: replace the torch line below with the correct CUDA build from
+#           https://pytorch.org/get-started/locally/
+# =============================================================================
+
+# ── Core Deep Learning ────────────────────────────────────────────────────────
+torch>=2.1.0                    # Neural networks, CUDA AMP, DataLoader
+# For CUDA 12.x:
+# pip install torch>=2.1.0 --index-url https://download.pytorch.org/whl/cu121
+
+# ── Transformer Models (PhoBERT, XLM-RoBERTa) ────────────────────────────────
+transformers>=4.38.0            # AutoModel, AutoTokenizer, scheduler helpers
+sentencepiece>=0.1.99           # PhoBERT tokenizer backend
+protobuf>=3.20.0                # Required by sentencepiece on some platforms
+accelerate>=0.27.0              # (optional) Gradient checkpointing helper
+
+# ── Scientific Computing ──────────────────────────────────────────────────────
+numpy>=1.24.0
+pandas>=2.0.0
+openpyxl>=3.1.0                 # pandas Excel read/write (.xlsx)
+
+# ── Machine Learning ──────────────────────────────────────────────────────────
+scikit-learn>=1.3.0             # KFold, TF-IDF, LR, NB, metrics (F1, AUC, etc.)
+
+# ── Training Utilities ────────────────────────────────────────────────────────
+tqdm>=4.66.0                    # Progress bars during training
+
+# ── Visualization ─────────────────────────────────────────────────────────────
+matplotlib>=3.7.0               # Loss plots, metric bar charts
+seaborn>=0.13.0                 # Confusion matrix heatmaps (evaluate_true_test.py)

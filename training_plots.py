@@ -160,3 +160,58 @@ def save_models_metrics_comparison(
 
     print(f"Saved model comparison chart to: {plot_path}")
     return plot_path
+
+
+def save_fold_scores_plot(
+    fold_metrics: List[Dict[str, float]],
+    output_dir: str,
+    filename: str = "fold_scores.png",
+    title: str = "Per-Fold Validation Scores",
+) -> Optional[str]:
+    """Plot key metrics per fold for ML models (substitute for training loss chart).
+
+    Shows Combined Score, Mention F1-macro, Sentiment F1-samples, and AUC-ROC
+    for each K-Fold split so training quality can still be assessed visually.
+    """
+    if not fold_metrics:
+        print("No fold metrics found, skipping fold scores plot.")
+        return None
+
+    plt = _get_matplotlib()
+    if plt is None:
+        return None
+
+    import numpy as np
+
+    metric_cfg = [
+        ("Combined Score",    "combined_score",         "#2196F3"),
+        ("Mention F1-macro",  "mention_f1_macro",       "#4CAF50"),
+        ("Sentiment F1-samp", "sentiment_f1_samples",   "#FF9800"),
+        ("Mention AUC-ROC",   "mention_auc_roc",        "#9C27B0"),
+        ("Sentiment AUC-ROC", "sentiment_auc_roc",      "#F44336"),
+    ]
+
+    n_folds = len(fold_metrics)
+    x = np.arange(1, n_folds + 1)
+
+    os.makedirs(output_dir, exist_ok=True)
+    plot_path = os.path.join(output_dir, filename)
+
+    plt.figure(figsize=(max(8, n_folds * 1.5), 6))
+    for label, key, color in metric_cfg:
+        values = [m.get(key, 0.0) for m in fold_metrics]
+        plt.plot(x, values, marker="o", linewidth=2, label=label, color=color)
+
+    plt.title(title)
+    plt.xlabel("Fold")
+    plt.ylabel("Score")
+    plt.xticks(x, [f"Fold {i}" for i in x])
+    plt.ylim(0, 1.05)
+    plt.legend(loc="lower right", fontsize=8)
+    plt.grid(True, alpha=0.3)
+    plt.tight_layout()
+    plt.savefig(plot_path, dpi=150)
+    plt.close()
+
+    print(f"Saved fold scores plot to: {plot_path}")
+    return plot_path
