@@ -28,6 +28,7 @@ from torch.optim import AdamW
 from transformers import AutoTokenizer, get_linear_schedule_with_warmup
 from sklearn.model_selection import KFold
 from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics import f1_score
 from tqdm import tqdm
 
 warnings.filterwarnings('ignore')
@@ -103,6 +104,77 @@ class BCEFocalLoss(nn.Module):
         else:
             return focal_loss
 
+# ── Dynamic Threshold Tuning Helpers ────────────────────────────────────────
+
+def _threshold_grid(min_t: float = 0.1, max_t: float = 0.9, steps: int = 17) -> np.ndarray:
+    return np.linspace(min_t, max_t, steps)
+
+
+def _collect_probs(model, loader, device: str):
+    """Run model on loader, return true labels and predicted probabilities."""
+    model.eval()
+    tm, ts, pm, ps = [], [], [], []
+    with torch.no_grad():
+        for batch in loader:
+            ids  = batch['input_ids'].to(device)
+            mask = batch['attention_mask'].to(device)
+            logits_m, logits_s = model(ids, mask)
+            pm.append(torch.sigmoid(logits_m).cpu().numpy())
+            ps.append(torch.sigmoid(logits_s).cpu().numpy())
+            tm.append(batch['labels_m'].numpy())
+            ts.append(batch['labels_s'].numpy())
+    return (
+        np.vstack(tm),
+        np.concatenate(ts, axis=0),
+        np.vstack(pm),
+        np.concatenate(ps, axis=0),
+    )
+
+
+def _tune_thresholds_m(prob_m: np.ndarray, true_m: np.ndarray, grid: np.ndarray) -> np.ndarray:
+    """Per-aspect threshold search on mention head."""
+    best = np.full(true_m.shape[1], 0.5, dtype=np.float32)
+    for a in range(true_m.shape[1]):
+        y_true = true_m[:, a]
+        if y_true.sum() == 0:
+            continue
+        best_f1 = -1.0
+        for t in grid:
+            y_pred = (prob_m[:, a] >= t).astype(int)
+            score  = f1_score(y_true, y_pred, zero_division=0)
+            if score > best_f1:
+                best_f1, best[a] = score, t
+    return best
+
+
+def _tune_thresholds_s(prob_s: np.ndarray, true_s: np.ndarray,
+                       true_m: np.ndarray, grid: np.ndarray) -> np.ndarray:
+    """Per-aspect per-class threshold search on sentiment head."""
+    best = np.full((true_s.shape[1], true_s.shape[2]), 0.5, dtype=np.float32)
+    for a in range(true_s.shape[1]):
+        mask = true_m[:, a] == 1
+        if mask.sum() == 0:
+            continue
+        for c in range(true_s.shape[2]):
+            y_true   = true_s[mask, a, c]
+            best_f1  = -1.0
+            for t in grid:
+                y_pred = (prob_s[mask, a, c] >= t).astype(int)
+                score  = f1_score(y_true, y_pred, zero_division=0)
+                if score > best_f1:
+                    best_f1, best[a, c] = score, t
+    return best
+
+
+def _apply_thresholds(prob_m, prob_s, th_m, th_s, enforce_neu: bool = True):
+    pred_m = (prob_m >= th_m.reshape(1, -1)).astype(np.float32)
+    pred_s = (prob_s >= th_s.reshape(1, th_s.shape[0], th_s.shape[1])).astype(np.float32)
+    if enforce_neu:
+        no_sent = (pred_m == 1) & (pred_s.sum(axis=2) == 0)
+        pred_s[no_sent, 2] = 1.0
+    return pred_m, pred_s
+
+
 MODEL_REGISTRY = {
     'logistic_regression': ('ML-Based', LogisticRegressionABSA),
     'naive_bayes':         ('ML-Based', NaiveBayesABSA),
@@ -172,6 +244,10 @@ def train_deep_kfold(
     sentiment_weight: float = 5.0,
     label_smoothing: float = 0.1,
     gamma: float = 2.0,
+    patience: int = 3,
+    threshold_min: float = 0.1,
+    threshold_max: float = 0.9,
+    threshold_steps: int = 17,
 ) -> Dict:
     """Train Deep/Transformer model with K-Fold CV."""
     name = model_class.__name__
@@ -182,8 +258,10 @@ def train_deep_kfold(
     vocab_size = tokenizer.vocab_size
     kfold = KFold(n_splits=n_folds, shuffle=True, random_state=42)
     all_fold_metrics = []
-    best_fold, best_f1 = 0, 0
+    best_fold, best_f1 = 0, -1.0
     best_state = None
+    best_th_m  = None
+    best_th_s  = None
     fold_epoch_losses = []
 
     for fold, (train_idx, val_idx) in enumerate(kfold.split(texts)):
@@ -241,28 +319,30 @@ def train_deep_kfold(
         crit_m = BCEFocalLoss(gamma=gamma, alpha=alpha_m, label_smoothing=label_smoothing)
         crit_s = BCEFocalLoss(gamma=gamma, alpha=alpha_s, label_smoothing=label_smoothing)
 
-        epoch_losses = []
+        grid = _threshold_grid(threshold_min, threshold_max, threshold_steps)
+
+        # ── Per-epoch training + validation + early stopping ─────────────────
+        epoch_losses    = []
+        epochs_no_improve = 0
+        fold_best_f1    = -1.0
+        fold_best_state = None
+        fold_best_th_m  = None
+        fold_best_th_s  = None
+
         for epoch in range(epochs):
             model.train()
             train_loss = 0.0
-            pbar = tqdm(train_loader, desc=f"Fold {fold+1} Ep {epoch+1}", leave=False)
+            pbar = tqdm(train_loader, desc=f"Fold {fold+1} Ep {epoch+1}/{epochs}", leave=False)
             for batch in pbar:
-                ids = batch['input_ids'].to(device)
+                ids  = batch['input_ids'].to(device)
                 mask = batch['attention_mask'].to(device)
-                lm = batch['labels_m'].to(device)
-                ls = batch['labels_s'].to(device)
+                lm   = batch['labels_m'].to(device)
+                ls   = batch['labels_s'].to(device)
 
                 logits_m, logits_s = model(ids, mask)
-                
-                # Task weighting: keep mention loss at `mention_weight` (default 2.0).
-                # Use a larger `sentiment_weight` for Transformer models so the
-                # sentiment task receives stronger punishment when incorrect.
                 loss_m = crit_m(logits_m, lm)
-
-                # Masked Sentiment Loss: Only compute sentiment loss for mentioned aspects
                 loss_s = crit_s(logits_s, ls, mask=lm)
-
-                loss = mention_weight * loss_m + sentiment_weight * loss_s
+                loss   = mention_weight * loss_m + sentiment_weight * loss_s
 
                 optimizer.zero_grad()
                 loss.backward()
@@ -275,44 +355,70 @@ def train_deep_kfold(
             avg_loss = train_loss / max(len(train_loader), 1)
             epoch_losses.append(avg_loss)
 
+            # ── Validation with Dynamic Threshold Tuning ─────────────────────
+            true_m, true_s, prob_m, prob_s = _collect_probs(model, val_loader, device)
+            th_m  = _tune_thresholds_m(prob_m, true_m, grid)
+            th_s  = _tune_thresholds_s(prob_s, true_s, true_m, grid)
+            pred_m, pred_s = _apply_thresholds(prob_m, prob_s, th_m, th_s)
+
+            fm = compute_all_metrics(true_m, pred_m, true_s, pred_s, prob_m, prob_s)
+            score = fm['combined_score']
+
+            print(f"    Fold {fold+1} Ep {epoch+1}: loss={avg_loss:.4f} | "
+                  f"M-F1={fm['mention_f1_macro']:.4f} | "
+                  f"S-F1s={fm['sentiment_f1_samples']:.4f} | "
+                  f"S-AUC={fm['sentiment_auc_roc']:.4f} | "
+                  f"Combined={score:.4f}")
+
+            if score > fold_best_f1:
+                fold_best_f1    = score
+                fold_best_state = {k: v.cpu().clone() for k, v in model.state_dict().items()}
+                fold_best_th_m  = th_m.copy()
+                fold_best_th_s  = th_s.copy()
+                epochs_no_improve = 0
+                print(f"      ✓ New fold best (score={score:.4f})")
+            else:
+                epochs_no_improve += 1
+                print(f"      No improve {epochs_no_improve}/{patience}")
+                if epochs_no_improve >= patience:
+                    print(f"      Early stopping at epoch {epoch+1}.")
+                    break
+
+        # Use best epoch metrics for this fold
+        fm = compute_all_metrics(
+            *_collect_probs(
+                model if fold_best_state is None else
+                model.load_state_dict(fold_best_state) or model,
+                val_loader, device
+            )
+        ) if fold_best_state is not None else fm
+
+        # Re-evaluate with best state to get final fold metrics
+        if fold_best_state is not None:
+            model.load_state_dict(fold_best_state)
+        true_m, true_s, prob_m, prob_s = _collect_probs(model, val_loader, device)
+        th_m = fold_best_th_m if fold_best_th_m is not None else _tune_thresholds_m(prob_m, true_m, grid)
+        th_s = fold_best_th_s if fold_best_th_s is not None else _tune_thresholds_s(prob_s, true_s, true_m, grid)
+        pred_m, pred_s = _apply_thresholds(prob_m, prob_s, th_m, th_s)
+        fm = compute_all_metrics(true_m, pred_m, true_s, pred_s, prob_m, prob_s)
+
+        all_fold_metrics.append(fm)
         if epoch_losses:
             fold_epoch_losses.append(epoch_losses)
 
-        model.eval()
-        pm, tm, ps, ts, prm, prs = [], [], [], [], [], []
-        with torch.no_grad():
-            for batch in val_loader:
-                ids = batch['input_ids'].to(device)
-                mask = batch['attention_mask'].to(device)
-                logits_m, logits_s = model(ids, mask)
+        print(f"    ── Fold {fold+1} Final: Combined={fm['combined_score']:.4f} | "
+              f"M-F1={fm['mention_f1_macro']:.4f} | S-F1s={fm['sentiment_f1_samples']:.4f}")
 
-                p_m = torch.sigmoid(logits_m).cpu().numpy()
-                p_s = torch.sigmoid(logits_s).cpu().numpy()
-
-                pm.append((p_m > 0.5).astype(float))
-                tm.append(batch['labels_m'].numpy())
-                ps.append((p_s > 0.5).astype(float))
-                ts.append(batch['labels_s'].numpy())
-                prm.append(p_m)
-                prs.append(p_s)
-
-        fm = compute_all_metrics(
-            np.vstack(tm), np.vstack(pm),
-            np.concatenate(ts), np.concatenate(ps),
-            np.vstack(prm), np.concatenate(prs),
-        )
-        all_fold_metrics.append(fm)
-
-        print(f"    F1-macro(M): {fm['mention_f1_macro']:.4f} | F1-samples(S): {fm['sentiment_f1_samples']:.4f} | Combined: {fm['combined_f1']:.4f}")
-
-        if fm['combined_f1'] > best_f1:
-            best_f1 = fm['combined_f1']
-            best_fold = fold + 1
-            best_state = model.state_dict().copy()
-            print(f"     New best! (Fold {fold+1})")
+        if fm['combined_score'] > best_f1:
+            best_f1    = fm['combined_score']
+            best_fold  = fold + 1
+            best_state = fold_best_state
+            best_th_m  = th_m
+            best_th_s  = th_s
+            print(f"     ★ Global best updated! (Fold {fold+1}, score={best_f1:.4f})")
 
         del model
-        if device == "cuda":
+        if device == 'cuda':
             torch.cuda.empty_cache()
 
     print_fold_summary(all_fold_metrics, name)
@@ -323,9 +429,11 @@ def train_deep_kfold(
             'model_state_dict': best_state,
             'model_class': name,
             'aspects': ASPECTS,
-            'best_f1': best_f1,
+            'best_combined_score': best_f1,
             'best_fold': best_fold,
             'multi_polarity': True,
+            'thresholds_m': best_th_m.tolist() if best_th_m is not None else None,
+            'thresholds_s': best_th_s.tolist() if best_th_s is not None else None,
         }, os.path.join(output_dir, f'{name.lower()}_absa.pt'))
 
     if fold_epoch_losses:
@@ -374,6 +482,10 @@ def train_selected_models(
     label_smoothing: float = 0.1,
     gamma: float = 2.0,
     sentiment_weight: float = 5.0,
+    patience: int = 3,
+    threshold_min: float = 0.1,
+    threshold_max: float = 0.9,
+    threshold_steps: int = 17,
 ):
     """Train selected models and produce comparison if >1."""
     if device is None:
@@ -433,7 +545,9 @@ def train_selected_models(
                 model_class, tok, texts_np, labels_m, labels_s, out_dir,
                 n_folds, epochs, batch_size, learning_rate=1e-3,
                 max_length=max_length, device=device, is_transformer=False,
-                label_smoothing=0.0, gamma=gamma, sentiment_weight=sentiment_weight
+                label_smoothing=0.0, gamma=gamma, sentiment_weight=sentiment_weight,
+                patience=patience, threshold_min=threshold_min,
+                threshold_max=threshold_max, threshold_steps=threshold_steps,
             )
 
         elif category == 'Transformer':
@@ -454,7 +568,9 @@ def train_selected_models(
                 n_folds, epochs, batch_size, learning_rate=learning_rate,
                 max_length=max_length, device=device, is_transformer=True,
                 mention_weight=2.0, sentiment_weight=sentiment_weight,
-                label_smoothing=label_smoothing, gamma=gamma
+                label_smoothing=label_smoothing, gamma=gamma,
+                patience=patience, threshold_min=threshold_min,
+                threshold_max=threshold_max, threshold_steps=threshold_steps,
             )
 
         display_name = model_key.replace('_', ' ').title()
@@ -462,10 +578,12 @@ def train_selected_models(
 
         avg = result.get('avg_metrics', {})
         metric_order = [
-            ('Mention F1', 'mention_f1_macro'),
-            ('Sentiment F1', 'sentiment_f1_macro'),
-            ('Sentiment F1 (samples)', 'sentiment_f1_samples'),
-            ('Combined F1', 'combined_f1'),
+            ('Mention F1',           'mention_f1_macro'),
+            ('Sentiment F1',         'sentiment_f1_macro'),
+            ('Sentiment F1 (samps)', 'sentiment_f1_samples'),
+            ('Mention AUC-ROC',      'mention_auc_roc'),
+            ('Sentiment AUC-ROC',    'sentiment_auc_roc'),
+            ('Combined Score',       'combined_score'),
         ]
         metrics = {label: float(avg.get(key, 0.0)) for label, key in metric_order}
         save_metric_bars(
@@ -521,6 +639,10 @@ if __name__ == "__main__":
     parser.add_argument('--label_smoothing', type=float, default=0.1, help='Label smoothing for transformers')
     parser.add_argument('--gamma', type=float, default=2.0, help='Gamma for Focal Loss')
     parser.add_argument('--sentiment_weight', type=float, default=5.0, help='Weight for sentiment loss')
+    parser.add_argument('--patience', type=int, default=3, help='Early stopping patience (epochs without improvement)')
+    parser.add_argument('--threshold_min', type=float, default=0.1, help='Min threshold for grid search')
+    parser.add_argument('--threshold_max', type=float, default=0.9, help='Max threshold for grid search')
+    parser.add_argument('--threshold_steps', type=int, default=17, help='Number of steps in threshold grid')
 
     args = parser.parse_args()
 
@@ -545,4 +667,8 @@ if __name__ == "__main__":
         label_smoothing=args.label_smoothing,
         gamma=args.gamma,
         sentiment_weight=args.sentiment_weight,
+        patience=args.patience,
+        threshold_min=args.threshold_min,
+        threshold_max=args.threshold_max,
+        threshold_steps=args.threshold_steps,
     )
