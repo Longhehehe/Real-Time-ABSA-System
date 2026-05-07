@@ -426,14 +426,7 @@ def train_deep_kfold(
                     print(f"      Early stopping at epoch {epoch+1}.")
                     break
 
-        # Use best epoch metrics for this fold
-        fm = compute_all_metrics(
-            *_collect_probs(
-                model if fold_best_state is None else
-                model.load_state_dict(fold_best_state) or model,
-                val_loader, device
-            )
-        ) if fold_best_state is not None else fm
+
 
         # Re-evaluate with best state to get final fold metrics
         if fold_best_state is not None:
