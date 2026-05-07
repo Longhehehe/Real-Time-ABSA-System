@@ -432,7 +432,7 @@ class XLMPredictor(PhoBERTPredictor):
     
     def load_model(self, model_path: Optional[str] = None) -> bool:
         if model_path is None:
-            model_path = os.path.join(BASE_DIR, 'models', 'xlm_roberta_absa', 'xlm_robertaforabsa_absa.pt')
+            model_path = os.path.join(BASE_DIR, 'models', 'xlm_roberta_absa', 'xlm_roberta_large_absa.pt')
             if not os.path.exists(model_path):
                 # Try fallback
                 model_path = os.path.join(BASE_DIR, 'models', 'xlm_roberta_absa', 'xlm_roberta_absa.pt')
@@ -457,12 +457,27 @@ class XLMPredictor(PhoBERTPredictor):
                     tokenizer_name = checkpoint['tokenizer_name']
                 self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
             
-            self.model = XLMRoBERTaForABSA(num_aspects=len(ASPECTS))
+            # Determine correct model name based on checkpoint file name or tokenizer
+            model_name = "xlm-roberta-large" if "large" in model_path.lower() else tokenizer_name
+            self.model = XLMRoBERTaForABSA(num_aspects=len(ASPECTS), model_name=model_name)
             
-            if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
-                self.model.load_state_dict(checkpoint['model_state_dict'])
-            else:
-                self.model.load_state_dict(checkpoint)
+            state_dict = checkpoint['model_state_dict'] if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint else checkpoint
+            
+            # Fix state dict key mismatches if they exist (from custom heads)
+            fixed_state_dict = {}
+            for k, v in state_dict.items():
+                if k == "head_m.linear.weight":
+                    fixed_state_dict["head_m.weight"] = v
+                elif k == "head_m.linear.bias":
+                    fixed_state_dict["head_m.bias"] = v
+                elif k == "head_s.linear.weight":
+                    fixed_state_dict["head_s.weight"] = v
+                elif k == "head_s.linear.bias":
+                    fixed_state_dict["head_s.bias"] = v
+                else:
+                    fixed_state_dict[k] = v
+                    
+            self.model.load_state_dict(fixed_state_dict)
             
             self.model = self.model.to(self.device)
             self.model.eval()
