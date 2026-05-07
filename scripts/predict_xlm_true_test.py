@@ -22,7 +22,7 @@ def main():
     predictor = XLMPredictor()
     
     # Try to find the correct model path
-    model_path = os.path.join(ROOT, 'models', 'xlm_roberta_absa', 'xlmrobertaforabsa_absa.pt')
+    model_path = os.path.join(ROOT, 'models', 'xlm_roberta_absa', 'xlm_roberta_large_absa.pt')
     if not os.path.exists(model_path):
         # Try alternate names if not found
         model_path = os.path.join(ROOT, 'models', 'xlm_roberta_absa', 'xlm_roberta_absa.pt')
