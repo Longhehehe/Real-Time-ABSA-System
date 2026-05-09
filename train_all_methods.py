@@ -459,6 +459,7 @@ def train_deep_kfold(
     print_fold_summary(all_fold_metrics, name)
 
     os.makedirs(output_dir, exist_ok=True)
+    avg_results = _save_results(name, all_fold_metrics, best_fold, best_f1, n_folds, output_dir)
     if best_state:
         torch.save({
             'model_state_dict': best_state,
@@ -469,18 +470,24 @@ def train_deep_kfold(
             'multi_polarity': True,
             'thresholds_m': best_th_m.tolist() if best_th_m is not None else None,
             'thresholds_s': best_th_s.tolist() if best_th_s is not None else None,
+            'avg_metrics': avg_results.get('avg_metrics'),
         }, os.path.join(output_dir, f'{name.lower()}_absa.pt'))
 
     if fold_epoch_losses:
-        avg_epoch_losses = np.mean(fold_epoch_losses, axis=0).tolist()
-        save_loss_plot(
-            avg_epoch_losses,
-            output_dir,
-            filename='training_loss_by_epoch.png',
-            title=f"{name} Training Loss by Epoch (Avg {n_folds}-Fold)",
-        )
+        # Align fold losses to the shortest length (early stopping can differ by fold).
+        lengths = [len(losses) for losses in fold_epoch_losses if losses]
+        min_len = min(lengths) if lengths else 0
+        if min_len > 0:
+            aligned = [losses[:min_len] for losses in fold_epoch_losses if len(losses) >= min_len]
+            avg_epoch_losses = np.mean(aligned, axis=0).tolist()
+            save_loss_plot(
+                avg_epoch_losses,
+                output_dir,
+                filename='training_loss_by_epoch.png',
+                title=f"{name} Training Loss by Epoch (Avg {n_folds}-Fold)",
+            )
 
-    return _save_results(name, all_fold_metrics, best_fold, best_f1, n_folds, output_dir)
+    return avg_results
 
 def _save_results(name, all_fold_metrics, best_fold, best_f1, n_folds, output_dir):
     """Compute averages and save results.json."""
