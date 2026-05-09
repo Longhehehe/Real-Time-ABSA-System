@@ -91,7 +91,16 @@ def compute_all_metrics(
                    'sentiment_f1_samples', 'sentiment_auc_roc', 'sentiment_auc_pr']:
             metrics[k] = 0.0
 
-    # ── Combined Score (Comprehensive) ──────────────────────────────────────
+    # ── Combined Metrics (Symmetric averages for all 7 core metrics) ─────────
+    metrics['combined_precision_macro'] = 0.5 * metrics['mention_precision_macro'] + 0.5 * metrics['sentiment_precision_macro']
+    metrics['combined_recall_macro']    = 0.5 * metrics['mention_recall_macro']    + 0.5 * metrics['sentiment_recall_macro']
+    metrics['combined_f1_macro']        = 0.5 * metrics['mention_f1_macro']        + 0.5 * metrics['sentiment_f1_macro']
+    metrics['combined_f1_micro']        = 0.5 * metrics['mention_f1_micro']        + 0.5 * metrics['sentiment_f1_micro']
+    metrics['combined_f1_weighted']     = 0.5 * metrics['mention_f1_weighted']     + 0.5 * metrics['sentiment_f1_weighted']
+    metrics['combined_auc_roc']         = 0.5 * metrics['mention_auc_roc']         + 0.5 * metrics['sentiment_auc_roc']
+    metrics['combined_auc_pr']          = 0.5 * metrics['mention_auc_pr']          + 0.5 * metrics['sentiment_auc_pr']
+
+    # ── Combined Score (Comprehensive Weighted) ─────────────────────────────
     # Weights reflect task importance and metric quality:
     #   Mention Detection  (40%): F1-macro (20%) + AUC-ROC (10%) + AUC-PR (10%)
     #   Sentiment          (60%): F1-samples (20%) + F1-macro (15%) + AUC-ROC (15%) + AUC-PR (10%)
@@ -145,7 +154,14 @@ def print_fold_summary(all_fold_metrics: List[Dict], model_name: str):
             ('AUC-ROC', 'sentiment_auc_roc'),
             ('AUC-PR', 'sentiment_auc_pr'),
         ],
-        'Combined': [
+        'Combined (Symmetric Avg)': [
+            ('Precision (macro)', 'combined_precision_macro'),
+            ('Recall (macro)', 'combined_recall_macro'),
+            ('F1-macro', 'combined_f1_macro'),
+            ('F1-micro', 'combined_f1_micro'),
+            ('F1-weighted', 'combined_f1_weighted'),
+            ('AUC-ROC', 'combined_auc_roc'),
+            ('AUC-PR', 'combined_auc_pr'),
             ('Combined Score (*)', 'combined_score'),
         ],
     }
@@ -173,15 +189,12 @@ def build_comparison_table(all_results: Dict[str, Dict]):
     print(f"{'='*110}")
 
     header_keys = [
-        ('Prec(M)', 'mention_precision_macro'),
-        ('Rec(M)', 'mention_recall_macro'),
-        ('F1mac(M)', 'mention_f1_macro'),
-        ('ROC(M)', 'mention_auc_roc'),
-        ('Prec(S)', 'sentiment_precision_macro'),
-        ('Rec(S)', 'sentiment_recall_macro'),
-        ('F1mac(S)', 'sentiment_f1_macro'),
-        ('ROC(S)', 'sentiment_auc_roc'),
-        ('Combined', 'combined_f1'),
+        ('Prec(C)', 'combined_precision_macro'),
+        ('Rec(C)', 'combined_recall_macro'),
+        ('F1mac(C)', 'combined_f1_macro'),
+        ('ROC(C)', 'combined_auc_roc'),
+        ('PR(C)',  'combined_auc_pr'),
+        ('Score',  'combined_score'),
     ]
 
     header = f"  {'Model':<24}" + "".join(f"{h:>10}" for h, _ in header_keys)
