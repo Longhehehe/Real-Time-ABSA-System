@@ -1,545 +1,218 @@
-"""
-PhoBERT ABSA Predictor Module (Multi-Polarity)
-Load trained PhoBERT model and predict aspect-based sentiment.
-Supports multi-label sentiment (e.g., both POSITIVE and NEGATIVE for same aspect).
-"""
-import os
-import sys
-import json
+from transformers import AutoTokenizer, AutoModel
 import torch
 import torch.nn as nn
-from typing import Dict, List, Optional
+import os
+import sys
+import pickle
 import numpy as np
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, BASE_DIR)
+# Add root to path to import methods
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+if ROOT not in sys.path:
+    sys.path.insert(0, ROOT)
 
-MODEL_DIR = os.path.join(BASE_DIR, 'models', 'phobert_absa')
-MODEL_PATH = os.path.join(MODEL_DIR, 'phobertforabsamultipolarity_absa.pt')
-CONFIG_PATH = os.path.join(MODEL_DIR, 'config.json')
+from absa_dataset import ASPECTS
+from methods import (
+    LogisticRegressionABSA, NaiveBayesABSA,
+    BiLSTMForABSA, CNNBiLSTMForABSA,
+    PhoBERTForABSAMultiPolarity, XLMRoBERTaForABSA
+)
 
-MODEL_DIR_OLD = os.path.join(BASE_DIR, 'models', 'phobert_absa')
-MODEL_PATH_OLD = os.path.join(MODEL_DIR_OLD, 'phobert_absa.pt')
-
-ASPECTS = [
-    'Chất lượng sản phẩm',                                       
-    'Hiệu năng & Trải nghiệm',                                   
-    'Đúng mô tả',                                         
-    'Giá cả & Khuyến mãi',                                
-    'Vận chuyển',                                          
-    'Đóng gói',                                     
-    'Dịch vụ & Thái độ Shop',                                       
-    'Bảo hành & Đổi trả',                           
-    'Tính xác thực',                                          
-]
-
-SENTIMENT_NAMES = ['NEG', 'POS', 'NEU']                 
-
-SENTIMENT_MAP = {
-    'POS': 1,
-    'NEU': 0,
-    'NEG': -1,
-    'N/A': 2
-}
-
-SENTIMENT_MAP_REVERSE = {
-    1: 'POSITIVE',
-    0: 'NEUTRAL',
-    -1: 'NEGATIVE',
-    2: 'N/A'
-}
-
-class PhoBERTForABSAMultiPolarity(nn.Module):
-    """PhoBERT model with multi-task learning for Multi-Polarity ABSA.
-    
-    Uses hard parameter sharing with two task heads:
-    - Mention detection: Binary classification per aspect
-    - Sentiment classification: MULTI-LABEL classification per aspect (can have multiple sentiments!)
+class GeneralABSAPredictor:
     """
-    
-    def __init__(self, num_aspects: int = 9, dropout: float = 0.3):
-        super().__init__()
-        
-        from transformers import AutoModel
-        
-        self.phobert = AutoModel.from_pretrained("vinai/phobert-base")
-        hidden_size = self.phobert.config.hidden_size       
-        
-        self.dropout = nn.Dropout(dropout)
-        
-        self.head_m = nn.Linear(hidden_size, num_aspects)                     
-        self.head_s = nn.Linear(hidden_size, num_aspects * 3)                                    
-        
-        self.num_aspects = num_aspects
-    
-    def forward(self, input_ids, attention_mask):
-        """
-        Forward pass
-        
-        Returns:
-            logits_m: Mention logits (batch_size, num_aspects)
-            logits_s: Sentiment logits (batch_size, num_aspects, 3) - use sigmoid, NOT softmax!
-        """
-        outputs = self.phobert(
-            input_ids=input_ids,
-            attention_mask=attention_mask
-        )
-        
-        cls_output = outputs.last_hidden_state[:, 0, :]
-        h_cls = self.dropout(cls_output)
-        
-        logits_m = self.head_m(h_cls)
-        logits_s = self.head_s(h_cls).view(-1, self.num_aspects, 3)
-        
-        return logits_m, logits_s
-
-class PhoBERTForABSA(nn.Module):
-    """PhoBERT model (old single-label version)."""
-    
-    def __init__(self, num_aspects: int = 9, dropout: float = 0.3):
-        super().__init__()
-        
-        from transformers import AutoModel
-        
-        self.phobert = AutoModel.from_pretrained("vinai/phobert-base")
-        hidden_size = self.phobert.config.hidden_size
-        
-        self.dropout = nn.Dropout(dropout)
-        self.head_m = nn.Linear(hidden_size, num_aspects)
-        self.head_s = nn.Linear(hidden_size, num_aspects * 3)
-        self.num_aspects = num_aspects
-    
-    def forward(self, input_ids, attention_mask):
-        outputs = self.phobert(input_ids=input_ids, attention_mask=attention_mask)
-        cls_output = outputs.last_hidden_state[:, 0, :]
-        h_cls = self.dropout(cls_output)
-        logits_m = self.head_m(h_cls)
-        logits_s = self.head_s(h_cls).view(-1, self.num_aspects, 3)
-        return logits_m, logits_s
-
-class PhoBERTPredictor:
-    """PhoBERT ABSA Predictor - loads model and makes predictions.
-    Supports multi-polarity (multi-label) sentiment prediction.
+    A robust predictor that can handle any model type from the registry:
+    - ML-Based (LR, NB)
+    - Deep-Based (BiLSTM, CNN-BiLSTM)
+    - Transformer (PhoBERT, XLM-R)
     """
-    
-    def __init__(self, model_path: Optional[str] = None, use_multipolarity: bool = True):
+    def __init__(self, model_path: str, device: str = None):
+        self.device = device or ("cuda" if torch.cuda.is_available() else "cpu")
+        self.model_path = model_path
         self.model = None
         self.tokenizer = None
-        self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        self.model_loaded = False
-        self.max_length = 256
-        self.is_multipolarity = use_multipolarity
-        self.mention_threshold = 0.6                              
-        self.sentiment_threshold = 0.5                            
+        self.tfidf = None
+        self.model_type = None # 'ml', 'deep', 'transformer'
+        self.model_class_name = None
         
-        if model_path:
-            self.load_model(model_path)
-    
-    def load_model(self, model_path: Optional[str] = None) -> bool:
-        """Load trained PhoBERT model (multipolarity or legacy)."""
+        # Thresholds (per aspect/class)
+        self.mention_threshold = 0.5
+        self.sentiment_threshold = 0.5
         
-        if model_path is None:
-            if os.path.exists(MODEL_PATH):
-                model_path = MODEL_PATH
-                self.is_multipolarity = True
-                model_dir = MODEL_DIR
-            elif os.path.exists(MODEL_PATH_OLD):
-                model_path = MODEL_PATH_OLD
-                self.is_multipolarity = False
-                model_dir = MODEL_DIR_OLD
-            else:
-                print(f"No model found!")
-                print(f"   Checked: {MODEL_PATH}")
-                print(f"   Checked: {MODEL_PATH_OLD}")
-                return False
+        self._load_anything()
+
+    def _load_anything(self):
+        print(f"Loading model from: {self.model_path}")
+        
+        # Check if it's a pickle (ML) or a torch file (DL/Transformer)
+        if self.model_path.endswith('.pkl'):
+            self._load_ml()
+        elif self.model_path.endswith('.pt'):
+            self._load_torch()
         else:
-            model_dir = os.path.dirname(model_path)
-            self.is_multipolarity = 'multipolarity' in model_path
+            # Try to determine from path if extension is missing
+            if 'logistic' in self.model_path.lower() or 'naive' in self.model_path.lower():
+                self._load_ml()
+            else:
+                self._load_torch()
+
+    def _load_ml(self):
+        with open(self.model_path, 'rb') as f:
+            data = pickle.load(f)
         
-        try:
-            from transformers import AutoTokenizer
+        # Determine class from filename or data
+        filename = os.path.basename(self.model_path).lower()
+        if 'logistic' in filename:
+            self.model = LogisticRegressionABSA()
+        else:
+            self.model = NaiveBayesABSA()
             
-            mode_str = "Multi-Polarity" if self.is_multipolarity else "Legacy"
-            print(f"Loading PhoBERT {mode_str} model from {model_path}...")
-            
-            checkpoint = torch.load(model_path, map_location=self.device, weights_only=False)
-            
-            tokenizer_local_path = os.path.join(model_dir, 'tokenizer')
-            if os.path.exists(tokenizer_local_path):
-                self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_local_path)
-            else:
-                tokenizer_name = 'vinai/phobert-base'
-                if isinstance(checkpoint, dict) and 'tokenizer_name' in checkpoint:
-                    tokenizer_name = checkpoint['tokenizer_name']
-                self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
-            
-            if self.is_multipolarity:
-                self.model = PhoBERTForABSAMultiPolarity(num_aspects=len(ASPECTS))
-            else:
-                self.model = PhoBERTForABSA(num_aspects=len(ASPECTS))
-            
-            if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint:
-                self.model.load_state_dict(checkpoint['model_state_dict'])
-            else:
-                self.model.load_state_dict(checkpoint)
-            
-            self.model = self.model.to(self.device)
-            self.model.eval()
-            
-            config_path = os.path.join(model_dir, 'config.json')
-            if os.path.exists(config_path):
-                with open(config_path, 'r', encoding='utf-8') as f:
-                    config = json.load(f)
-                self.max_length = config.get('max_length', 256)
-            
-            self.model_loaded = True
-            f1_score = checkpoint.get('best_f1', 'N/A')
-            if isinstance(f1_score, (int, float)):
-                print(f"Model loaded successfully! (F1: {f1_score:.4f})")
-            else:
-                print(f"Model loaded successfully!")
-            
-            return True
-            
-        except Exception as e:
-            print(f"Error loading model: {e}")
-            import traceback
-            traceback.print_exc()
-            return False
-    
-    def predict_single(self, text: str) -> Dict[str, any]:
-        """
-        Predict sentiment for a single review.
+        self.model.tfidf = data['tfidf']
+        self.model.mention_clfs = data['mention_clfs']
+        self.model.sentiment_clfs = data['sentiment_clfs']
+        self.tfidf = data['tfidf']
+        self.model_type = 'ml'
+        self.model_class_name = self.model.__class__.__name__
+        print(f"Successfully loaded ML model: {self.model_class_name}")
+
+    def _load_torch(self):
+        checkpoint = torch.load(self.model_path, map_location=self.device, weights_only=False)
         
-        Returns:
-            Dict with two formats:
-            - 'legacy': {aspect: int} for backward compatibility (-1=NEG, 0=NEU, 1=POS, 2=N/A)
-            - 'multipolarity': {aspect: {'mentioned': bool, 'sentiments': List[str]}}
-        """
-        if not self.model_loaded:
-            if not self.load_model():
-                print("Cannot make prediction - model not available")
-                return {
-                    'legacy': {asp: 2 for asp in ASPECTS},
-                    'multipolarity': {asp: {'mentioned': False, 'sentiments': None} for asp in ASPECTS}
-                }
-        
-        try:
-                      
-            encoding = self.tokenizer(
-                text,
-                truncation=True,
-                max_length=self.max_length,
-                padding='max_length',
-                return_tensors='pt'
-            )
+        # 1. Identify model class
+        if isinstance(checkpoint, dict):
+            self.model_class_name = checkpoint.get('model_class')
+            state_dict = checkpoint.get('model_state_dict')
             
-            input_ids = encoding['input_ids'].to(self.device)
-            attention_mask = encoding['attention_mask'].to(self.device)
-            
-            with torch.no_grad():
-                logits_m, logits_s = self.model(input_ids, attention_mask)
-                
-                preds_m = (torch.sigmoid(logits_m) > self.mention_threshold).squeeze(0).cpu().numpy()
-                
-                if self.is_multipolarity:
-                                                              
-                    preds_s = (torch.sigmoid(logits_s) > self.sentiment_threshold).squeeze(0).cpu().numpy()
+            # Load thresholds if they exist (new format)
+            if 'thresholds_m' in checkpoint and checkpoint['thresholds_m'] is not None:
+                self.mention_threshold = np.array(checkpoint['thresholds_m'])
+            if 'thresholds_s' in checkpoint and checkpoint['thresholds_s'] is not None:
+                self.sentiment_threshold = np.array(checkpoint['thresholds_s'])
+        else:
+            state_dict = checkpoint
+            # Fallback identification based on keys
+            if 'conv1.weight' in state_dict: self.model_class_name = 'CNNBiLSTMForABSA'
+            elif 'lstm.weight_ih_l0' in state_dict: self.model_class_name = 'BiLSTMForABSA'
+            elif 'roberta.embeddings.word_embeddings.weight' in state_dict:
+                # Check model path for XLM vs PhoBERT
+                if 'xlm' in self.model_path.lower():
+                    self.model_class_name = 'XLMRoBERTaForABSA'
                 else:
-                                          
-                    preds_s = torch.argmax(logits_s, dim=-1).squeeze(0).cpu().numpy()
+                    self.model_class_name = 'PhoBERTForABSAMultiPolarity'
+        
+        # 2. Instantiate and Load
+        num_aspects = len(ASPECTS)
+        
+        if self.model_class_name == 'PhoBERTForABSAMultiPolarity':
+            self.model = PhoBERTForABSAMultiPolarity(num_aspects=num_aspects)
+            self.tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base")
+            self.model_type = 'transformer'
+        elif self.model_class_name == 'XLMRoBERTaForABSA':
+            self.model = XLMRoBERTaForABSA(num_aspects=num_aspects)
+            self.tokenizer = AutoTokenizer.from_pretrained("xlm-roberta-base")
+            self.model_type = 'transformer'
+        elif self.model_class_name in ['BiLSTMForABSA', 'CNNBiLSTMForABSA']:
+            # For Deep models, we use PhoBERT tokenizer for pre-processing
+            self.tokenizer = AutoTokenizer.from_pretrained("vinai/phobert-base")
+            # Determine vocab_size directly from the state_dict to avoid mismatches
+            vocab_size = state_dict['embedding.weight'].shape[0]
+            if self.model_class_name == 'BiLSTMForABSA':
+                self.model = BiLSTMForABSA(vocab_size=vocab_size)
+            else:
+                self.model = CNNBiLSTMForABSA(vocab_size=vocab_size)
+            self.model_type = 'deep'
+        else:
+            raise ValueError(f"Unknown model class: {self.model_class_name}")
+
+        self.model.load_state_dict(state_dict)
+        self.model.to(self.device)
+        self.model.eval()
+        print(f"Successfully loaded Torch model: {self.model_class_name} ({self.model_type})")
+
+    def predict_single(self, text: str) -> dict:
+        if self.model_type == 'ml':
+            return self._predict_ml(text)
+        else:
+            return self._predict_torch(text)
+
+    def _predict_ml(self, text: str) -> dict:
+        X_tfidf = self.tfidf.transform([text])
+        # ml_models predict returns: pred_m, pred_s, prob_m, prob_s
+        pm, ps, prob_m_raw, prob_s_raw = self.model.predict(X_tfidf)
+        
+        # ML models already output "hard" predictions, but we want the probs for metric calculation
+        prob_m = prob_m_raw[0]
+        prob_s = prob_s_raw[0]
+        
+        return self._format_output(prob_m, prob_s)
+
+    def _predict_torch(self, text: str) -> dict:
+        inputs = self.tokenizer(text, return_tensors="pt", truncation=True, max_length=256, padding='max_length')
+        input_ids = inputs['input_ids'].to(self.device)
+        attention_mask = inputs['attention_mask'].to(self.device)
+        
+        with torch.no_grad():
+            logits_m, logits_s = self.model(input_ids, attention_mask)
+            prob_m = torch.sigmoid(logits_m).squeeze(0).cpu().numpy()
+            prob_s = torch.sigmoid(logits_s).squeeze(0).cpu().numpy()
             
-            legacy_result = {}
-            multi_result = {}
+        return self._format_output(prob_m, prob_s)
+
+    def _format_output(self, prob_m, prob_s) -> dict:
+        # th_m can be float (0.5) or array (9,)
+        if isinstance(self.mention_threshold, np.ndarray): th_m = self.mention_threshold
+        else: th_m = np.full(len(ASPECTS), self.mention_threshold)
             
-            for i, aspect in enumerate(ASPECTS):
-                mentioned = bool(preds_m[i])
-                
-                if mentioned:
-                    if self.is_multipolarity:
-                                                                         
-                        sentiments = [SENTIMENT_NAMES[j] for j in range(3) if preds_s[i, j]]
-                        
-                        if not sentiments:
-                            sentiments = ['NEU']
-                        
-                        if 'POS' in sentiments and 'NEG' in sentiments:
-                                                                                 
-                            legacy_result[aspect] = 0           
-                        elif 'POS' in sentiments:
-                            legacy_result[aspect] = 1
-                        elif 'NEG' in sentiments:
-                            legacy_result[aspect] = -1
-                        else:
-                            legacy_result[aspect] = 0
-                    else:
-                                      
-                        sentiment_idx = int(preds_s[i])
-                                                            
-                        sentiment_to_legacy = {0: -1, 1: 1, 2: 0}
-                        legacy_result[aspect] = sentiment_to_legacy.get(sentiment_idx, 0)
-                        sentiments = [SENTIMENT_NAMES[sentiment_idx]]
-                    
-                    multi_result[aspect] = {
-                        'mentioned': True,
-                        'sentiments': sentiments
-                    }
-                else:
-                    legacy_result[aspect] = 2       
-                    multi_result[aspect] = {
-                        'mentioned': False,
-                        'sentiments': None
-                    }
+        if isinstance(self.sentiment_threshold, np.ndarray): th_s = self.sentiment_threshold
+        else: th_s = np.full((len(ASPECTS), 3), self.sentiment_threshold)
+        
+        preds_m = (prob_m >= th_m).astype(int)
+        preds_s = (prob_s >= th_s).astype(int)
+        
+        # Enforce Neutral if no sentiment but mentioned
+        for i in range(len(ASPECTS)):
+            if preds_m[i] == 1 and preds_s[i].sum() == 0:
+                preds_s[i, 2] = 1 # NEU
+        
+        multi_result = {}
+        legacy_result = {}
+        SENTIMENT_NAMES = ['NEG', 'POS', 'NEU']
+        
+        for i, aspect in enumerate(ASPECTS):
+            is_m = bool(preds_m[i])
+            active_s = [SENTIMENT_NAMES[j] for j in range(3) if preds_s[i, j] == 1]
             
-            return {
-                'legacy': legacy_result,
-                'multipolarity': multi_result
+            multi_result[aspect] = {
+                'mentioned': is_m,
+                'sentiments': active_s if is_m else []
             }
             
-        except Exception as e:
-            print(f"Prediction error: {e}")
-            import traceback
-            traceback.print_exc()
-            return {
-                'legacy': {asp: 2 for asp in ASPECTS},
-                'multipolarity': {asp: {'mentioned': False, 'sentiments': None} for asp in ASPECTS}
+            # Legacy mapping for evaluation script
+            if not is_m:
+                legacy_result[aspect] = "2"
+            else:
+                if 'POS' in active_s and 'NEG' in active_s:
+                    legacy_result[aspect] = "1, -1"
+                elif 'POS' in active_s:
+                    legacy_result[aspect] = "1"
+                elif 'NEG' in active_s:
+                    legacy_result[aspect] = "-1"
+                else:
+                    legacy_result[aspect] = "0"
+                
+        return {
+            'multipolarity': multi_result,
+            'legacy': legacy_result,
+            'probs': {
+                'mention': prob_m,
+                'sentiment': prob_s
             }
-    
-    def predict_single_legacy(self, text: str) -> Dict[str, int]:
-        """Predict and return only legacy format (for backward compatibility)."""
-        result = self.predict_single(text)
-        return result['legacy']
-    
-    def predict_single_multipolarity(self, text: str) -> Dict[str, Dict]:
-        """Predict and return only multipolarity format."""
-        result = self.predict_single(text)
-        return result['multipolarity']
-    
-    def predict_batch(self, texts: List[str], format: str = 'legacy') -> List[Dict]:
-        """
-        Predict sentiment for a batch of reviews.
-        
-        Args:
-            texts: List of review texts
-            format: 'legacy', 'multipolarity', or 'both'
-        """
-        results = []
-        for text in texts:
-            pred = self.predict_single(text)
-            if format == 'legacy':
-                results.append(pred['legacy'])
-            elif format == 'multipolarity':
-                results.append(pred['multipolarity'])
-            else:
-                results.append(pred)
-        return results
-
-def aggregate_scores(predictions: List[Dict[str, int]], aspects: List[str] = None) -> Dict[str, float]:
-    """
-    Aggregate predictions across multiple reviews into scores (0-100).
-    
-    Args:
-        predictions: List of prediction dicts (aspect -> sentiment)
-        aspects: List of aspects to include (default: all)
-    
-    Returns:
-        Dict mapping aspect to average score (0-100)
-    """
-    if aspects is None:
-        aspects = ASPECTS
-    
-    if not predictions:
-        return {asp: 50.0 for asp in aspects}
-    
-    value_map = {1: 100, 0: 50, -1: 0, 2: np.nan}
-    
-    scores = {}
-    for aspect in aspects:
-        values = []
-        for pred in predictions:
-            val = pred.get(aspect, 2)
-            mapped = value_map.get(val, np.nan)
-            if not np.isnan(mapped):
-                values.append(mapped)
-        
-        if values:
-            scores[aspect] = np.mean(values)
-        else:
-            scores[aspect] = 50.0                      
-    
-    return scores
-
-def aggregate_multipolarity_scores(predictions: List[Dict], aspects: List[str] = None) -> Dict[str, Dict]:
-    """
-    Aggregate multipolarity predictions into detailed scores.
-    
-    Returns:
-        Dict mapping aspect to:
-        - score: float (0-100)
-        - sentiment_distribution: {POS: %, NEG: %, NEU: %}
-        - review_count: int
-        - has_mixed: bool (has reviews with multiple sentiments)
-    """
-    if aspects is None:
-        aspects = ASPECTS
-    
-    if not predictions:
-        return {asp: {'score': 50.0, 'sentiment_distribution': {}, 'review_count': 0, 'has_mixed': False} for asp in aspects}
-    
-    result = {}
-    
-    for aspect in aspects:
-        sentiment_counts = {'POS': 0, 'NEG': 0, 'NEU': 0}
-        total_mentioned = 0
-        mixed_count = 0
-        
-        for pred in predictions:
-            if aspect in pred and pred[aspect].get('mentioned'):
-                total_mentioned += 1
-                sentiments = pred[aspect].get('sentiments', [])
-                
-                if len(sentiments) > 1:
-                    mixed_count += 1
-                
-                for s in sentiments:
-                    if s in sentiment_counts:
-                        sentiment_counts[s] += 1
-        
-        if total_mentioned > 0:
-                                                    
-            total_votes = sum(sentiment_counts.values())
-            if total_votes > 0:
-                score = (sentiment_counts['POS'] * 100 + sentiment_counts['NEU'] * 50) / total_votes
-            else:
-                score = 50.0
-            
-            distribution = {k: round(v / total_votes * 100, 1) if total_votes > 0 else 0 for k, v in sentiment_counts.items()}
-        else:
-            score = 50.0
-            distribution = {}
-        
-        result[aspect] = {
-            'score': round(score, 1),
-            'sentiment_distribution': distribution,
-            'review_count': total_mentioned,
-            'has_mixed': mixed_count > 0
         }
-    
-    return result
 
-class XLMPredictor(PhoBERTPredictor):
-    """XLM-RoBERTa ABSA Predictor - inherits from PhoBERTPredictor and overrides model loading."""
-    
-    def load_model(self, model_path: Optional[str] = None) -> bool:
-        if model_path is None:
-            model_path = os.path.join(BASE_DIR, 'models', 'xlm_roberta_absa', 'xlm_roberta_large_absa.pt')
-            if not os.path.exists(model_path):
-                # Try fallback
-                model_path = os.path.join(BASE_DIR, 'models', 'xlm_roberta_absa', 'xlm_roberta_absa.pt')
-                
-        model_dir = os.path.dirname(model_path)
-        self.is_multipolarity = True
-        
-        try:
-            from transformers import AutoTokenizer
-            from methods.transformer_models import XLMRoBERTaForABSA
-            
-            print(f"Loading XLM-RoBERTa model from {model_path}...")
-            
-            checkpoint = torch.load(model_path, map_location=self.device, weights_only=False)
-            
-            tokenizer_local_path = os.path.join(model_dir, 'tokenizer')
-            if os.path.exists(tokenizer_local_path):
-                self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_local_path)
-            else:
-                tokenizer_name = 'xlm-roberta-base'
-                if isinstance(checkpoint, dict) and 'tokenizer_name' in checkpoint:
-                    tokenizer_name = checkpoint['tokenizer_name']
-                self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_name)
-            
-            # Determine correct model name based on checkpoint file name or tokenizer
-            model_name = "xlm-roberta-large" if "large" in model_path.lower() else tokenizer_name
-            self.model = XLMRoBERTaForABSA(num_aspects=len(ASPECTS), model_name=model_name)
-            
-            state_dict = checkpoint['model_state_dict'] if isinstance(checkpoint, dict) and 'model_state_dict' in checkpoint else checkpoint
-            
-            # Fix state dict key mismatches if they exist (from custom heads)
-            fixed_state_dict = {}
-            for k, v in state_dict.items():
-                if k == "head_m.linear.weight":
-                    fixed_state_dict["head_m.weight"] = v
-                elif k == "head_m.linear.bias":
-                    fixed_state_dict["head_m.bias"] = v
-                elif k == "head_s.linear.weight":
-                    fixed_state_dict["head_s.weight"] = v
-                elif k == "head_s.linear.bias":
-                    fixed_state_dict["head_s.bias"] = v
-                else:
-                    fixed_state_dict[k] = v
-                    
-            self.model.load_state_dict(fixed_state_dict)
-            
-            self.model = self.model.to(self.device)
-            self.model.eval()
-            
-            config_path = os.path.join(model_dir, 'config.json')
-            if os.path.exists(config_path):
-                with open(config_path, 'r', encoding='utf-8') as f:
-                    config = json.load(f)
-                self.max_length = config.get('max_length', 256)
-            
-            self.model_loaded = True
-            
-            f1_score = checkpoint.get('best_f1', 'N/A') if isinstance(checkpoint, dict) else 'N/A'
-            if isinstance(f1_score, (int, float)):
-                print(f"XLM-RoBERTa Model loaded successfully! (F1: {f1_score:.4f})")
-            else:
-                print(f"XLM-RoBERTa Model loaded successfully!")
-                
-            return True
-            
-        except Exception as e:
-            print(f"Error loading model: {e}")
-            import traceback
-            traceback.print_exc()
-            return False
+# Maintain backward compatibility
+class PhoBERTPredictor(GeneralABSAPredictor):
+    def __init__(self, model_path: str, device: str = None):
+        super().__init__(model_path, device)
 
-_predictor = None
-def get_predictor() -> PhoBERTPredictor:
-    """Get or create global predictor instance."""
-    global _predictor
-    if _predictor is None:
-        _predictor = PhoBERTPredictor()
-    return _predictor
-
-if __name__ == "__main__":
-    print("=== PhoBERT ABSA Multi-Polarity Predictor Test ===")
-    print(f"Device: {'CUDA' if torch.cuda.is_available() else 'CPU'}")
-    
-    predictor = PhoBERTPredictor()
-    
-    if predictor.load_model():
-        test_reviews = [
-            "Sản phẩm chất lượng tốt, giao hàng nhanh, đóng gói cẩn thận",
-            "Sản phẩm kém chất lượng, giao hàng chậm, shop thái độ tệ",
-            "Áo đẹp nhưng vải hơi mỏng. Giao hàng nhanh!",                   
-            "Giá rẻ nhưng chất lượng không tương xứng",               
-        ]
-        
-        print(f"\n Testing {len(test_reviews)} reviews...\n")
-        
-        for review in test_reviews:
-            print(f"Review: {review[:60]}...")
-            result = predictor.predict_single(review)
-            
-            print("  [Multipolarity Format]:")
-            for asp, info in result['multipolarity'].items():
-                if info['mentioned']:
-                    print(f"    {asp}: {info['sentiments']}")
-            
-            print("  [Legacy Format]:")
-            for asp, val in result['legacy'].items():
-                if val != 2:            
-                    sentiment = SENTIMENT_MAP_REVERSE.get(val, 'N/A')
-                    print(f"    {asp}: {sentiment}")
-            print()
+class XLMPredictor(GeneralABSAPredictor):
+    def __init__(self, model_path: str, device: str = None):
+        super().__init__(model_path, device)
