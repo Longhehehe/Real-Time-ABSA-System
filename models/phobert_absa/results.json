@@ -37,7 +37,21 @@
     "combined_score": 0.8952728734627714,
     "combined_score_std": 0.0028302436185190104,
     "combined_f1": 0.8952728734627714,
-    "combined_f1_std": 0.0028302436185190104
+    "combined_f1_std": 0.0028302436185190104,
+    "combined_precision_macro": 0.8500471489690534,
+    "combined_precision_macro_std": 0.004547935889554406,
+    "combined_recall_macro": 0.8645594392043068,
+    "combined_recall_macro_std": 0.004998404215390647,
+    "combined_f1_macro": 0.8567721680502679,
+    "combined_f1_macro_std": 0.003494351749014627,
+    "combined_f1_micro": 0.9004530278024868,
+    "combined_f1_micro_std": 0.0027553508197546575,
+    "combined_f1_weighted": 0.9006304584096808,
+    "combined_f1_weighted_std": 0.0026350865689895113,
+    "combined_auc_roc": 0.9496769905262991,
+    "combined_auc_roc_std": 0.002461673021448959,
+    "combined_auc_pr": 0.8819058284714943,
+    "combined_auc_pr_std": 0.006735863595951796
   },
   "fold_results": [
     {
@@ -57,7 +71,14 @@
       "sentiment_auc_roc": 0.9557829683294293,
       "sentiment_auc_pr": 0.8713080997384538,
       "combined_score": 0.8952684023921372,
-      "combined_f1": 0.8952684023921372
+      "combined_f1": 0.8952684023921372,
+      "combined_precision_macro": 0.8520943193031184,
+      "combined_recall_macro": 0.8560815790493561,
+      "combined_f1_macro": 0.8530380454761399,
+      "combined_f1_micro": 0.9048904943636991,
+      "combined_f1_weighted": 0.9047414801220572,
+      "combined_auc_roc": 0.9514315267769953,
+      "combined_auc_pr": 0.8760515005642893
     },
     {
       "mention_precision_macro": 0.8767265390010799,
@@ -76,7 +97,14 @@
       "sentiment_auc_roc": 0.9453737585165397,
       "sentiment_auc_pr": 0.8604426132670664,
       "combined_score": 0.8901161578548669,
-      "combined_f1": 0.8901161578548669
+      "combined_f1": 0.8901161578548669,
+      "combined_precision_macro": 0.8415144899460654,
+      "combined_recall_macro": 0.8630732145331819,
+      "combined_f1_macro": 0.8520280570184227,
+      "combined_f1_micro": 0.898598902160182,
+      "combined_f1_weighted": 0.8987435403635651,
+      "combined_auc_roc": 0.9456741153382437,
+      "combined_auc_pr": 0.87288051779616
     },
     {
       "mention_precision_macro": 0.8730520473765928,
@@ -95,7 +123,14 @@
       "sentiment_auc_roc": 0.9545585332894916,
       "sentiment_auc_pr": 0.8912912110977954,
       "combined_score": 0.8982812656181269,
-      "combined_f1": 0.8982812656181269
+      "combined_f1": 0.8982812656181269,
+      "combined_precision_macro": 0.8549164146857615,
+      "combined_recall_macro": 0.864456508993141,
+      "combined_f1_macro": 0.8590384626977537,
+      "combined_f1_micro": 0.899836881466419,
+      "combined_f1_weighted": 0.8998278051016917,
+      "combined_auc_roc": 0.9519093894188282,
+      "combined_auc_pr": 0.8916761006260114
     },
     {
       "mention_precision_macro": 0.8770116658965474,
@@ -114,7 +149,14 @@
       "sentiment_auc_roc": 0.9525235065355178,
       "sentiment_auc_pr": 0.8819615231614146,
       "combined_score": 0.8973720056263856,
-      "combined_f1": 0.8973720056263856
+      "combined_f1": 0.8973720056263856,
+      "combined_precision_macro": 0.8516935894270936,
+      "combined_recall_macro": 0.8693152270676767,
+      "combined_f1_macro": 0.8601714169243857,
+      "combined_f1_micro": 0.9019710635526476,
+      "combined_f1_weighted": 0.902430005526992,
+      "combined_auc_roc": 0.9514476334109618,
+      "combined_auc_pr": 0.8856048178647529
     },
     {
       "mention_precision_macro": 0.8703232992002357,
@@ -133,8 +175,16 @@
       "sentiment_auc_roc": 0.95337202590039,
       "sentiment_auc_pr": 0.8913284609864592,
       "combined_score": 0.8953265358223405,
-      "combined_f1": 0.8953265358223405
+      "combined_f1": 0.8953265358223405,
+      "combined_precision_macro": 0.8500169314832282,
+      "combined_recall_macro": 0.8698706663781779,
+      "combined_f1_macro": 0.8595848581346366,
+      "combined_f1_micro": 0.8969677974694861,
+      "combined_f1_weighted": 0.8974094609340985,
+      "combined_auc_roc": 0.9479222876864655,
+      "combined_auc_pr": 0.883316205506258
     }
   ],
-  "timestamp": "2026-05-09T02:06:15.791218"
+  "timestamp": "2026-05-09T02:06:15.791218",
+  "best_combined_score": 0.8982812656181269
 }
