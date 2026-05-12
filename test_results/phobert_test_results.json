@@ -1,0 +1,32 @@
+{
+  "model": "PhoBERTForABSAMultiPolarity",
+  "test_data": "dev_augmented_500.xlsx",
+  "num_samples": 1721,
+  "metrics": {
+    "mention_precision_macro": 0.8826371199116982,
+    "mention_recall_macro": 0.8841745590903798,
+    "mention_f1_macro": 0.8834009104254802,
+    "mention_f1_micro": 0.9076118535735038,
+    "mention_f1_weighted": 0.9077044712364389,
+    "mention_auc_roc": 0.9461592961993274,
+    "mention_auc_pr": 0.892911538160187,
+    "sentiment_precision_macro": 0.8270330159135036,
+    "sentiment_recall_macro": 0.6440112838849835,
+    "sentiment_f1_macro": 0.7106710834399123,
+    "sentiment_f1_micro": 0.8461538461538461,
+    "sentiment_f1_weighted": 0.8386640190565715,
+    "sentiment_f1_samples": 0.7785974932571792,
+    "sentiment_auc_roc": 0.9434292179082272,
+    "sentiment_auc_pr": 0.8417630564862898,
+    "combined_precision_macro": 0.8548350679126009,
+    "combined_recall_macro": 0.7640929214876817,
+    "combined_f1_macro": 0.7970359969326962,
+    "combined_f1_micro": 0.8768828498636749,
+    "combined_f1_weighted": 0.8731842451465053,
+    "combined_auc_roc": 0.9447942570537773,
+    "combined_auc_pr": 0.8673372973232384,
+    "combined_score": 0.8485981150233334,
+    "combined_f1": 0.8485981150233334
+  },
+  "timestamp": "2026-05-12T15:43:33.752792"
+}

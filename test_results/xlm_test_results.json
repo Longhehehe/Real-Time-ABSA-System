@@ -1,0 +1,32 @@
+{
+  "model": "XLMRoBERTaForABSA",
+  "test_data": "dev_augmented_500.xlsx",
+  "num_samples": 1721,
+  "metrics": {
+    "mention_precision_macro": 0.8938273828983052,
+    "mention_recall_macro": 0.8980202169293591,
+    "mention_f1_macro": 0.8958883482812644,
+    "mention_f1_micro": 0.9172315837045645,
+    "mention_f1_weighted": 0.9174507071824596,
+    "mention_auc_roc": 0.9509319014976267,
+    "mention_auc_pr": 0.8996571068112317,
+    "sentiment_precision_macro": 0.8347474590891218,
+    "sentiment_recall_macro": 0.660859578084942,
+    "sentiment_f1_macro": 0.7253962392252737,
+    "sentiment_f1_micro": 0.8614177090998283,
+    "sentiment_f1_weighted": 0.8542035832629433,
+    "sentiment_f1_samples": 0.8036173250832936,
+    "sentiment_auc_roc": 0.9492850316312614,
+    "sentiment_auc_pr": 0.8611419599612415,
+    "combined_precision_macro": 0.8642874209937135,
+    "combined_recall_macro": 0.7794398975071506,
+    "combined_f1_macro": 0.8106422937532691,
+    "combined_f1_micro": 0.8893246464021964,
+    "combined_f1_weighted": 0.8858271452227015,
+    "combined_auc_roc": 0.9501084665644441,
+    "combined_auc_pr": 0.8803995333862367,
+    "combined_score": 0.8622764221284019,
+    "combined_f1": 0.8622764221284019
+  },
+  "timestamp": "2026-05-12T15:40:45.578769"
+}

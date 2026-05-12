@@ -9,6 +9,7 @@ import seaborn as sns
 import torch
 import argparse
 from tqdm import tqdm
+from datetime import datetime
 
 # Add root to sys.path
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -138,6 +139,24 @@ def main():
     print("\nComputing comprehensive metrics...")
     metrics = compute_all_metrics(true_m, pred_m, true_s, pred_s, prob_m, prob_s)
     
+    # Save to JSON
+    out_dir = os.path.join(ROOT, 'test_results')
+    os.makedirs(out_dir, exist_ok=True)
+    safe_model_name = args.model.replace('/', '_').replace('\\', '_').replace(':', '_').replace('.pt', '').replace('.pkl', '')
+    out_file = os.path.join(out_dir, f"{safe_model_name}_test_results.json")
+    
+    result_data = {
+        "model": predictor.model_class_name,
+        "test_data": args.data,
+        "num_samples": num_samples,
+        "metrics": {k: float(v) for k, v in metrics.items()},
+        "timestamp": datetime.now().isoformat()
+    }
+    
+    with open(out_file, 'w', encoding='utf-8') as f:
+        json.dump(result_data, f, ensure_ascii=False, indent=2)
+    print(f"  [+] Saved evaluation metrics to: {out_file}")
+
     # 5. Display
     print(f"\n{'='*80}")
     print(f"  FINAL RESULTS FOR TEST SET")
