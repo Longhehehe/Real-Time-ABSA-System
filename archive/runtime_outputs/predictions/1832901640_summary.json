@@ -1,0 +1,47 @@
+{
+  "Chất lượng sản phẩm": {
+    "positive": 53,
+    "negative": 54,
+    "neutral": 8
+  },
+  "Hiệu năng & Trải nghiệm": {
+    "positive": 48,
+    "negative": 30,
+    "neutral": 5
+  },
+  "Đúng mô tả": {
+    "positive": 20,
+    "negative": 15,
+    "neutral": 3
+  },
+  "Giá cả & Khuyến mãi": {
+    "positive": 21,
+    "negative": 4,
+    "neutral": 9
+  },
+  "Vận chuyển": {
+    "positive": 33,
+    "negative": 19,
+    "neutral": 25
+  },
+  "Đóng gói": {
+    "positive": 22,
+    "negative": 7,
+    "neutral": 15
+  },
+  "Dịch vụ & Thái độ Shop": {
+    "positive": 18,
+    "negative": 7,
+    "neutral": 12
+  },
+  "Bảo hành & Đổi trả": {
+    "positive": 0,
+    "negative": 0,
+    "neutral": 21
+  },
+  "Tính xác thực": {
+    "positive": 5,
+    "negative": 3,
+    "neutral": 0
+  }
+}

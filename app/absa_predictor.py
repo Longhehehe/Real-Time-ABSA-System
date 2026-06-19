@@ -8,7 +8,7 @@ import sys
 import json
 import torch
 import torch.nn as nn
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 import numpy as np
 
 # Add project root to path
@@ -142,7 +142,8 @@ class PhoBERTPredictor:
         self.tokenizer = None
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
         self.model_loaded = False
-        self.max_length = 256
+        self.max_length = int(os.getenv("ABSA_MAX_LENGTH", "256"))
+        self.batch_size = int(os.getenv("ABSA_BATCH_SIZE", "32"))
         self.is_multipolarity = use_multipolarity
         self.threshold = 0.5  # Threshold for sigmoid predictions
         
@@ -210,7 +211,7 @@ class PhoBERTPredictor:
             if os.path.exists(config_path):
                 with open(config_path, 'r', encoding='utf-8') as f:
                     config = json.load(f)
-                self.max_length = config.get('max_length', 256)
+                self.max_length = int(os.getenv("ABSA_MAX_LENGTH", config.get('max_length', 256)))
             
             self.model_loaded = True
             f1_score = checkpoint.get('best_f1', 'N/A')
@@ -227,7 +228,57 @@ class PhoBERTPredictor:
             traceback.print_exc()
             return False
     
-    def predict_single(self, text: str) -> Dict[str, any]:
+    def _empty_prediction(self) -> Dict[str, Dict[str, Any]]:
+        return {
+            'legacy': {asp: 2 for asp in ASPECTS},
+            'multipolarity': {asp: {'mentioned': False, 'sentiments': None} for asp in ASPECTS}
+        }
+
+    def _format_prediction(self, preds_m, preds_s) -> Dict[str, Dict[str, Any]]:
+        legacy_result = {}
+        multi_result = {}
+
+        for i, aspect in enumerate(ASPECTS):
+            mentioned = bool(preds_m[i])
+
+            if mentioned:
+                if self.is_multipolarity:
+                    sentiments = [SENTIMENT_NAMES[j] for j in range(3) if preds_s[i, j]]
+
+                    if not sentiments:
+                        sentiments = ['NEU']
+
+                    if 'POS' in sentiments and 'NEG' in sentiments:
+                        legacy_result[aspect] = 0
+                    elif 'POS' in sentiments:
+                        legacy_result[aspect] = 1
+                    elif 'NEG' in sentiments:
+                        legacy_result[aspect] = -1
+                    else:
+                        legacy_result[aspect] = 0
+                else:
+                    sentiment_idx = int(preds_s[i])
+                    sentiment_to_legacy = {0: -1, 1: 1, 2: 0}
+                    legacy_result[aspect] = sentiment_to_legacy.get(sentiment_idx, 0)
+                    sentiments = [SENTIMENT_NAMES[sentiment_idx]]
+
+                multi_result[aspect] = {
+                    'mentioned': True,
+                    'sentiments': sentiments
+                }
+            else:
+                legacy_result[aspect] = 2
+                multi_result[aspect] = {
+                    'mentioned': False,
+                    'sentiments': None
+                }
+
+        return {
+            'legacy': legacy_result,
+            'multipolarity': multi_result
+        }
+
+    def predict_single(self, text: str) -> Dict[str, Any]:
         """
         Predict sentiment for a single review.
         
@@ -239,96 +290,16 @@ class PhoBERTPredictor:
         if not self.model_loaded:
             if not self.load_model():
                 print("❌ Cannot make prediction - model not available")
-                return {
-                    'legacy': {asp: 2 for asp in ASPECTS},
-                    'multipolarity': {asp: {'mentioned': False, 'sentiments': None} for asp in ASPECTS}
-                }
+                return self._empty_prediction()
         
         try:
-            # Tokenize
-            encoding = self.tokenizer(
-                text,
-                truncation=True,
-                max_length=self.max_length,
-                padding='max_length',
-                return_tensors='pt'
-            )
-            
-            input_ids = encoding['input_ids'].to(self.device)
-            attention_mask = encoding['attention_mask'].to(self.device)
-            
-            # Predict
-            with torch.no_grad():
-                logits_m, logits_s = self.model(input_ids, attention_mask)
-                
-                # Mention predictions (binary)
-                preds_m = (torch.sigmoid(logits_m) > self.threshold).squeeze(0).cpu().numpy()
-                
-                if self.is_multipolarity:
-                    # Multi-label: apply sigmoid and threshold
-                    preds_s = (torch.sigmoid(logits_s) > self.threshold).squeeze(0).cpu().numpy()
-                else:
-                    # Single-label: argmax
-                    preds_s = torch.argmax(logits_s, dim=-1).squeeze(0).cpu().numpy()
-            
-            # Build results
-            legacy_result = {}
-            multi_result = {}
-            
-            for i, aspect in enumerate(ASPECTS):
-                mentioned = bool(preds_m[i])
-                
-                if mentioned:
-                    if self.is_multipolarity:
-                        # Multi-label: get all sentiments above threshold
-                        sentiments = [SENTIMENT_NAMES[j] for j in range(3) if preds_s[i, j]]
-                        
-                        # Default to NEU if no sentiment detected
-                        if not sentiments:
-                            sentiments = ['NEU']
-                        
-                        # For legacy format, pick primary sentiment (POS > NEG > NEU priority)
-                        if 'POS' in sentiments and 'NEG' in sentiments:
-                            # Mixed sentiment - could show as Neutral or pick one
-                            legacy_result[aspect] = 0  # Neutral
-                        elif 'POS' in sentiments:
-                            legacy_result[aspect] = 1
-                        elif 'NEG' in sentiments:
-                            legacy_result[aspect] = -1
-                        else:
-                            legacy_result[aspect] = 0
-                    else:
-                        # Single-label
-                        sentiment_idx = int(preds_s[i])
-                        # Map: 0=NEG->-1, 1=POS->1, 2=NEU->0
-                        sentiment_to_legacy = {0: -1, 1: 1, 2: 0}
-                        legacy_result[aspect] = sentiment_to_legacy.get(sentiment_idx, 0)
-                        sentiments = [SENTIMENT_NAMES[sentiment_idx]]
-                    
-                    multi_result[aspect] = {
-                        'mentioned': True,
-                        'sentiments': sentiments
-                    }
-                else:
-                    legacy_result[aspect] = 2  # N/A
-                    multi_result[aspect] = {
-                        'mentioned': False,
-                        'sentiments': None
-                    }
-            
-            return {
-                'legacy': legacy_result,
-                'multipolarity': multi_result
-            }
+            return self.predict_batch([text], format='both')[0]
             
         except Exception as e:
             print(f"⚠️ Prediction error: {e}")
             import traceback
             traceback.print_exc()
-            return {
-                'legacy': {asp: 2 for asp in ASPECTS},
-                'multipolarity': {asp: {'mentioned': False, 'sentiments': None} for asp in ASPECTS}
-            }
+            return self._empty_prediction()
     
     def predict_single_legacy(self, text: str) -> Dict[str, int]:
         """Predict and return only legacy format (for backward compatibility)."""
@@ -342,21 +313,71 @@ class PhoBERTPredictor:
     
     def predict_batch(self, texts: List[str], format: str = 'legacy') -> List[Dict]:
         """
-        Predict sentiment for a batch of reviews.
+        Predict sentiment for a batch of reviews with one model forward pass per chunk.
+        This is the serving hot path: batching improves GPU/CPU utilization and
+        follows the same principle used by low-latency model-serving systems.
         
         Args:
             texts: List of review texts
             format: 'legacy', 'multipolarity', or 'both'
         """
+        if not texts:
+            return []
+
+        if not self.model_loaded:
+            if not self.load_model():
+                print("❌ Cannot make prediction - model not available")
+                if format == 'legacy':
+                    return [self._empty_prediction()['legacy'] for _ in texts]
+                if format == 'multipolarity':
+                    return [self._empty_prediction()['multipolarity'] for _ in texts]
+                return [self._empty_prediction() for _ in texts]
+
         results = []
-        for text in texts:
-            pred = self.predict_single(text)
+
+        try:
+            for start in range(0, len(texts), self.batch_size):
+                chunk = ["" if text is None else str(text) for text in texts[start:start + self.batch_size]]
+
+                encoding = self.tokenizer(
+                    chunk,
+                    truncation=True,
+                    max_length=self.max_length,
+                    padding=True,
+                    return_tensors='pt'
+                )
+
+                input_ids = encoding['input_ids'].to(self.device)
+                attention_mask = encoding['attention_mask'].to(self.device)
+
+                with torch.inference_mode():
+                    logits_m, logits_s = self.model(input_ids, attention_mask)
+                    preds_m = (torch.sigmoid(logits_m) > self.threshold).cpu().numpy()
+
+                    if self.is_multipolarity:
+                        preds_s = (torch.sigmoid(logits_s) > self.threshold).cpu().numpy()
+                    else:
+                        preds_s = torch.argmax(logits_s, dim=-1).cpu().numpy()
+
+                for row_idx in range(len(chunk)):
+                    pred = self._format_prediction(preds_m[row_idx], preds_s[row_idx])
+                    if format == 'legacy':
+                        results.append(pred['legacy'])
+                    elif format == 'multipolarity':
+                        results.append(pred['multipolarity'])
+                    else:
+                        results.append(pred)
+
+        except Exception as e:
+            print(f"⚠️ Batch prediction error: {e}")
+            import traceback
+            traceback.print_exc()
             if format == 'legacy':
-                results.append(pred['legacy'])
-            elif format == 'multipolarity':
-                results.append(pred['multipolarity'])
-            else:
-                results.append(pred)
+                return [self._empty_prediction()['legacy'] for _ in texts]
+            if format == 'multipolarity':
+                return [self._empty_prediction()['multipolarity'] for _ in texts]
+            return [self._empty_prediction() for _ in texts]
+
         return results
 
 

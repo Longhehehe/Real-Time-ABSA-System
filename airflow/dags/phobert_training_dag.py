@@ -62,7 +62,7 @@ with DAG(
             python -c "
 import sys
 sys.path.insert(0, '/opt/airflow/project')
-from phobert_trainer_multipolarity import train_model_multipolarity
+from model.phobert_trainer_multipolarity import train_model_multipolarity
 
 # Use labeled/ folder directly (contains xlsx files)
 DATA_PATH = '/opt/airflow/project/labeled'
@@ -115,7 +115,7 @@ print(f'Training complete! Model saved to: {output_dir}')
             python -c "
 import sys
 sys.path.insert(0, '/opt/airflow/project')
-from phobert_trainer_multipolarity import predict_multipolarity
+from model.phobert_trainer_multipolarity import predict_multipolarity
 
 test_texts = [
     'San pham tot, giao hang nhanh, dong goi can than',

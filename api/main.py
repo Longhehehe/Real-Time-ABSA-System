@@ -130,7 +130,7 @@ def get_model_info():
 def run_model_evaluation():
     """Trigger model evaluation on validation set"""
     try:
-        from phobert_trainer_multipolarity import evaluate_model
+        from model.phobert_trainer_multipolarity import evaluate_model
         
         DATA_PATH = os.path.join(BASE_DIR, 'labeled')
         MODEL_PATH = os.path.join(BASE_DIR, 'models', 'phobert_absa_multipolarity')

@@ -1,0 +1,18 @@
+FROM python:3.10-slim
+
+WORKDIR /app
+
+RUN pip install --no-cache-dir "torch>=2.6.0"
+RUN pip install --no-cache-dir fastapi uvicorn transformers numpy
+
+COPY app/absa_predictor.py /app/app/absa_predictor.py
+COPY serving/ /app/serving/
+COPY models/ /app/models/
+
+ENV PYTHONPATH=/app
+ENV ABSA_BATCH_SIZE=32
+ENV ABSA_MAX_LENGTH=256
+
+EXPOSE 8010
+
+CMD ["uvicorn", "serving.inference_service:app", "--host", "0.0.0.0", "--port", "8010"]

@@ -1,0 +1,4462 @@
+[
+  {
+    "review_id": "1832901640_1770089922953_b37fbbf8",
+    "original_text": "Giao hàng đúng sản phẩm nhưng không hài lòng với sự hỗ trợ của nhà bán hàng, không nhận được bất kỳ sự tương tác hỗ trợ nào! Đặt hàng từ 12 đến 20 vẫn không giao hàng, liên hệ không ai phản hồi ",
+    "cleaned_text": "giao hàng đúng sản phẩm nhưng không hài lòng với sự hỗ trợ của nhà bán hàng, không nhận được bất kỳ sự tương tác hỗ trợ nào! đặt hàng từ 12 đến 20 vẫn không giao hàng, liên hệ không ai phản hồi",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089944.475519
+  },
+  {
+    "review_id": "1832901640_1770089922953_9acbd2fe",
+    "original_text": "Tôi đã nhận được hàng rồi nha Shop , sản phẩm nhận được date không tốt như những thùng mua trước đó  ",
+    "cleaned_text": "tôi đã nhận được hàng rồi nha shop , sản phẩm nhận được date không tốt như những thùng mua trước đó",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089944.475535
+  },
+  {
+    "review_id": "1832901640_1770089922953_e343a644",
+    "original_text": "Tháng 1 mình có mua sữa tươi. Ở ngoài thùng date 26/5/2024 nhưng trong thùng khi bóc ra có những lốc date 18/2/2024; 14/3/2024…\n ",
+    "cleaned_text": "tháng 1 mình có mua sữa tươi. ở ngoài thùng date 26/5/2024 nhưng trong thùng khi bóc ra có những lốc date 18/2/2024; 14/3/2024…",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089944.4755487
+  },
+  {
+    "review_id": "1832901640_1770089922954_360dca0c",
+    "original_text": "Hương vị tuyệt vời với một chút ngọt ngào, Tuyệt vời cho một món ăn nhẹ nhanh chóng và bổ dưỡng, Đa dạng các loại hạt cao cấp,  ",
+    "cleaned_text": "hương vị tuyệt vời với một chút ngọt ngào, tuyệt vời cho một món ăn nhẹ nhanh chóng và bổ dưỡng, đa dạng các loại hạt cao cấp,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089944.4755611
+  },
+  {
+    "review_id": "1832901640_1770089922954_b45bbbca",
+    "original_text": "Sữa ngon nhưng shop xử lý đơn hàng siêu chậm, dù mình đã chat hỏi khi nào, lý do giao chậm nhưng shop không trả lời. Đây là đơn hàng thứ 2 mình mua nhưng trải nghiệm  giao hàng chậm, phản hồi kém (chatbot trả lời) khiến mình thất vọng về dịch vụ. Shop sữa chính hãng, thương hiệu lớn, nên cải thiện dịch vụ giao hàng và CSKH ",
+    "cleaned_text": "sữa ngon nhưng shop xử lý đơn hàng siêu chậm, dù mình đã chat hỏi khi nào, lý do giao chậm nhưng shop không trả lời. đây là đơn hàng thứ 2 mình mua nhưng trải nghiệm giao hàng chậm, phản hồi kém (chatbot trả lời) khiến mình thất vọng về dịch vụ. shop sữa chính hãng, thương hiệu lớn, nên cải thiện dịch vụ giao hàng và cskh",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 2,
+    "processed_at": 1770089944.4755733
+  },
+  {
+    "review_id": "1832901640_1770089922954_df694f19",
+    "original_text": "N\nhiều loại hạt cao cấp, Giàu chất xơ và protein, Bao bì tiện lợi để mang theo, \nSữa ngon. nhưng giao hàng quá chậm.  ",
+    "cleaned_text": "n hiều loại hạt cao cấp, giàu chất xơ và protein, bao bì tiện lợi để mang theo, sữa ngon. nhưng giao hàng quá chậm.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 2,
+    "processed_at": 1770089944.4755855
+  },
+  {
+    "review_id": "1832901640_1770089922954_b72bb409",
+    "original_text": "Giá Cả:Tương đối được.\n Mùi vị:Có hơi nhạt\n Giá trị dinh dưỡng:chưa biết, để test thử 1 thời gian\n ",
+    "cleaned_text": "giá cả:tương đối được. mùi vị:có hơi nhạt giá trị dinh dưỡng:chưa biết, để test thử 1 thời gian",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089944.475597
+  },
+  {
+    "review_id": "1832901640_1770089922954_c3197838",
+    "original_text": "Tăng cường năng lượng và thúc đẩy lối sống lành mạnh, Hương vị tuyệt vời với chút ngọt ngào,  ",
+    "cleaned_text": "tăng cường năng lượng và thúc đẩy lối sống lành mạnh, hương vị tuyệt vời với chút ngọt ngào,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089944.4756079
+  },
+  {
+    "review_id": "1832901640_1770089922955_002f3cd6",
+    "original_text": "sữa uống ngon, nhưng giao hàng lâu quá, đặt ngày 27/11 đến ngày 12/12 mới nhận được. chờ đợi lâu ngày muốn hủy đơn luôn. k dám mua lại nữa ",
+    "cleaned_text": "sữa uống ngon, nhưng giao hàng lâu quá, đặt ngày 27/11 đến ngày 12/12 mới nhận được. chờ đợi lâu ngày muốn hủy đơn luôn. k dám mua lại nữa",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089944.475633
+  },
+  {
+    "review_id": "1832901640_1770089922955_a0eeb504",
+    "original_text": "Mùi vị: \nHạn sử dụng ngắn, chỉ còn 3m là hết hạn. Thùng sữa thì rách, rõ ràng có cửa hàng vinamilk gần nhà nhưng lại đẩy sang bên giao cách tận 50-60km. Nhận đc thì rách tươm, chán đời\n ",
+    "cleaned_text": "mùi vị: hạn sử dụng ngắn, chỉ còn 3m là hết hạn. thùng sữa thì rách, rõ ràng có cửa hàng vinamilk gần nhà nhưng lại đẩy sang bên giao cách tận 50-60km. nhận đc thì rách tươm, chán đời",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089944.475648
+  },
+  {
+    "review_id": "1832901640_1770089922955_28412b9a",
+    "original_text": "Giao hàng nhanh! Mà đặt cả thùng lại xé ra cho vào thùng khác. Thấy hơi ko thích ",
+    "cleaned_text": "giao hàng nhanh! mà đặt cả thùng lại xé ra cho vào thùng khác. thấy hơi ko thích",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089959.3966436
+  },
+  {
+    "review_id": "1832901640_1770089922955_38936c2e",
+    "original_text": "Giao chậm.......................................... ",
+    "cleaned_text": "giao chậm..........................................",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089959.396695
+  },
+  {
+    "review_id": "1832901640_1770089922955_830eadfd",
+    "original_text": "Tăng cường năng lượng và thúc đẩy lối sống lành mạnh,  ",
+    "cleaned_text": "tăng cường năng lượng và thúc đẩy lối sống lành mạnh,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089959.3967059
+  },
+  {
+    "review_id": "1832901640_1770089922955_7557c104",
+    "original_text": "Hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng, Tăng cường năng lượng và thúc đẩy lối sống lành mạnh, Bao bì tiện lợi để mang theo, Ngon và bổ dưỡng,  ",
+    "cleaned_text": "hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng, tăng cường năng lượng và thúc đẩy lối sống lành mạnh, bao bì tiện lợi để mang theo, ngon và bổ dưỡng,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089959.3967137
+  },
+  {
+    "review_id": "1832901640_1770089922956_4b9e94c7",
+    "original_text": "Giao hàng rất lâu, đã mua được nhiều lần, nhưng lần này hơi lâu. Nhắn tin hỏi shop cũng không ai trả lời  ",
+    "cleaned_text": "giao hàng rất lâu, đã mua được nhiều lần, nhưng lần này hơi lâu. nhắn tin hỏi shop cũng không ai trả lời",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089959.3967214
+  },
+  {
+    "review_id": "1832901640_1770089922956_1fd1a2c7",
+    "original_text": "Bao bì tiện lợi khi di chuyển, Tuyệt vời cho một món ăn nhẹ nhanh chóng và bổ dưỡng, Hương vị tuyệt vời với một chút ngọt ngào,  ",
+    "cleaned_text": "bao bì tiện lợi khi di chuyển, tuyệt vời cho một món ăn nhẹ nhanh chóng và bổ dưỡng, hương vị tuyệt vời với một chút ngọt ngào,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089959.3967273
+  },
+  {
+    "review_id": "1832901640_1770089922956_4db88259",
+    "original_text": "Mùi vị: \nSữa 9 loại hạt loại ít đường uống khá ngon, shop gửi hàng lần này cũng nhanh hơn mấy lần trước. Tuy nhiên shop cần cải thiện khâu chăm sóc khách hàng, cần bỏ thời gian ra giao tiếp và trả lời khách, chứ toàn để trả lời tự động, làm cho người mua cảm thấy khó chịu, vì không biết khi nào shop gửi hàng hoặc ship đến cho khách. ",
+    "cleaned_text": "mùi vị: sữa 9 loại hạt loại ít đường uống khá ngon, shop gửi hàng lần này cũng nhanh hơn mấy lần trước. tuy nhiên shop cần cải thiện khâu chăm sóc khách hàng, cần bỏ thời gian ra giao tiếp và trả lời khách, chứ toàn để trả lời tự động, làm cho người mua cảm thấy khó chịu, vì không biết khi nào shop gửi hàng hoặc ship đến cho khách.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089959.3967335
+  },
+  {
+    "review_id": "1832901640_1770089922957_49776f53",
+    "original_text": "Đáng tiền:  sữa ít ngọt, mua được khuyến mãi nên tính ra Ko đắt :)))\n Mùi vị:  dễ uống ",
+    "cleaned_text": "đáng tiền: sữa ít ngọt, mua được khuyến mãi nên tính ra ko đắt :))) mùi vị: dễ uống",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089959.3967402
+  },
+  {
+    "review_id": "1832901640_1770089922957_9bdedd86",
+    "original_text": "Bao bì k giống hàng đặt,liên hệ thì k thấy ,cảm thấy thất vọng bbbbbbbbbbbbbbb ",
+    "cleaned_text": "bao bì k giống hàng đặt,liên hệ thì k thấy ,cảm thấy thất vọng bbbbbbbbbbbbbbb",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089959.3967474
+  },
+  {
+    "review_id": "1832901640_1770089922953_a8d3a497",
+    "original_text": "Giao lâu. Hàng thì rơi ướt vỡ. Chán. Dạo này vnm cho đơn vị vận chuyển khác giao ko phải grab nữa à. Chán quá  ",
+    "cleaned_text": "giao lâu. hàng thì rơi ướt vỡ. chán. dạo này vnm cho đơn vị vận chuyển khác giao ko phải grab nữa à. chán quá",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089959.3967543
+  },
+  {
+    "review_id": "1832901640_1770089922954_b689a7ec",
+    "original_text": "Giao hàng quá lâu tới nửa tháng mới nhận được, chưa bao giờ mình gặp tình trạng nhận hàng ntn\nCSKH quá Tệ, ko 1 ai Help\nSẽ không bao giờ mua lại\nHàng nhận đến tay cái bọc nó rách, tồi tàn như ăn xin.\n1 trải nghiệm mua sắm quá tệ từ trc đến h , Mall mà làm ăn như vậy thì chết rồi.\n-10đ\nMình lười chụp lại cho mn xem cái thùng hàng . ",
+    "cleaned_text": "giao hàng quá lâu tới nửa tháng mới nhận được, chưa bao giờ mình gặp tình trạng nhận hàng ntn cskh quá tệ, ko 1 ai help sẽ không bao giờ mua lại hàng nhận đến tay cái bọc nó rách, tồi tàn như ăn xin. 1 trải nghiệm mua sắm quá tệ từ trc đến h , mall mà làm ăn như vậy thì chết rồi. -10đ mình lười chụp lại cho mn xem cái thùng hàng .",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089966.771308
+  },
+  {
+    "review_id": "1832901640_1770089922954_c7509402",
+    "original_text": "Cửa hàng làm việc không uy tín, gọi điện hẹn chiều 16h ngày 13.10 giao hàng làm mình chờ cả buổi không thấy giao cũng không gọi điện báo hẹn lại. Tới tận chiều 16.10 mới gọi lại đi giao, mình đã không nhận hàng nữa, không thể chấp nhận 1 cửa hàng làm việc như vậy. Thế là shop cho hoàn tất đơn hàng đã giao, buồn cười thật ",
+    "cleaned_text": "cửa hàng làm việc không uy tín, gọi điện hẹn chiều 16h ngày 13.10 giao hàng làm mình chờ cả buổi không thấy giao cũng không gọi điện báo hẹn lại. tới tận chiều 16.10 mới gọi lại đi giao, mình đã không nhận hàng nữa, không thể chấp nhận 1 cửa hàng làm việc như vậy. thế là shop cho hoàn tất đơn hàng đã giao, buồn cười thật",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089966.7713175
+  },
+  {
+    "review_id": "1832901640_1770089922954_36ab7953",
+    "original_text": "Cao chất xơ và protein, Bao bì tiện lợi khi di chuyển, Một nguồn cung cấp tuyệt vời Omega-3, một số sản phẩm hơn 2 tuần vẫn không thấy giao. ",
+    "cleaned_text": "cao chất xơ và protein, bao bì tiện lợi khi di chuyển, một nguồn cung cấp tuyệt vời omega-3, một số sản phẩm hơn 2 tuần vẫn không thấy giao.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089966.771326
+  },
+  {
+    "review_id": "1832901640_1770089922954_1b1cfb80",
+    "original_text": "giao hàng cực kì chậm rất rất chậm.15 ngàyHương vị tuyệt vời với chút ngọt ngào, Giàu vitamin và khoáng chất,  ",
+    "cleaned_text": "giao hàng cực kì chậm rất rất chậm.15 ngàyhương vị tuyệt vời với chút ngọt ngào, giàu vitamin và khoáng chất,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089966.7713337
+  },
+  {
+    "review_id": "1832901640_1770089922954_f99e80a2",
+    "original_text": "Đáng tiền: Mua 2thung sữa trên trang Lazmall luôn,mà con bị treo hàng tới 10 ngày,còn phải nho ctv của Lazada 3-4 nt với các bạn yêu cầu trợ giúp xem đon hàng,thật là thất vọng với cách làm việc của các đại li của sữa Vinamilk, mua hàng mà giống như đi xin \n ",
+    "cleaned_text": "đáng tiền: mua 2thung sữa trên trang lazmall luôn,mà con bị treo hàng tới 10 ngày,còn phải nho ctv của lazada 3-4 nt với các bạn yêu cầu trợ giúp xem đon hàng,thật là thất vọng với cách làm việc của các đại li của sữa vinamilk, mua hàng mà giống như đi xin",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      }
+    },
+    "rating": 2,
+    "processed_at": 1770089966.7713423
+  },
+  {
+    "review_id": "1832901640_1770089922955_a593eeb5",
+    "original_text": "Sữa hơi loãng, vị ngọt vừa phải, giá tốt nhưng shop giao hàng lâu quá, 2 tuần mới nhận đc, nhắn tin thì ko có nhv trả lời ",
+    "cleaned_text": "sữa hơi loãng, vị ngọt vừa phải, giá tốt nhưng shop giao hàng lâu quá, 2 tuần mới nhận đc, nhắn tin thì ko có nhv trả lời",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089966.771352
+  },
+  {
+    "review_id": "1832901640_1770089922955_b8b752fe",
+    "original_text": "Hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng, Lựa chọn lành mạnh cho cả gia đình,  ",
+    "cleaned_text": "hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng, lựa chọn lành mạnh cho cả gia đình,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089966.7713602
+  },
+  {
+    "review_id": "1832901640_1770089922956_56eae725",
+    "original_text": "đóng gói cẩn thận, giao đúng hàng mua, giao chậm, sữa nhạt, ko có vị ngon ngậy của hạt ",
+    "cleaned_text": "đóng gói cẩn thận, giao đúng hàng mua, giao chậm, sữa nhạt, ko có vị ngon ngậy của hạt",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089966.7713664
+  },
+  {
+    "review_id": "1832901640_1770089922956_2619ba64",
+    "original_text": "Đơn có km tặng 1h sữa chua nhưng khi nhận thì không có, hàng nhận quá lâu ",
+    "cleaned_text": "đơn có km tặng 1h sữa chua nhưng khi nhận thì không có, hàng nhận quá lâu",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089966.7713728
+  },
+  {
+    "review_id": "1832901640_1770089922956_b1b48f32",
+    "original_text": "Sữa 9 loại hạt Super nut uống ngon và ít ngọt.Đa dạng các loại hạt, tuy nhiên shop cần cải thiện khâu giao tiếp với khách hàng, chứ cứ để trả lời tự động rất khó chịu. ",
+    "cleaned_text": "sữa 9 loại hạt super nut uống ngon và ít ngọt.đa dạng các loại hạt, tuy nhiên shop cần cải thiện khâu giao tiếp với khách hàng, chứ cứ để trả lời tự động rất khó chịu.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089966.7713802
+  },
+  {
+    "review_id": "1832901640_1770089922956_45a7ac5b",
+    "original_text": "sữa vị đặc hơn hẳn chỉ có 24 hộp thôi nhé. giao hàng cực kỳ lâu nha, nên cân nhắc, gần 15 ngày mới có hàng ",
+    "cleaned_text": "sữa vị đặc hơn hẳn chỉ có 24 hộp thôi nhé. giao hàng cực kỳ lâu nha, nên cân nhắc, gần 15 ngày mới có hàng",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089974.1976712
+  },
+  {
+    "review_id": "1832901640_1770089922956_16d6b05e",
+    "original_text": "Đơn hàng vinamilk giao quá lâu. Có đơn ngâm của mình hơn 1 tháng rồi tự huỷ đơn mình luôn ",
+    "cleaned_text": "đơn hàng vinamilk giao quá lâu. có đơn ngâm của mình hơn 1 tháng rồi tự huỷ đơn mình luôn",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089974.1976805
+  },
+  {
+    "review_id": "1832901640_1770089922956_1c76aa50",
+    "original_text": "Giao hàng hơi chậm, không theo dõi được hành trình giao hàng trên ứng dụng ",
+    "cleaned_text": "giao hàng hơi chậm, không theo dõi được hành trình giao hàng trên ứng dụng",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089974.1976888
+  },
+  {
+    "review_id": "1832901640_1770089922956_229e2b49",
+    "original_text": "Nhận hàng đúng chất lượng. Nhưng giao hàng hơi lâu. Gần 1 tháng mới nhận được hàng  ",
+    "cleaned_text": "nhận hàng đúng chất lượng. nhưng giao hàng hơi lâu. gần 1 tháng mới nhận được hàng",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089974.1976964
+  },
+  {
+    "review_id": "1832901640_1770089922957_ee98f0a5",
+    "original_text": "Mỗi lần viết đánh giá cũng hơi phiền =)) nói chung thì hàng ổn, cũng đẹp, mình không chê trách gì =)))) nhưng mong là sử dụng ổn, btw mình có đan móc nhé, cứ pm nhé :3 ",
+    "cleaned_text": "mỗi lần viết đánh giá cũng hơi phiền =)) nói chung thì hàng ổn, cũng đẹp, mình không chê trách gì =)))) nhưng mong là sử dụng ổn, btw mình có đan móc nhé, cứ pm nhé :3",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770089974.1977038
+  },
+  {
+    "review_id": "1832901640_1770089922957_d528375d",
+    "original_text": "Nhiều loại hạt cao cấp, Bao bì tiện lợi để mang theo, Nguồn Omega-3 tuyệt vời, Ngon và bổ dưỡng, Giàu vitamin và khoáng chất,  ",
+    "cleaned_text": "nhiều loại hạt cao cấp, bao bì tiện lợi để mang theo, nguồn omega-3 tuyệt vời, ngon và bổ dưỡng, giàu vitamin và khoáng chất,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770089974.1977105
+  },
+  {
+    "review_id": "1832901640_1770089922957_7c492528",
+    "original_text": "Giao hàng nhanh đóng gói chắc chắn sản phẩm rất tốt cảm ơn shop nhiều hình ảnh chỉ mang tính chất minh họa.  ",
+    "cleaned_text": "giao hàng nhanh đóng gói chắc chắn sản phẩm rất tốt cảm ơn shop nhiều hình ảnh chỉ mang tính chất minh họa.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770089974.1977193
+  },
+  {
+    "review_id": "1832901640_1770089922957_156ee3e9",
+    "original_text": "Tăng cường năng lượng và thúc đẩy lối sống lành mạnh, Giàu chất xơ và protein, Ngon và bổ dưỡng, Lựa chọn lành mạnh cho cả gia đình,  ",
+    "cleaned_text": "tăng cường năng lượng và thúc đẩy lối sống lành mạnh, giàu chất xơ và protein, ngon và bổ dưỡng, lựa chọn lành mạnh cho cả gia đình,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770089974.1977272
+  },
+  {
+    "review_id": "1832901640_1770089922957_1dcb7d00",
+    "original_text": "230k/thùng\nBao bì thường không phải tết\nJ&T giao\nBao bì tiện lợi để mang theo, Lựa chọn lành mạnh cho cả gia đình,  ",
+    "cleaned_text": "230k/thùng bao bì thường không phải tết j&t giao bao bì tiện lợi để mang theo, lựa chọn lành mạnh cho cả gia đình,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770089974.1977336
+  },
+  {
+    "review_id": "1832901640_1770089922957_260ec37d",
+    "original_text": "Bao bì tiện lợi để mang theo, Tăng cường năng lượng và thúc đẩy lối sống lành mạnh, Hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng,  ",
+    "cleaned_text": "bao bì tiện lợi để mang theo, tăng cường năng lượng và thúc đẩy lối sống lành mạnh, hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770089974.1977417
+  },
+  {
+    "review_id": "1832901640_1770089922957_b0aeab47",
+    "original_text": "Giàu chất xơ và protein, Giàu vitamin và khoáng chất, Nguồn Omega-3 tuyệt vời, Giàu chất xơ và protein,  ",
+    "cleaned_text": "giàu chất xơ và protein, giàu vitamin và khoáng chất, nguồn omega-3 tuyệt vời, giàu chất xơ và protein,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770089997.5734847
+  },
+  {
+    "review_id": "1832901640_1770089922847_627e6b6f",
+    "original_text": "giao hàng đổ bịch bên trong mà không cho đồng kiểm khui ra thấy hư hết quay video lại rồi mà còn kêu k đủ bằng chứng, hàng hư ngta mới yêu cầu đổi trả hoàn tiền chứ không hư nhận chứ ngu gì trả, đơn hàng gần cả triệu mà từ nhà bán đến Lazada từ chối đùng đẩy trách nhiệm, thật hết dám nhận hàng luôn ",
+    "cleaned_text": "giao hàng đổ bịch bên trong mà không cho đồng kiểm khui ra thấy hư hết quay video lại rồi mà còn kêu k đủ bằng chứng, hàng hư ngta mới yêu cầu đổi trả hoàn tiền chứ không hư nhận chứ ngu gì trả, đơn hàng gần cả triệu mà từ nhà bán đến lazada từ chối đùng đẩy trách nhiệm, thật hết dám nhận hàng luôn",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089997.5734944
+  },
+  {
+    "review_id": "1832901640_1770089922952_883be786",
+    "original_text": "Giao hàng quá lâu lắc. Đặc biệt mục chat liên hệ với shop siêu tệ. Đầu tư bao bì, quảng cáo mà không lo chăm sóc tư vấn cho khách hàng. Chả thấy phản hồi tin nhắn bao giờ. Tệ nhất trong các shop trên lazada từng mua. ",
+    "cleaned_text": "giao hàng quá lâu lắc. đặc biệt mục chat liên hệ với shop siêu tệ. đầu tư bao bì, quảng cáo mà không lo chăm sóc tư vấn cho khách hàng. chả thấy phản hồi tin nhắn bao giờ. tệ nhất trong các shop trên lazada từng mua.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089997.5735023
+  },
+  {
+    "review_id": "1832901640_1770089922953_a257a2c6",
+    "original_text": "đặt đơn hàng làm nhiệm vụ mà không giao thì xứng đáng 0 sao. dù cách nhà chưa đến 3km có tận 2 cửa hàng giấc mơ sữa việt. ",
+    "cleaned_text": "đặt đơn hàng làm nhiệm vụ mà không giao thì xứng đáng 0 sao. dù cách nhà chưa đến 3km có tận 2 cửa hàng giấc mơ sữa việt.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089997.5735092
+  },
+  {
+    "review_id": "1832901640_1770089922954_1fd55d11",
+    "original_text": "Mua hàng rất nhiều lần nhưng lần này phải cho 1*. Chờ nhận được hàng quá lâu. Cty lớn mà chế độ tư vấn cho khách trên lazada siêu tệ, không phản hồi khách, tin nhắn có đọc mà cũng im lặng không trả lời. 100 lần khách nhắn tin thì cũng chỉ nhận về sự im lặng. Tệ! Âm sao cho dịch vụ ",
+    "cleaned_text": "mua hàng rất nhiều lần nhưng lần này phải cho 1*. chờ nhận được hàng quá lâu. cty lớn mà chế độ tư vấn cho khách trên lazada siêu tệ, không phản hồi khách, tin nhắn có đọc mà cũng im lặng không trả lời. 100 lần khách nhắn tin thì cũng chỉ nhận về sự im lặng. tệ! âm sao cho dịch vụ",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089997.5735183
+  },
+  {
+    "review_id": "1832901640_1770089922954_31b183a5",
+    "original_text": "nếu đã có gian hàng online thì nên tập trung chốt đơn và vận chuyển chứ ko phải kiểu làm cho có đặt hàng xong muốn liên hệ thì cứ trả lời tự động chẳng ai phản hồi. đơn hàng trong tp mà 1 tuần mới giao, sao biết bao nhiêu lần phản hồi giữa KH và cái máy   ",
+    "cleaned_text": "nếu đã có gian hàng online thì nên tập trung chốt đơn và vận chuyển chứ ko phải kiểu làm cho có đặt hàng xong muốn liên hệ thì cứ trả lời tự động chẳng ai phản hồi. đơn hàng trong tp mà 1 tuần mới giao, sao biết bao nhiêu lần phản hồi giữa kh và cái máy",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089997.5735276
+  },
+  {
+    "review_id": "1832901640_1770089922955_2ae8fbae",
+    "original_text": "Mùi vị:nhạt nhẽo, k thơm\n Giá Cả:cao\n\nMua loại 1 lít cùng loại trên v.np....ay uống ngậy và thơm ngon nên mua tiếp\nloại 180ml/1 hộp mà uống vị nhạt lách chẳng có tí béo ngậy nào.\nTừng mua rất nhiều sữa vinamilk trên lazada rồi mà đơn này thất vọng thật sự ",
+    "cleaned_text": "mùi vị:nhạt nhẽo, k thơm giá cả:cao mua loại 1 lít cùng loại trên v.np....ay uống ngậy và thơm ngon nên mua tiếp loại 180ml/1 hộp mà uống vị nhạt lách chẳng có tí béo ngậy nào. từng mua rất nhiều sữa vinamilk trên lazada rồi mà đơn này thất vọng thật sự",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089997.573536
+  },
+  {
+    "review_id": "1832901640_1770089922955_761c1efa",
+    "original_text": "Lựa chọn lành mạnh cho cả gia đình, Giàu chất xơ và protein, Tăng cường năng lượng và thúc đẩy lối sống lành mạnh, có điều giao hàng quá lâu,dịch vụ khách hàng quá tệ ",
+    "cleaned_text": "lựa chọn lành mạnh cho cả gia đình, giàu chất xơ và protein, tăng cường năng lượng và thúc đẩy lối sống lành mạnh, có điều giao hàng quá lâu,dịch vụ khách hàng quá tệ",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089997.5735433
+  },
+  {
+    "review_id": "1832901640_1770089922955_1cb31b6b",
+    "original_text": "Hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng, Tăng cường năng lượng và thúc đẩy lối sống lành mạnh, Ngon và bổ dưỡng,  ",
+    "cleaned_text": "hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng, tăng cường năng lượng và thúc đẩy lối sống lành mạnh, ngon và bổ dưỡng,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089997.5735517
+  },
+  {
+    "review_id": "1832901640_1770089922955_f16f89c9",
+    "original_text": "Sữa ngon. Đóng gói cẩn thận. Giao hàng quá lâu, liên hệ không ai trả lời. ",
+    "cleaned_text": "sữa ngon. đóng gói cẩn thận. giao hàng quá lâu, liên hệ không ai trả lời.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089997.5735586
+  },
+  {
+    "review_id": "1832901640_1770089922955_aa6265cf",
+    "original_text": "giao hàng lâu quá trời, từ 29/3 đến 19/4 mới nhận được hàng, nhắn tin thì toàn tin nhắn tự động ",
+    "cleaned_text": "giao hàng lâu quá trời, từ 29/3 đến 19/4 mới nhận được hàng, nhắn tin thì toàn tin nhắn tự động",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090005.222778
+  },
+  {
+    "review_id": "1832901640_1770089922955_2c12866f",
+    "original_text": "Mùi vị:  sữa hạt uống thơm ngon béo ngon giá thành hơi cao so với cửa hàng mặc dù đc giảm giá và có đổi xu ",
+    "cleaned_text": "mùi vị: sữa hạt uống thơm ngon béo ngon giá thành hơi cao so với cửa hàng mặc dù đc giảm giá và có đổi xu",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090005.222788
+  },
+  {
+    "review_id": "1832901640_1770089922955_760c2674",
+    "original_text": "Giao lâu Bao bì tiện lợi để mang theo, Hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng,  ",
+    "cleaned_text": "giao lâu bao bì tiện lợi để mang theo, hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090005.2227962
+  },
+  {
+    "review_id": "1832901640_1770089922956_682a6654",
+    "original_text": "mình thích dòng sữa này. tuy nhiên việc giao hàng gặp khó khăn, shop toàn báo là bên giao hàng hủy đơn vì hàng nặng quá họ không giao cho nên đành lúc nào tiện thể lại tự đi lấy ở của hàng cách nhà 14km, bất tiện. ",
+    "cleaned_text": "mình thích dòng sữa này. tuy nhiên việc giao hàng gặp khó khăn, shop toàn báo là bên giao hàng hủy đơn vì hàng nặng quá họ không giao cho nên đành lúc nào tiện thể lại tự đi lấy ở của hàng cách nhà 14km, bất tiện.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090005.222803
+  },
+  {
+    "review_id": "1832901640_1770089922956_8a3c1874",
+    "original_text": "Đã mua nhiều lần, hàng chất lượng, ngọt nhẹ tốt cho sk. Điểm trừ là giao hàng rất chậm 3 ngày mới nhận đc hàng, đề nghị shop cải tiến ",
+    "cleaned_text": "đã mua nhiều lần, hàng chất lượng, ngọt nhẹ tốt cho sk. điểm trừ là giao hàng rất chậm 3 ngày mới nhận đc hàng, đề nghị shop cải tiến",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090005.2228098
+  },
+  {
+    "review_id": "1832901640_1770089922956_38411738",
+    "original_text": "Đáng tiền:mua ngay đợt sale, không có code gì áp xu cũng ok\n Mùi vị:ngon, \nCó điều đợi shop giao hàng mòn con mắt. đơn đặt dau thì giao trước. ",
+    "cleaned_text": "đáng tiền:mua ngay đợt sale, không có code gì áp xu cũng ok mùi vị:ngon, có điều đợi shop giao hàng mòn con mắt. đơn đặt dau thì giao trước.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090005.2228186
+  },
+  {
+    "review_id": "1832901640_1770089922957_6acc3ec2",
+    "original_text": "Sữa hạt uống ngon dễ uống mỗi tội giá thành hơi cao và shop giao thiếu quà tặng kèm theo ",
+    "cleaned_text": "sữa hạt uống ngon dễ uống mỗi tội giá thành hơi cao và shop giao thiếu quà tặng kèm theo",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090005.2228262
+  },
+  {
+    "review_id": "1832901640_1770089922957_228b8b9f",
+    "original_text": "Nhiều loại hạt cao cấp, Tăng cường năng lượng và thúc đẩy lối sống lành mạnh, đóng gố cẩn thận giao hành nhanh nên mja nbes kx ",
+    "cleaned_text": "nhiều loại hạt cao cấp, tăng cường năng lượng và thúc đẩy lối sống lành mạnh, đóng gố cẩn thận giao hành nhanh nên mja nbes kx",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090005.2228343
+  },
+  {
+    "review_id": "1832901640_1770089922957_8cf48275",
+    "original_text": "Giá Cả:  hợp lý Mùi vị:  thơm ngon Giá trị dinh dưỡng:  bổ dưỡng,tốt cho sức khoẻ. Là loại sữa gia đình mình tin dùng từ nhiều năm nay!\nLà loại sữa gia đình mình tin tưởng và sử dụng nhiều năm nay! ",
+    "cleaned_text": "giá cả: hợp lý mùi vị: thơm ngon giá trị dinh dưỡng: bổ dưỡng,tốt cho sức khoẻ. là loại sữa gia đình mình tin dùng từ nhiều năm nay! là loại sữa gia đình mình tin tưởng và sử dụng nhiều năm nay!",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090005.222843
+  },
+  {
+    "review_id": "1832901640_1770089922957_7592b5a4",
+    "original_text": "Giao hàng nhanh, mua uống thử, hi vọng là ngon. \n Giá trị dinh dưỡng:  ok Mùi vị:  chua dùng nên ko biết ",
+    "cleaned_text": "giao hàng nhanh, mua uống thử, hi vọng là ngon. giá trị dinh dưỡng: ok mùi vị: chua dùng nên ko biết",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090005.2228494
+  },
+  {
+    "review_id": "1832901640_1770089922953_4d0bbfe1",
+    "original_text": "Đặt hàng rồi đợi mấy ngày trời không thấy giao xong tự huỷ đơn khách hàng kg một lý do. Chưa thấy cửa hàng nào vô trách nhiệm và kg tôn trọng khách hàng như vậy. Quá tê…! ",
+    "cleaned_text": "đặt hàng rồi đợi mấy ngày trời không thấy giao xong tự huỷ đơn khách hàng kg một lý do. chưa thấy cửa hàng nào vô trách nhiệm và kg tôn trọng khách hàng như vậy. quá tê…!",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090035.7799592
+  },
+  {
+    "review_id": "1832901640_1770089922953_75846cbf",
+    "original_text": "đặt nhiều đơn hàng của shop rồi mà shop vẫn hủy đơn hàng ",
+    "cleaned_text": "đặt nhiều đơn hàng của shop rồi mà shop vẫn hủy đơn hàng",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090035.7799695
+  },
+  {
+    "review_id": "1832901640_1770089922953_f4942912",
+    "original_text": "Giao hàng quá thể chậm. Đặt cả nửa tháng mới giao hàng. Quá tệ.  ",
+    "cleaned_text": "giao hàng quá thể chậm. đặt cả nửa tháng mới giao hàng. quá tệ.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090035.7799783
+  },
+  {
+    "review_id": "1832901640_1770089922953_2dd784c4",
+    "original_text": "Giao hàng hơi tệ. Thùng sữa ướt sũng. Có mùi hôi. Không biết do ship đánh rơi hay gì.  Chán.  ",
+    "cleaned_text": "giao hàng hơi tệ. thùng sữa ướt sũng. có mùi hôi. không biết do ship đánh rơi hay gì. chán.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090035.7800164
+  },
+  {
+    "review_id": "1832901640_1770089922954_710e95a1",
+    "original_text": "Giá Cả:hợp lý Hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng, Hương vị tuyệt vời với chút ngọt ngào. Hơi thất vọng vì lần này giao hàng hạn sử dụng còn quá ngắn , sữa sản xuất năm 2023 hết hạn T 09/25 ",
+    "cleaned_text": "giá cả:hợp lý hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng, hương vị tuyệt vời với chút ngọt ngào. hơi thất vọng vì lần này giao hàng hạn sử dụng còn quá ngắn , sữa sản xuất năm 2023 hết hạn t 09/25",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770090035.7800298
+  },
+  {
+    "review_id": "1832901640_1770089922954_d9329638",
+    "original_text": "Đóng gói hàng liên tỉnh mà bọc mỗi cái màng bọc thực phẩm xem có chán không cơ chứ máy mà sữa về vẫn nguyên vẹn không bục toàn hàng thanh toán trước shiper cứ cho vào nhà thôi nếu mà có hỏng vỡ thì cũng kb làm thế nào ",
+    "cleaned_text": "đóng gói hàng liên tỉnh mà bọc mỗi cái màng bọc thực phẩm xem có chán không cơ chứ máy mà sữa về vẫn nguyên vẹn không bục toàn hàng thanh toán trước shiper cứ cho vào nhà thôi nếu mà có hỏng vỡ thì cũng kb làm thế nào",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770090035.7800398
+  },
+  {
+    "review_id": "1832901640_1770089922954_a842356c",
+    "original_text": "Giao hnagf quá chậm, hàng về đại lý không giao cho khách đi bán cho khách khác. Đợi thêm hai ngày sau không gọi lại cho khách, khách phải gọi ra cửa hàng để hỏi và tự lấy hàng. ",
+    "cleaned_text": "giao hnagf quá chậm, hàng về đại lý không giao cho khách đi bán cho khách khác. đợi thêm hai ngày sau không gọi lại cho khách, khách phải gọi ra cửa hàng để hỏi và tự lấy hàng.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770090035.7800481
+  },
+  {
+    "review_id": "1832901640_1770089922954_ea7b3946",
+    "original_text": "Chất lượng sp rất ok, ko có điểm j chê về về sản phẩm, nhưng điểm trừ duy nhất vẫn là câu chuyện cũ, giao hàng cực kỳ chậm, chỉ đc 1* điểm giao hàng thôi ",
+    "cleaned_text": "chất lượng sp rất ok, ko có điểm j chê về về sản phẩm, nhưng điểm trừ duy nhất vẫn là câu chuyện cũ, giao hàng cực kỳ chậm, chỉ đc 1* điểm giao hàng thôi",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770090035.78006
+  },
+  {
+    "review_id": "1832901640_1770089922954_bcc80b33",
+    "original_text": "Sữa pha sẵn mà đóng gói sơ sài, sữa bị móp nhừ bao bì, bị hư hỏng và hôi thối…. ",
+    "cleaned_text": "sữa pha sẵn mà đóng gói sơ sài, sữa bị móp nhừ bao bì, bị hư hỏng và hôi thối….",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770090035.7800684
+  },
+  {
+    "review_id": "1832901640_1770089922954_aa97d1c0",
+    "original_text": "Thơm ngon và bổ dưỡng, Thơm ngon và bổ dưỡng, Hương vị tuyệt vời với một chút ngọt ngào, ",
+    "cleaned_text": "thơm ngon và bổ dưỡng, thơm ngon và bổ dưỡng, hương vị tuyệt vời với một chút ngọt ngào,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770090035.7800756
+  },
+  {
+    "review_id": "1832901640_1770089922955_fbd103f7",
+    "original_text": "Tuyệt vời cho một món ăn nhẹ nhanh chóng và bổ dưỡng, mình chọn hàng 48hop chủ k fải 24 hộp mong shop giao hàng chú ý chút  ",
+    "cleaned_text": "tuyệt vời cho một món ăn nhẹ nhanh chóng và bổ dưỡng, mình chọn hàng 48hop chủ k fải 24 hộp mong shop giao hàng chú ý chút",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770090043.0089304
+  },
+  {
+    "review_id": "1832901640_1770089922955_0225150f",
+    "original_text": "giao hàng lâuTăng cường năng lượng và thúc đẩy lối sống lành mạnh,  ",
+    "cleaned_text": "giao hàng lâutăng cường năng lượng và thúc đẩy lối sống lành mạnh,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770090043.0089388
+  },
+  {
+    "review_id": "1832901640_1770089922955_0a4c1956",
+    "original_text": "Đã mua của shop vài lần và tiếp tục mua ủng hộ shop. Lần này shop giao sữa date hơi gần. Tạm cho 4 sao. ",
+    "cleaned_text": "đã mua của shop vài lần và tiếp tục mua ủng hộ shop. lần này shop giao sữa date hơi gần. tạm cho 4 sao.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090043.008945
+  },
+  {
+    "review_id": "1832901640_1770089922955_c4613183",
+    "original_text": "Tăng cường năng lượng và thúc đẩy lối sống lành mạnh, Hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng, \n ",
+    "cleaned_text": "tăng cường năng lượng và thúc đẩy lối sống lành mạnh, hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090043.008953
+  },
+  {
+    "review_id": "1832901640_1770089922955_9a1cb440",
+    "original_text": "Chất lượng đảm bảo, ngon, rất dễ uống. Mua rẩt nhiều lần rồi. Trừ 1 sao vì đợt này không biết sau giao hơi chậm ",
+    "cleaned_text": "chất lượng đảm bảo, ngon, rất dễ uống. mua rẩt nhiều lần rồi. trừ 1 sao vì đợt này không biết sau giao hơi chậm",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090043.0089593
+  },
+  {
+    "review_id": "1832901640_1770089922956_1986bcd0",
+    "original_text": "Giá Cả:rẻ do có áp mã giảm giá\n Mùi vị:Ngon và bổ dưỡng, Nhiều loại hạt cao cấp,  ",
+    "cleaned_text": "giá cả:rẻ do có áp mã giảm giá mùi vị:ngon và bổ dưỡng, nhiều loại hạt cao cấp,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090043.0089664
+  },
+  {
+    "review_id": "1832901640_1770089922956_48f0865e",
+    "original_text": "Giàu vitamin và khoáng chất, Hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng,  ",
+    "cleaned_text": "giàu vitamin và khoáng chất, hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090043.0089738
+  },
+  {
+    "review_id": "1832901640_1770089922956_1a276afc",
+    "original_text": "Tăng cường năng lượng và thúc đẩy lối sống lành mạnh, Giàu vitamin và khoáng chất, \nĐặt mà shop huỷ miết à ",
+    "cleaned_text": "tăng cường năng lượng và thúc đẩy lối sống lành mạnh, giàu vitamin và khoáng chất, đặt mà shop huỷ miết à",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090043.0089805
+  },
+  {
+    "review_id": "1832901640_1770089922956_1ad4164d",
+    "original_text": "Giá Cả:hợp lý\n Mùi vị:tươi ngon\n Giá trị dinh dưỡng:cao Hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng, Giàu vitamin và khoáng chất,  ",
+    "cleaned_text": "giá cả:hợp lý mùi vị:tươi ngon giá trị dinh dưỡng:cao hoàn hảo cho một bữa ăn nhẹ nhanh chóng và bổ dưỡng, giàu vitamin và khoáng chất,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090043.0089874
+  },
+  {
+    "review_id": "1832901640_1770089922956_a0e54831",
+    "original_text": "date mới, giao nhanh. mà bên này làm ăn hơi bực mình xíu . gói cẩn thận. nên mua nhé mọi người.njj ",
+    "cleaned_text": "date mới, giao nhanh. mà bên này làm ăn hơi bực mình xíu . gói cẩn thận. nên mua nhé mọi người.njj",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090043.0090225
+  },
+  {
+    "review_id": "1832901640_1770089922957_3dbaf1ad",
+    "original_text": "Đáng tiền:cũng tạm m, rẻ hơn ra tiệm mua\n Mùi vị:ngon\nCo điều shop giao hàng lâu quá ",
+    "cleaned_text": "đáng tiền:cũng tạm m, rẻ hơn ra tiệm mua mùi vị:ngon co điều shop giao hàng lâu quá",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090079.5766168
+  }
+]

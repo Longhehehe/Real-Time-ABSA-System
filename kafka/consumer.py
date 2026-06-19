@@ -51,7 +51,7 @@ def check_and_train_model():
         # Import and run training
         # Import and run training
         sys.path.insert(0, BASE_DIR)
-        from train_pipeline import run_training
+        from model.train_pipeline import run_training
         run_training()
         
         # After training, find the new model

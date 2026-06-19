@@ -33,7 +33,7 @@ with DAG(
     # Task 2: Execute the Training Script
     # IMPORTANT: Adjust the path to where your train_pipeline.py is located
     # In Docker (via docker-compose), we mounted the root dir to /opt/airflow/project
-    training_script_path = "train_pipeline.py" 
+    training_script_path = "model/train_pipeline.py"
     
     # Note: In a real Airflow setup (e.g. Docker), the path would be mapped differently (e.g. /opt/airflow/dags/...).
     # Here we assume a local or compatible path for demonstration.

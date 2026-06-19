@@ -70,7 +70,7 @@ lazada_crawler/
 ├── utils.py            # Hàm tiện ích
 ├── requirements.txt    # Thư viện cần thiết
 ├── run_lazada_crawler.bat  # File chạy nhanh
-└── bulk_crawl_progress.csv # Dữ liệu đang crawl (auto-save)
+└── bulk_crawl_progress.csv # Dữ liệu đang crawl mới (auto-save)
 ```
 
 ## ⚙️ Cấu hình
@@ -100,6 +100,7 @@ lazada_crawler/
 
 - **Không đóng cửa sổ Chrome** khi đang crawl
 - Dữ liệu được **tự động lưu** vào `bulk_crawl_progress.csv` sau mỗi sản phẩm
+- Các output lịch sử đã được gom vào `data/crawl_outputs/lazada_crawler/`
 - Nếu bị chặn, **đợi 10-30 phút** rồi thử lại
 - Cookie sẽ được **lưu tự động** cho lần sau
 

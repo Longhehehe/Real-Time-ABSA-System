@@ -19,8 +19,9 @@ import threading
 KAFKA_BOOTSTRAP_SERVERS = os.environ.get('KAFKA_BOOTSTRAP_SERVERS', 'kafka:29092')
 INPUT_TOPIC = 'raw_reviews'
 GROUP_ID = 'absa_spark_consumer_group'
-BATCH_SIZE = 10  # Reduced for faster real-time feedback
-BATCH_TIMEOUT = 15  # Reduced timeout for quicker batch processing
+BATCH_SIZE = int(os.environ.get('ABSA_CONSUMER_BATCH_SIZE', '32'))
+BATCH_TIMEOUT = int(os.environ.get('ABSA_CONSUMER_BATCH_TIMEOUT', '15'))
+SPARK_TARGET_ROWS_PER_PARTITION = int(os.environ.get('SPARK_TARGET_ROWS_PER_PARTITION', '32'))
 
 # Paths
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -227,12 +228,10 @@ def run_spark_prediction(product_id: str, reviews: List[Dict]):
         preprocess_udf = pandas_udf(StringType())(_preprocess_text_logic)
         predict_model_udf = pandas_udf(StringType())(_predict_model_logic)
         
-        # Apply UDFs
-        # Repartition to 1 to ensure we don't scatter 10 items across 10 tasks if unnecessary
-        # But we want parallelism if batch > 1. 10 items -> maybe 2 partitions?
-        # Actually, let Spark decide or force 1 for small batch to keep it in one executor (better for caching)
+        partition_count = max(1, min(8, (len(data) + SPARK_TARGET_ROWS_PER_PARTITION - 1) // SPARK_TARGET_ROWS_PER_PARTITION))
+
         df_result = df \
-            .repartition(1) \
+            .repartition(partition_count) \
             .withColumn("cleaned_text", preprocess_udf(col("review_text"))) \
             .withColumn("sentiment_json", predict_model_udf(col("cleaned_text")))
         

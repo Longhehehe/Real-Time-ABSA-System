@@ -45,7 +45,7 @@ def load_model_on_worker():
         import sys
         sys.path.insert(0, '/app')  # Ensure app modules are visible
         from transformers import AutoTokenizer
-        from phobert_trainer import PhoBERTForABSA
+        from model.phobert_trainer import PhoBERTForABSA
         
         device = torch.device('cpu')  # Use CPU on Spark workers (unless GPU config)
         

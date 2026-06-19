@@ -1,0 +1,3976 @@
+[
+  {
+    "review_id": "1356425180_1770089923279_0a86058b",
+    "original_text": "Đặt mẫu khác nhau! Giao 4 cái giống nhau, cùng 1 size!! Nhắn tin ko giải quyết!!! Nói thông cảm??? Làm gì với 4 cái giống nhau??? ",
+    "cleaned_text": "đặt mẫu khác nhau! giao 4 cái giống nhau, cùng 1 size!! nhắn tin ko giải quyết!!! nói thông cảm??? làm gì với 4 cái giống nhau???",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089952.0771163
+  },
+  {
+    "review_id": "1356425180_1770089923385_186f5c49",
+    "original_text": "Chất vải rất rất xấu so với mấy đợt trước mình mua, mà lỡ đợt này mình mua nhiều rồi nên thấy hối hận quá ",
+    "cleaned_text": "chất vải rất rất xấu so với mấy đợt trước mình mua, mà lỡ đợt này mình mua nhiều rồi nên thấy hối hận quá",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089952.0771418
+  },
+  {
+    "review_id": "1356425180_1770089923385_36497d15",
+    "original_text": "Vải chất lượng tuyệt vời, Kháng khuẩn, không gây mùi cơ thể, Thiết kế phong cách cho những người đam mê bóng áo quần đẹp nhưng mà giao sai size nên đâng giá cho 3*, Lý tưởng cho các hoạt động thể thao,  ",
+    "cleaned_text": "vải chất lượng tuyệt vời, kháng khuẩn, không gây mùi cơ thể, thiết kế phong cách cho những người đam mê bóng áo quần đẹp nhưng mà giao sai size nên đâng giá cho 3*, lý tưởng cho các hoạt động thể thao,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089952.0771537
+  },
+  {
+    "review_id": "1356425180_1770089923385_9c74b94c",
+    "original_text": "vải nóng ",
+    "cleaned_text": "vải nóng",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089952.0771656
+  },
+  {
+    "review_id": "1356425180_1770089923386_e546d581",
+    "original_text": "5.5 ",
+    "cleaned_text": "5.5",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089952.0771768
+  },
+  {
+    "review_id": "1356425180_1770089923386_df8f5f07",
+    "original_text": "giao sai mẫu ",
+    "cleaned_text": "giao sai mẫu",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089952.0771883
+  },
+  {
+    "review_id": "1356425180_1770089923386_f5e6a31e",
+    "original_text": "Giá sale khá rẻ, mặc đi chạy hoặc đá bóng thấy ổn. Phần mác có vẻ là chưa kỹ nên bị bong ra, shop chú ý kỹ hơn chút là đẹp!",
+    "cleaned_text": "giá sale khá rẻ, mặc đi chạy hoặc đá bóng thấy ổn. phần mác có vẻ là chưa kỹ nên bị bong ra, shop chú ý kỹ hơn chút là đẹp!",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089952.0772142
+  },
+  {
+    "review_id": "1356425180_1770089923386_629ba018",
+    "original_text": "Hàng lỗi nên chỉ cho 3 sao thôi .",
+    "cleaned_text": "hàng lỗi nên chỉ cho 3 sao thôi .",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089952.0772276
+  },
+  {
+    "review_id": "1356425180_1770089923386_d6b7f8a0",
+    "original_text": "mẫu đẹp nhưng vải không tốt bằng các mẫu trước có một vài lỗi nhẹ",
+    "cleaned_text": "mẫu đẹp nhưng vải không tốt bằng các mẫu trước có một vài lỗi nhẹ",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089952.0772414
+  },
+  {
+    "review_id": "1356425180_1770089923386_8fbfe01b",
+    "original_text": "sản phẩm nhìn chung tạm được \nchất liệu vải nylon, khá mỏng và nóng , không hấp thụ mồ hôi\nnói chung là hàng trung bình  ",
+    "cleaned_text": "sản phẩm nhìn chung tạm được chất liệu vải nylon, khá mỏng và nóng , không hấp thụ mồ hôi nói chung là hàng trung bình",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089952.077263
+  },
+  {
+    "review_id": "1356425180_1770089923387_9b175737",
+    "original_text": "đã nhận được sản phẩm, không hài lòng với bộ đồ đá banh này vì lem màu hết cả áo quần. không trả hàng được bộ này, bị bắt phải trả hết tất cả trong đơn ",
+    "cleaned_text": "đã nhận được sản phẩm, không hài lòng với bộ đồ đá banh này vì lem màu hết cả áo quần. không trả hàng được bộ này, bị bắt phải trả hết tất cả trong đơn",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089982.111279
+  },
+  {
+    "review_id": "1356425180_1770089923388_08eb2bb4",
+    "original_text": "Vải tương đối ok so với giá tiền  ",
+    "cleaned_text": "vải tương đối ok so với giá tiền",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089982.1112885
+  },
+  {
+    "review_id": "1356425180_1770089923388_41e59a9b",
+    "original_text": "Bộ quần áo bóng đá nhân được giống y như hình ảnh shop đăng-giá sale nên quá rẻ.Quần có dây rút-không có túi  ",
+    "cleaned_text": "bộ quần áo bóng đá nhân được giống y như hình ảnh shop đăng-giá sale nên quá rẻ.quần có dây rút-không có túi",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770089982.1112967
+  },
+  {
+    "review_id": "1356425180_1770089923388_403416eb",
+    "original_text": "Kháng khuẩn, không gây mùi cơ thể, Giá trị tuyệt vời cho giá cả, Thiết kế phong cách cho những người đam mê bóng đá,  ",
+    "cleaned_text": "kháng khuẩn, không gây mùi cơ thể, giá trị tuyệt vời cho giá cả, thiết kế phong cách cho những người đam mê bóng đá,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770089982.1113033
+  },
+  {
+    "review_id": "1356425180_1770089923388_1562b1f5",
+    "original_text": "Vải cũng được nhé, shop  đóng gói nhanh nhé, giao hàng cũng nhanh nhé Chào bán cổ phiếu ra công chúng Chào bạn  ",
+    "cleaned_text": "vải cũng được nhé, shop đóng gói nhanh nhé, giao hàng cũng nhanh nhé chào bán cổ phiếu ra công chúng chào bạn",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770089982.1113098
+  },
+  {
+    "review_id": "1356425180_1770089923388_4bd61503",
+    "original_text": "🎨Thiết kế:  đẹp vải phối màu  🛡Độ bền:  áp tốt  🛡️Độ bền:  vải dày  😌Thoải mái:  thoải mái  📏Vừa vặn:  OK lý tưởng  ✅Chất lượng:  tốt Lý tưởng cho các hoạt động thể thao, Có 8 màu sắc tươi sáng,  ",
+    "cleaned_text": "🎨thiết kế: đẹp vải phối màu 🛡độ bền: áp tốt 🛡️độ bền: vải dày 😌thoải mái: thoải mái 📏vừa vặn: ok lý tưởng ✅chất lượng: tốt lý tưởng cho các hoạt động thể thao, có 8 màu sắc tươi sáng,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770089982.111317
+  },
+  {
+    "review_id": "1356425180_1770089923384_61a7c339",
+    "original_text": "Shop giao sai màu đặt bộ màu trắng lại giao màu đỏ, bộ đỏ đó còn bị phai màu nữa ",
+    "cleaned_text": "shop giao sai màu đặt bộ màu trắng lại giao màu đỏ, bộ đỏ đó còn bị phai màu nữa",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089989.6423075
+  },
+  {
+    "review_id": "1356425180_1770089923384_13a1ca24",
+    "original_text": "Mua màu trắng giao màu đỏ, 1 sao ",
+    "cleaned_text": "mua màu trắng giao màu đỏ, 1 sao",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089989.642318
+  },
+  {
+    "review_id": "1356425180_1770089923385_72f4a5ee",
+    "original_text": "Đặt 4 mẫu!! Gió 4 cái y chang nhau!! Nt ko muốn giải quyết!!! Khách hàng lúc nào cũng là ng chịu thiệt!!l. Lazada ko quản lí nổi!! ",
+    "cleaned_text": "đặt 4 mẫu!! gió 4 cái y chang nhau!! nt ko muốn giải quyết!!! khách hàng lúc nào cũng là ng chịu thiệt!!l. lazada ko quản lí nổi!!",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089989.642327
+  },
+  {
+    "review_id": "1356425180_1770089923385_ca097181",
+    "original_text": "Sai màu sắc\nKhông nên mua nhé mọi người \nBuồn thất vọng lắm ạ\nMọi người  ",
+    "cleaned_text": "sai màu sắc không nên mua nhé mọi người buồn thất vọng lắm ạ mọi người",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770089989.6423357
+  },
+  {
+    "review_id": "1356425180_1770089923385_18f732d7",
+    "original_text": "shop giao sai màu shop giao sai màu shop giao sai màu shop giao sai màu ",
+    "cleaned_text": "shop giao sai màu shop giao sai màu shop giao sai màu shop giao sai màu",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 2,
+    "processed_at": 1770089989.6423433
+  },
+  {
+    "review_id": "1356425180_1770089923385_562f45f3",
+    "original_text": "ko hài lòg giao sai mẫu ",
+    "cleaned_text": "ko hài lòg giao sai mẫu",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 2,
+    "processed_at": 1770089989.6423519
+  },
+  {
+    "review_id": "1356425180_1770089923386_b07a4ce7",
+    "original_text": "Đương chỉ may lỗi",
+    "cleaned_text": "đương chỉ may lỗi",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089989.6423576
+  },
+  {
+    "review_id": "1356425180_1770089923386_da95aed9",
+    "original_text": "màu k đẹp",
+    "cleaned_text": "màu k đẹp",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770089989.642365
+  },
+  {
+    "review_id": "1356425180_1770089923386_c414f866",
+    "original_text": "🎨Thiết kế:  đẹp 🛡Độ bền:  chưa biết thế nào 😌Thoải mái:  tạm chấp nhận dc 📏Vừa vặn:  khá vừa vặn ✅Chất lượng:  vải tạm ổn thôi Giao hàng khá nhanh đóng gói cẩn thận ",
+    "cleaned_text": "🎨thiết kế: đẹp 🛡độ bền: chưa biết thế nào 😌thoải mái: tạm chấp nhận dc 📏vừa vặn: khá vừa vặn ✅chất lượng: vải tạm ổn thôi giao hàng khá nhanh đóng gói cẩn thận",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089989.6423733
+  },
+  {
+    "review_id": "1356425180_1770089923386_e6577c2a",
+    "original_text": "Có sẵn trong nhiều kích cỡ, Có 8 màu sắc tươi sáng, Lý tưởng cho các hoạt động thể thao, Hấp thụ cao và thấm mồ hôi,  ",
+    "cleaned_text": "có sẵn trong nhiều kích cỡ, có 8 màu sắc tươi sáng, lý tưởng cho các hoạt động thể thao, hấp thụ cao và thấm mồ hôi,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770089989.6423807
+  },
+  {
+    "review_id": "1356425180_1770089923386_3df39879",
+    "original_text": "Thiết kế phong cách cho những người đam mê bóng đá, \n 😌Thoải mái:  Lý tưởng cho các hoạt động thể thao,  ✅Chất lượng:  vải cũng tạm ổn thôi ",
+    "cleaned_text": "thiết kế phong cách cho những người đam mê bóng đá, 😌thoải mái: lý tưởng cho các hoạt động thể thao, ✅chất lượng: vải cũng tạm ổn thôi",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090012.9624875
+  },
+  {
+    "review_id": "1356425180_1770089923386_9201cb51",
+    "original_text": "Có sẵn trong nhiều kích cỡ, Vừa vặn hoàn hảo và thoải mái khi mặc, bền và lâu dài . Hàng giao rất nhanh , giao đúng size, đúng mẫu đặt ",
+    "cleaned_text": "có sẵn trong nhiều kích cỡ, vừa vặn hoàn hảo và thoải mái khi mặc, bền và lâu dài . hàng giao rất nhanh , giao đúng size, đúng mẫu đặt",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090012.962506
+  },
+  {
+    "review_id": "1356425180_1770089923387_086427b0",
+    "original_text": "Lý tưởng cho các hoạt động thể thao,  ",
+    "cleaned_text": "lý tưởng cho các hoạt động thể thao,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090012.962519
+  },
+  {
+    "review_id": "1356425180_1770089923387_c8ebccfa",
+    "original_text": "giá ok, vải ok,Giao hàng nhanh nhưng giao không đúng áo, đặt bộ áo trắng quần xanh dương nhưng shop giao màu đen cũng k thấy hỏi có lấy không ",
+    "cleaned_text": "giá ok, vải ok,giao hàng nhanh nhưng giao không đúng áo, đặt bộ áo trắng quần xanh dương nhưng shop giao màu đen cũng k thấy hỏi có lấy không",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090012.9625335
+  },
+  {
+    "review_id": "1356425180_1770089923388_caf548f4",
+    "original_text": "Có 8 màu sắc tươi sáng, Vải chất lượng tuyệt vời, Bền và lâu dài, Giá trị tuyệt vời cho giá cả, nên mua nhiều nhé mọi người ",
+    "cleaned_text": "có 8 màu sắc tươi sáng, vải chất lượng tuyệt vời, bền và lâu dài, giá trị tuyệt vời cho giá cả, nên mua nhiều nhé mọi người",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090012.9625487
+  },
+  {
+    "review_id": "1356425180_1770089923388_a9c2020b",
+    "original_text": "Đóng gói kỹ, giao hàng OK. Với giá 50k/bộ thể thao đá banh ko đòi hỏi gì hơn. Vải mỏng, với áo thì ko sao, còn với quần vải như vậy thì mỏng quá mặc hơi kì. 50k chưa đủ tiền công may cái áo, quá rẻ. Gói hàng rất chi li,tỉ mỉ  có lót giấy cho bộ đồ. Đường kim mũi chỉ rất đẹp. Tuy nhiên đồ trắng mà shop để dính một vệt màu xanh rất lớn trên quần, chắc giặt ko ra. Shop cần ktra kỹ trước khi giao hàng nhé. mn mua ở shop là OK  ",
+    "cleaned_text": "đóng gói kỹ, giao hàng ok. với giá 50k/bộ thể thao đá banh ko đòi hỏi gì hơn. vải mỏng, với áo thì ko sao, còn với quần vải như vậy thì mỏng quá mặc hơi kì. 50k chưa đủ tiền công may cái áo, quá rẻ. gói hàng rất chi li,tỉ mỉ có lót giấy cho bộ đồ. đường kim mũi chỉ rất đẹp. tuy nhiên đồ trắng mà shop để dính một vệt màu xanh rất lớn trên quần, chắc giặt ko ra. shop cần ktra kỹ trước khi giao hàng nhé. mn mua ở shop là ok",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090012.962564
+  },
+  {
+    "review_id": "1356425180_1770089923388_5e7921cd",
+    "original_text": "giao hàng rất nhanh \nđúng size mặc thoải mái.\nmình cao 1m63, nặng 64kg.\nchất vải mát , màu sáng đẹp.ok ",
+    "cleaned_text": "giao hàng rất nhanh đúng size mặc thoải mái. mình cao 1m63, nặng 64kg. chất vải mát , màu sáng đẹp.ok",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090012.9625764
+  },
+  {
+    "review_id": "1356425180_1770089923384_a8dacf57",
+    "original_text": "Đặt mẫu khác nhau! Giao 4 cái y chang nhau!!nt ko giải quyết!!! Làm ăn quá tệ!! ",
+    "cleaned_text": "đặt mẫu khác nhau! giao 4 cái y chang nhau!!nt ko giải quyết!!! làm ăn quá tệ!!",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090020.656169
+  },
+  {
+    "review_id": "1356425180_1770089923384_d29c4793",
+    "original_text": "chất vải mỏng lét,xấu vcl,sale đồ mà vải mỏng tang chán trường quá đang  ",
+    "cleaned_text": "chất vải mỏng lét,xấu vcl,sale đồ mà vải mỏng tang chán trường quá đang",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090020.6561925
+  },
+  {
+    "review_id": "1356425180_1770089923385_8b7cc07a",
+    "original_text": "Giao 4 cái 1 kiểu 1 size xong nói khách thông cảm m!! Vì hết hàng ?????Giờ khách cố mặc đi để ng khác sẽ nhận ra là khách có 4 bộ chứ không phải 1 bộ!! ",
+    "cleaned_text": "giao 4 cái 1 kiểu 1 size xong nói khách thông cảm m!! vì hết hàng ?????giờ khách cố mặc đi để ng khác sẽ nhận ra là khách có 4 bộ chứ không phải 1 bộ!!",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090020.6562698
+  },
+  {
+    "review_id": "1356425180_1770089923385_87e888e3",
+    "original_text": "giao ko đúng mẫu, thất vọng tràn trề, đặt màu xang lại giao màu trắng . nản lắm ko thể tin tưởng  ",
+    "cleaned_text": "giao ko đúng mẫu, thất vọng tràn trề, đặt màu xang lại giao màu trắng . nản lắm ko thể tin tưởng",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090020.6562915
+  },
+  {
+    "review_id": "1356425180_1770089923385_07261dd6",
+    "original_text": "Giao 4 cái giống nhau??? Ntin Ko giải quyết!!’  ",
+    "cleaned_text": "giao 4 cái giống nhau??? ntin ko giải quyết!!’",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090020.6563416
+  },
+  {
+    "review_id": "1356425180_1770089923385_643ff45e",
+    "original_text": "Đặt 2 bộ mà giao có 1 .  ",
+    "cleaned_text": "đặt 2 bộ mà giao có 1 .",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090020.656355
+  },
+  {
+    "review_id": "1356425180_1770089923385_8bc7db10",
+    "original_text": "Vải thô mặc nóng\nÁo bị hấp màu nên sale\nPhù hợp với gias tiền  ",
+    "cleaned_text": "vải thô mặc nóng áo bị hấp màu nên sale phù hợp với gias tiền",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 2,
+    "processed_at": 1770090020.6563625
+  },
+  {
+    "review_id": "1356425180_1770089923385_120da68e",
+    "original_text": "nhiều chỉ thừa chất lượng kém\n ",
+    "cleaned_text": "nhiều chỉ thừa chất lượng kém",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 2,
+    "processed_at": 1770090020.6563709
+  },
+  {
+    "review_id": "1356425180_1770089923385_4ff54506",
+    "original_text": "chất liệu kém lắm mọi người không nên mua\n ",
+    "cleaned_text": "chất liệu kém lắm mọi người không nên mua",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 2,
+    "processed_at": 1770090020.656378
+  },
+  {
+    "review_id": "1356425180_1770089923385_2779fcda",
+    "original_text": "áo quần đẹp nhưng mà giao sai size nên đâng giá cho 3* thôi \n 🎨Thiết kế:áo quần đẹp nhưng mà giao sai size nên đâng giá cho 3*\n 🛡Độ bền:áo quần đẹp nhưng mà giao sai size nên đâng giá cho 3*\n 😌Thoải mái:áo quần đẹp nhưng mà giao sai size nên đâng giá cho 3*\n 📏Vừa vặn:áo quần đẹp nhưng mà giao sai size nên đâng giá cho 3* ",
+    "cleaned_text": "áo quần đẹp nhưng mà giao sai size nên đâng giá cho 3* thôi 🎨thiết kế:áo quần đẹp nhưng mà giao sai size nên đâng giá cho 3* 🛡độ bền:áo quần đẹp nhưng mà giao sai size nên đâng giá cho 3* 😌thoải mái:áo quần đẹp nhưng mà giao sai size nên đâng giá cho 3* 📏vừa vặn:áo quần đẹp nhưng mà giao sai size nên đâng giá cho 3*",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770090020.656387
+  },
+  {
+    "review_id": "1356425180_1770089923386_119d4a9b",
+    "original_text": "Vải mỏng, hơi chật so với bảng size ",
+    "cleaned_text": "vải mỏng, hơi chật so với bảng size",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770090028.6195679
+  },
+  {
+    "review_id": "1356425180_1770089923386_6eabc19a",
+    "original_text": "Có 8 màu sắc tươi sáng,bé cao 1m50 nặng 31kg mặc size S hơi rộng tí,vải mềm,thấm hút mồ hôi..nên mua nha cả nhà ",
+    "cleaned_text": "có 8 màu sắc tươi sáng,bé cao 1m50 nặng 31kg mặc size s hơi rộng tí,vải mềm,thấm hút mồ hôi..nên mua nha cả nhà",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090028.6195772
+  },
+  {
+    "review_id": "1356425180_1770089923387_0c78cbe4",
+    "original_text": "giao k đúng màu, đặt đỏ giao màu kem , vải thì đẹp giao hàng nhanh  ",
+    "cleaned_text": "giao k đúng màu, đặt đỏ giao màu kem , vải thì đẹp giao hàng nhanh",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090028.6195843
+  },
+  {
+    "review_id": "1356425180_1770089923387_c15e6de0",
+    "original_text": "🎨Thiết kế:đẹp\n 🛡Độ bền:kém\n 😌Thoải mái:ok\n 📏Vừa vặn:tốt\n ✅Chất lượng:bình thường\n giá rất rẻ tuy nhiên lỗi khá nặng đấy là phai màu rất nhiều luôn nhé, giặt máy chung quần áo khác thì xác định đi tong mấy món, quần áo này t phải giặt tay, vò cái quần mà đỏ lòm cả chậu. Ra mồ hôi thậm chí nó còn dính màu vào quần áo bên trong nhé nên tuy là quần áo thể thao nhưng mặc để tập thể thao thì k khuyến khích, mặc nhà ok ",
+    "cleaned_text": "🎨thiết kế:đẹp 🛡độ bền:kém 😌thoải mái:ok 📏vừa vặn:tốt ✅chất lượng:bình thường giá rất rẻ tuy nhiên lỗi khá nặng đấy là phai màu rất nhiều luôn nhé, giặt máy chung quần áo khác thì xác định đi tong mấy món, quần áo này t phải giặt tay, vò cái quần mà đỏ lòm cả chậu. ra mồ hôi thậm chí nó còn dính màu vào quần áo bên trong nhé nên tuy là quần áo thể thao nhưng mặc để tập thể thao thì k khuyến khích, mặc nhà ok",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090028.6195915
+  },
+  {
+    "review_id": "1356425180_1770089923387_a259724b",
+    "original_text": "Lý tưởng cho các hoạt động thể thao, Thiết kế phong cách cho những người đam mê bóng đá,  ",
+    "cleaned_text": "lý tưởng cho các hoạt động thể thao, thiết kế phong cách cho những người đam mê bóng đá,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090028.619598
+  },
+  {
+    "review_id": "1356425180_1770089923387_f791a22c",
+    "original_text": "Ok, giao hàng nhanh. ",
+    "cleaned_text": "ok, giao hàng nhanh.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090028.6196184
+  },
+  {
+    "review_id": "1356425180_1770089923387_7b12811a",
+    "original_text": "ok. ",
+    "cleaned_text": "ok.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090028.6196294
+  },
+  {
+    "review_id": "1356425180_1770089923388_a62c39a9",
+    "original_text": "Hàng đặt đã nhận được rồi nhé. Màu kem rất đẹp. Đủ bộ, mặc vừa, rất phù hợp với chơi bóng các loại. Sẽ mua lại với màu khác. ",
+    "cleaned_text": "hàng đặt đã nhận được rồi nhé. màu kem rất đẹp. đủ bộ, mặc vừa, rất phù hợp với chơi bóng các loại. sẽ mua lại với màu khác.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090028.6196373
+  },
+  {
+    "review_id": "1356425180_1770089923388_2902c761",
+    "original_text": "Đồ nhân được giống như hình ảnh của shop-chất vai cũng rất oki-mua đot giảm giá nên có giá rẻ -Mình làm biến đi chụp ảnh-đồ đẹp mọi người  ",
+    "cleaned_text": "đồ nhân được giống như hình ảnh của shop-chất vai cũng rất oki-mua đot giảm giá nên có giá rẻ -mình làm biến đi chụp ảnh-đồ đẹp mọi người",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090028.6196456
+  },
+  {
+    "review_id": "1356425180_1770089923388_ad6d4270",
+    "original_text": "🎨Thiết kế:  đẹp 🛡Độ bền:  chưa búey 😌Thoải mái:  oke 📏Vừa vặn:  đúng fom ✅Chất lượng:  chưa biết đồ mặc mát đẹp phù hợp mùa he ship nhann đóng gói cẩn thận nên mua nha mọi người ",
+    "cleaned_text": "🎨thiết kế: đẹp 🛡độ bền: chưa búey 😌thoải mái: oke 📏vừa vặn: đúng fom ✅chất lượng: chưa biết đồ mặc mát đẹp phù hợp mùa he ship nhann đóng gói cẩn thận nên mua nha mọi người",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090028.6196544
+  },
+  {
+    "review_id": "1356425180_1770089923388_36534aa8",
+    "original_text": "Bộ quần áo bóng đá được sản xuất từ chất liệu vải cao cấp, mềm mại, không chỉ giảm nhăn hiệu quả mà còn bền màu sau nhiều lần giặt và thoáng khí, giúp người mặc cảm thấy thoải mái và tự tin trong mọi hoạt động. Đặc biệt, chất liệu này còn có khả năng co giãn 4 chiều với độ đàn hồi cao, do sự kết hợp theo tỷ lệ đặc biệt từ sợi Polyester. ",
+    "cleaned_text": "bộ quần áo bóng đá được sản xuất từ chất liệu vải cao cấp, mềm mại, không chỉ giảm nhăn hiệu quả mà còn bền màu sau nhiều lần giặt và thoáng khí, giúp người mặc cảm thấy thoải mái và tự tin trong mọi hoạt động. đặc biệt, chất liệu này còn có khả năng co giãn 4 chiều với độ đàn hồi cao, do sự kết hợp theo tỷ lệ đặc biệt từ sợi polyester.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090050.451035
+  },
+  {
+    "review_id": "1356425180_1770089923388_782ff593",
+    "original_text": "Giá trị t.uyệt vời cho giá cả, Thiết kế phong cách cho những người đam mê bóng đá, ............................... ",
+    "cleaned_text": "giá trị t.uyệt vời cho giá cả, thiết kế phong cách cho những người đam mê bóng đá, ...............................",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090050.4510453
+  },
+  {
+    "review_id": "1356425180_1770089923384_24c9b1d2",
+    "original_text": "Ý thức bán hàng quá kém, tự ý thay đổi mẫu chưa hỏi ý kiến khách hàng, đánh giá 1* ý thức người bán nói riêng và cửa hàng Bulbal nói chung. ",
+    "cleaned_text": "ý thức bán hàng quá kém, tự ý thay đổi mẫu chưa hỏi ý kiến khách hàng, đánh giá 1* ý thức người bán nói riêng và cửa hàng bulbal nói chung.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090050.4510548
+  },
+  {
+    "review_id": "1356425180_1770089923385_ac30d85d",
+    "original_text": "Size màu\n Kích cỡ:  rộng\n Màu sắc:  sai màu\nKhông nên mua nua nhé \nBuồn chất lượng kém ",
+    "cleaned_text": "size màu kích cỡ: rộng màu sắc: sai màu không nên mua nua nhé buồn chất lượng kém",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090050.4510646
+  },
+  {
+    "review_id": "1356425180_1770089923385_fd0543d9",
+    "original_text": "Không đúng mẫu  ",
+    "cleaned_text": "không đúng mẫu",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 1,
+    "processed_at": 1770090050.451072
+  },
+  {
+    "review_id": "1356425180_1770089923385_7bbd4e94",
+    "original_text": "No pockets in the shorts ,its very bad and i received defective piece ",
+    "cleaned_text": "no pockets in the shorts ,its very bad and i received defective piece",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 2,
+    "processed_at": 1770090050.4510827
+  },
+  {
+    "review_id": "1356425180_1770089923385_f3c6b7d9",
+    "original_text": "Đồ bị lem màu nhiều\nHấp thụ cao và thấm mồ hôi, Vừa vặn hoàn hảo và thoải mái khi mặc,\n ",
+    "cleaned_text": "đồ bị lem màu nhiều hấp thụ cao và thấm mồ hôi, vừa vặn hoàn hảo và thoải mái khi mặc,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770090050.4510934
+  },
+  {
+    "review_id": "1356425180_1770089923386_9600e3f1",
+    "original_text": "🛡️Độ bền:6đ\n 🎨Thiết kế:xấu vl ",
+    "cleaned_text": "🛡️độ bền:6đ 🎨thiết kế:xấu vl",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 3,
+    "processed_at": 1770090050.4511018
+  },
+  {
+    "review_id": "1356425180_1770089923387_0e5fc0a0",
+    "original_text": "Giao hàng nhanh, ok. ",
+    "cleaned_text": "giao hàng nhanh, ok.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090050.451116
+  },
+  {
+    "review_id": "1356425180_1770089923387_3727ae26",
+    "original_text": "Lý tưởng cho các hoạt động thể thao, Có 8 màu sắc tươi sáng, \nnnnn ",
+    "cleaned_text": "lý tưởng cho các hoạt động thể thao, có 8 màu sắc tươi sáng, nnnn",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090050.4511228
+  },
+  {
+    "review_id": "1356425180_1770089923387_1f446cf0",
+    "original_text": "🎨Thiết kế:ok\n 🛡️Độ bền:ok\n 😌Thoải mái:tamh ổn ",
+    "cleaned_text": "🎨thiết kế:ok 🛡️độ bền:ok 😌thoải mái:tamh ổn",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090057.8525853
+  },
+  {
+    "review_id": "1356425180_1770089923387_ae8387f1",
+    "original_text": "giao không đúng màu đã đặt.Vải chất lượng tuyệt vời, \n 🎨Thiết kế:ok\n 🛡Độ bền:chưa biết \n 😌Thoải mái:ok\n 📏Vừa vặn:ok ",
+    "cleaned_text": "giao không đúng màu đã đặt.vải chất lượng tuyệt vời, 🎨thiết kế:ok 🛡độ bền:chưa biết 😌thoải mái:ok 📏vừa vặn:ok",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090057.8526006
+  },
+  {
+    "review_id": "1356425180_1770089923387_6b399d56",
+    "original_text": "Giá trị tuyệt vời cho giá cả, Vừa vặn hoàn hảo và thoải mái khi mặc, Lý tưởng cho các hoạt động thể thao,  ",
+    "cleaned_text": "giá trị tuyệt vời cho giá cả, vừa vặn hoàn hảo và thoải mái khi mặc, lý tưởng cho các hoạt động thể thao,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090057.8526118
+  },
+  {
+    "review_id": "1356425180_1770089923387_8cfa85f2",
+    "original_text": "vải hơi nóng nhé, cũng ổn, size chuẩn,...................\nphù hợp vận động, co giãn tốt.......................................................................................................... ",
+    "cleaned_text": "vải hơi nóng nhé, cũng ổn, size chuẩn,................... phù hợp vận động, co giãn tốt..........................................................................................................",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090057.852622
+  },
+  {
+    "review_id": "1356425180_1770089923387_106b143e",
+    "original_text": "🎨Thiết kế:  rất ok 🛡Độ bền:  chắc tương đối 😌Thoải mái:  khá thoải mái - chuẩn form á 📏Vừa vặn:  vừa  ✅Chất lượng:  8/10 Nhược điểm : chất không mát lắm\nƯu điểm : rẻ - mua đá bóng tạm ",
+    "cleaned_text": "🎨thiết kế: rất ok 🛡độ bền: chắc tương đối 😌thoải mái: khá thoải mái - chuẩn form á 📏vừa vặn: vừa ✅chất lượng: 8/10 nhược điểm : chất không mát lắm ưu điểm : rẻ - mua đá bóng tạm",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090057.8526382
+  },
+  {
+    "review_id": "1356425180_1770089923388_cdc783a5",
+    "original_text": "Vải hơi bị chắp nối nhiều. Tạm được. ",
+    "cleaned_text": "vải hơi bị chắp nối nhiều. tạm được.",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 4,
+    "processed_at": 1770090057.8526483
+  },
+  {
+    "review_id": "1356425180_1770089923388_f8440c6f",
+    "original_text": "Thiết kế phong cách cho những người đam mê bóng đá, Lý tưởng cho các hoạt động thể thao, Kháng khuẩn, không gây mùi cơ thể, Có sẵn trong nhiều kích cỡ, \n ✅Chất lượng:  ok  ",
+    "cleaned_text": "thiết kế phong cách cho những người đam mê bóng đá, lý tưởng cho các hoạt động thể thao, kháng khuẩn, không gây mùi cơ thể, có sẵn trong nhiều kích cỡ, ✅chất lượng: ok",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090057.8526604
+  },
+  {
+    "review_id": "1356425180_1770089923388_bc22b7ea",
+    "original_text": "Hấp thụ cao và thấm mồ hôi, Giá trị tuyệt vời cho giá cả, Vừa vặn hoàn hảo và thoải mái khi mặc, Bền và lâu dài, Vải chất lượng tuyệt vời,  ",
+    "cleaned_text": "hấp thụ cao và thấm mồ hôi, giá trị tuyệt vời cho giá cả, vừa vặn hoàn hảo và thoải mái khi mặc, bền và lâu dài, vải chất lượng tuyệt vời,",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090057.8526742
+  },
+  {
+    "review_id": "1356425180_1770089923388_88eef81c",
+    "original_text": "Vừa vặn hoàn hảo và thoải mái khi mặc, Kháng khuẩn, không gây mùi cơ thể, bé rất thích,đã quay lại mua vì chất lượng vải tốt,kiểu dáng đẹp..ủng hộ shop nha mn ",
+    "cleaned_text": "vừa vặn hoàn hảo và thoải mái khi mặc, kháng khuẩn, không gây mùi cơ thể, bé rất thích,đã quay lại mua vì chất lượng vải tốt,kiểu dáng đẹp..ủng hộ shop nha mn",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEG",
+          "POS"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090057.8526893
+  },
+  {
+    "review_id": "1356425180_1770089923388_dca26423",
+    "original_text": "Sản phẩm như hình nhé, shop đóng gói nhanh, giao hàng cũng nhanh nhé, shop đóng gói nhanh, giao hàng nhanh nhé ",
+    "cleaned_text": "sản phẩm như hình nhé, shop đóng gói nhanh, giao hàng cũng nhanh nhé, shop đóng gói nhanh, giao hàng nhanh nhé",
+    "sentiment": {
+      "Chất lượng sản phẩm": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Hiệu năng & Trải nghiệm": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đúng mô tả": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Giá cả & Khuyến mãi": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Vận chuyển": {
+        "mentioned": true,
+        "sentiments": [
+          "POS"
+        ]
+      },
+      "Đóng gói": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Dịch vụ & Thái độ Shop": {
+        "mentioned": true,
+        "sentiments": [
+          "NEU"
+        ]
+      },
+      "Bảo hành & Đổi trả": {
+        "mentioned": false,
+        "sentiments": null
+      },
+      "Tính xác thực": {
+        "mentioned": false,
+        "sentiments": null
+      }
+    },
+    "rating": 5,
+    "processed_at": 1770090057.8527012
+  }
+]

@@ -10,6 +10,7 @@ __pycache__
 .Python
 venv/
 .venv/
+.codegraph/
 
 # Jupyter
 .ipynb_checkpoints/
@@ -31,6 +32,8 @@ airflow/logs/
 # IDE
 .idea/
 .vscode/
+dist/
+build/
 
 # Archives
 *.rar
