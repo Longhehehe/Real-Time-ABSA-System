@@ -34,6 +34,10 @@ Mỗi khía cạnh có hai tầng dự đoán:
 - `mentioned`: review có nhắc đến khía cạnh đó hay không.
 - `sentiments`: danh sách nhãn sentiment thuộc `NEG`, `POS`, `NEU`.
 
+Vì đây là multi-polarity ABSA, một khía cạnh trong cùng một bình luận có thể có
+nhiều sentiment cùng lúc, ví dụ `["POS", "NEG"]` khi người dùng vừa khen vừa chê
+cùng một khía cạnh.
+
 ## Kiến Trúc Hệ Thống
 
 ```mermaid
@@ -89,16 +93,16 @@ sequenceDiagram
 
 ```mermaid
 flowchart TD
-    A[Raw Vietnamese review text] --> B[PhoBERT Tokenizer]
-    B --> C[PhoBERT Backbone<br/>vinai/phobert-base]
-    C --> D[[CLS] representation]
-    D --> E[Dropout]
-    E --> F[Mention Head<br/>9 sigmoid outputs]
-    E --> G[Sentiment Head<br/>9 x 3 sigmoid outputs]
+    A["Raw Vietnamese review text"] --> B["PhoBERT Tokenizer"]
+    B --> C["PhoBERT Backbone<br/>vinai/phobert-base"]
+    C --> D["CLS representation"]
+    D --> E["Dropout"]
+    E --> F["Mention Head<br/>9 sigmoid outputs"]
+    E --> G["Sentiment Head<br/>9 x 3 sigmoid outputs"]
 
-    F --> H[Aspect mentioned flags]
-    G --> I[NEG / POS / NEU per aspect]
-    H --> J[Multi-polarity ABSA result]
+    F --> H["Aspect mentioned flags"]
+    G --> I["NEG / POS / NEU per aspect<br/>multi-label sigmoid"]
+    H --> J["Multi-polarity ABSA result"]
     I --> J
 ```
 
@@ -157,7 +161,7 @@ Input:
 
 ```json
 {
-  "text": "Sản phẩm tốt, đóng gói cẩn thận nhưng giao hàng hơi chậm."
+  "text": "Áo mặc đẹp, vải mát nhưng đường may ở cổ hơi lỗi."
 }
 ```
 
@@ -165,19 +169,22 @@ Output:
 
 ```json
 {
-  "text": "Sản phẩm tốt, đóng gói cẩn thận nhưng giao hàng hơi chậm.",
+  "text": "Áo mặc đẹp, vải mát nhưng đường may ở cổ hơi lỗi.",
   "aspects": {
     "Chất lượng sản phẩm": {
       "mentioned": true,
-      "sentiments": ["POS"]
+      "sentiments": ["POS", "NEG"]
     },
-    "Vận chuyển": {
+    "Đóng gói": {
       "mentioned": true,
-      "sentiments": ["NEG"]
+      "sentiments": ["NEU"]
     }
   }
 }
 ```
+
+Trong ví dụ trên, `Chất lượng sản phẩm` có cả `POS` và `NEG` vì cùng một bình luận
+vừa khen chất liệu vừa chê lỗi đường may.
 
 ### Product Pipeline Trigger
 
@@ -229,7 +236,7 @@ Mỗi record thường gồm:
   "multipolarity": {
     "Chất lượng sản phẩm": {
       "mentioned": true,
-      "sentiments": ["POS"]
+      "sentiments": ["POS", "NEG"]
     }
   }
 }
