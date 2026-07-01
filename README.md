@@ -51,10 +51,10 @@ flowchart LR
 
     AF --> Crawler[Lazada Crawler]
     Crawler --> Kafka[(Kafka topic<br/>raw_reviews)]
-    Kafka --> Consumer[Kafka ABSA Consumer<br/>batching]
-    Consumer --> Spark[Spark Processing]
+    Kafka --> Spark[Spark Structured Streaming<br/>app/spark_kafka_streaming_absa.py]
     Spark --> Predictor
 
+    Spark --> PredTopic[(Kafka topic<br/>predictions)]
     Predictor --> Output[(data/predictions)]
     API --> Output
     Output --> FE
@@ -80,14 +80,21 @@ sequenceDiagram
     API->>AF: Trigger realtime_absa_pipeline
     AF->>CR: Crawl reviews
     CR->>K: Publish raw_reviews
-    K->>SP: Consume review batches
-    SP->>M: Batch inference
+    K->>SP: Spark readStream from raw_reviews
+    SP->>M: Micro-batch inference with Pandas UDF
     M-->>SP: Aspect sentiment predictions
+    SP->>K: Write prediction events to predictions topic
     SP->>FS: Write data/predictions/{product_id}.json
     UI->>API: GET /api/trigger-status/{product_id}
     UI->>API: GET /api/predictions/{product_id}
     API-->>UI: Scores, distributions, review-level predictions
 ```
+
+Spark runtime hiện dùng true Structured Streaming: Spark đọc Kafka trực tiếp bằng
+`readStream`, quản lý offset bằng checkpoint trong `data/spark_checkpoints/`, xử lý
+micro-batch bằng Pandas UDF, ghi prediction event vào Kafka topic `predictions`,
+đồng thời giữ file `data/predictions/{product_id}.json` để tương thích với Airflow
+và API hiện tại.
 
 ## Kiến Trúc Mô Hình
 

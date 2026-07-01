@@ -63,6 +63,7 @@ yarn-error.log
 data/predictions/*.json
 data/predictions/*.done
 data/triggers/
+data/spark_checkpoints/
 
 # Local code index/cache
 .codegraph/

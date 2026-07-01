@@ -147,17 +147,27 @@ services:
     build:
       context: .
       dockerfile: docker/Dockerfile.spark
-    command: python /app/app/kafka_absa_consumer.py
+    command:
+      - /opt/spark/bin/spark-submit
+      - --packages
+      - org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.0
+      - /app/app/spark_kafka_streaming_absa.py
     volumes:
       - ./:/app
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=kafka:29092
+      - KAFKA_INPUT_TOPIC=raw_reviews
+      - KAFKA_OUTPUT_TOPIC=predictions
+      - KAFKA_STARTING_OFFSETS=latest
+      - SPARK_CHECKPOINT_DIR=/app/data/spark_checkpoints/absa_kafka_stream
+      - SPARK_TRIGGER_INTERVAL=5 seconds
       - SPARK_MASTER=spark://spark-master:7077
       - PYTHONUNBUFFERED=1
     depends_on:
       - kafka
       - zookeeper
       - spark-master
+      - spark-worker
     restart: always
     deploy:
       resources:
