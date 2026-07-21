@@ -1,0 +1,2 @@
+scripts/setup_experiment_server.sh text eol=lf
+scripts/upload_and_setup_server.ps1 text eol=crlf

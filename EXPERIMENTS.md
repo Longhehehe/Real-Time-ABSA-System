@@ -37,6 +37,32 @@ Dataset sources and citations are recorded in `configs/datasets.json`. The prepa
 
 ## 2. Server preflight
 
+### Automated local-to-server bootstrap
+
+On Windows PowerShell, the launcher can package and upload `absa data`, verify
+SHA-256, bootstrap Ubuntu/Conda/PyTorch, run the audits and smoke tests, and
+start the full matrix in detached `tmux`:
+
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\scripts\upload_and_setup_server.ps1 `
+  -Server "islabworker1@<server-ip>" `
+  -FullRun
+```
+
+If the archive already exists as `~/absa-data.zip` on the server, run after SSH:
+
+```bash
+cd ~/Real-Time-ABSA-System
+bash scripts/setup_experiment_server.sh \
+  --data-archive ~/absa-data.zip \
+  --full-run
+```
+
+Use `--help`/`Get-Help` to inspect CPU, driver-install, skip-upload,
+skip-system-package, smoke-test and dry-run controls. The manual commands below
+remain the source of truth for inspecting each stage independently.
+
 Activate the dedicated Conda environment after every SSH login:
 
 ```bash
