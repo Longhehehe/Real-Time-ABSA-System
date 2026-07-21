@@ -1,0 +1,139 @@
+{
+  "schema_version": 1,
+  "sentiment_order": ["NEG", "POS", "NEU"],
+  "profiles": {
+    "uit_visd4sa": {
+      "task": "acsa",
+      "loader": "uit_jsonl",
+      "description": "UIT-ViSD4SA converted from span annotations to review-level ACSA.",
+      "source_url": "https://github.com/kimkim00/UIT-ViSD4SA",
+      "citation": "Thanh et al., Span Detection for Aspect-Based Sentiment Analysis in Vietnamese, PACLIC 2021.",
+      "span_policy": "collapse_to_review_multi_polarity",
+      "splits": {
+        "train": "absa data/UIT-ViSD4SA-main/UIT-ViSD4SA-main/data/train.jsonl",
+        "dev": "absa data/UIT-ViSD4SA-main/UIT-ViSD4SA-main/data/dev.jsonl",
+        "test": "absa data/UIT-ViSD4SA-main/UIT-ViSD4SA-main/data/test.jsonl"
+      },
+      "aspects": [
+        "BATTERY",
+        "CAMERA",
+        "DESIGN",
+        "FEATURES",
+        "GENERAL",
+        "PERFORMANCE",
+        "PRICE",
+        "SCREEN",
+        "SER&ACC",
+        "STORAGE"
+      ],
+      "polarity_map": {
+        "NEGATIVE": "NEG",
+        "POSITIVE": "POS",
+        "NEUTRAL": "NEU"
+      }
+    },
+    "vlsp2018_hotel": {
+      "task": "acsa",
+      "loader": "vlsp2018_txt",
+      "description": "VLSP 2018 Hotel review-level ACSA using the native 34-aspect taxonomy.",
+      "source_url": "https://vlsp.org.vn/vlsp2018/eval/sa",
+      "citation": "VLSP 2018 Aspect-Based Sentiment Analysis shared task, Hotel domain.",
+      "splits": {
+        "train": "absa data/absa-vlsp-2018-main/absa-vlsp-2018-main/datasets/vlsp2018_hotel/1-VLSP2018-SA-Hotel-train.txt",
+        "dev": "absa data/absa-vlsp-2018-main/absa-vlsp-2018-main/datasets/vlsp2018_hotel/2-VLSP2018-SA-Hotel-dev.txt",
+        "test": "absa data/absa-vlsp-2018-main/absa-vlsp-2018-main/datasets/vlsp2018_hotel/3-VLSP2018-SA-Hotel-test.txt"
+      },
+      "aspects": [
+        "FACILITIES#CLEANLINESS",
+        "FACILITIES#COMFORT",
+        "FACILITIES#DESIGN&FEATURES",
+        "FACILITIES#GENERAL",
+        "FACILITIES#MISCELLANEOUS",
+        "FACILITIES#PRICES",
+        "FACILITIES#QUALITY",
+        "FOOD&DRINKS#MISCELLANEOUS",
+        "FOOD&DRINKS#PRICES",
+        "FOOD&DRINKS#QUALITY",
+        "FOOD&DRINKS#STYLE&OPTIONS",
+        "HOTEL#CLEANLINESS",
+        "HOTEL#COMFORT",
+        "HOTEL#DESIGN&FEATURES",
+        "HOTEL#GENERAL",
+        "HOTEL#MISCELLANEOUS",
+        "HOTEL#PRICES",
+        "HOTEL#QUALITY",
+        "LOCATION#GENERAL",
+        "ROOMS#CLEANLINESS",
+        "ROOMS#COMFORT",
+        "ROOMS#DESIGN&FEATURES",
+        "ROOMS#GENERAL",
+        "ROOMS#MISCELLANEOUS",
+        "ROOMS#PRICES",
+        "ROOMS#QUALITY",
+        "ROOM_AMENITIES#CLEANLINESS",
+        "ROOM_AMENITIES#COMFORT",
+        "ROOM_AMENITIES#DESIGN&FEATURES",
+        "ROOM_AMENITIES#GENERAL",
+        "ROOM_AMENITIES#MISCELLANEOUS",
+        "ROOM_AMENITIES#PRICES",
+        "ROOM_AMENITIES#QUALITY",
+        "SERVICE#GENERAL"
+      ],
+      "polarity_map": {
+        "negative": "NEG",
+        "positive": "POS",
+        "neutral": "NEU"
+      }
+    },
+    "vlsp2018_restaurant": {
+      "task": "acsa",
+      "loader": "vlsp2018_txt",
+      "description": "VLSP 2018 Restaurant review-level ACSA using the native 12-aspect taxonomy.",
+      "source_url": "https://vlsp.org.vn/vlsp2018/eval/sa",
+      "citation": "VLSP 2018 Aspect-Based Sentiment Analysis shared task, Restaurant domain.",
+      "splits": {
+        "train": "absa data/absa-vlsp-2018-main/absa-vlsp-2018-main/datasets/vlsp2018_restaurant/1-VLSP2018-SA-Restaurant-train.txt",
+        "dev": "absa data/absa-vlsp-2018-main/absa-vlsp-2018-main/datasets/vlsp2018_restaurant/2-VLSP2018-SA-Restaurant-dev.txt",
+        "test": "absa data/absa-vlsp-2018-main/absa-vlsp-2018-main/datasets/vlsp2018_restaurant/3-VLSP2018-SA-Restaurant-test.txt"
+      },
+      "aspects": [
+        "AMBIENCE#GENERAL",
+        "DRINKS#PRICES",
+        "DRINKS#QUALITY",
+        "DRINKS#STYLE&OPTIONS",
+        "FOOD#PRICES",
+        "FOOD#QUALITY",
+        "FOOD#STYLE&OPTIONS",
+        "LOCATION#GENERAL",
+        "RESTAURANT#GENERAL",
+        "RESTAURANT#MISCELLANEOUS",
+        "RESTAURANT#PRICES",
+        "SERVICE#GENERAL"
+      ],
+      "polarity_map": {
+        "negative": "NEG",
+        "positive": "POS",
+        "neutral": "NEU"
+      }
+    },
+    "vlsp2016": {
+      "task": "global_sentiment",
+      "loader": "vlsp2016_tsv",
+      "description": "Vietnamese sentence-level sentiment classification; this profile is not ABSA.",
+      "source_url": "https://vlsp.org.vn/",
+      "citation": "VLSP 2016 Sentiment Analysis data as distributed with this project.",
+      "splits": {
+        "train": "absa data/vlsp2016/SA-2016.train",
+        "dev": "absa data/vlsp2016/SA-2016.dev",
+        "test": "absa data/vlsp2016/SA-2016.test",
+        "diagnostic": "absa data/vlsp2016/SA-2016.dev_test"
+      },
+      "aspects": [],
+      "polarity_map": {
+        "NEG": "NEG",
+        "POS": "POS",
+        "NEU": "NEU"
+      }
+    }
+  }
+}

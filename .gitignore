@@ -34,6 +34,16 @@ airflow/logs/
 data/
 # rawdata/
 
+# External benchmark datasets (kept outside Git; see EXPERIMENTS.md)
+/absa data/
+
+# Heavy/reproducible experiment artifacts. Lightweight reports are published
+# separately under reports/experiments/ and are intentionally versioned.
+/artifacts/experiments/
+/.experiment_cache/
+/reports/experiments/**/*.log
+/reports/experiments/**/*.jsonl
+
 # IDE
 .idea/
 .vscode/
