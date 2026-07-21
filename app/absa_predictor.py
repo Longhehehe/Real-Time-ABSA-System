@@ -33,6 +33,9 @@ class GeneralABSAPredictor:
         self.tfidf = None
         self.model_type = None # 'ml', 'deep', 'transformer'
         self.model_class_name = None
+        # New experiment checkpoints carry their native taxonomy. Legacy
+        # checkpoints keep the historical nine-aspect fallback.
+        self.aspects = list(ASPECTS)
         
         # Thresholds (per aspect/class)
         self.mention_threshold = 0.5
@@ -58,13 +61,29 @@ class GeneralABSAPredictor:
     def _load_ml(self):
         with open(self.model_path, 'rb') as f:
             data = pickle.load(f)
+
+        metadata = data.get('metadata', {}) if isinstance(data, dict) else {}
+        task = data.get('task') or metadata.get('task', 'acsa')
+        if task != 'acsa':
+            raise ValueError(
+                f"GeneralABSAPredictor only serves ACSA checkpoints; got task={task!r}"
+            )
+        stored_aspects = metadata.get('aspects') or data.get('aspects')
+        if stored_aspects:
+            self.aspects = list(stored_aspects)
+        num_aspects = int(data.get('num_aspects', len(self.aspects)))
+        if data.get('thresholds_m') is not None:
+            self.mention_threshold = np.asarray(data['thresholds_m'])
+        if data.get('thresholds_s') is not None:
+            self.sentiment_threshold = np.asarray(data['thresholds_s'])
         
         # Determine class from filename or data
         filename = os.path.basename(self.model_path).lower()
-        if 'logistic' in filename:
-            self.model = LogisticRegressionABSA()
+        stored_class = str(data.get('model_class', ''))
+        if stored_class == 'LogisticRegressionABSA' or 'logistic' in filename:
+            self.model = LogisticRegressionABSA(num_aspects=num_aspects)
         else:
-            self.model = NaiveBayesABSA()
+            self.model = NaiveBayesABSA(num_aspects=num_aspects)
             
         self.model.tfidf = data['tfidf']
         self.model.mention_clfs = data['mention_clfs']
@@ -79,8 +98,15 @@ class GeneralABSAPredictor:
         
         # 1. Identify model class
         if isinstance(checkpoint, dict):
+            task = checkpoint.get('task', 'acsa')
+            if task != 'acsa':
+                raise ValueError(
+                    f"GeneralABSAPredictor only serves ACSA checkpoints; got task={task!r}"
+                )
             self.model_class_name = checkpoint.get('model_class')
             state_dict = checkpoint.get('model_state_dict')
+            if checkpoint.get('aspects'):
+                self.aspects = list(checkpoint['aspects'])
             
             # Load thresholds if they exist (new format)
             if 'thresholds_m' in checkpoint and checkpoint['thresholds_m'] is not None:
@@ -100,7 +126,7 @@ class GeneralABSAPredictor:
                     self.model_class_name = 'PhoBERTForABSAMultiPolarity'
         
         # 2. Instantiate and Load
-        num_aspects = len(ASPECTS)
+        num_aspects = len(self.aspects)
         
         if self.model_class_name == 'PhoBERTForABSAMultiPolarity':
             self.model = PhoBERTForABSAMultiPolarity(num_aspects=num_aspects)
@@ -116,9 +142,9 @@ class GeneralABSAPredictor:
             # Determine vocab_size directly from the state_dict to avoid mismatches
             vocab_size = state_dict['embedding.weight'].shape[0]
             if self.model_class_name == 'BiLSTMForABSA':
-                self.model = BiLSTMForABSA(vocab_size=vocab_size)
+                self.model = BiLSTMForABSA(vocab_size=vocab_size, num_aspects=num_aspects)
             else:
-                self.model = CNNBiLSTMForABSA(vocab_size=vocab_size)
+                self.model = CNNBiLSTMForABSA(vocab_size=vocab_size, num_aspects=num_aspects)
             self.model_type = 'deep'
         else:
             raise ValueError(f"Unknown model class: {self.model_class_name}")
@@ -160,16 +186,16 @@ class GeneralABSAPredictor:
     def _format_output(self, prob_m, prob_s) -> dict:
         # th_m can be float (0.5) or array (9,)
         if isinstance(self.mention_threshold, np.ndarray): th_m = self.mention_threshold
-        else: th_m = np.full(len(ASPECTS), self.mention_threshold)
+        else: th_m = np.full(len(self.aspects), self.mention_threshold)
             
         if isinstance(self.sentiment_threshold, np.ndarray): th_s = self.sentiment_threshold
-        else: th_s = np.full((len(ASPECTS), 3), self.sentiment_threshold)
+        else: th_s = np.full((len(self.aspects), 3), self.sentiment_threshold)
         
         preds_m = (prob_m >= th_m).astype(int)
         preds_s = (prob_s >= th_s).astype(int)
         
         # Enforce Neutral if no sentiment but mentioned
-        for i in range(len(ASPECTS)):
+        for i in range(len(self.aspects)):
             if preds_m[i] == 1 and preds_s[i].sum() == 0:
                 preds_s[i, 2] = 1 # NEU
         
@@ -177,7 +203,7 @@ class GeneralABSAPredictor:
         legacy_result = {}
         SENTIMENT_NAMES = ['NEG', 'POS', 'NEU']
         
-        for i, aspect in enumerate(ASPECTS):
+        for i, aspect in enumerate(self.aspects):
             is_m = bool(preds_m[i])
             active_s = [SENTIMENT_NAMES[j] for j in range(3) if preds_s[i, j] == 1]
             

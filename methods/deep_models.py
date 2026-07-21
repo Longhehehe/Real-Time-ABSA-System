@@ -5,14 +5,15 @@ PyTorch models with Embedding layer + dual task heads for multi-polarity ABSA.
 import torch
 import torch.nn as nn
 
-NUM_ASPECTS = 9
+DEFAULT_NUM_ASPECTS = 9
 
 
 class BiLSTMForABSA(nn.Module):
     """BiLSTM model for multi-task multi-polarity ABSA."""
 
     def __init__(self, vocab_size: int, embedding_dim: int = 128,
-                 hidden_dim: int = 256, dropout: float = 0.3):
+                 hidden_dim: int = 256, dropout: float = 0.3,
+                 num_aspects: int = DEFAULT_NUM_ASPECTS):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=0)
         self.lstm = nn.LSTM(
@@ -20,8 +21,9 @@ class BiLSTMForABSA(nn.Module):
             bidirectional=True, batch_first=True, dropout=dropout
         )
         self.dropout = nn.Dropout(dropout)
-        self.head_m = nn.Linear(hidden_dim * 2, NUM_ASPECTS)
-        self.head_s = nn.Linear(hidden_dim * 2, NUM_ASPECTS * 3)
+        self.num_aspects = int(num_aspects)
+        self.head_m = nn.Linear(hidden_dim * 2, self.num_aspects)
+        self.head_s = nn.Linear(hidden_dim * 2, self.num_aspects * 3)
 
     def forward(self, input_ids, attention_mask=None):
         emb = self.embedding(input_ids)
@@ -38,7 +40,7 @@ class BiLSTMForABSA(nn.Module):
         h = self.dropout(h)
 
         logits_m = self.head_m(h)
-        logits_s = self.head_s(h).view(-1, NUM_ASPECTS, 3)
+        logits_s = self.head_s(h).view(-1, self.num_aspects, 3)
         return logits_m, logits_s
 
 
@@ -46,7 +48,8 @@ class CNNBiLSTMForABSA(nn.Module):
     """CNN + BiLSTM model for multi-task multi-polarity ABSA."""
 
     def __init__(self, vocab_size: int, embedding_dim: int = 128,
-                 hidden_dim: int = 256, dropout: float = 0.3):
+                 hidden_dim: int = 256, dropout: float = 0.3,
+                 num_aspects: int = DEFAULT_NUM_ASPECTS):
         super().__init__()
         self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=0)
 
@@ -61,8 +64,9 @@ class CNNBiLSTMForABSA(nn.Module):
             bidirectional=True, batch_first=True, dropout=dropout
         )
         self.dropout = nn.Dropout(dropout)
-        self.head_m = nn.Linear(hidden_dim * 2, NUM_ASPECTS)
-        self.head_s = nn.Linear(hidden_dim * 2, NUM_ASPECTS * 3)
+        self.num_aspects = int(num_aspects)
+        self.head_m = nn.Linear(hidden_dim * 2, self.num_aspects)
+        self.head_s = nn.Linear(hidden_dim * 2, self.num_aspects * 3)
 
     def forward(self, input_ids, attention_mask=None):
         emb = self.embedding(input_ids)
@@ -78,5 +82,5 @@ class CNNBiLSTMForABSA(nn.Module):
         h = self.dropout(h)
 
         logits_m = self.head_m(h)
-        logits_s = self.head_s(h).view(-1, NUM_ASPECTS, 3)
+        logits_s = self.head_s(h).view(-1, self.num_aspects, 3)
         return logits_m, logits_s
