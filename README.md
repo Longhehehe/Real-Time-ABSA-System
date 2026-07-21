@@ -4,6 +4,8 @@ Real-Time ABSA System is an end-to-end Aspect-Based Sentiment Analysis platform 
 
 ABSA means the system does not only classify a review as positive or negative. It extracts sentiment for specific product aspects, such as product quality, shipping, packaging, price, shop service, warranty, authenticity, and description correctness.
 
+For the reproducible six-model benchmark on UIT-ViSD4SA, VLSP 2018 Hotel/Restaurant, and VLSP 2016, see [EXPERIMENTS.md](EXPERIMENTS.md). External datasets keep their native label taxonomies and are never mapped to the Lazada aspects.
+
 ## Table of Contents
 
 1. [System Overview](#system-overview)
@@ -1122,4 +1124,3 @@ Then restart FastAPI.
 - Restrict FastAPI CORS before deployment. The current API allows broad origins.
 - Keep model/data artifacts in controlled storage if they contain private or licensed data.
 - Rotate cookies if you suspect they were leaked.
-
