@@ -1,0 +1,52 @@
+{
+  "allowed_statuses": [
+    "LABELED"
+  ],
+  "curation_sources": [
+    "data/releases/lazada_vi_absa_curation_v2_1_2_20260725/curation_records.jsonl",
+    "data/releases/lazada_vi_absa_delta_curation_v1_20260728/curation_records.jsonl"
+  ],
+  "reservation_ledgers": [
+    "data/annotations/human_reference_v1_20260726/private/group_reservations.jsonl",
+    "data/annotations/q1_human_gold_1200_v1_20260728/private/group_reservations.jsonl"
+  ],
+  "schema_version": "absa-model-data-config/1.0.0",
+  "seed": 20260729,
+  "sources": [
+    {
+      "domain": "crawled_clean",
+      "name": "absa_ai_tranche_5000_v1_20260727",
+      "path": "data/annotations/absa_ai_tranche_5000_v1_20260727/final/ai_pseudo_labels.jsonl"
+    },
+    {
+      "domain": "crawled_clean",
+      "name": "absa_ai_remainder_8976_v1_20260728",
+      "path": "data/annotations/absa_ai_remainder_8976_v1_20260728/final/ai_pseudo_labels.jsonl"
+    },
+    {
+      "domain": "crawled_clean_delta",
+      "name": "absa_ai_delta_v1_20260728",
+      "path": "data/annotations/absa_ai_delta_v1_20260728/final/ai_pseudo_labels.jsonl"
+    },
+    {
+      "domain": "crawled_quarantine",
+      "name": "absa_ai_quarantine_base_11166_v1_20260728",
+      "path": "data/annotations/absa_ai_quarantine_base_11166_v1_20260728/final/ai_pseudo_labels.jsonl"
+    },
+    {
+      "domain": "crawled_quarantine_delta",
+      "name": "absa_ai_quarantine_delta_375_v1_20260728",
+      "path": "data/annotations/absa_ai_quarantine_delta_375_v1_20260728/final/ai_pseudo_labels.jsonl"
+    },
+    {
+      "domain": "legacy_old",
+      "name": "absa_legacy_old_relabel_9772_v1_20260728",
+      "path": "data/annotations/absa_legacy_old_relabel_9772_v1_20260728/final/ai_pseudo_labels.jsonl"
+    }
+  ],
+  "split": {
+    "dev": 0.1,
+    "test": 0.1,
+    "train": 0.8
+  }
+}

@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lazada-dataset-collector"
+version = "0.3.0"
+description = "A provenance-aware collector for building a Vietnamese e-commerce review corpus."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "requests>=2.31,<3",
+]
+
+[project.optional-dependencies]
+browser = [
+  "selenium>=4.18,<5",
+]
+ml = [
+  "numpy>=2,<3",
+  "torch>=2.4,<3",
+  "transformers>=4.45,<5",
+]
+dev = [
+  "pytest>=8,<9",
+]
+
+[project.scripts]
+lazada-collect = "lazada_collector.cli:main"
+absa-system = "absa_system.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]

@@ -1,0 +1,83 @@
+{
+  "schema_version": "q1-human-gold-sampling-config/1.0.0",
+  "snapshot_id": "q1-dataset-snapshot-03caeced3c2f421a",
+  "selection_seed": "q1-human-gold-v1-20260728",
+  "target_unique_reviews": 1200,
+  "annotation_design": {
+    "annotators": 2,
+    "double_blind_records": 1200,
+    "ai_suggestions_visible": false,
+    "adjudicate_all_disagreements": true,
+    "existing_human_reference_usage": "CALIBRATION_ONLY_NOT_FINAL_EVALUATION"
+  },
+  "eligibility": {
+    "source": "crawled_pseudo_label_union_26130",
+    "exclude_existing_human_reference_records": true,
+    "exclude_existing_reference_leakage_groups": true,
+    "exclude_confirmed_duplicate_records": true,
+    "exclude_old_historical_corpus": true,
+    "reserve_selected_leakage_groups_from_future_training": true
+  },
+  "leakage_grouping": {
+    "union_by_product_id": true,
+    "union_by_curated_text_sha256": true,
+    "union_by_near_duplicate_representative": true,
+    "union_by_template_family_id": true,
+    "maximum_selected_groups": 240,
+    "maximum_core_records_per_group": 8,
+    "maximum_total_records_per_group": 12
+  },
+  "panels": {
+    "CORE_BALANCED": {
+      "records": 800,
+      "mapped_categories": [
+        "beauty_personal_care",
+        "electronics",
+        "fashion",
+        "food_beverage",
+        "home_appliances",
+        "home_living",
+        "mother_baby",
+        "sports_outdoors"
+      ],
+      "records_per_category": 100,
+      "minimum_per_category_rating_1_2": 10,
+      "minimum_per_category_rating_3_4": 10,
+      "minimum_selenium_dom_total": 120,
+      "minimum_clean_origin_total": 320,
+      "minimum_quarantine_origin_total": 320,
+      "primary_use": "GROUP_ISOLATED_DEV_TEST_AFTER_ADJUDICATION"
+    },
+    "CHALLENGE_DIAGNOSTIC": {
+      "records": 400,
+      "ordered_disjoint_bin_quotas": {
+        "SEMANTIC_AUDIT_MAJOR": 23,
+        "ESCALATE": 170,
+        "REJECT_NON_REVIEW": 90,
+        "MIXED_POLARITY": 55,
+        "NEUTRAL_POLARITY": 35,
+        "NEGATIVE_OR_RARE_ASPECT": 27
+      },
+      "primary_use": "DIAGNOSTIC_ONLY_NOT_AGGREGATED_AS_PREVALENCE"
+    }
+  },
+  "post_adjudication_split": {
+    "core_dev_records": 300,
+    "core_test_records": 500,
+    "challenge_records": 400,
+    "group_isolation_required": true,
+    "label_aware_split_algorithm_must_be_preregistered_before_execution": true
+  },
+  "agreement_reporting": {
+    "before_adjudication": true,
+    "status_exact_agreement": true,
+    "aspect_mention_f1": true,
+    "polarity_cohen_kappa_per_aspect": true,
+    "krippendorff_alpha": true,
+    "raw_confusion_matrices": true
+  },
+  "review_mode_separation": {
+    "blind_gold_must_be_completed_before_ai_review_for_same_sample": true,
+    "ai_review_package_must_exclude_or_lock_selected_gold_sample_ids": true
+  }
+}

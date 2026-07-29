@@ -1,82 +1,52 @@
 # Python
+.venv/
 __pycache__/
 *.py[cod]
-*$py.class
-*.so
-.Python
-venv/
-env/
-.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
+dist/
+.tmp/
 
-# Jupyter Notebook
-.ipynb_checkpoints/
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+**/*cookie*.json
+**/*cookie*.txt
+**/browser-profile/
+browser-profile/
 
-# Airflow logs (gây lỗi symlink trên Windows)
-airflow/logs/
+# New crawl output. Keep only directory placeholders in Git.
+data/raw/**
+!data/raw/.gitkeep
+data/manifests/**
+!data/manifests/.gitkeep
+data/releases/**
+!data/releases/.gitkeep
+data/annotations/**
+!data/annotations/.gitkeep
 
-# Model files (quá lớn cho GitHub - 540MB)
-*.pth
-*.pt
-*.pkl
-*.pickle
-*.joblib
-*.bin
-*.onnx
-*.safetensors
-*.h5
-# *.pkl  # KEEP cookie files
-*.model
+# Generated outputs
+artifacts/
+models/
+reports/
+logs/
+*.log
+*.docx
+tests/browser_smoke_*.py
 
-# Data files (nếu quá lớn)
-# Large datasets / exports / notebooks
-*.csv
-*.ipynb
-data/
-# rawdata/
+# Superseded model-ready split experiments are kept locally for audit only.
+data/model_ready/absa_pseudo_v1_20260729/
+data/model_ready/absa_pseudo_v1_1_20260729/
 
-# External benchmark datasets (kept outside Git; see EXPERIMENTS.md)
-/absa data/
+# Historical external benchmark sources were never versioned.
+legacy/data/external_benchmarks/
 
-# Heavy/reproducible experiment artifacts. Lightweight reports are published
-# separately under reports/experiments/ and are intentionally versioned.
-/artifacts/experiments/
-/.experiment_cache/
-/reports/experiments/**/*.log
-/reports/experiments/**/*.jsonl
-
-# IDE
+# Editors and operating systems
 .idea/
 .vscode/
-*.swp
-*.swo
-
-# Environment
-.env
-.env.local
-
-# OS
 .DS_Store
 Thumbs.db
-
-# Byte-compiled files
-*.pyc
-
-# Node.js - EXCLUDE when zipping (reinstall on target machine)
-node_modules/
-npm-debug.log
-yarn-error.log
-
-# Compressed files
-*.rar
-*.zip
-*.tar.gz
-
-# Temporary files
-*.tmp
-*.temp
-*.log
-
-# Generated prediction files (will be recreated)
-data/predictions/*.json
-data/predictions/*.done
-data/triggers/

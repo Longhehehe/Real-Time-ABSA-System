@@ -1,0 +1,365 @@
+{
+  "rule_version": "2.1.2",
+  "parent_release": "data/releases/lazada_vi_reviews_delta_v1_20260728",
+  "output_release": "data/releases/lazada_vi_absa_delta_curation_v1_20260728",
+  "statuses": [
+    "KEEP",
+    "KEEP_CLEANED",
+    "QUARANTINE",
+    "EXCLUDE_AUTO"
+  ],
+  "precedence": [
+    "INVALID_SCHEMA",
+    "DUPLICATE",
+    "HARD_NONREVIEW",
+    "NONREVIEW_SUSPECT",
+    "PRIVACY",
+    "PLATFORM_TEMPLATE",
+    "REWARD_DISCLOSURE",
+    "INTERNAL_REPETITION",
+    "POST_CLEAN_QUALITY",
+    "NEAR_DUPLICATE",
+    "PRODUCT_CAP",
+    "KEEP"
+  ],
+  "duplicate": {
+    "cross_transport_word_5gram_jaccard": 0.5,
+    "cross_transport_min_length_ratio": 0.75,
+    "cross_transport_ambiguous_margin": 0.1,
+    "global_clean_word_5gram_jaccard": 0.92,
+    "global_clean_min_length_ratio": 0.9,
+    "product_clean_word_5gram_jaccard": 0.85,
+    "product_clean_min_length_ratio": 0.8
+  },
+  "clause": {
+    "min_tokens": 4,
+    "min_characters": 20,
+    "split_pattern": "[,.!?…;:\\n\\r|•]+"
+  },
+  "internal_repetition": {
+    "min_tokens": 1,
+    "min_characters": 2,
+    "ngram_size": 4,
+    "minimum_repeated_ngrams": 3,
+    "minimum_later_token_coverage": 0.15
+  },
+  "structural_template": {
+    "minimum_segments": 3,
+    "minimum_list_delimiters": 2,
+    "short_segment_min_tokens": 2,
+    "short_segment_max_tokens": 15,
+    "minimum_short_segment_ratio": 0.75,
+    "minimum_catalogue_openers": 2,
+    "weak_global_min_clauses": 1,
+    "weak_global_min_coverage": 0.2,
+    "weak_product_min_clauses": 2,
+    "weak_product_min_coverage": 0.55,
+    "unique_min_marketing_ratio": 0.5,
+    "low_density_min_marketing_ratio": 0.333333,
+    "modular_min_segments": 2,
+    "modular_trailing_min_short_ratio": 0.75,
+    "modular_cleaned_min_short_ratio": 0.6,
+    "modular_min_capitalized_ratio": 0.6,
+    "expanded_spec_min_clauses": 2,
+    "glued_min_segments": 3
+  },
+  "template": {
+    "global_review_df": 5,
+    "global_product_df": 3,
+    "global_candidate_min_recurrent_clauses": 2,
+    "global_min_recurrent_clauses": 3,
+    "global_high_coverage": 0.7,
+    "global_candidate_coverage": 0.4,
+    "product_review_df": 10,
+    "product_min_recurrent_clauses": 3,
+    "product_high_coverage": 0.85,
+    "list_min_segments": 3,
+    "family_min_shared_clauses": 2,
+    "family_max_signature_members": 500
+  },
+  "artifact": {
+    "auto_exclude_token_coverage": 0.8,
+    "minimum_residual_content_tokens": 5,
+    "gibberish_ratio": 0.35,
+    "long_text_manual_audit_chars": 800
+  },
+  "post_clean_quality": {
+    "min_chars": 80,
+    "min_words": 15,
+    "min_unique_word_ratio": 0.4,
+    "min_meaningful_words": 8,
+    "min_score": 0.55,
+    "require_vietnamese": true,
+    "min_vietnamese_signals": 2,
+    "max_foreign_script_ratio": 0.2,
+    "reject_suspect_encoding": true
+  },
+  "product_cap": {
+    "enabled": false,
+    "maximum_reviews": 50,
+    "selection_seed": "lazada-vi-absa-curation-v2-20260725"
+  },
+  "annotation": {
+    "batch_size": 500,
+    "pilot_size": 450,
+    "unflagged_manual_audit_size": 1000,
+    "template_calibration_per_stratum": 200,
+    "allowed_labels": [
+      -1,
+      0,
+      1,
+      2,
+      "1, -1"
+    ],
+    "unlabeled_representation": "blank"
+  },
+  "bilingual_heading_aliases": {
+    "effectiveness": "hiệu quả",
+    "efficiency": "hiệu quả",
+    "fragrance": "hương thơm",
+    "scent": "hương thơm",
+    "ingredients": "thành phần",
+    "ingredient": "thành phần",
+    "quality": "chất lượng",
+    "texture": "kết cấu",
+    "value for money": "đáng tiền",
+    "price": "giá cả",
+    "flavor": "mùi vị",
+    "flavour": "mùi vị",
+    "taste": "mùi vị",
+    "nutritional value": "giá trị dinh dưỡng",
+    "digestibility": "tiêu hóa",
+    "brand trust": "niềm tin thương hiệu",
+    "capacity": "dung lượng",
+    "portability": "tính di động",
+    "charging speed": "tốc độ sạc",
+    "sound quality": "chất lượng âm thanh",
+    "battery life": "thời lượng pin",
+    "spf level": "mức spf",
+    "material": "chất liệu",
+    "ease of use": "dễ sử dụng",
+    "suction power": "công suất hút",
+    "performance": "hiệu năng",
+    "design": "thiết kế",
+    "fit": "độ vừa vặn",
+    "style": "kiểu dáng",
+    "size": "kích thước",
+    "color": "màu sắc",
+    "colour": "màu sắc"
+  },
+  "hard_nonreview_signatures": {
+    "NONREVIEW_GBOARD": [
+      "bang nho tam cua gboard",
+      "bo nho tam cua gboard",
+      "van ban nao ban sao chep se duoc luu tai day",
+      "nhan vao mot doan de dan vao hop van ban",
+      "cham va giu mot doan de ghim",
+      "su dung bieu tuong chinh sua de ghim"
+    ],
+    "NONREVIEW_SHARE_CARD": [
+      "lazada dang livestream",
+      "mua ngay tai lazada",
+      "click tai day de xem ngay",
+      "s lazada vn"
+    ],
+    "NONREVIEW_SMS_TELECOM": [
+      "viettel tb",
+      "mobifone soan",
+      "vinaphone 5g",
+      "thue bao cua quy khach",
+      "quy khach da huy gia han goi",
+      "tai khoan chinh cua quy khach sap het",
+      "quy khach da thanh toan thanh cong",
+      "tai khoan cua quy khach da bi khoa",
+      "ung tien airtime",
+      "quy vac xin phong chong covid 19",
+      "quy khach duoc cong",
+      "tu choi tu van cskh",
+      "goi cuoc se duoc gia han",
+      "tong diem tieu dung con lai",
+      "soan tc gui",
+      "soan huy gui"
+    ],
+    "NONREVIEW_NEWS_LEGAL": [
+      "bm windows cua ong nguyen ba duong",
+      "cuc an ninh mang va pctp",
+      "bo cong an khuyen cao",
+      "bo tttt khuyen cao",
+      "truc ban hinh su",
+      "luat doanh nghiep",
+      "cac vi tri tuyen dung",
+      "trang tran di my dinh cu",
+      "doi tuyen singapore tiep don doi tuyen viet nam",
+      "mat tran to quoc viet nam",
+      "giac mac sau khi hien"
+    ],
+    "NONREVIEW_SYSTEM_TEXT": [
+      "khong co noi dung hop le de hien thi sau khi xoa"
+    ]
+  },
+  "soft_nonreview_patterns_accent_folded": {
+    "SUSPECT_SMS_TELECOM": [
+      "\\bsoan\\s+[a-z0-9]+\\s+gui\\s+\\d{3,5}\\b",
+      "\\b(?:quy khach|tai khoan)\\b.{0,220}\\b(?:gia han goi|airtime|dau so|nap the|bi khoa|ung tien|chi tiet lh)\\b",
+      "\\bquy\\s+vac\\s*xin\\b.{0,220}\\bsoan\\b.{0,80}\\bgui\\b",
+      "(?:^|\\[tb\\]).{0,160}\\b(?:thue bao|goi cuoc|nap the|nap tien vao|gia tri nap|tai khoan vien thong|data toc do cao|mien phi cuoc data)\\b",
+      "\\b(?:viettel|mobifone|vinaphone)\\b.{0,180}\\b(?:quy khach|khuyen mai|tang ngay|soan|cuoc|tai khoan)\\b"
+    ],
+    "SUSPECT_JOB_POST": [
+      "\\btuyen\\s+(?:nhan vien|dung|cong tac vien)\\b",
+      "\\bung vien\\b.{0,120}\\b(?:muc luong|ho so|cong viec)\\b"
+    ],
+    "SUSPECT_NEWS_SOCIAL": [
+      "\\b(?:24hshowbiz|missworld|showbiz|hoa hau)\\b",
+      "\\b(?:asean cup|hlv kim sang sik|doi tuyen singapore)\\b",
+      "\\bphuwin\\b",
+      "\\bchu re\\b.{0,100}\\bnha vo\\b",
+      "\\bgay bat ngo khi tiet lo\\b",
+      "\\bcre\\s*:",
+      "\\bsai lam ma con nguoi ta\\b.{0,600}\\bthuan theo tu nhien\\b",
+      "\\b(?:phim\\s*:|anh\\s*:).{0,100}\\b(?:trich dan|2021|cre|nguyen)\\b",
+      "\\bhay chia se (?:buc anh|bai viet) nay\\b",
+      "\\bcong an\\b.{0,180}\\b(?:toi pham|ma tuy|vao cuoc|de nghi nguoi dan|phat hien|tam giu|trieu tap)\\b",
+      "\\b(?:toi pham|ma tuy|vao cuoc|de nghi nguoi dan|tam giu|trieu tap)\\b.{0,180}\\bcong an\\b",
+      "\\b(?:phim theo chan|phim vui cuoi|trich dan hay)\\b",
+      "\\bthong tu so\\s+\\d+\\/\\d+\\/.{0,40}\\btt-",
+      "\\bhai cau de\\b.{0,120}\\bdeo ngang\\b"
+    ],
+    "SUSPECT_DOCUMENT_EDUCATIONAL": [
+      "\\b(?:mat tran to quoc|dai doan ket cac dan toc)\\b",
+      "\\bgiac mac\\b.{0,160}\\b(?:ngan hang mat|hien tang|cay ghep)\\b",
+      "\\btask\\s*1\\s*:.*\\btask\\s*2\\s*:",
+      "\\bloi bai hat\\b.{0,120}\\b(?:sang tac|bieu dien)\\b",
+      "\\b(?:thcs|luot doc)\\b.{0,180}\\b(?:sang tac|bieu dien|loi bai hat)\\b",
+      "\\bthap ky la khoang thoi gian\\b",
+      "\\btuoi tho\\b.{0,220}\\bgdp\\b|\\bgdp\\b.{0,220}\\btuoi tho\\b",
+      "\\b\\d+\\.\\d+\\.\\s*(?:dieu kien|che do)\\b",
+      "\\bhang tot\\W{0,6}la san pham hoac dich vu\\b",
+      "\\bcac tieu chi chon mua\\b.{0,100}\\bdo day\\b"
+    ],
+    "SUSPECT_PRIVATE_NOTIFICATION": [
+      "(?:^|\\s)@all\\b",
+      "\\blich gio cung ngay hom nay\\b",
+      "\\bchu nhat\\b.{0,100}\\bvo chong em ket hon\\b",
+      "\\b(?:cac em se tan|tb cho ph|thu xep don cac em)\\b"
+    ],
+    "SUSPECT_PLATFORM_GAME": [
+      "\\blazada coin\\b.{0,180}\\b(?:merge boss|nang luong trong game)\\b"
+    ],
+    "SUSPECT_ADVERTISEMENT": [
+      "\\blazada da giao cho ban day du\\b.{0,180}\\bdon hang\\b",
+      "\\bkhach can dat\\b.{0,260}\\b(?:alo|lien he|hotline|ben em co)\\b",
+      "\\b(?:em chuyen|nhan dat)\\b.{0,240}\\b(?:lien he|zalo|hotline|giao hang|gia si)\\b",
+      "\\b(?:photo by|makeup\\s*:)\\b",
+      "(?:#\\w{3,}[\\s,.;]*){2,}",
+      "\\b(?:cashbag|ma dang ky)\\b.{0,140}\\bhoan(?:\\s+them)?\\s+tien\\b",
+      "\\bai can\\b.{0,180}\\b(?:lien he|inbox|ib|zalo)\\b",
+      "\\b(?:muon vay|vay von|vay tien)\\b.{0,100}\\blien he\\b",
+      "\\b(?:buffet|tiktoker)\\b.{0,260}\\b(?:hotline|ctkm|dat ve)\\b",
+      "\\b\\d+[.,]?\\d*\\s*k{2,}\\b.{0,200}\\b(?:cac chi mua|trang tri nha|tang bo me)\\b",
+      "\\b(?:banh goi|banh tom)\\b.{0,300}\\bmoi ca nha len don\\b",
+      "\\bcoc giu nhiet jeep\\b.{0,220}\\bod\\s*\\d",
+      "\\bcherry\\b.{0,260}\\bgia huy diet\\b.{0,160}\\bib\\b",
+      "\\bkhau trang\\b.{0,240}\\b(?:si le|ban si)\\b",
+      "\\bduong link xem\\b.{0,220}\\b(?:tran dau|phat goc|penalty|bang xep hang)\\b",
+      "\\bthong ke chi tiet cac thong so cua tran dau\\b.{0,500}\\bduong link xem\\b",
+      "\\bnguyen se?t ao\\b.{0,220}\\bung ib\\b",
+      "\\bbanh dam mai rang\\b.{0,500}\\b(?:\\d+tang\\d+|freeship)\\b",
+      "\\bbui toc dinh icon\\b.{0,220}\\bib lien\\b",
+      "\\btang\\b.{0,100}\\bcmt dau tien\\b",
+      "\\b(?:hop dong bao hiem|hop dong bh|benh hiem ngheo)\\b.{0,220}\\blien he\\b",
+      "\\b(?:gui chut yeu thuong ve vung lu|kinh phi.{0,100}ba con)\\b",
+      "\\b(?:grabcar|skypoint|klook)\\b",
+      "\\b(?:khu du lich|gia ve)\\b.{0,180}\\b(?:tam suoi|picnic|tre em|vui choi)\\b",
+      "\\b(?:can ban|ban gap)\\s+(?:nha|dat|can ho|chung cu)\\b",
+      "\\b(?:set lau|combo lau)\\b.{0,180}\\b(?:kg|nguoi|gia|phan)\\b",
+      "\\bmenu\\b.{0,180}\\b(?:\\d+\\s*(?:kg|nguoi|phan)|gia\\s*\\d+)\\b",
+      "\\bpass lai\\b.{0,100}\\b\\d+\\s*k\\b.{0,30}\\b(?:chai|lo|cai|doi)\\b",
+      "\\bsale\\b.{0,120}\\b(?:size|co)\\b.{0,160}\\bod\\s*\\d+\\s*[-–]\\s*\\d+\\s*tuan\\b",
+      "\\bthich thi nhanh tay dat hang(?: ngay)?\\b",
+      "\\b(?:thiet ke|san pham|bo suu tap|thuong hieu) cua chung toi\\b",
+      "^\\s*\\[(?:giao|ship|co san|san hang|hoa toc|chi giao|giao tai)\\b[^]]{0,50}\\]\\s*[-–—:]"
+    ],
+    "SUSPECT_COPIED_CONTENT": [
+      "\\b(?:nam mo|phat day|bo thi hanh thien)\\b",
+      "\\bco nhung chuyen\\b.{0,100}\\blap gia dinh\\b",
+      "\\blazada la mot trong nhung nen tang mua sam truc tuyen hang dau\\b",
+      "\\b(?:ma otp|ma xac thuc|otp)\\b.{0,120}\\b(?:zalo|khong cung cap|hieu luc)\\b",
+      "\\bthanks for contacting us\\b",
+      "\\b(?:fan duy quyen|dong le a|a hau)\\b",
+      "\\bsan pham rat xinh dep tuyet voi\\b.{0,180}\\bcam on nha cung cap\\b",
+      "\\bthoi gian van chuyen rat hop li\\b.{0,180}\\bkhong he bi cho moi co\\b",
+      "\\bviet nhan xet\\b.{0,240}\\b(?:he thong diem thuong|tich diem)\\b",
+      "\\bhat chia uc black bag chia\\b",
+      "\\bchinh hang\\b.{0,140}\\bdau goi duoc lieu\\b",
+      "\\bgiao hang nhanh\\b.{0,600}\\bgiao hang nhanh\\b.{0,300}\\b(?:shop uy tin|ung ho shop|san pham rat tot)\\b"
+    ],
+    "SUSPECT_OBFUSCATED_CONTACT": [
+      "\\b(?:z\\s*\\.\\s*a\\s*\\.\\s*l\\s*\\.\\s*o|zaolo|zalo)\\b.{0,50}(?:(?:[0-9oibl])[\\s._-]*){8,12}\\b",
+      "\\b(?:ig|fb|instagram)\\s*:\\s*[_a-z0-9.]{4,}\\b",
+      "\\bhotline\\s*:?\\s*(?:\\d[\\s.-]*){8,12}\\b",
+      "\\b(?:lien he|lin he|rep ib)\\b.{0,100}\\b(?:khong|mot|hai|ba|bon|nam|sau|bay|tam|chin)\\b(?:[\\s.-]+(?:\\d|khong|mot|hai|ba|bon|nam|sau|bay|tam|chin)){7,11}\\b",
+      "\\b(?:lien he|lin he)\\b.{0,80}\\b(?:khong|mot|hai|ba|bon|nam|sau|bay|tam|chin)\\b.{0,30}\\d{5,}.{0,30}\\b(?:khong|mot|hai|ba|bon|nam|sau|bay|tam|chin)\\b",
+      "\\b(?:[a-z0-9-]+\\.)+(?:com(?:\\.vn)?|net(?:\\.vn)?|org(?:\\.vn)?|vn)\\b"
+    ],
+    "SUSPECT_PERSONAL_ABUSE": [
+      "\\bxin dang thong tin ca nhan de tim nguoi\\b",
+      "\\b(?:lua dao gat tien|de phong thang trong anh)\\b"
+    ],
+    "SUSPECT_GENERIC_PURCHASE_ADVICE": [
+      "\\b(?:moi nguoi|cac ban|nguoi mua|ai mua)\\b.{0,160}\\b(?:mua|dat)\\b.{0,160}\\b(?:doc|xem|kiem tra|tim hieu)\\b.{0,100}\\b(?:thong tin|mo ta|chinh sach)\\b"
+    ],
+    "SUSPECT_NO_EVALUATION": [
+      "^(?!.*\\b(?:shop|shipper|giao (?:hang|nhanh|cham|lau|dung|sai)|dong goi|bao bi|tem|gia ca|san sale|hop (?:dep|mop|rach)|mau ma|giong.{0,30}quang cao|google dich)\\b)\\s*chua\\s+(?:su dung|dung|xai|sai|uong|thu|test)\\b.{0,100}\\b(?:khong|ko|k|chua)\\s+(?:biet|bik|bt|ro)\\b.{0,100}\\b(?:hieu qua|tac dung|ket qua|chat luong|do ben|the nao|ra sao)\\b.{0,180}\\b(?:se\\s+quay lai\\s+(?:danh gia|review)|hi vong|hy vong|mong|neu\\s+(?:tot|hieu qua))\\b",
+      "^(?!.*\\b(?:shipper|giao (?:hang|nhanh|cham|lau|dung|sai)|dong goi|bao bi|tem|gia ca|san sale|hop (?:dep|mop|rach)|mau ma|giong.{0,30}quang cao|google dich)\\b)\\s*(?:moi mua|moi nhan|moi su dung|moi dung|su dung lan dau|dung lan dau)\\b.{0,160}\\b(?:doi|cho)\\b.{0,80}\\bmoi biet\\b.{0,80}\\b(?:hieu qua|tac dung|ket qua|chat luong|do ben)\\b.{0,160}\\b(?:neu\\s+tot|neu\\s+hieu qua|se\\s+(?:ung ho|mua tiep|danh gia|review))\\b"
+    ]
+  },
+  "promotional_cta_patterns_accent_folded": [
+    "\\b(?:dung bo lo|neu thich|cac me|cac ba me).{0,100}\\b(?:nhanh tay|nhan de|hay nhan de)\\s+dat hang\\b",
+    "\\bnhanh tay dat hang\\b|\\bnhan de dat hang ngay\\b|\\bhay nhan de dat hang\\b"
+  ],
+  "promotional_cta_min_product_records": 2,
+  "reward_signatures": [
+    "nhan xu",
+    "kiem xu",
+    "lay xu",
+    "hinh anh mang tinh chat",
+    "hinh anh chi mang tinh",
+    "hinh anh minh hoa",
+    "hinh anh chi de minh hoa",
+    "hinh anh va video chi mang tinh",
+    "video mang tinh chat",
+    "viet cho du ky tu",
+    "du 50 ky tu"
+  ],
+  "reward_typo_pattern": "\\b(?:nhận|nhan|lấy|lay|kiếm|kiem)\\s+(?:xu|su)\\b",
+  "reward_suspect_patterns": {
+    "explicit_reward": [
+      "\\b(?:hình|ảnh|hinbf|hunhf|video|clip)\\b.{0,100}\\b(?:nhận+|nhân+|nhan+|ngận|lấy|lay|kiếm|kiem)\\b.{0,30}\\b(?:xu|xy|xe|su|zuu)\\b",
+      "\\b(?:chưa|chua|không|khong)\\s+(?:đủ|du)\\s+\\d+\\s+(?:ký|ky)\\s+(?:tự|tu)\\b",
+      "\\b(?:viết nhận xét|viet nhan xet)\\b.{0,220}\\b(?:tích điểm|tich diem|điểm thưởng|diem thuong|nhận ưu đãi|nhan uu dai)\\b",
+      "\\b(?:nhận xét|đánh giá|review)\\b.{0,100}\\b(?:lấy|nhận)\\b.{0,40}\\b(?:voucher|mã giảm giá|ma giam gia|ưu đãi)\\b"
+    ],
+    "generic_disclaimer": [
+      "\\b(?:hình|ảnh|hinbf|hunhf|video|clip)\\b.{0,100}\\b(?:minh họa|minh hoạ|minh hoa|không liên quan|k liên quan|mang tính(?: chất)? (?:minh họa|minh hoạ|minh hoa)|cho có)\\b"
+    ]
+  },
+  "reward_context_guard_patterns": [
+    "\\bkhông có ảnh minh hoạ\\b|\\bkhông có ảnh minh họa\\b",
+    "\\bnhư trong ảnh minh hoạ\\b|\\bnhư trong ảnh minh họa\\b",
+    "\\bảnh minh (?:hoạ|họa)\\b.{0,100}\\b(?:tặng kèm|hàng thật|không kèm|ko kèm|không đúng|ko đúng)\\b",
+    "\\b(?:rất\\s+)?giống(?:\\s+như)?\\s+(?:trong\\s+)?(?:hình|ảnh)\\s+minh\\s*(?:hoạ|họa)\\b",
+    "\\b(?:màu\\s+)?(?:đậm|nhạt)\\s+hơn\\s+so\\s+với\\s+(?:hình|ảnh)\\s+minh\\s*(?:hoạ|họa)\\b"
+  ],
+  "qc_audit_escalations": {
+    "QC_AUDIT_PURE_TEMPLATE": [],
+    "QC_AUDIT_BORDERLINE": [],
+    "QC_AUDIT_MIXED_NOISY": [],
+    "QC_AUDIT_NONREVIEW": []
+  },
+  "privacy": {
+    "phone_pattern": "(?<!\\d)(?:(?:\\+?84)[\\s.-]?(?:3|5|7|8|9)\\d(?:[\\s.-]?\\d){7}|0(?:3|5|7|8|9)\\d(?:[\\s.-]?\\d){7})(?!\\d)",
+    "email_pattern": "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}",
+    "url_pattern": "https?://\\S+|(?:www\\.)\\S+|\\b(?:[A-Za-z0-9-]+\\.)+(?:com(?:\\.vn)?|net(?:\\.vn)?|org(?:\\.vn)?|vn)\\b"
+  }
+}

@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>Human ABSA Reference</title>
+    <link rel="stylesheet" href="/styles.css">
+    <script src="/app.js" type="module"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#annotationMain">Bỏ qua đến vùng gán nhãn</a>
+
+    <div id="bootScreen" class="state-screen" role="status" aria-live="polite">
+      <div class="state-card">
+        <span class="spinner" aria-hidden="true"></span>
+        <h1>Đang kiểm tra assignment</h1>
+        <p id="bootDetail">Đối chiếu workflow, schema, checksum và review hash.</p>
+      </div>
+    </div>
+
+    <div id="fatalScreen" class="state-screen" hidden>
+      <div class="state-card state-card-error">
+        <p class="eyebrow">Không thể mở phiên gán nhãn</p>
+        <h1 id="fatalTitle">Assignment không hợp lệ</h1>
+        <p id="fatalMessage"></p>
+        <button id="retryButton" class="button button-primary" type="button">
+          Thử tải lại
+        </button>
+      </div>
+    </div>
+
+    <div id="appShell" class="app-shell" hidden>
+      <header class="topbar">
+        <div class="brand-block">
+          <p id="workflowEyebrow" class="eyebrow">Đang xác minh workflow</p>
+          <div class="brand-line">
+            <h1>ABSA Annotation Desk</h1>
+            <span id="roleBadge" class="badge"></span>
+          </div>
+        </div>
+
+        <div class="topbar-progress" aria-label="Tiến độ assignment">
+          <div class="progress-copy">
+            <span id="progressText">0 / 0 hoàn tất</span>
+            <span id="saveState" class="save-state" role="status">Đã lưu</span>
+          </div>
+          <div
+            class="progress-track"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="1"
+            aria-valuenow="0"
+          >
+            <span id="progressFill"></span>
+          </div>
+        </div>
+
+        <nav class="top-actions" aria-label="Công cụ phiên">
+          <button id="openRecordsButton" class="button button-quiet" type="button">
+            Danh sách
+          </button>
+          <button id="openGuideButton" class="button button-quiet" type="button">
+            Guideline
+          </button>
+          <button id="openShortcutsButton" class="button button-quiet" type="button">
+            Phím tắt
+          </button>
+          <button id="exportDraftButton" class="button button-secondary" type="button">
+            Sao lưu
+          </button>
+        </nav>
+      </header>
+
+      <aside
+        id="reviewModeBanner"
+        class="review-mode-banner"
+        role="status"
+        hidden
+      >
+        <strong id="workflowBannerTitle">Workflow có hỗ trợ</strong>
+        <span id="workflowBannerText"></span>
+      </aside>
+
+      <main id="annotationMain" class="workspace">
+        <section class="review-panel" aria-labelledby="reviewHeading">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Review nguyên văn</p>
+              <h2 id="reviewHeading">Đọc toàn bộ trước khi gán</h2>
+            </div>
+            <button
+              id="revisitButton"
+              class="flag-button"
+              type="button"
+              aria-pressed="false"
+            >
+              Đánh dấu xem lại
+            </button>
+          </div>
+
+          <div class="record-meta">
+            <button id="previousButton" class="nav-button" type="button">
+              Trước
+            </button>
+            <div class="record-position">
+              <strong id="recordPosition">1 / 0</strong>
+              <code id="annotationId"></code>
+            </div>
+            <button id="nextButton" class="nav-button" type="button">
+              Sau
+            </button>
+          </div>
+
+          <article
+            id="reviewText"
+            class="review-text"
+            tabindex="0"
+            aria-label="Nội dung review. Có thể chọn đoạn văn để làm evidence."
+          ></article>
+
+          <section
+            id="adjudicationPanel"
+            class="adjudication-panel"
+            aria-labelledby="adjudicationHeading"
+            hidden
+          >
+            <div class="adjudication-heading">
+              <div>
+                <p class="eyebrow">So sánh blind annotation đã khóa</p>
+                <h3 id="adjudicationHeading">Nguồn A và B</h3>
+              </div>
+              <span id="disagreementCount" class="badge"></span>
+            </div>
+            <p id="disagreementFields" class="disagreement-fields"></p>
+            <div class="comparison-grid">
+              <article class="comparison-card">
+                <div class="comparison-card-heading">
+                  <h4>Annotator A</h4>
+                  <button
+                    id="applySourceAButton"
+                    class="button button-secondary"
+                    type="button"
+                  >
+                    Dùng A làm điểm xuất phát
+                  </button>
+                </div>
+                <div id="adjudicationSourceA"></div>
+              </article>
+              <article class="comparison-card">
+                <div class="comparison-card-heading">
+                  <h4>Annotator B</h4>
+                  <button
+                    id="applySourceBButton"
+                    class="button button-secondary"
+                    type="button"
+                  >
+                    Dùng B làm điểm xuất phát
+                  </button>
+                </div>
+                <div id="adjudicationSourceB"></div>
+              </article>
+            </div>
+            <p class="adjudication-note">
+              Expert phải đưa ra annotation cuối. Nếu kết quả không trùng hoàn
+              toàn A hoặc B, ghi lý do manual override trong ô Ghi chú.
+            </p>
+          </section>
+
+          <div id="selectionTray" class="selection-tray" hidden>
+            <div>
+              <span class="selection-label">Đoạn đang chọn</span>
+              <q id="selectionPreview"></q>
+            </div>
+            <button id="clearSelectionButton" class="text-button" type="button">
+              Bỏ chọn
+            </button>
+          </div>
+
+          <div class="read-check">
+            <label>
+              <input id="readCompleteCheckbox" type="checkbox">
+              Tôi đã đọc toàn bộ review này
+            </label>
+            <button id="fillAbsentButton" class="text-button" type="button">
+              Điền các ô trống = Không nhắc
+            </button>
+          </div>
+
+          <details class="reference-card">
+            <summary>Nhắc nhanh: neutral khác absent</summary>
+            <p>
+              <strong>0 · Trung tính</strong> khi aspect được nhắc nhưng không có
+              cực tính rõ. <strong>2 · Không nhắc</strong> khi review hoàn toàn
+              không có bằng chứng cho aspect.
+            </p>
+          </details>
+        </section>
+
+        <section class="annotation-panel" aria-labelledby="annotationHeading">
+          <div class="panel-heading annotation-heading">
+            <div>
+              <p class="eyebrow">Chín quyết định độc lập</p>
+              <h2 id="annotationHeading">Nhãn và bằng chứng</h2>
+            </div>
+            <span id="recordStateBadge" class="record-state">Chưa hoàn tất</span>
+          </div>
+
+          <fieldset class="status-fieldset">
+            <legend>Trạng thái review</legend>
+            <div class="status-options">
+              <label>
+                <input type="radio" name="annotationStatus" value="LABELED">
+                <span>Gán nhãn</span>
+              </label>
+              <label>
+                <input type="radio" name="annotationStatus" value="ESCALATE">
+                <span>Cần hòa giải</span>
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="annotationStatus"
+                  value="REJECT_NON_REVIEW"
+                >
+                <span>Không phải review</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div id="aspectList" class="aspect-list"></div>
+
+          <details class="uncertainty-card">
+            <summary>Mã không chắc chắn ở cấp review</summary>
+            <div id="reviewUncertainty" class="checkbox-grid"></div>
+          </details>
+
+          <label class="notes-field">
+            <span>Ghi chú</span>
+            <textarea
+              id="notesInput"
+              rows="3"
+              maxlength="2000"
+              placeholder="Bắt buộc nếu chọn OTHER hoặc Không phải review."
+            ></textarea>
+          </label>
+
+          <section
+            id="validationPanel"
+            class="validation-panel"
+            aria-labelledby="validationHeading"
+            hidden
+          >
+            <h3 id="validationHeading">Cần sửa trước khi hoàn tất</h3>
+            <ul id="validationList"></ul>
+          </section>
+
+          <div class="completion-bar">
+            <button id="validateButton" class="button button-secondary" type="button">
+              Kiểm tra
+            </button>
+            <button id="completeButton" class="button button-primary" type="button">
+              Hoàn tất và sang review kế
+            </button>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footerbar">
+        <div>
+          <span id="assignmentLabel"></span>
+          <span aria-hidden="true">·</span>
+          <span>Guideline 2.0.0</span>
+        </div>
+        <div>
+          <label class="annotator-field">
+            Mã người gán
+            <input
+              id="annotatorIdInput"
+              type="text"
+              maxlength="40"
+              autocomplete="off"
+              spellcheck="false"
+              placeholder="ví dụ: ANN-01"
+            >
+          </label>
+          <button id="importButton" class="text-button" type="button">
+            Khôi phục bản sao
+          </button>
+          <input id="importFileInput" type="file" accept=".json,application/json" hidden>
+          <button id="finalizeButton" class="button button-dark" type="button">
+            Xuất FINAL
+          </button>
+        </div>
+      </footer>
+    </div>
+
+    <dialog id="recordsDialog" class="drawer-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">Điều hướng assignment</p>
+          <h2 id="recordsDialogTitle">Danh sách review</h2>
+        </div>
+        <button class="dialog-close text-button" type="button">Đóng</button>
+      </div>
+      <div class="filter-row" role="group" aria-label="Lọc trạng thái">
+        <button class="filter-button active" data-filter="all" type="button">Tất cả</button>
+        <button class="filter-button" data-filter="incomplete" type="button">Chưa xong</button>
+        <button class="filter-button" data-filter="complete" type="button">Đã xong</button>
+        <button class="filter-button" data-filter="revisit" type="button">Xem lại</button>
+        <button class="filter-button" data-filter="uncertain" type="button">Không chắc</button>
+      </div>
+      <div id="recordGrid" class="record-grid"></div>
+    </dialog>
+
+    <dialog id="guideDialog" class="drawer-dialog guide-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">Chuẩn đang khóa</p>
+          <h2>Guideline V2</h2>
+        </div>
+        <button class="dialog-close text-button" type="button">Đóng</button>
+      </div>
+      <div class="guide-body">
+        <section>
+          <h3>Năm nhãn canonical</h3>
+          <dl class="definition-list">
+            <div><dt>2</dt><dd>Aspect hoàn toàn không được nhắc.</dd></div>
+            <div><dt>-1</dt><dd>Tiêu cực, phải có evidence negative.</dd></div>
+            <div><dt>0</dt><dd>Được nhắc nhưng trung tính.</dd></div>
+            <div><dt>1</dt><dd>Tích cực, phải có evidence positive.</dd></div>
+            <div><dt>1, -1</dt><dd>Có cả evidence positive và negative.</dd></div>
+          </dl>
+        </section>
+        <section>
+          <h3>Checklist trước Submit</h3>
+          <ol>
+            <li>Đây có thực sự là review không?</li>
+            <li>Đã đọc toàn bộ review, kể cả nhiều câu và nhiều dòng?</li>
+            <li>Mỗi nhãn mentioned có exact evidence?</li>
+            <li>Có nhầm neutral với absent không?</li>
+            <li>Có lan cảm xúc từ aspect này sang aspect khác không?</li>
+            <li>Cùng aspect có cả positive và negative cần mixed không?</li>
+            <li>Đủ chín nhãn và không còn ô trống?</li>
+            <li>Ca không chắc đã có uncertainty code?</li>
+          </ol>
+        </section>
+        <a
+          class="button button-secondary"
+          href="/guideline.md"
+          target="_blank"
+          rel="noopener"
+        >
+          Mở toàn bộ guideline nguyên bản
+        </a>
+      </div>
+    </dialog>
+
+    <dialog id="shortcutsDialog" class="modal-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p class="eyebrow">Làm nhanh, không đổi semantics</p>
+          <h2>Phím tắt</h2>
+        </div>
+        <button class="dialog-close text-button" type="button">Đóng</button>
+      </div>
+      <dl class="shortcut-list">
+        <div><dt><kbd>Alt</kbd> + <kbd>1…9</kbd></dt><dd>Focus aspect</dd></div>
+        <div><dt><kbd>A</kbd></dt><dd>Không nhắc · 2</dd></div>
+        <div><dt><kbd>N</kbd></dt><dd>Tiêu cực · -1</dd></div>
+        <div><dt><kbd>U</kbd></dt><dd>Trung tính · 0</dd></div>
+        <div><dt><kbd>P</kbd></dt><dd>Tích cực · 1</dd></div>
+        <div><dt><kbd>M</kbd></dt><dd>Mixed · 1, -1</dd></div>
+        <div><dt><kbd>E</kbd></dt><dd>Thêm đoạn đang chọn làm evidence</dd></div>
+        <div><dt><kbd>Ctrl</kbd> + <kbd>Enter</kbd></dt><dd>Kiểm tra và hoàn tất</dd></div>
+        <div><dt><kbd>G</kbd></dt><dd>Bật/tắt đánh dấu xem lại</dd></div>
+        <div><dt><kbd>?</kbd></dt><dd>Mở bảng phím tắt</dd></div>
+      </dl>
+    </dialog>
+
+    <dialog id="confirmDialog" class="modal-dialog">
+      <div class="dialog-heading">
+        <div>
+          <p id="confirmEyebrow" class="eyebrow">Xác nhận</p>
+          <h2 id="confirmTitle">Tiếp tục?</h2>
+        </div>
+      </div>
+      <p id="confirmMessage"></p>
+      <div class="dialog-actions">
+        <button id="confirmCancelButton" class="button button-secondary" type="button">
+          Hủy
+        </button>
+        <button id="confirmAcceptButton" class="button button-primary" type="button">
+          Xác nhận
+        </button>
+      </div>
+    </dialog>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  </body>
+</html>

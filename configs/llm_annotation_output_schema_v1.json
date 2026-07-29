@@ -1,0 +1,127 @@
+{
+  "$id": "https://local.invalid/schemas/absa-llm-pseudo-label-v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "annotation_status": {
+      "enum": [
+        "LABELED",
+        "ESCALATE",
+        "REJECT_NON_REVIEW"
+      ]
+    },
+    "aspects": {
+      "items": {
+        "additionalProperties": false,
+        "properties": {
+          "aspect": {
+            "enum": [
+              "Chất lượng sản phẩm",
+              "Hiệu năng & Trải nghiệm",
+              "Đúng mô tả",
+              "Giá cả & Khuyến mãi",
+              "Vận chuyển",
+              "Đóng gói",
+              "Dịch vụ & Thái độ Shop",
+              "Bảo hành & Đổi trả",
+              "Tính xác thực"
+            ]
+          },
+          "evidence": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "occurrence": {
+                  "minimum": 1,
+                  "type": "integer"
+                },
+                "polarity": {
+                  "enum": [
+                    "positive",
+                    "negative",
+                    "neutral"
+                  ]
+                },
+                "quote": {
+                  "minLength": 1,
+                  "type": "string"
+                }
+              },
+              "required": [
+                "quote",
+                "occurrence",
+                "polarity"
+              ],
+              "type": "object"
+            },
+            "type": "array"
+          },
+          "label": {
+            "enum": [
+              -1,
+              0,
+              1,
+              2,
+              "1, -1",
+              null
+            ]
+          },
+          "uncertainty_codes": {
+            "items": {
+              "enum": [
+                "ASPECT_BOUNDARY",
+                "POLARITY_SCOPE",
+                "SARCASM",
+                "INSUFFICIENT_CONTEXT",
+                "TYPO_LANGUAGE",
+                "NON_REVIEW",
+                "BOILERPLATE_MIXED_WITH_REVIEW",
+                "OTHER"
+              ]
+            },
+            "type": "array",
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "aspect",
+          "label",
+          "evidence",
+          "uncertainty_codes"
+        ],
+        "type": "object"
+      },
+      "maxItems": 9,
+      "minItems": 9,
+      "type": "array"
+    },
+    "notes": {
+      "type": "string"
+    },
+    "review_uncertainty_codes": {
+      "items": {
+        "enum": [
+          "ASPECT_BOUNDARY",
+          "POLARITY_SCOPE",
+          "SARCASM",
+          "INSUFFICIENT_CONTEXT",
+          "TYPO_LANGUAGE",
+          "NON_REVIEW",
+          "BOILERPLATE_MIXED_WITH_REVIEW",
+          "OTHER"
+        ]
+      },
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "annotation_status",
+    "aspects",
+    "review_uncertainty_codes",
+    "notes"
+  ],
+  "title": "Vietnamese ABSA LLM pseudo-label response v1",
+  "type": "object",
+  "x-schema-version": "absa-llm-annotation/1.0.0"
+}

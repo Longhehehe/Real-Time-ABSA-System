@@ -1,0 +1,12 @@
+[collector]
+transport = "auto"
+page_size = 50
+max_pages = 100
+min_delay_seconds = 1.5
+max_delay_seconds = 3.0
+headless = true
+cookie_file = "src/cookies.txt"
+review_browser_fallback = false
+
+[output]
+root = "data/raw"

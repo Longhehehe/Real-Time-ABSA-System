@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Compact ABSA batch response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "records"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "enum": [
+        "absa-ai-compact-response/1.0.0"
+      ]
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "s",
+          "y",
+          "e",
+          "u",
+          "au",
+          "n"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "s": {
+            "type": "string",
+            "enum": [
+              "L",
+              "E",
+              "R"
+            ]
+          },
+          "y": {
+            "type": "array",
+            "minItems": 9,
+            "maxItems": 9,
+            "items": {
+              "anyOf": [
+                {
+                  "type": "integer",
+                  "enum": [
+                    -1,
+                    0,
+                    1,
+                    2
+                  ]
+                },
+                {
+                  "type": "string",
+                  "enum": [
+                    "1, -1"
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "e": {
+            "type": "array",
+            "minItems": 9,
+            "maxItems": 9,
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "items": {
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "integer"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "u": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ASPECT_BOUNDARY",
+                "POLARITY_SCOPE",
+                "SARCASM",
+                "INSUFFICIENT_CONTEXT",
+                "TYPO_LANGUAGE",
+                "NON_REVIEW",
+                "BOILERPLATE_MIXED_WITH_REVIEW",
+                "OTHER"
+              ]
+            }
+          },
+          "au": {
+            "type": "array",
+            "minItems": 9,
+            "maxItems": 9,
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "ASPECT_BOUNDARY",
+                  "POLARITY_SCOPE",
+                  "SARCASM",
+                  "INSUFFICIENT_CONTEXT",
+                  "TYPO_LANGUAGE",
+                  "NON_REVIEW",
+                  "BOILERPLATE_MIXED_WITH_REVIEW",
+                  "OTHER"
+                ]
+              }
+            }
+          },
+          "n": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

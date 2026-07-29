@@ -1,0 +1,360 @@
+{
+  "artifacts": [
+    {
+      "bytes": 31833810,
+      "path": "train.jsonl",
+      "records": 22508,
+      "sha256": "f319eb425da707320320f59867afc93bd5c1e00703d8f86f37d336794967249c"
+    },
+    {
+      "bytes": 4229939,
+      "path": "dev.jsonl",
+      "records": 2861,
+      "sha256": "2173b297896fa0a85ea52a29d68e128348350359c73797c8804be805c474e1c1"
+    },
+    {
+      "bytes": 4278758,
+      "path": "test.jsonl",
+      "records": 2897,
+      "sha256": "93142c20e1bf43e292fbf93f2f45f70564d956dcf9e194dbf0952d7229b0b5f0"
+    },
+    {
+      "bytes": 15259428,
+      "path": "decision_ledger.jsonl",
+      "records": 35902,
+      "sha256": "dcf17abd0f492f99e9231bc29421826198116c19bf72fed303bd42ffb7fedc77"
+    },
+    {
+      "bytes": 1812,
+      "path": "data_config.json",
+      "sha256": "fb2271fa372d323e1f06f9b4ab412504333a7651f4953a08293fdef470337bd1"
+    },
+    {
+      "bytes": 317,
+      "path": "README.md",
+      "sha256": "07e87a1dba650b905e8cc86a22942c24b347f8f980574fe7ea79d8a634d3119a"
+    }
+  ],
+  "counts": {
+    "candidate_before_exact_dedup": 28267,
+    "decisions": {
+      "EXCLUDE_ANNOTATION_STATUS": 2613,
+      "EXCLUDE_EXACT_TEXT_DUPLICATE": 1,
+      "EXCLUDE_HUMAN_GOLD_RESERVATION": 4134,
+      "EXCLUDE_NON_REVIEW": 888,
+      "INCLUDE_DEV": 2861,
+      "INCLUDE_TEST": 2897,
+      "INCLUDE_TRAIN": 22508
+    },
+    "model_ready_unique": 28266,
+    "source_records": 35902,
+    "splits": {
+      "dev": 2861,
+      "test": 2897,
+      "train": 22508
+    }
+  },
+  "created_at": "2026-07-28T17:16:16.381958+00:00",
+  "curation_sources": [
+    {
+      "path": "data/releases/lazada_vi_absa_curation_v2_1_2_20260725/curation_records.jsonl",
+      "sha256": "05e79bdf828a0575ed20ca3badefb715d2da650fadffd6e456fecb95642107d3"
+    },
+    {
+      "path": "data/releases/lazada_vi_absa_delta_curation_v1_20260728/curation_records.jsonl",
+      "sha256": "067db0de44c61461a6e7f55a0a2d325b82bb54eb8de50e82b93ccc268d88432e"
+    }
+  ],
+  "distributions": {
+    "dev": {
+      "groups": 876,
+      "mentions_by_aspect": {
+        "Bảo hành & Đổi trả": 63,
+        "Chất lượng sản phẩm": 1934,
+        "Dịch vụ & Thái độ Shop": 349,
+        "Giá cả & Khuyến mãi": 741,
+        "Hiệu năng & Trải nghiệm": 2145,
+        "Tính xác thực": 103,
+        "Vận chuyển": 630,
+        "Đóng gói": 593,
+        "Đúng mô tả": 601
+      },
+      "mixed_aspect_instances": 304,
+      "records": 2861,
+      "sentiments_by_aspect": {
+        "Bảo hành & Đổi trả": {
+          "negative": 21,
+          "neutral": 19,
+          "positive": 24
+        },
+        "Chất lượng sản phẩm": {
+          "negative": 403,
+          "neutral": 85,
+          "positive": 1595
+        },
+        "Dịch vụ & Thái độ Shop": {
+          "negative": 111,
+          "neutral": 1,
+          "positive": 238
+        },
+        "Giá cả & Khuyến mãi": {
+          "negative": 67,
+          "neutral": 45,
+          "positive": 636
+        },
+        "Hiệu năng & Trải nghiệm": {
+          "negative": 344,
+          "neutral": 100,
+          "positive": 1825
+        },
+        "Tính xác thực": {
+          "negative": 15,
+          "neutral": 10,
+          "positive": 78
+        },
+        "Vận chuyển": {
+          "negative": 89,
+          "neutral": 8,
+          "positive": 541
+        },
+        "Đóng gói": {
+          "negative": 70,
+          "neutral": 10,
+          "positive": 514
+        },
+        "Đúng mô tả": {
+          "negative": 264,
+          "neutral": 9,
+          "positive": 341
+        }
+      }
+    },
+    "test": {
+      "groups": 877,
+      "mentions_by_aspect": {
+        "Bảo hành & Đổi trả": 59,
+        "Chất lượng sản phẩm": 1918,
+        "Dịch vụ & Thái độ Shop": 326,
+        "Giá cả & Khuyến mãi": 785,
+        "Hiệu năng & Trải nghiệm": 2145,
+        "Tính xác thực": 118,
+        "Vận chuyển": 638,
+        "Đóng gói": 571,
+        "Đúng mô tả": 637
+      },
+      "mixed_aspect_instances": 351,
+      "records": 2897,
+      "sentiments_by_aspect": {
+        "Bảo hành & Đổi trả": {
+          "negative": 19,
+          "neutral": 16,
+          "positive": 25
+        },
+        "Chất lượng sản phẩm": {
+          "negative": 426,
+          "neutral": 63,
+          "positive": 1604
+        },
+        "Dịch vụ & Thái độ Shop": {
+          "negative": 114,
+          "neutral": 1,
+          "positive": 211
+        },
+        "Giá cả & Khuyến mãi": {
+          "negative": 72,
+          "neutral": 49,
+          "positive": 672
+        },
+        "Hiệu năng & Trải nghiệm": {
+          "negative": 335,
+          "neutral": 107,
+          "positive": 1843
+        },
+        "Tính xác thực": {
+          "negative": 15,
+          "neutral": 13,
+          "positive": 90
+        },
+        "Vận chuyển": {
+          "negative": 95,
+          "neutral": 7,
+          "positive": 541
+        },
+        "Đóng gói": {
+          "negative": 71,
+          "neutral": 9,
+          "positive": 500
+        },
+        "Đúng mô tả": {
+          "negative": 254,
+          "neutral": 9,
+          "positive": 387
+        }
+      }
+    },
+    "train": {
+      "groups": 7383,
+      "mentions_by_aspect": {
+        "Bảo hành & Đổi trả": 376,
+        "Chất lượng sản phẩm": 13227,
+        "Dịch vụ & Thái độ Shop": 1869,
+        "Giá cả & Khuyến mãi": 4991,
+        "Hiệu năng & Trải nghiệm": 15947,
+        "Tính xác thực": 651,
+        "Vận chuyển": 3832,
+        "Đóng gói": 3050,
+        "Đúng mô tả": 3730
+      },
+      "mixed_aspect_instances": 1173,
+      "records": 22508,
+      "sentiments_by_aspect": {
+        "Bảo hành & Đổi trả": {
+          "negative": 131,
+          "neutral": 108,
+          "positive": 139
+        },
+        "Chất lượng sản phẩm": {
+          "negative": 2266,
+          "neutral": 408,
+          "positive": 10958
+        },
+        "Dịch vụ & Thái độ Shop": {
+          "negative": 560,
+          "neutral": 8,
+          "positive": 1304
+        },
+        "Giá cả & Khuyến mãi": {
+          "negative": 369,
+          "neutral": 315,
+          "positive": 4336
+        },
+        "Hiệu năng & Trải nghiệm": {
+          "negative": 1969,
+          "neutral": 715,
+          "positive": 13897
+        },
+        "Tính xác thực": {
+          "negative": 93,
+          "neutral": 50,
+          "positive": 508
+        },
+        "Vận chuyển": {
+          "negative": 421,
+          "neutral": 46,
+          "positive": 3385
+        },
+        "Đóng gói": {
+          "negative": 358,
+          "neutral": 56,
+          "positive": 2654
+        },
+        "Đúng mô tả": {
+          "negative": 1509,
+          "neutral": 41,
+          "positive": 2242
+        }
+      }
+    }
+  },
+  "leakage_audit": {
+    "group_overlap": {
+      "dev_test": 0,
+      "train_dev": 0,
+      "train_test": 0
+    },
+    "reserved_sample_overlap": 0,
+    "reserved_text_overlap": 0,
+    "review_text_sha256_unique": true,
+    "sample_id_unique": true
+  },
+  "policy": {
+    "allowed_statuses": [
+      "LABELED"
+    ],
+    "evaluation_label_warning": "All labels remain pseudo labels pending human verification; dev/test are engineering splits, not final gold benchmarks.",
+    "exact_text_deduplication": true,
+    "grouping": [
+      "product_id",
+      "review_text_sha256",
+      "duplicate_cluster_id",
+      "near_duplicate_cluster_id",
+      "near_duplicate_representative_sample_id",
+      "template_family_id"
+    ],
+    "reservation_exclusion": true,
+    "seed": 20260729,
+    "split_ratios": {
+      "dev": 0.1,
+      "test": 0.1,
+      "train": 0.8
+    },
+    "stratification": [
+      "27 aspect-polarity labels",
+      "source_domain",
+      "category"
+    ]
+  },
+  "release_id": "absa-model-ready-5e6d8c9306664b405624",
+  "reservation_ledgers": [
+    {
+      "path": "data/annotations/human_reference_v1_20260726/private/group_reservations.jsonl",
+      "records": 6646,
+      "sha256": "a8ba153b6211f47f6d0f8f525cb62873ff069c47737d585a73949a7fc4d8357b"
+    },
+    {
+      "path": "data/annotations/q1_human_gold_1200_v1_20260728/private/group_reservations.jsonl",
+      "records": 4666,
+      "sha256": "ffc491344c1046f533cbb329c11a835debb2f93ebf84ffc13f8d6edd8553888e"
+    }
+  ],
+  "schema_version": "absa-model-ready-release/1.0.0",
+  "source_config": {
+    "path": "configs/model_data_v1.json",
+    "sha256": "91e5f2957440ba6bf326f3f291d375c1effa2d706643111fd3ae5004c36b0e86"
+  },
+  "source_packages": [
+    {
+      "domain": "crawled_clean",
+      "name": "absa_ai_tranche_5000_v1_20260727",
+      "path": "data/annotations/absa_ai_tranche_5000_v1_20260727/final/ai_pseudo_labels.jsonl",
+      "records": 5000,
+      "sha256": "a58da3b437e03221a84845834ca3733af06b2e711d77932b3f77312c940823cc"
+    },
+    {
+      "domain": "crawled_clean",
+      "name": "absa_ai_remainder_8976_v1_20260728",
+      "path": "data/annotations/absa_ai_remainder_8976_v1_20260728/final/ai_pseudo_labels.jsonl",
+      "records": 8976,
+      "sha256": "0184e92ec82bd5b4919e33bd07f3ced3a7021800489703672bfdbc4836db8d9d"
+    },
+    {
+      "domain": "crawled_clean_delta",
+      "name": "absa_ai_delta_v1_20260728",
+      "path": "data/annotations/absa_ai_delta_v1_20260728/final/ai_pseudo_labels.jsonl",
+      "records": 613,
+      "sha256": "5674689d12124366be2190dd559cc2291034310f71601f161f551b923978b128"
+    },
+    {
+      "domain": "crawled_quarantine",
+      "name": "absa_ai_quarantine_base_11166_v1_20260728",
+      "path": "data/annotations/absa_ai_quarantine_base_11166_v1_20260728/final/ai_pseudo_labels.jsonl",
+      "records": 11166,
+      "sha256": "0f378e8ee1e25d3b7a95ab62d26081d0caedb4a74660fa0459fac1759f87031f"
+    },
+    {
+      "domain": "crawled_quarantine_delta",
+      "name": "absa_ai_quarantine_delta_375_v1_20260728",
+      "path": "data/annotations/absa_ai_quarantine_delta_375_v1_20260728/final/ai_pseudo_labels.jsonl",
+      "records": 375,
+      "sha256": "7319d0ac9e5c29c9cf3053b60fa02370a35a2c29a67da69c4e178717846e1771"
+    },
+    {
+      "domain": "legacy_old",
+      "name": "absa_legacy_old_relabel_9772_v1_20260728",
+      "path": "data/annotations/absa_legacy_old_relabel_9772_v1_20260728/final/ai_pseudo_labels.jsonl",
+      "records": 9772,
+      "sha256": "7674a86e15bebcecd6d598005606c3c798a4801b1ffcb40cfe9a8499a5559629"
+    }
+  ],
+  "status": "DEVELOPMENT_PSEUDO_MODEL_READY_NOT_GOLD"
+}

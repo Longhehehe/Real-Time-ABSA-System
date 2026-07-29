@@ -1,0 +1,52 @@
+[automatic]
+products_per_query = 2
+reviews_per_product = 50
+min_product_reviews = 50
+scan_multiplier = 5
+max_products_total = 24
+seed = 20260723
+include_sponsored = false
+rating_filter = 0
+
+[quality]
+min_chars = 80
+min_words = 15
+min_unique_word_ratio = 0.40
+min_meaningful_words = 8
+min_score = 0.55
+require_vietnamese = true
+min_vietnamese_signals = 2
+max_foreign_script_ratio = 0.20
+reject_suspect_encoding = true
+
+[[segments]]
+name = "electronics"
+queries = ["dien thoai", "tai nghe bluetooth", "sac du phong"]
+
+[[segments]]
+name = "home_appliances"
+queries = ["may hut bui", "noi chien khong dau", "may xay sinh to"]
+
+[[segments]]
+name = "beauty_personal_care"
+queries = ["dau goi", "sua rua mat", "kem chong nang"]
+
+[[segments]]
+name = "home_living"
+queries = ["bo ga giuong", "hop dung do", "den ban"]
+
+[[segments]]
+name = "fashion"
+queries = ["giay the thao", "ao khoac", "tui deo cheo"]
+
+[[segments]]
+name = "mother_baby"
+queries = ["bim em be", "binh sua", "do choi giao duc"]
+
+[[segments]]
+name = "sports_outdoors"
+queries = ["tham yoga", "vot cau long", "binh nuoc the thao"]
+
+[[segments]]
+name = "food_beverage"
+queries = ["ca phe", "ngu coc", "tra tui loc"]

@@ -1,0 +1,39 @@
+{
+  "annotation_output_schema": "configs/llm_annotation_output_schema_v1.json",
+  "artifact_type": "LLM_PSEUDO_LABEL",
+  "backend": {
+    "api_key_env": "NVIDIA_API_KEY",
+    "endpoint": "https://integrate.api.nvidia.com/v1/chat/completions",
+    "model": "mistralai/mistral-medium-3.5-128b",
+    "request_json_mode": true,
+    "type": "openai_compatible"
+  },
+  "generation": {
+    "max_retries": 3,
+    "max_retry_after_seconds": 120.0,
+    "max_tokens": 4096,
+    "temperature": 0.0,
+    "timeout_seconds": 180.0
+  },
+  "guideline": "docs/ABSA_ANNOTATION_GUIDELINE_V2.md",
+  "passes": [
+    {
+      "id": "pass_a",
+      "prompt_variant": "direct",
+      "seed": 1701
+    },
+    {
+      "id": "pass_b",
+      "prompt_variant": "evidence_first",
+      "seed": 2903
+    }
+  ],
+  "pinned_sha256": {
+    "annotation_output_schema": "e3e65fa7b3d658f9495aa69ccefe6bb99800d181a2c428e9461c2b945b7f6214",
+    "guideline": "58ae9f19d1921fa6ce9933f85a1af2ed47a72601bfa8b1a91f48b991fb3aa1f9"
+  },
+  "pilot_input": "data/annotations/llm_pilot_v1_1_20260725/pilot_blind.jsonl",
+  "prompt_version": "absa-llm-v1.0.0",
+  "schema_version": "absa-llm-annotation/1.0.0",
+  "source_release": "data/releases/lazada_vi_absa_curation_v2_1_2_20260725"
+}
