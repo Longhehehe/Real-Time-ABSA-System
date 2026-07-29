@@ -5,6 +5,7 @@ from __future__ import annotations
 from collections import defaultdict
 from contextlib import nullcontext
 from datetime import datetime, timezone
+from importlib.metadata import version as distribution_version
 from pathlib import Path
 from typing import Any, Iterable, Mapping
 import json
@@ -502,6 +503,19 @@ def train_model(
         dropout=float(config.get("dropout", 0.2)),
         local_files_only=local_files_only,
     )
+    tokenizer_vocab_size = getattr(tokenizer, "model_vocab_size", None)
+    encoder_vocab_size = int(
+        model.encoder.get_input_embeddings().num_embeddings
+    )
+    if (
+        tokenizer_vocab_size is not None
+        and int(tokenizer_vocab_size) > encoder_vocab_size
+    ):
+        raise RuntimeError(
+            "tokenizer/model vocabulary mismatch: "
+            f"tokenizer={int(tokenizer_vocab_size)}, "
+            f"encoder={encoder_vocab_size}"
+        )
     if config.get("gradient_checkpointing", True):
         model.enable_gradient_checkpointing()
     model.to(device)
@@ -546,6 +560,28 @@ def train_model(
             else None
         ),
         "torch_version": torch.__version__,
+        "transformers_version": distribution_version("transformers"),
+        "numpy_version": np.__version__,
+        "tokenizer": {
+            "class": tokenizer.__class__.__name__,
+            "is_fast": bool(getattr(tokenizer, "is_fast", False)),
+            "model_vocab_size": (
+                int(tokenizer_vocab_size)
+                if tokenizer_vocab_size is not None
+                else None
+            ),
+            "encoder_vocab_size": encoder_vocab_size,
+            "id_alignment": getattr(
+                tokenizer,
+                "model_vocab_id_alignment",
+                "unknown",
+            ),
+            "remapped_vocab_entries": getattr(
+                tokenizer,
+                "remapped_vocab_entries",
+                0,
+            ),
+        },
         "seed": seed,
         "sample_limits": {
             "train": max_train_samples,

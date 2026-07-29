@@ -4209,3 +4209,68 @@ Các đẳng thức kiểm tra closure:
   `deploy_final_absa_server.ps1 -Action setup`, sau đó `-Action pilot
   -Detach`. Ghi lại GPU model, driver, wheel, wall-clock, peak VRAM và kết quả
   `validate-run` trước khi chốt full-training configuration.
+
+## TASK-20260729-049 — Sửa PhoBERT fast-tokenizer ID crash trên Kaggle
+
+- **Trạng thái:** ĐÃ TÁI HIỆN nguyên nhân, sửa source và chạy full-corpus
+  tokenizer/preprocessing audit local; **CHƯA chạy lại GPU forward/full
+  training trên Kaggle sau bản sửa**.
+- **Mục tiêu:** Xử lý lỗi Kaggle
+  `vectorized_gather_kernel index out of bounds` /
+  `CUDA error: device-side assert triggered` ở forward đầu tiên, đồng thời
+  biến tokenizer/model vocabulary contract thành một gate đo được thay vì để
+  CUDA crash bất đồng bộ.
+- **Đầu vào thực tế:** Log Kaggle với Python 3.12, NumPy 2.0.2, PyTorch
+  2.10.0+cu128, Transformers 4.57.6, Tesla T4 14,56 GiB; data validator đã
+  `VALID` cho đủ 28.266 record và split/group đúng manifest. Source được kiểm
+  tra gồm `tokenization.py`, `dataset.py`, `training.py`, `model.py`; official
+  PhoBERT config và historical `PhobertTokenizerFast` implementation.
+- **Chẩn đoán đã xác nhận:** PhoBERT encoder có `vocab_size=64001` và
+  `max_position_embeddings=258`. `tokenizer.json` backend hiện phát 66.119
+  ID, trong khi slow `PhobertTokenizer` chuẩn chỉ dùng model IDs 0..64.000.
+  Historical fast implementation của VinAI có logic chuyển các backend ID
+  lớn hơn `mask_token_id=64000` về model-compatible ID/`<unk>`. Loader cũ của
+  hệ thống dựng `PreTrainedTokenizerFast` tổng quát nhưng bỏ qua bước chuyển
+  này; vì vậy một rare backend token có thể đi thẳng vào embedding và gây
+  device-side assert. Đây không phải OOM, dataset checksum failure hoặc lỗi
+  cài pip.
+- **Code đã thay đổi:** `load_offset_tokenizer` giờ tải slow tokenizer làm
+  vocabulary reference; chỉ nhận native fast tokenizer nếu probe IDs khớp;
+  nếu phải dựng generic fast tokenizer thì bọc bằng adapter giữ offset mapping
+  nhưng remap backend IDs về reference/model ID space. Adapter kiểm tra source
+  range, công bố `model_vocab_size`, alignment mode và số vocabulary entry bị
+  remap. `tokenize_model_record` fail sớm trên CPU nếu còn ID ngoài model
+  vocabulary. `train_model` so tokenizer vocabulary với encoder embedding và
+  ghi NumPy/Transformers version cùng tokenizer alignment provenance vào
+  `run.json`.
+- **Kết quả audit trước sửa:** Trên toàn bộ 28.266 review tại max length 256,
+  generic fast tokenizer tạo ID ngoài range ở 110 record: 88 train, 17 dev và
+  5 test. Raw maximum ID là 65.478, lớn hơn encoder upper bound 64.000. Năm
+  affected example đầu được truy về `sample_id` và xác nhận là review thật;
+  không thay đổi/xóa data để né lỗi.
+- **Kết quả audit sau sửa:** 110/110 affected record có aligned input IDs
+  giống slow tokenizer chuẩn, 0 mismatch và 0 post-remap range failure.
+  Full preprocessing, gồm tokenization, offsets và evidence masks
+  `(9,256)`/`(9,3,256)`, PASS 28.266/28.266; maximum final input ID là 63.985
+  `< 64.001`. Adapter xác định 2.118 backend vocabulary entries nằm ngoài
+  model vocabulary và quy chúng theo reference behavior. Probe đặc hiệu
+  `t_triển/ấn_đề/ặc_biệt` tái hiện raw IDs 64.001+ và xác nhận output mới trở
+  về `<unk>` giống slow tokenizer.
+- **Validation đã chạy:** Python `py_compile` PASS cho hai source file sửa;
+  Transformers 4.57.6 tokenizer compatibility probes PASS; full token-ID
+  audit PASS; full model-record preprocessing audit PASS; `git diff --check`
+  PASS. Local validation environment không cài PyTorch nên không tuyên bố đã
+  chạy forward/backward GPU.
+- **Quyết định:** Không giảm `max_length`, đổi backbone, xóa 110 review hoặc
+  resize embedding ngẫu nhiên. Giữ nguyên data/labels/splits và khôi phục
+  đúng tokenizer contract của pretrained PhoBERT. ID ngoài pretrained
+  vocabulary được xử lý giống slow tokenizer chuẩn thay vì tạo embedding row
+  mới chưa pretrain.
+- **Giới hạn:** Full-corpus audit chứng minh preprocessing an toàn về ID,
+  offsets và evidence shape nhưng chưa thay thế một Kaggle GPU rerun. CUDA
+  context của tiến trình đã device-assert phải được bỏ; lần chạy mới dùng
+  process/run directory mới. Training CLI vẫn chưa resume failed run.
+- **Next dependency:** Commit/publish bản sửa lên `final_absa`; tại Kaggle
+  `git pull` và reinstall editable package, chạy tokenizer preflight rồi full
+  training bằng run name mới. Sau khi complete, chạy `validate-run`, lưu
+  `run.json`/log/checksum và ghi runtime/peak VRAM/result vào protocol.
