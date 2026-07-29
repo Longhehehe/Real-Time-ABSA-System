@@ -4148,3 +4148,64 @@ Các đẳng thức kiểm tra closure:
 - **Next dependency:** Trên máy chạy model, checkout/pull `final_absa`, tạo
   environment ML, validate release v1.2 và chạy capacity pilot. Chỉ tạo tag
   hoặc GitHub Release sau khi full baseline artifact đã seal.
+
+## TASK-20260729-048 — Viết lại bộ triển khai Ubuntu Server cho `final_absa`
+
+- **Trạng thái:** ĐÃ THỰC THI việc viết tài liệu, tạo launcher và kiểm tra
+  tĩnh/dry-run tại máy Windows; **CHƯA thực thi setup hoặc training trên một
+  Ubuntu/NVIDIA server thật**.
+- **Mục tiêu:** Thay thế hướng dẫn server cũ dành cho
+  Docker/Airflow/Kafka/experiment runner bằng một đường triển khai gọn, đúng
+  active source `src/absa_system`, current model-ready v1.2 và frozen training
+  config của nhánh `final_absa`.
+- **Đầu vào:** Active CLI trong `src/absa_system/cli.py`;
+  `configs/training_v1.json`; immutable release
+  `data/model_ready/absa_pseudo_v1_2_20260729/`; packaging extras trong
+  `pyproject.toml`; tài liệu/script server cũ dưới `legacy/system/`; official
+  PyTorch installation selector và Hugging Face Transformers offline-cache
+  documentation.
+- **Phương pháp/code đã thực thi:** Tạo
+  `scripts/setup_final_absa_server.sh` với bốn action
+  `setup|validate|pilot|full`; tạo
+  `scripts/deploy_final_absa_server.ps1` để Windows kiểm tra SSH, upload một
+  bootstrap Bash có tên tạm bằng GUID, truyền argument đã quote và xóa đúng
+  file tạm sau khi chạy; tạo `docs/SERVER_SETUP_FINAL_ABSA.md`; liên kết
+  hướng dẫn từ `README.md`.
+- **Các gate được cài đặt:** Linux và Python >=3.11; checkout update chỉ bằng
+  fast-forward và dừng nếu có tracked modification; virtual environment
+  `.venv-model`; inventory NumPy/PyTorch/Transformers/CUDA; bắt buộc
+  `validate-data`; tải hoặc xác minh `vinai/phobert-base`; chặn yêu cầu CUDA
+  khi PyTorch không thấy GPU; chặn full CPU training nếu không có xác nhận
+  explicit; không ghi đè run name; pilot cố định 1.000/200/200 record và một
+  epoch; nối `validate-run` sau training; hỗ trợ detached `tmux`, offline
+  Hugging Face cache và runtime memory overrides.
+- **Quyết định:** Script không tự cài/sửa NVIDIA driver; PyTorch CUDA wheel
+  index không hard-code mà phải lấy từ official selector phù hợp server tại
+  thời điểm setup. Model server mặc định không nhận cookie, raw/private
+  annotation archive hoặc local checkpoint. Dataset v1.2 lấy từ Git và phải
+  pass checksum/schema/group-isolation validation trước training. Giảm
+  `max_length` được xem là thay đổi experiment, không phải OOM fix âm thầm.
+- **Kết quả đo đã thực thi:** PowerShell AST parser PASS; PowerShell `-Help`
+  PASS; dry-run cho `setup`, low-memory detached `pilot` và detached `full`
+  PASS, đồng thời xác nhận không mở SSH/thay đổi remote; Bash `bash -n` PASS
+  bằng Git Bash; Bash `--help` PASS; LF check của Bash cho 0 byte CR và Git
+  attribute `eol=lf`; CLI argument đối chiếu khớp với các option hiện có của
+  `absa_system train`, `validate-data` và `validate-run`. `shellcheck` không
+  có trên máy local nên không được tuyên bố là đã chạy.
+- **Output:** Một runbook khoảng 13 phần gồm prerequisite, Windows SSH
+  deployment, direct server setup, validation, capacity pilot, full
+  training, offline mode, update policy, fault handling và security; hai
+  launcher không chứa credential; README có quick-start link.
+- **Giới hạn:** Chưa có server address/SSH key trong phạm vi task nên chưa
+  chạy apt, clone remote, pip install, PhoBERT download, `nvidia-smi`,
+  capacity pilot hoặc full training thật. Khuyến nghị 12 GB VRAM chỉ là điểm
+  bắt đầu vận hành; minimum VRAM và throughput phải được đo bằng capacity
+  pilot trên GPU đích. Training CLI hiện chưa resume optimizer/mid-epoch.
+- **Planned nhưng CHƯA thực thi:** Chọn official PyTorch index theo
+  GPU/driver; chạy remote `setup`; chạy `validate`; chạy detached capacity
+  pilot; kiểm tra OOM, runtime, sealed artifact; sau khi pilot pass mới chạy
+  full experiment.
+- **Next dependency:** Có Ubuntu server và SSH destination; chạy
+  `deploy_final_absa_server.ps1 -Action setup`, sau đó `-Action pilot
+  -Detach`. Ghi lại GPU model, driver, wheel, wall-clock, peak VRAM và kết quả
+  `validate-run` trước khi chốt full-training configuration.

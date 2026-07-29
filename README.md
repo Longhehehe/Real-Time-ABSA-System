@@ -63,6 +63,34 @@ completed run with a manifest and SHA-256 checksums. The
 `absa_arch_smoke_v2_20260729` artifact only proves that the full GPU path
 works; its two-sample metrics are deliberately not model-performance results.
 
+## Deploy to an Ubuntu GPU server
+
+The maintained deployment path for this branch is documented in
+[`docs/SERVER_SETUP_FINAL_ABSA.md`](docs/SERVER_SETUP_FINAL_ABSA.md). From
+Windows PowerShell, setup and validate a remote server with:
+
+```powershell
+.\scripts\deploy_final_absa_server.ps1 `
+  -Server "user@server-ip" `
+  -Action setup `
+  -Device cuda
+```
+
+Then run the mandatory capacity pilot in a detached `tmux` session:
+
+```powershell
+.\scripts\deploy_final_absa_server.ps1 `
+  -Server "user@server-ip" `
+  -Action pilot `
+  -Device cuda `
+  -Detach `
+  -TmuxSession "absa-pilot"
+```
+
+The scripts validate the immutable model-ready release and CUDA environment
+before training. They do not install NVIDIA drivers, upload raw/private data,
+or commit generated checkpoints.
+
 ## Processed 2026-07-28 incremental delta
 
 The 18 closed crawl runs under `data/raw/2026-07-28/` contain 2,615 review
