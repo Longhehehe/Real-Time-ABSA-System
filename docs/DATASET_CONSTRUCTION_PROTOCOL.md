@@ -4124,3 +4124,27 @@ Các đẳng thức kiểm tra closure:
 - **Next dependency:** Push `final_absa` chỉ khi chủ dự án yêu cầu; sau clone,
   tạo environment và cài `.[browser,ml]`, validate data, rồi chạy capacity
   pilot/full training. Checkpoint sinh ra tiếp tục nằm ngoài Git.
+
+## TASK-20260729-047 — Publish nhánh `final_absa` lên remote
+
+- **Trạng thái:** ĐÃ THỰC THI local publication commit và push lên `origin`;
+  không force-push, không sửa/xóa remote branch khác.
+- **Mục tiêu:** Công bố active source/data snapshot đã kiểm tra ở Task 046
+  trên remote repository để có upstream branch riêng, trong khi tiếp tục
+  loại DOCX, smoke/checkpoint artifact và local research archive khỏi Git.
+- **Đầu vào:** Local branch `final_absa`; snapshot commit Task 046; remote
+  `origin` tại `https://github.com/Longhehehe/Real-Time-ABSA-System`.
+- **Phương pháp đã thực thi:** Xác nhận current branch và tracked working tree
+  sạch; cập nhật protocol Markdown; render/round-trip validate DOCX chỉ ở
+  local; commit thay đổi protocol; chạy non-force
+  `git push -u origin final_absa`; kiểm tra upstream và remote ref sau push.
+- **Output:** Remote branch `origin/final_absa` trỏ tới cùng publication
+  commit với local `final_absa`. DOCX, artifacts, raw/annotation archive,
+  cookie/profile và các ignored/untracked file local không được push.
+- **Kết quả/giới hạn:** Đây là source + current model-ready data publication,
+  không phải model checkpoint release hoặc complete research-archive backup.
+  Git history cha vẫn là lịch sử repository hiện có; task này không rewrite
+  history để loại secret cũ đã từng tồn tại ở commit trước.
+- **Next dependency:** Trên máy chạy model, checkout/pull `final_absa`, tạo
+  environment ML, validate release v1.2 và chạy capacity pilot. Chỉ tạo tag
+  hoặc GitHub Release sau khi full baseline artifact đã seal.
