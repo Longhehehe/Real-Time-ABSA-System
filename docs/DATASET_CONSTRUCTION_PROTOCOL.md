@@ -4212,9 +4212,10 @@ Các đẳng thức kiểm tra closure:
 
 ## TASK-20260729-049 — Sửa PhoBERT fast-tokenizer ID crash trên Kaggle
 
-- **Trạng thái:** ĐÃ TÁI HIỆN nguyên nhân, sửa source và chạy full-corpus
-  tokenizer/preprocessing audit local; **CHƯA chạy lại GPU forward/full
-  training trên Kaggle sau bản sửa**.
+- **Trạng thái:** ĐÃ TÁI HIỆN nguyên nhân, sửa source, chạy full-corpus
+  tokenizer/preprocessing audit local và publish source commit `3aeaa54` lên
+  `origin/final_absa`; **CHƯA chạy lại GPU forward/full training trên Kaggle
+  sau bản sửa**.
 - **Mục tiêu:** Xử lý lỗi Kaggle
   `vectorized_gather_kernel index out of bounds` /
   `CUDA error: device-side assert triggered` ở forward đầu tiên, đồng thời
@@ -4259,8 +4260,9 @@ Các đẳng thức kiểm tra closure:
 - **Validation đã chạy:** Python `py_compile` PASS cho hai source file sửa;
   Transformers 4.57.6 tokenizer compatibility probes PASS; full token-ID
   audit PASS; full model-record preprocessing audit PASS; `git diff --check`
-  PASS. Local validation environment không cài PyTorch nên không tuyên bố đã
-  chạy forward/backward GPU.
+  PASS. Non-force push `final_absa` PASS từ remote commit `9d0ff56` tới
+  `3aeaa54`. Local validation environment không cài PyTorch nên không tuyên
+  bố đã chạy forward/backward GPU.
 - **Quyết định:** Không giảm `max_length`, đổi backbone, xóa 110 review hoặc
   resize embedding ngẫu nhiên. Giữ nguyên data/labels/splits và khôi phục
   đúng tokenizer contract của pretrained PhoBERT. ID ngoài pretrained
@@ -4270,7 +4272,7 @@ Các đẳng thức kiểm tra closure:
   offsets và evidence shape nhưng chưa thay thế một Kaggle GPU rerun. CUDA
   context của tiến trình đã device-assert phải được bỏ; lần chạy mới dùng
   process/run directory mới. Training CLI vẫn chưa resume failed run.
-- **Next dependency:** Commit/publish bản sửa lên `final_absa`; tại Kaggle
-  `git pull` và reinstall editable package, chạy tokenizer preflight rồi full
-  training bằng run name mới. Sau khi complete, chạy `validate-run`, lưu
-  `run.json`/log/checksum và ghi runtime/peak VRAM/result vào protocol.
+- **Next dependency:** Tại Kaggle, `git pull` và reinstall editable package,
+  chạy tokenizer preflight rồi full training bằng run name mới. Sau khi
+  complete, chạy `validate-run`, lưu `run.json`/log/checksum và ghi
+  runtime/peak VRAM/result vào protocol.
