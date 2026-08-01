@@ -81,19 +81,24 @@ python -X utf8 -m absa_system predict `
   --text "Máy hút mạnh nhưng đóng gói móp và giao hàng chậm."
 ```
 
-Training displays `tqdm` progress bars for every train epoch and dev/test
-evaluation. After each epoch it prints an `epoch_completed` JSON event with
-loss, end-to-end macro/micro F1, mention F1, exact-set match, Jaccard, mixed
-F1 and per-polarity macro F1. The completed CLI response still contains the
-full per-label test metrics, while `epochs.jsonl` retains the full dev metrics
-for every epoch. Pass `--no-progress` when a non-interactive runner should
-keep only the structured metric events.
+Training displays one compact `tqdm` bar for each train/validation stage. Each
+stage finishes at 100% on its own line before the metric summary begins. After
+every epoch, a separate multiline summary reports loss, end-to-end
+macro/micro F1, mention F1, exact-set match, Jaccard, hamming loss, mixed F1,
+per-polarity F1, best checkpoint, early-stopping counter and elapsed time.
+`tqdm.write` keeps these summaries on their own lines in terminals and Kaggle
+notebooks. The completed CLI response is compact; full per-label test metrics
+remain in `test_metrics.json`, while `epochs.jsonl` retains full validation
+metrics for every epoch.
+Pass `--no-progress` to hide bars while retaining readable summaries. For a
+machine log stream, set `ABSA_CONSOLE_FORMAT=json`; canonical artifact JSON/
+JSONL/CSV content is identical in both console modes.
 
 The `train-kfold` command merges only the original train and dev partitions,
 then creates deterministic multi-label stratified folds over complete
 `leakage_group_id` groups. Every fold has its own early stopping, checkpoint,
-thresholds, `epochs.jsonl`, validation metrics and tqdm bars. It prints
-`fold_epoch_completed`, `fold_early_stopping` and `fold_completed` events.
+thresholds, `epochs.jsonl`, validation metrics and compact tqdm bars. It prints
+readable fold/epoch headers, metric summaries and early-stopping notices.
 After all folds, it reports cross-fold mean +/- sample standard deviation and
 pooled out-of-fold metrics. The original test partition remains locked: fold
 models only contribute probabilities, those probabilities are averaged, and

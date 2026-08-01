@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import Any, Mapping, Sequence
 import os
 import pickle
+import sys
 import tempfile
 import time
 
@@ -35,7 +36,13 @@ from .results import (
     write_suite_comparison,
 )
 from .schema import ASPECTS, POLARITIES
-from .training import _emit_console_event, _metric_summary, _write_json, evaluate_probabilities
+from .training import (
+    _TQDM_BAR_FORMAT,
+    _emit_console_event,
+    _metric_summary,
+    _write_json,
+    evaluate_probabilities,
+)
 
 
 def _atomic_pickle(payload: Mapping[str, Any], path: Path) -> None:
@@ -135,11 +142,14 @@ def _fit_classical_fold(
     tasks = len(ASPECTS) + len(ASPECTS) * len(POLARITIES)
     progress = tqdm(
         total=tasks,
-        desc=f"Fit {model_name}",
+        desc=f"[{model_name}] fit heads",
         unit="head",
         disable=not show_progress,
         dynamic_ncols=True,
         mininterval=1.0,
+        leave=True,
+        bar_format=_TQDM_BAR_FORMAT,
+        file=sys.stdout,
     )
     try:
         for aspect_index in range(len(ASPECTS)):
@@ -671,6 +681,12 @@ def train_benchmark_suite(
         comparison = write_suite_comparison(
             comparison_dir, suite_id=suite_id, runs=completed
         )
+    _emit_console_event(
+        "benchmark_completed",
+        suite_id=suite_id,
+        models=comparison["models"],
+        comparison_dir=str(comparison_dir),
+    )
     return {
         "status": "COMPLETED",
         "suite_id": suite_id,

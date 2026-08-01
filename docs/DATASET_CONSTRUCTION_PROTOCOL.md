@@ -4736,3 +4736,62 @@ Các đẳng thức kiểm tra closure:
   ngắt dùng `--resume`. Trước final paper claim cần multi-seed hoặc nested
   development-only tuning được pre-register, ablation cho proposed PhoBERT,
   statistical comparison và locked independently human-adjudicated test.
+
+## TASK-20260801-056 — Chuẩn hóa console/tqdm cho Kaggle và terminal
+
+- **Trạng thái:** ĐÃ THỰC THI và chạy end-to-end CPU K-fold smoke; thay đổi
+  chỉ thuộc observability/CLI presentation, không đổi dataset, split, model,
+  loss, threshold, checkpoint-selection, metric computation hoặc sealed
+  artifact schema.
+- **Mục tiêu:** Khắc phục log huấn luyện khó đọc do raw JSON dài bị xen với
+  carriage-return của `tqdm`, thiếu ranh giới rõ giữa model/fold/epoch và khó
+  nhận biết metric/early stopping trên Kaggle.
+- **Đầu vào:** Console events hiện hữu trong
+  `src/absa_system/{training,cross_validation,benchmark}.py`; CLI trong
+  `src/absa_system/cli.py`; full metric artifacts `epochs.jsonl`,
+  `validation_metrics.json`, `oof_metrics.json`, `test_metrics.json` và CSV
+  exports. Không đọc/sửa `data/raw/`.
+- **Thay đổi đã code:** Tất cả progress bar dùng một format cố định, description
+  ngắn (`[F1/3 E2/8] train`, `validate`, `best validation`,
+  `test probabilities`), output chung qua stdout và mỗi stage kết thúc ở 100%
+  trên dòng riêng. `tqdm.write` được dùng cho message để không phá bar đang
+  render. `training_started`, `kfold_started`, `fold_started`, epoch/fold
+  completion, early stop, locked test và suite completion được render thành
+  block nhiều dòng có separator thay vì một raw JSON line rất dài.
+- **Metric console contract:** Sau mỗi epoch hiển thị train loss
+  total/mention/sentiment/evidence; validation E2E macro-F1; E2E micro
+  precision/recall/F1; mention macro-F1; exact-set/Jaccard/hamming; polarity
+  negative/positive/neutral macro-F1; mixed-F1/support; `NEW BEST`; best epoch;
+  no-improvement counter/patience và elapsed time. Cuối K-fold hiển thị
+  mean±SD, pooled OOF và locked-test summary. Cuối benchmark hiển thị bảng
+  xếp hạng model/OOF/test macro-F1.
+- **Machine-readable mode:** Human-readable là mặc định. Có thể đặt
+  `ABSA_CONSOLE_FORMAT=json` để console quay lại one-event-per-line JSON phục
+  vụ log parser. `--no-progress` chỉ tắt progress bar, vẫn giữ summary. Các
+  JSONL/JSON/CSV canonical artifact không phụ thuộc console mode.
+- **CLI final response:** `train` và `train-kfold` không còn in full 27-label
+  metric tree lên notebook. CLI chỉ in compact scalar summary và output path;
+  toàn bộ per-label metrics vẫn nằm nguyên trong sealed artifact. Suite CLI
+  chỉ in run identity/list/path sau khi bảng xếp hạng readable đã xuất hiện.
+- **Documentation:** README được sửa để mô tả format mới, `--no-progress` và
+  `ABSA_CONSOLE_FORMAT=json`. Không đưa smoke output hoặc DOCX vào Git.
+- **Validation thực thi:** `compileall` PASS; tám test trong
+  `test_absa_system.py` PASS; `git diff --check` PASS. Chạy BiLSTM CPU smoke
+  tại `.tmp/bilstm_console_smoke_v4` với development=20, locked test=4,
+  2 fold, 1 epoch, max length=24, batch=4. Console thực tế xác nhận mỗi train/
+  validation/best-validation/test stage có dòng 0→100% riêng, metric block
+  xuống dòng đúng, fold/run separator rõ, final CLI compact. Run sinh 22 file
+  và `validate-kfold-run=VALID`.
+- **Measured smoke values (không dùng cho paper):** Fold validation macro-F1
+  0,080098/0,081458; cross-fold mean±SD 0,080778±0,000962; pooled OOF
+  macro-F1 0,084241; locked-test macro-F1 0,093474. Các số này chỉ chứng minh
+  renderer dùng đúng metric payload của pipeline trên sample rất nhỏ.
+- **Giới hạn:** Chưa xem trực tiếp renderer trong một live Kaggle notebook;
+  terminal/collected stdout đã PASS nhưng font, cell-width và notebook widget
+  có thể khác. Progress update rất nhanh có thể chỉ hiện 0%→100%; full training
+  sẽ có intermediate updates theo `mininterval=1s`. Human console summary là
+  projection; artifact JSON/CSV vẫn là nguồn chuẩn khi phân tích paper.
+- **Next dependency:** Push source update lên `final_absa`, pull/restart Kaggle
+  kernel và chạy bounded one-model pilot để xác nhận notebook presentation;
+  chỉ sau đó resume/full six-model suite. Nếu cần ingest log tự động, freeze
+  `ABSA_CONSOLE_FORMAT=json` trong job environment thay vì parse human text.

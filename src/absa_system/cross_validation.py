@@ -10,6 +10,7 @@ from typing import Any, Mapping, Sequence
 import hashlib
 import json
 import math
+import sys
 import time
 
 import numpy as np
@@ -41,6 +42,7 @@ from .training import (
     _metric_summary,
     _move_batch,
     _optimizer,
+    _TQDM_BAR_FORMAT,
     _write_json,
     collect_probabilities,
     evaluate_probabilities,
@@ -347,6 +349,7 @@ def _train_one_fold(
     _write_json(output_dir / "fold.json", fold_metadata)
     _emit_console_event(
         "fold_started",
+        model=model_name,
         fold=fold_number,
         folds=folds,
         seed=fold_seed,
@@ -371,10 +374,13 @@ def _train_one_fold(
         train_progress = tqdm(
             train_loader,
             total=len(train_loader),
-            desc=f"Fold {fold_number}/{folds} epoch {epoch}/{max_epochs} train",
+            desc=f"[F{fold_number}/{folds} E{epoch}/{max_epochs}] train",
             unit="batch",
             dynamic_ncols=True,
             mininterval=1.0,
+            leave=True,
+            bar_format=_TQDM_BAR_FORMAT,
+            file=sys.stdout,
             disable=not show_progress,
         )
         for batch_index, raw_batch in enumerate(train_progress, start=1):
@@ -434,7 +440,7 @@ def _train_one_fold(
             amp=amp,
             show_progress=show_progress,
             description=(
-                f"Fold {fold_number}/{folds} epoch {epoch}/{max_epochs} validation"
+                f"[F{fold_number}/{folds} E{epoch}/{max_epochs}] validate"
             ),
         )
         validation_metrics, thresholds = evaluate_probabilities(
@@ -512,6 +518,7 @@ def _train_one_fold(
             best_epoch=best_epoch,
             best_validation_end_to_end_macro_f1=best_metric,
             epochs_without_improvement=epochs_without_improvement,
+            patience=patience,
             elapsed_seconds=epoch_log["elapsed_seconds"],
         )
         if epochs_without_improvement >= patience:
@@ -541,7 +548,7 @@ def _train_one_fold(
         device=device,
         amp=amp,
         show_progress=show_progress,
-        description=f"Fold {fold_number}/{folds} best validation",
+        description=f"[F{fold_number}/{folds}] best validation",
     )
     recomputed_metrics, _ = evaluate_probabilities(
         best_validation_predictions,
@@ -564,7 +571,7 @@ def _train_one_fold(
         device=device,
         amp=amp,
         show_progress=show_progress,
-        description=f"Fold {fold_number}/{folds} locked-test inference",
+        description=f"[F{fold_number}/{folds}] test probabilities",
     )
     fold_summary = _metric_summary(recomputed_metrics)
     fold_metadata.update(
@@ -585,6 +592,7 @@ def _train_one_fold(
     _write_json(output_dir / "fold.json", fold_metadata)
     _emit_console_event(
         "fold_completed",
+        model=model_name,
         fold=fold_number,
         folds=folds,
         best_epoch=best_epoch,
@@ -1003,6 +1011,7 @@ def train_kfold_model(
     _write_json(output_dir / "run.json", run_metadata)
     _emit_console_event(
         "kfold_started",
+        model=model_name,
         folds=folds,
         development_records=len(development_records),
         development_groups=len(development_groups),
@@ -1132,6 +1141,7 @@ def train_kfold_model(
     final["artifact_validation"] = validate_kfold_training_run(output_dir)
     _emit_console_event(
         "kfold_completed",
+        model=model_name,
         folds=folds,
         cross_fold_mean_std=aggregate_metrics["cross_fold_mean_std"],
         pooled_oof_metrics=_metric_summary(pooled_oof_metrics),

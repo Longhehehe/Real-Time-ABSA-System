@@ -12,6 +12,7 @@ import json
 import math
 import os
 import random
+import sys
 import tempfile
 import time
 
@@ -33,6 +34,12 @@ from .metrics import (
 from .model import AspectEvidenceModel
 from .schema import ASPECTS, POLARITIES
 from .tokenization import load_offset_tokenizer
+
+
+_TQDM_BAR_FORMAT = (
+    "{desc:<30} {percentage:3.0f}%|{bar:24}| "
+    "{n_fmt}/{total_fmt} [{elapsed}<{remaining}] {postfix}"
+)
 
 
 def set_seed(seed: int) -> None:
@@ -118,6 +125,9 @@ def collect_probabilities(
         unit="batch",
         dynamic_ncols=True,
         mininterval=1.0,
+        leave=True,
+        bar_format=_TQDM_BAR_FORMAT,
+        file=sys.stdout,
         disable=not show_progress,
     )
     for raw_batch in progress:
@@ -214,14 +224,246 @@ def _metric_summary(metrics: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
-def _emit_console_event(event: str, **payload: Any) -> None:
-    print(
-        json.dumps(
-            {"event": event, **payload},
-            ensure_ascii=False,
+def _console_number(value: Any, digits: int = 4) -> str:
+    try:
+        return f"{float(value):.{digits}f}"
+    except (TypeError, ValueError):
+        return "-"
+
+
+def _console_duration(value: Any) -> str:
+    try:
+        total = max(0, int(round(float(value))))
+    except (TypeError, ValueError):
+        return "-"
+    hours, remainder = divmod(total, 3600)
+    minutes, seconds = divmod(remainder, 60)
+    return f"{hours:02d}:{minutes:02d}:{seconds:02d}"
+
+
+def _console_metric_lines(
+    title: str,
+    metrics: Mapping[str, Any] | None,
+) -> list[str]:
+    if not isinstance(metrics, Mapping):
+        return [f"  {title}: unavailable"]
+    micro = metrics.get("end_to_end_micro", {})
+    mixed = metrics.get("mixed", {})
+    polarity = metrics.get("polarity_macro_f1", {})
+    return [
+        f"  {title}",
+        (
+            "    E2E macro-F1 : "
+            f"{_console_number(metrics.get('end_to_end_macro_f1'))}"
+            "    | Mention macro-F1: "
+            f"{_console_number(metrics.get('mention_macro_f1'))}"
         ),
-        flush=True,
-    )
+        (
+            "    E2E micro P/R/F1: "
+            f"{_console_number(micro.get('precision'))} / "
+            f"{_console_number(micro.get('recall'))} / "
+            f"{_console_number(micro.get('f1'))}"
+        ),
+        (
+            "    Exact/Jaccard/Hamming: "
+            f"{_console_number(metrics.get('exact_set_match'))} / "
+            f"{_console_number(metrics.get('sample_jaccard'))} / "
+            f"{_console_number(metrics.get('hamming_loss'))}"
+        ),
+        (
+            "    Polarity F1 neg/pos/neu: "
+            f"{_console_number(polarity.get('negative'))} / "
+            f"{_console_number(polarity.get('positive'))} / "
+            f"{_console_number(polarity.get('neutral'))}"
+            "    | Mixed-F1: "
+            f"{_console_number(mixed.get('f1'))} (n={mixed.get('support', '-')})"
+        ),
+    ]
+
+
+def _emit_console_event(event: str, **payload: Any) -> None:
+    """Write readable, tqdm-safe progress; JSON console output remains opt-in."""
+
+    if os.environ.get("ABSA_CONSOLE_FORMAT", "human").strip().lower() == "json":
+        tqdm.write(
+            json.dumps({"event": event, **payload}, ensure_ascii=False),
+            file=sys.stdout,
+        )
+        return
+
+    separator = "=" * 78
+    lines: list[str]
+    if event == "training_started":
+        lines = [
+            "",
+            separator,
+            "TRAINING STARTED",
+            separator,
+            (
+                f"  Device: {payload.get('device')} | Epochs: {payload.get('epochs')} "
+                f"| Total updates: {payload.get('total_updates')}"
+            ),
+            (
+                f"  Records train/dev/test: {payload.get('train_records')} / "
+                f"{payload.get('dev_records')} / {payload.get('test_records')}"
+            ),
+            (
+                f"  Batches train/dev/test: {payload.get('train_batches')} / "
+                f"{payload.get('dev_batches')} / {payload.get('test_batches')}"
+            ),
+        ]
+    elif event in {"epoch_completed", "fold_epoch_completed"}:
+        fold_prefix = (
+            f"FOLD {payload.get('fold')}/{payload.get('folds')} | "
+            if event == "fold_epoch_completed"
+            else ""
+        )
+        epoch_total = payload.get("max_epochs", payload.get("epochs"))
+        marker = " | NEW BEST" if payload.get("is_best") else ""
+        losses = payload.get("train_loss", {})
+        metrics = payload.get("validation_metrics", payload.get("dev_metrics"))
+        lines = [
+            "",
+            separator,
+            f"{fold_prefix}EPOCH {payload.get('epoch')}/{epoch_total} COMPLETED{marker}",
+            separator,
+            (
+                "  Train loss total/mention/sentiment/evidence: "
+                f"{_console_number(losses.get('total'))} / "
+                f"{_console_number(losses.get('mention'))} / "
+                f"{_console_number(losses.get('sentiment'))} / "
+                f"{_console_number(losses.get('evidence'))}"
+            ),
+            *_console_metric_lines("Validation metrics", metrics),
+            (
+                f"  Early stopping: {payload.get('epochs_without_improvement', 0)}"
+                f"/{payload.get('patience', '-')} without improvement | "
+                f"best epoch={payload.get('best_epoch')} | best macro-F1="
+                f"{_console_number(payload.get('best_validation_end_to_end_macro_f1', payload.get('best_dev_end_to_end_macro_f1')))}"
+            ),
+            f"  Elapsed: {_console_duration(payload.get('elapsed_seconds'))}",
+        ]
+    elif event in {"early_stopping", "fold_early_stopping"}:
+        fold_prefix = (
+            f"Fold {payload.get('fold')}/{payload.get('folds')}: "
+            if event == "fold_early_stopping"
+            else ""
+        )
+        lines = [
+            "",
+            f"[EARLY STOP] {fold_prefix}stopped at epoch "
+            f"{payload.get('stopped_epoch', payload.get('epoch'))}; "
+            f"best epoch={payload.get('best_epoch')}, best macro-F1="
+            f"{_console_number(payload.get('best_validation_end_to_end_macro_f1', payload.get('best_dev_end_to_end_macro_f1')))}, "
+            f"patience={payload.get('patience')}.",
+        ]
+    elif event == "test_completed":
+        lines = [
+            "",
+            separator,
+            f"LOCKED TEST COMPLETED | checkpoint epoch {payload.get('selected_checkpoint_epoch')}",
+            separator,
+            *_console_metric_lines("Test metrics", payload.get("metrics")),
+        ]
+    elif event == "kfold_started":
+        validation = payload.get("fold_assignment_validation", {})
+        early = payload.get("early_stopping", {})
+        lines = [
+            "",
+            separator,
+            f"K-FOLD RUN STARTED | model={payload.get('model', '-')} | folds={payload.get('folds')}",
+            separator,
+            (
+                f"  Device: {payload.get('device')} | Development/test: "
+                f"{payload.get('development_records')} / {payload.get('locked_test_records')}"
+            ),
+            (
+                f"  Leakage groups: {payload.get('development_groups')} | Fold sizes: "
+                f"{validation.get('records_by_fold', {})}"
+            ),
+            (
+                f"  Early stopping: patience={early.get('patience')} | "
+                f"max epochs={early.get('max_epochs')} | monitor={early.get('monitor')}"
+            ),
+        ]
+        for warning in payload.get("split_warnings", []):
+            lines.append(f"  WARNING: {warning}")
+    elif event == "fold_started":
+        lines = [
+            "",
+            separator,
+            f"FOLD {payload.get('fold')}/{payload.get('folds')} STARTED | model={payload.get('model', '-')}",
+            separator,
+            (
+                f"  Train/validation records: {payload.get('train_records')} / "
+                f"{payload.get('validation_records')} | seed={payload.get('seed')}"
+            ),
+            (
+                f"  Max epochs: {payload.get('max_epochs')} | "
+                f"early-stopping patience: {payload.get('patience')}"
+            ),
+        ]
+    elif event in {"fold_completed", "classical_fold_completed"}:
+        lines = [
+            "",
+            f"[FOLD {payload.get('fold')}/{payload.get('folds')} COMPLETED] "
+            f"model={payload.get('model', '-')} | best epoch="
+            f"{payload.get('best_epoch', 'n/a')} | elapsed="
+            f"{_console_duration(payload.get('elapsed_seconds'))}",
+            *_console_metric_lines(
+                "Validation metrics", payload.get("validation_metrics")
+            ),
+        ]
+    elif event == "classical_kfold_started":
+        lines = [
+            "",
+            separator,
+            f"CLASSICAL K-FOLD STARTED | model={payload.get('model')} | folds={payload.get('folds')}",
+            separator,
+            (
+                f"  Development/test records: {payload.get('development_records')} / "
+                f"{payload.get('locked_test_records')}"
+            ),
+            "  Early stopping: not applicable (non-epoch estimator)",
+        ]
+    elif event == "kfold_completed":
+        aggregate = payload.get("cross_fold_mean_std", {}).get(
+            "end_to_end_macro_f1", {}
+        )
+        lines = [
+            "",
+            separator,
+            f"K-FOLD RUN COMPLETED | model={payload.get('model', '-')} | folds={payload.get('folds')}",
+            separator,
+            (
+                "  Cross-fold E2E macro-F1 mean +/- SD: "
+                f"{_console_number(aggregate.get('mean'))} +/- "
+                f"{_console_number(aggregate.get('std'))}"
+            ),
+            *_console_metric_lines("Pooled OOF metrics", payload.get("pooled_oof_metrics")),
+            *_console_metric_lines("Locked test metrics", payload.get("locked_test_metrics")),
+            f"  Total elapsed: {_console_duration(payload.get('elapsed_seconds'))}",
+        ]
+    elif event == "benchmark_completed":
+        lines = [
+            "",
+            separator,
+            f"BENCHMARK SUITE COMPLETED | run={payload.get('suite_id')}",
+            separator,
+            "  Rank  Model                    OOF macro-F1  Test macro-F1",
+            "  ----  -----------------------  ------------  -------------",
+        ]
+        for row in payload.get("models", []):
+            lines.append(
+                f"  {int(row.get('rank', 0)):>4}  "
+                f"{str(row.get('model', '-')):<23}  "
+                f"{_console_number(row.get('oof_end_to_end_macro_f1')):>12}  "
+                f"{_console_number(row.get('test_end_to_end_macro_f1')):>13}"
+            )
+        lines.append(f"  Results: {payload.get('comparison_dir')}")
+    else:
+        lines = ["", f"[{event}]", json.dumps(payload, ensure_ascii=False, indent=2)]
+    tqdm.write("\n".join(lines), file=sys.stdout)
 
 
 def _optimizer(
@@ -701,10 +943,13 @@ def train_model(
         train_progress = tqdm(
             train_loader,
             total=len(train_loader),
-            desc=f"Epoch {epoch}/{epochs} train",
+            desc=f"[Epoch {epoch}/{epochs}] train",
             unit="batch",
             dynamic_ncols=True,
             mininterval=1.0,
+            leave=True,
+            bar_format=_TQDM_BAR_FORMAT,
+            file=sys.stdout,
             disable=not show_progress,
         )
         for batch_index, raw_batch in enumerate(train_progress, start=1):
@@ -767,7 +1012,7 @@ def train_model(
             device=device,
             amp=amp,
             show_progress=show_progress,
-            description=f"Epoch {epoch}/{epochs} dev",
+            description=f"[Epoch {epoch}/{epochs}] validate",
         )
         dev_metrics, thresholds = evaluate_probabilities(
             dev_predictions,
@@ -834,6 +1079,7 @@ def train_model(
             best_epoch=best_epoch,
             best_dev_end_to_end_macro_f1=best_metric,
             epochs_without_improvement=epochs_without_improvement,
+            patience=patience,
             elapsed_seconds=epoch_log["elapsed_seconds"],
         )
         if epochs_without_improvement >= patience:
@@ -857,7 +1103,7 @@ def train_model(
         device=device,
         amp=amp,
         show_progress=show_progress,
-        description="Final test",
+        description="[Locked test] inference",
     )
     test_metrics, _ = evaluate_probabilities(
         test_predictions,
