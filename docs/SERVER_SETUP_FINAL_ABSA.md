@@ -190,7 +190,7 @@ Setup mặc định:
 4. cài `.[ml]`;
 5. in phiên bản NumPy/PyTorch/Transformers và trạng thái CUDA;
 6. validate 28.266 model-ready records;
-7. tải hoặc xác minh `vinai/phobert-base`.
+7. tải hoặc xác minh `vinai/phobert-base` và `xlm-roberta-base`.
 
 Nếu system packages đã được quản trị viên chuẩn bị:
 
@@ -361,9 +361,34 @@ python -m absa_system validate-run artifacts/models/<RUN_NAME>
 Detached run cũng nối validation sau training bằng `&&`; nếu train lỗi,
 sealed-run validation không chạy.
 
+### 8.1. Chạy benchmark đủ sáu mô hình
+
+Action `full` ở trên vẫn là đường chạy PhoBERT một-split tương thích cũ. Để
+chạy thí nghiệm so sánh chính thức gồm Logistic Regression, Naive Bayes,
+BiLSTM, CNN-BiLSTM, PhoBERT và XLM-RoBERTa trên cùng group-aware folds, chạy
+trực tiếp trong repository sau khi setup:
+
+```bash
+source .venv-model/bin/activate
+python -X utf8 -m absa_system train-benchmark \
+  --data data/model_ready/absa_pseudo_v1_2_20260729 \
+  --results-dir results \
+  --run-id full_v1 \
+  --folds 3 \
+  --device cuda
+```
+
+Nên chạy lệnh trong `tmux`. Nếu session bị ngắt sau khi một số mô hình đã hoàn
+tất, chạy lại đúng lệnh và thêm `--resume`; code chỉ tái sử dụng run đã qua
+`validate-kfold-run`. Kết quả từng mô hình nằm tại
+`results/<model>/full_v1/`, còn bảng JSON/CSV so sánh nằm tại
+`results/comparisons/full_v1/`. Hai mô hình cổ điển không có early stopping vì
+không huấn luyện theo epoch; bốn mô hình neural có early stopping độc lập theo
+fold.
+
 ## 9. Chế độ offline
 
-Chỉ dùng sau khi dependency và PhoBERT đã nằm trên server:
+Chỉ dùng sau khi dependency, PhoBERT và XLM-RoBERTa đã nằm trên server:
 
 ```bash
 bash scripts/setup_final_absa_server.sh \

@@ -4276,3 +4276,463 @@ Các đẳng thức kiểm tra closure:
   chạy tokenizer preflight rồi full training bằng run name mới. Sau khi
   complete, chạy `validate-run`, lưu `run.json`/log/checksum và ghi
   runtime/peak VRAM/result vào protocol.
+
+## TASK-20260729-050 — Tiếp nhận và kiểm định full-training artifact `absa`
+
+- **Trạng thái:** ĐÃ THỰC THI read-only artifact inspection, metric analysis,
+  full-data contract reconciliation và independent SHA-256 verification;
+  **không sửa/đổi tên/xóa file trong run**.
+- **Mục tiêu:** Xác minh artifact được tải từ Kaggle thực sự là full-data
+  completed run sau tokenizer fix, không phải smoke/sample-limited run; tóm
+  tắt kết quả và giới hạn trước khi dùng cho experiment/paper.
+- **Đầu vào:** `artifacts/models/absa/` gồm `run.json`, `training_config.json`,
+  `epochs.jsonl`, `thresholds.json`, `test_metrics.json`, `manifest.json`,
+  `SHA256SUMS` và `model.pt`; immutable data release
+  `absa_pseudo_v1_2_20260729`.
+- **Artifact closure đã xác nhận:** Đủ 7/7 file được liệt kê trong
+  `SHA256SUMS` và cả 7 SHA-256 đều PASS. `model.pt` có 568.441.378 byte và
+  digest
+  `3d4d9e4ffe3537d0fe4911a63bf2c6abe428549aeae8991d71abe94cf56ed2d3`,
+  khớp đồng thời `run.json`, `manifest.json` và checksum ledger. Run status
+  là `COMPLETED`; manifest là `SEALED_TRAINING_RUN` với run status
+  `COMPLETED`.
+- **Full-data contract:** `sample_limits` train/dev/test đều null; validated
+  splits là 22.508/2.861/2.897. Cấu hình dùng batch size 2, gradient
+  accumulation 8, max length 256, 8 epoch và không có runtime override. Với
+  22.508 train record, số optimizer update kỳ vọng là
+  `ceil(ceil(22508/2)/8) * 8 = 11.256`; `epochs.jsonl` ghi đúng 11.256.
+  Data-manifest SHA khớp release local. Contract reconciliation PASS 13/13.
+- **Môi trường/khoảng thời gian:** Tesla T4; PyTorch 2.10.0+cu128;
+  Transformers 4.57.6; tokenizer alignment
+  `fast_backend_to_reference_vocab` với tokenizer/encoder vocab cùng 64.001.
+  Run bắt đầu `2026-07-29T06:48:59Z`, hoàn tất
+  `2026-07-29T08:47:38Z`, elapsed 7.119,17 giây, xấp xỉ 1 giờ 58 phút 39
+  giây.
+- **Model selection:** Dev end-to-end macro-F1 theo epoch là
+  0,4428; 0,6238; 0,6562; 0,6815; 0,6430; 0,6937; 0,6850; 0,6957.
+  Best epoch là 8 theo frozen primary metric. Thresholds được chọn duy nhất
+  trên dev tại epoch 8; mention thresholds nằm trong 0,35–0,85 và sentiment
+  thresholds 0,15–0,75.
+- **Test result trên 2.897 pseudo-labeled samples:** End-to-end macro-F1
+  0,6706; micro precision/recall/F1 0,8544/0,9086/0,8806; mention
+  macro-F1 0,8964 và mention micro-F1 0,9191; exact-set match 0,5851;
+  sample Jaccard 0,8227; hamming loss 0,02377. Mixed-case
+  precision/recall/F1 là 0,5352/0,7151/0,6122 trên support 351.
+- **Class-level finding:** Macro-F1 theo polarity là positive 0,8915
+  (support 5.873), negative 0,7752 (1.401), neutral 0,3451 (274). Neutral là
+  bottleneck rõ rệt: `Dịch vụ & Thái độ Shop::neutral` F1=0 với support 1;
+  `Đúng mô tả::neutral` 0,1333/support 9; `Tính xác thực::neutral`
+  0,1429/support 13. Mention F1 thấp nhất ở `Dịch vụ & Thái độ Shop` 0,8006
+  và `Bảo hành & Đổi trả` 0,8108; cao nhất ở `Vận chuyển` 0,9814.
+- **Quyết định diễn giải:** Artifact này là valid full engineering baseline
+  trên leakage-controlled pseudo-label release và đủ dùng cho inference,
+  error analysis, baseline/ablation planning. Không diễn giải micro-F1 cao là
+  đã giải quyết đều mọi polarity; macro/micro gap phản ánh strong imbalance,
+  đặc biệt neutral. Không dùng kết quả này làm final Q1 benchmark claim vì
+  manifest data vẫn là `DEVELOPMENT_PSEUDO_MODEL_READY_NOT_GOLD`, mới có một
+  seed và chưa có independently human-adjudicated locked test.
+- **Giới hạn:** Independent check local xác minh structure/hash/metric
+  contract nhưng chưa chạy checkpoint inference vì local validation
+  environment chưa có PyTorch. Artifact directory tên `absa` khá chung;
+  không rename in place trong task này để giữ nguyên provenance mà người dùng
+  đã tải về.
+- **Next dependency:** Backup nguyên vẹn sealed artifact; chạy checkpoint
+  inference sanity cases; thực hiện stratified error analysis tập trung
+  neutral/mixed/rare aspects; sau đó chạy multi-seed, baseline và ablation.
+  Final paper evaluation phải chuyển sang locked human-gold test và báo cáo
+  mean±standard deviation/confidence interval thay vì một pseudo-test run.
+
+## TASK-20260801-051 — Thêm training progress và console metric reporting
+
+- **Trạng thái:** ĐÃ THỰC THI source/config/documentation change và static
+  validation; **CHƯA chạy một GPU training run mới sau thay đổi**. Sealed run
+  `artifacts/models/absa` không bị sửa và không thể hồi tố thêm progress log.
+- **Mục tiêu:** Làm training quan sát được trên Kaggle/server thay vì im lặng
+  trong từng epoch; in metric có cấu trúc sau mỗi epoch và summary cuối run,
+  đồng thời tiếp tục lưu full machine-readable metrics trong artifact.
+- **Làm rõ phạm vi:** Active experiment dùng một leakage-controlled
+  train/dev/test split, không có K-fold cross-validation. Yêu cầu “từng fold”
+  được triển khai theo nghĩa từng training epoch với dev evaluation và final
+  test split. Không tự tạo K-fold vì việc đó sẽ thay đổi split/provenance,
+  model-selection protocol và paper claim.
+- **Code/config đã thay đổi:** Thêm `tqdm>=4.66,<5` vào ML dependency;
+  `show_progress=true` vào frozen training config; thêm CLI
+  `--no-progress`; mở rộng `collect_probabilities` để hiển thị progress cho
+  dev/test; thêm train progress theo batch với running total loss, learning
+  rate và optimizer-update count.
+- **Console output mới:** Trước train in event `training_started` với số
+  record/batch/epoch/update. Sau mỗi epoch in `epoch_completed` gồm full loss
+  breakdown và dev summary: end-to-end macro-F1, micro precision/recall/F1,
+  mention macro/micro F1, exact-set match, sample Jaccard, hamming loss,
+  mixed precision/recall/F1/support và macro-F1 theo negative/positive/neutral.
+  Early stop in event riêng. Final test có progress bar và
+  `test_completed`; CLI response hiện hữu tiếp tục in toàn bộ per-label test
+  metrics.
+- **Artifact behavior:** `epochs.jsonl` tiếp tục là canonical full dev metric
+  record cho từng epoch; `test_metrics.json` tiếp tục chứa toàn bộ final test
+  metrics; `run.json`, checkpoint selection, dev-only threshold tuning,
+  one-time test evaluation và sealing/checksum contract không đổi. Progress
+  chỉ là observability, không thay loss/model/data/split/seed.
+- **Validation đã thực thi:** `py_compile` PASS cho `training.py` và `cli.py`;
+  JSON config parse PASS; TOML parse PASS; `git diff --check` PASS; local tqdm
+  import PASS ở version 4.70.0. Exact `_metric_summary` function được tách từ
+  AST source và chạy trên full artifact `test_metrics.json`: PASS 2.897
+  sample, end-to-end macro-F1 0,670593 và neutral macro-F1 0,345141 đúng với
+  canonical metrics.
+- **Quyết định:** Tqdm bật mặc định để Kaggle hiện batch progress; có thể tắt
+  bằng `--no-progress` nhưng structured epoch/test events vẫn được in. Console
+  chỉ in summary ổn định mỗi epoch để tránh hàng chục nghìn dòng per-label;
+  full per-label dev metrics nằm trong `epochs.jsonl`, full test metrics được
+  in ở CLI cuối run và lưu `test_metrics.json`.
+- **Giới hạn:** Local environment không có PyTorch nên chưa chạy
+  forward/backward/DataLoader integration sau thay đổi. Tqdm carriage-return
+  trong log `tee` có thể làm raw log dài hơn; structured JSON events và
+  artifact JSONL/JSON vẫn là nguồn parsing chính. Đây không phải K-fold
+  implementation.
+- **Next dependency:** Commit/publish thay đổi lên `final_absa`; ở training
+  runner kế tiếp reinstall `.[ml]`, chạy capacity pilot một epoch để xác nhận
+  tqdm + console JSON + artifact closure, rồi mới dùng cho multi-seed,
+  baseline hoặc ablation. Nếu nghiên cứu thực sự yêu cầu group-aware K-fold,
+  phải thiết kế thành experiment protocol riêng và không dùng locked test để
+  tune.
+
+## TASK-20260801-052 — Tích hợp group-aware K-fold và early stopping
+
+- **Trạng thái:** ĐÃ THỰC THI source/config/CLI/documentation change, kiểm
+  thử splitter trên toàn development pool và kiểm thử artifact contract bằng
+  synthetic fixture; **CHƯA chạy GPU K-fold training**. Task này mở rộng và
+  thay thế giới hạn “không có K-fold” đã nêu tại TASK-051; lệnh one-split cũ
+  vẫn được giữ làm baseline riêng.
+- **Mục tiêu:** Bổ sung K-fold cross-validation thật cho hệ thống ABSA, có
+  tqdm theo fold/epoch/batch, early stopping độc lập cho từng fold, metric
+  từng fold, mean±sample-standard-deviation toàn bộ fold, pooled out-of-fold
+  metric và một lần đánh giá locked test không dùng test để tune.
+- **Đầu vào:** Immutable release
+  `data/model_ready/absa_pseudo_v1_2_20260729`; cấu hình
+  `configs/training_v1.json`; taxonomy 9 aspect × 3 polarity; khóa chống rò
+  rỉ `leakage_group_id`. Development pool được tạo từ original train+dev
+  (22.508 + 2.861 = 25.369 record); original test 2.897 record vẫn bị khóa.
+- **Split method đã code:** Thêm
+  `src/absa_system/folds.py` với deterministic greedy multi-label stratified
+  group assignment. Mỗi connected leakage group là đơn vị bất khả phân;
+  objective cân bằng kích thước, 27 aspect-polarity support, source domain và
+  source category. Mỗi sample nằm đúng một validation fold; train/validation
+  group intersection của mọi fold bắt buộc bằng 0; development/test group
+  intersection bắt buộc bằng 0.
+- **Training method đã code:** Thêm
+  `src/absa_system/cross_validation.py` và CLI `train-kfold`. Mỗi fold khởi
+  tạo model/optimizer/scheduler/class weights từ training partition của fold;
+  seed fold bằng base seed + fold index × 1.009. Mỗi epoch tune threshold chỉ
+  trên validation fold, chọn checkpoint theo validation end-to-end macro-F1
+  và early-stop sau `patience=2` epoch liên tiếp không cải thiện, tối đa 8
+  epoch. Không dùng validation record của fold để train fold đó.
+- **Test policy đã code:** Sau khi chọn checkpoint từng fold, hệ thống chỉ
+  thu probability trên locked test, không tính/in fold-level test metric.
+  Threshold cuối được học từ pooled OOF predictions; probability locked test
+  của các fold được mean-ensemble và metric test chỉ được tính một lần sau
+  khi toàn bộ fold đã hoàn tất. Policy này ngăn test tham gia early stopping,
+  threshold tuning hoặc fold/model selection.
+- **Progress và reporting:** Tqdm hiển thị
+  `Fold k/K epoch e/E train`, validation, best-validation và locked-test
+  inference. Structured events gồm `kfold_started`, `fold_started`,
+  `fold_epoch_completed`, `fold_early_stopping`, `fold_completed` và
+  `kfold_completed`. Full metric nằm trong `epochs.jsonl`,
+  `validation_metrics.json`, `oof_metrics.json`, `test_metrics.json`; summary
+  từng fold và cross-fold mean/std nằm trong `aggregate_metrics.json` và CLI
+  output.
+- **Artifact/provenance:** Lưu exact `fold_assignments.jsonl`, split method và
+  validation trong `cross_validation.json`, checkpoint/threshold/epoch log
+  riêng ở `folds/fold_XX/`, pooled-OOF threshold ở root, run metadata và
+  recursive manifest/SHA-256 ledger. Thêm `validate-kfold-run` để fail closed
+  khi file thiếu, thừa, hash sai, fold chưa complete hoặc metadata không nhất
+  quán. `data/raw/` và sealed artifact `artifacts/models/absa` không bị sửa.
+- **Measured splitter result trên full development pool:** PASS exact coverage
+  25.369/25.369 sample, 8.259 leakage group, 5/5 fold không overlap. Record
+  count từng fold là 6.967/4.601/4.605/4.599/4.597; group count tương ứng
+  1/2.060/2.065/2.065/2.068. Minimum 27-label support từng fold là
+  1/2/2/2/2. Kết quả được tái tạo bằng seed 20.260.729.
+- **Phát hiện/giới hạn dữ liệu quan trọng:** Release hiện có một connected
+  leakage group cực lớn `absa-lkg-cb08e16544f5fa72dbd9` gồm 6.967 record,
+  chiếm 27,4627% development pool và lớn hơn target 5-fold 5.073,8 record.
+  Do không được phá leakage boundary, exact size balance là bất khả thi;
+  max/min fold-size ratio đo được 1,5156 và fold chứa group lớn chỉ có một
+  connected group. Code ghi rõ warning này và yêu cầu đọc pooled OOF metric
+  song song với unweighted mean±std; không che giấu bằng random row split.
+- **Validation đã thực thi:** `py_compile` PASS cho training/folds/K-fold/CLI;
+  JSON/TOML parse PASS; `git diff --check` PASS. Full-data splitter validation
+  PASS; synthetic prediction concat, ensemble và sample-SD aggregation PASS;
+  CLI parser contract PASS; synthetic recursive sealing/checksum/validation
+  contract PASS. Local environment không có PyTorch nên chưa chạy
+  forward/backward, CUDA memory test hoặc end-to-end checkpoint production.
+- **Quyết định:** `k_folds=5` và `fold_seed_stride=1009` được ghi trong frozen
+  config; `patience=2` được dùng cho từng fold. Lệnh `train` one-split không bị
+  đổi semantic. K-fold report là experiment protocol khác, không trộn trực
+  tiếp số liệu với one-split baseline. Full K-fold giữ 5 checkpoint để có thể
+  kiểm toán và tái tạo ensemble, vì vậy storage/runtime xấp xỉ nhiều lần một
+  run đơn.
+- **Next dependency:** Reinstall package với ML extra, chạy K-fold capacity
+  smoke bằng output directory mới, xác nhận tqdm/event/checkpoint và peak VRAM;
+  sau đó mới chạy full 5-fold. Trước paper freeze cần điều tra provenance của
+  giant leakage component để xác định đó là connected duplication/template
+  family hợp lệ hay over-connection; mọi thay đổi group definition phải tạo
+  model-ready release/version mới, không sửa release hiện hữu. Final Q1 claim
+  vẫn cần locked independently human-adjudicated test thay cho pseudo test.
+
+## TASK-20260801-053 — Audit giant leakage component 6.967 record
+
+- **Trạng thái:** ĐÃ THỰC THI read-only graph/provenance audit, namespace
+  ablation, bridge-family analysis, manual content check và counterfactual
+  measurement; **không sửa model-ready release, curation release, raw data,
+  nhãn hoặc fold assignment**.
+- **Mục tiêu:** Xác định giant component
+  `absa-lkg-cb08e16544f5fa72dbd9` là leakage boundary hợp lệ, lỗi implementation
+  hay over-connection; đo tác động tới K-fold và xác định dependency cần xử lý
+  trước final Q1 experiment.
+- **Đầu vào/checksum:** Model-ready manifest
+  `absa_pseudo_v1_2_20260729` SHA-256
+  `05957d1590cb4494bedcaa82f29478261e0c198ec112dc0d2ae46852387841dc`;
+  base/delta curation records lần lượt
+  `05e79bdf828a0575ed20ca3badefb715d2da650fadffd6e456fecb95642107d3`
+  và
+  `067db0de44c61461a6e7f55a0a2d325b82bb54eb8de50e82b93ccc268d88432e`.
+  Code tạo model leakage group `src/absa_system/data.py` có SHA-256
+  `c83567aaee022eacf413058a992d956e03b7ad6c63016c683ea7525cf0196060`;
+  code tạo connected template family
+  `scripts/build_clean_release_v2.py` có SHA-256
+  `de53da08ca9af38f1d7b88f26e7babb37380a4e6cde858fb260b984a5fe0d807`.
+- **Phương pháp thực thi:** Load đủ 28.266 model record và hai curation
+  ledger; dựng lại đúng các key mà builder sử dụng: normalized exact-text
+  hash, product, duplicate cluster, near-duplicate cluster, near representative
+  và template family. Recompute connected components trên target; chạy
+  single-namespace, cumulative và leave-one-namespace-out ablation; đo
+  template-family/product bipartite incidence; lần lượt bỏ từng family để tìm
+  bridge; recompute stable group hash; đọc 8 record/family của năm bridge
+  family lớn nhất. Không dùng label/model prediction để tạo group.
+- **Integrity result:** Target có đúng 6.967 unique member và toàn bộ nằm ở
+  train; stable member hash recompute lại đúng
+  `absa-lkg-cb08e16544f5fa72dbd9`. Không có key nào vừa chạm target vừa chạm
+  một final component khác; không thấy blank/`None` key collision hoặc stable
+  hash collision. Vì vậy đây không phải lỗi serialize/hash hay tình cờ gom
+  sai ID.
+- **Edge attribution:** Exact-text và duplicate cluster tạo 0 shared edge;
+  near-duplicate/representative chỉ tạo 9 cặp, direct component lớn nhất 2.
+  Product-only tách target thành 184 product group; cùng near-duplicate còn
+  181 component, lớn nhất 299. Template-only có component lớn nhất 347. Chỉ
+  khi cộng template edges vào product components thì 181 component percolate
+  thành một component 6.967 record. Nếu bỏ toàn bộ product namespace còn
+  5.320 component/largest 347; nếu bỏ toàn bộ template namespace còn 181
+  component/largest 299.
+- **Root cause trong code:** Clean-release builder tạo template family bằng
+  connected components khi review chia sẻ ít nhất hai recurrent clause,
+  với `family_max_signature_members=500`. Model-ready builder tiếp tục union
+  mọi review cùng template family và mọi review cùng product. Một product có
+  nhiều family trở thành bridge bậc hai; transitive closure sau hai tầng làm
+  184 product và 55 family nối thành giant component. Đây là
+  `SECOND_ORDER_TRANSITIVE_OVER_CONNECTION`: implementation đang làm đúng
+  rule đã viết, nhưng composition của hai rule tạo boundary quá lớn.
+- **Bridge measurements:** Có 1.696 target record mang template-family ID,
+  55 family, 22 family đi qua nhiều product, 242 product-family incidence edge
+  và 183/184 product có template-family member. Năm hub family chính có
+  253/251/315/347/195 model member và phủ 52/42/37/30/9 product. Bỏ riêng từng
+  family này làm graph tách lần lượt thành 50/39/36/29/9 component; 17/55
+  family là articulation bridge theo phép remove-family audit.
+- **Curation/content finding:** Trong giant group có 3.035 `KEEP`, 28
+  `KEEP_CLEANED`, 3.904 `QUARANTINE`; primary reason gồm 3.701
+  `PLATFORM_TEMPLATE`, 122 reward disclosure, 70 internal repetition, 23
+  post-clean quality, 10 non-review suspect và 6 near-duplicate. Manual check
+  40 record của năm hub family xác nhận mẫu catalogue/platform phổ biến:
+  danh sách lợi ích chăm sóc tóc, tính năng bình sữa/trẻ em, feature tai nghe,
+  mô tả thời trang và câu “giá trị tuyệt vời”, đôi khi ghép thêm một buyer
+  residual clause ngắn. Đây không phải chỉ là các review tự nhiên tình cờ
+  giống nhau.
+- **Label-shift signal:** Toàn giant group chứa 14.185 positive, 1.193
+  negative và 515 neutral aspect-polarity instance. Riêng 3.701 row có primary
+  reason `PLATFORM_TEMPLATE` đóng góp 7.033 positive nhưng chỉ 31 negative và
+  36 neutral. Vì vậy template rows là nguồn khả dĩ làm tăng positive imbalance
+  và tạo shortcut/optimistic pseudo-label performance; số đo này là mô tả,
+  chưa phải causal model experiment.
+- **Global counterfactual đã đo nhưng chưa thực thi:** Current 28.266 record
+  tạo 9.136 component/largest 6.967. Chỉ bỏ template edges nhưng giữ row tạo
+  9.349 component/largest 299, nhưng bị bác bỏ vì recurring text sẽ được phép
+  qua fold. Loại toàn bộ 8.505 row có primary reason `PLATFORM_TEMPLATE`
+  (30,0892% release) rồi không dùng template edges còn 19.761 record, 9.281
+  component, largest 182. Đây chỉ là upper-bound counterfactual, không phải
+  release proposal cuối vì mixed rows có thể còn buyer evidence đáng giữ.
+- **Kết luận/quyết định:** Release hiện tại giữ immutable và vẫn dùng được như
+  engineering/pseudo-label baseline có disclosure. Không dùng full 5-fold
+  result trên release này làm final Q1 claim. Không “sửa nhanh” bằng cách bỏ
+  template edge hoặc random split giant group. Hướng hợp lệ là tạo release
+  version mới: exclude pure platform templates; với mixed template+buyer rows
+  thì tách buyer-authored residual, chạy lại quality gate và relabel text đã
+  thay đổi hoặc human-adjudicate; sau đó recompute duplicate/template/product
+  graph và splits từ đầu.
+- **Outputs:** Machine-readable report và narrative report được tạo tại
+  `artifacts/audits/giant_leakage_group_v1_20260801/audit_summary.json` và
+  `REPORT.md`, với SHA-256 lần lượt
+  `b537a88040f1cf89825b4f1d32534692f93526847fba2ad3f263a7245aa70692`
+  và
+  `bdf7fda35f959ef1bd383ccb178eb865a640586723345fce2865bae4f4137cb9`;
+  cả hai PASS theo `SHA256SUMS`. Thư mục `artifacts/` bị Git-ignore; output
+  audit local không làm thay đổi sealed dataset/checksum.
+- **Giới hạn:** Manual content check mới gồm 40 sample có chủ đích từ năm hub
+  family, không phải prevalence estimate hay double-annotated adjudication.
+  Counterfactual exclude 8.505 row chưa đo class coverage theo toàn release,
+  domain retention, human validity hoặc downstream metric; không được coi là
+  quyết định xóa tự động. Cần audit pure-vs-mixed template ở record level.
+- **Next dependency:** Đóng băng audit artifact; thiết kế calibration sample
+  stratified theo pure/mixed, family size, product và polarity; hai annotator
+  độc lập xác định buyer-authored residual. Từ kết quả đó, viết config mới và
+  publish model-ready v1.3 kèm decision ledger/checksum. Chỉ sau khi v1.3 pass
+  largest-component, group isolation, label-distribution và human-gold checks
+  mới chạy capacity smoke rồi full K-fold.
+
+## TASK-20260801-054 — Quyết định giữ giant component trong experiment hiện tại
+
+- **Trạng thái:** ĐÃ GHI NHẬN quyết định của chủ nhiệm nghiên cứu; **không có
+  data mutation** vì toàn bộ 6.967 record đã nằm trong immutable release
+  `absa_pseudo_v1_2_20260729`.
+- **Quyết định:** Giữ toàn bộ member của
+  `absa-lkg-cb08e16544f5fa72dbd9` trong dataset hiện tại; không thực hiện
+  template exclusion/residualization hoặc publish v1.3 trước experiment kế
+  tiếp. Audit TASK-053 vẫn được giữ làm provenance/limitation, không bị rút
+  lại.
+- **Leakage constraint bắt buộc:** Giữ component là đơn vị bất khả phân trong
+  group-aware cross-validation. Không random row split và không cho bất kỳ
+  member nào của component xuất hiện đồng thời ở train và validation/test.
+- **Fold-count consequence đã đo:** Với 5-fold, validation record counts là
+  6.967/4.601/4.605/4.599/4.597, max/min=1,5156 và fold đầu chỉ chứa một
+  leakage group. Với cùng deterministic splitter/seed nhưng 3-fold, counts là
+  8.904/8.228/8.237 và group counts 1.637/3.315/3.307; kích thước cân bằng hơn
+  trong khi vẫn giữ nguyên leakage boundary. Vì vậy 3-fold được khuyến nghị
+  cho release hiện tại; đây là protocol choice cần freeze trước khi chạy,
+  không được chọn lại dựa trên test metric.
+- **Reporting requirement:** Paper/report phải disclosure rằng giant component
+  gồm nhiều platform-template-marked rows, báo fold sizes/group counts, dùng
+  pooled OOF metric song song với unweighted mean±SD, và không diễn giải
+  current pseudo-test result là final human-gold Q1 claim. Positive shortcut
+  và template-domain shift từ TASK-053 vẫn là known limitation.
+- **Next dependency:** Chạy một 3-fold capacity smoke bằng output directory
+  mới; nếu artifact/progress/VRAM PASS thì freeze `--folds 3`, seed, config và
+  data manifest hash rồi chạy full 3-fold. 5-fold chỉ chạy như sensitivity
+  experiment nếu có đủ compute và phải giữ nguyên split assignments đã seal.
+
+## TASK-20260801-055 — Khôi phục benchmark đủ sáu mô hình của hệ thống gốc
+
+- **Trạng thái:** ĐÃ THỰC THI source/config/CLI/inference/result-contract và
+  smoke integration cho classical + BiLSTM; ĐÃ kiểm thử forward/backward cho
+  BiLSTM/CNN-BiLSTM và mocked-backbone forward cho PhoBERT/XLM-RoBERTa;
+  **CHƯA chạy full 28.266-record benchmark hoặc actual pretrained XLM-R GPU
+  training**. Mọi số metric smoke bên dưới chỉ kiểm tra đường code, không phải
+  kết quả paper.
+- **Mục tiêu:** Phục hồi family so sánh của `legacy/system/` nhưng đặt toàn bộ
+  model dưới protocol leakage-controlled hiện tại, thay vì dùng row-level
+  KFold cũ. Registry legacy xác nhận sáu model tổng cộng: Logistic Regression,
+  Naive Bayes, BiLSTM, CNN-BiLSTM, PhoBERT và XLM-RoBERTa. Vì PhoBERT proposed
+  model đã tồn tại, task này bổ sung năm model còn lại.
+- **Đầu vào:** Immutable
+  `data/model_ready/absa_pseudo_v1_2_20260729`; config
+  `configs/training_v1.json`; taxonomy 9 aspect × 3 polarity; base seed
+  20.260.729; `leakage_group_id`; source code legacy ở
+  `legacy/system/methods/{ml_models,deep_models,transformer_models}.py`.
+  Không sửa `data/raw/`, model-ready release, label hoặc split.
+- **Model implementation đã code:** Thêm canonical registry tại
+  `src/absa_system/model_registry.py`. Logistic Regression và Naive Bayes dùng
+  fold-local TF-IDF unigram+bigram tối đa 10.000 feature, chín mention binary
+  head và 27 aspect-polarity binary head; single-class target dùng
+  `DummyClassifier`. Logistic Regression dùng `C=1`, `max_iter=1000` và
+  `class_weight=balanced`; Naive Bayes dùng `alpha=1`. BiLSTM giữ random
+  embedding 128, two-layer bidirectional LSTM hidden 256 và dual head.
+  CNN-BiLSTM bám legacy architecture gồm convolution 128→64→128, batch norm,
+  hai max-pool và two-layer BiLSTM; pooling-aware valid lengths được bổ sung
+  để không dùng padded tail làm representation. XLM-RoBERTa dùng
+  `xlm-roberta-base` CLS dual head. PhoBERT vẫn là proposed evidence-aware
+  model hiện tại, không hạ về legacy CLS-only model.
+- **Imbalance/loss/threshold:** Neural models dùng fold-train-only positive
+  class weights, focal BCE, mention/sentiment task weights, consistency và
+  neutral-exclusivity loss; evidence loss chỉ bật cho proposed PhoBERT.
+  Classical LR dùng balanced class weight; NB không có class weight theo bản
+  chất estimator. Mọi model tune 9 mention + 27 sentiment threshold trên
+  validation fold; pooled OOF threshold mới được dùng cho mean-ensemble locked
+  test. Không đưa test label vào optimizer, early stop hoặc threshold tuning.
+- **K-fold/early-stopping contract:** `train-kfold --model` chạy riêng một
+  neural model. `train-benchmark` mặc định chạy cả sáu model tuần tự. Tất cả
+  dùng cùng deterministic group-aware assignment; suite so SHA-256 của
+  `fold_assignments.jsonl` và fail nếu khác. BiLSTM, CNN-BiLSTM, PhoBERT và
+  XLM-RoBERTa early-stop độc lập mỗi fold theo validation end-to-end macro-F1,
+  `patience=2`. LR/NB là closed-form/iterative-solver không có epoch validation
+  loop, nên metadata ghi rõ `early_stopping.enabled=false` và reason
+  `non_iterative_classical_estimator`; không giả lập early stopping cho chúng.
+  Config mặc định đổi từ 5 sang 3 fold theo quyết định TASK-054.
+- **Code/output đã thay đổi:** Thêm
+  `src/absa_system/{benchmark,results}.py`; tổng quát hóa model/checkpoint trong
+  `cross_validation.py`, optimizer trong `training.py`, và inference trong
+  `inference.py`. Neural checkpoint dùng `model.pt`, classical dùng
+  `model.pkl`; cả hai đều mang model identity, config, data release/hash,
+  fold/seed và threshold. CLI `predict` đọc được cả hai loại; chỉ proposed
+  PhoBERT xuất evidence peak, tránh trình bày uniform compatibility attention
+  của baseline như evidence thật. Thêm dependency `scikit-learn>=1.4,<2`.
+- **Result layout/provenance:** Mỗi run được fail-closed tại
+  `results/<model>/<run-id>/`, có checkpoint từng fold, exact assignments,
+  `fold.json`, `epochs.jsonl`, full `validation/oof/test_metrics.json`, pooled
+  thresholds, `fold_metrics.csv`, `epoch_metrics.csv`, recursive manifest và
+  SHA-256 ledger. Bảng tổng hợp nằm ở
+  `results/comparisons/<run-id>/all_models_comparison.{json,csv}` cùng sealed
+  `suite_manifest.json`/`SHA256SUMS`. `validate-kfold-run` hỗ trợ động
+  `model.pt`/`model.pkl`; `validate-benchmark` kiểm tra closure/checksum bảng
+  so sánh. `--resume` chỉ reuse per-model run đã validate và cùng assignment
+  hash; không overwrite run hỏng/chưa complete.
+- **Server/Kaggle documentation:** README có lệnh full six-model benchmark và
+  result tree. `docs/SERVER_SETUP_FINAL_ABSA.md` có lệnh 3-fold + resume; server
+  setup cài ML extra gồm sklearn và cache cả `vinai/phobert-base` lẫn
+  `xlm-roberta-base`. `results/` được Git-ignore vì checkpoint/metric run là
+  generated artifact, không phải source.
+- **Measured classical smoke 1:** Chạy LR+NB với development=80, locked
+  test=20, 2 fold tại `.tmp/benchmark_contract_smoke_v1`. Cả hai hoàn tất,
+  mỗi run có 22 sealed file và `validate-kfold-run=VALID`. Assignment SHA-256
+  của LR và NB giống tuyệt đối:
+  `e581bd635399beb3725b95875543d9dd1b1943c89cec32848771d2904ef9b401`.
+  Smoke locked-test macro-F1 lần lượt 0,117724 và 0,202138; không được trích
+  làm performance vì sample quá nhỏ và threshold không ổn định.
+- **Measured resume/comparison smoke:** Chạy NB với development=40, test=10,
+  2 fold tại `.tmp/benchmark_contract_smoke_v2`; sealed comparison gồm đúng
+  bốn file, checksum PASS, `validate-benchmark=VALID`. Chạy lại cùng lệnh với
+  `--resume` hoàn tất mà không retrain và chỉ reuse run đã validated.
+- **Measured neural integration smoke:** Chạy BiLSTM CPU, development=40,
+  test=10, 2 fold, 1 epoch, max length 32, batch 4. Hai fold hoàn tất, 22 file
+  sealed, `validate-kfold-run=VALID`, checkpoint inference PASS. Pooled OOF
+  macro-F1=0,112363 và smoke test macro-F1=0,095251 chỉ xác nhận execution.
+  BiLSTM assignment SHA-256 bằng đúng NB smoke có cùng 40/10 selection:
+  `ef05a73a5d50beb94233833723b6fdaec8e3275a01f6b18791f918c6d37d6189`,
+  chứng minh classical/neural path dùng cùng fold contract.
+- **Các validation khác đã thực thi:** `py_compile`/`compileall`, JSON parse và
+  `git diff --check` PASS (chỉ có Git CRLF warning cho `.gitignore`). BiLSTM và
+  CNN-BiLSTM synthetic forward/backward + optimizer step PASS với output shape
+  `[batch,9]` và `[batch,9,3]`. Registry/build/forward PhoBERT và XLM-RoBERTa
+  PASS với mocked `AutoModel` để không tải model trong unit path. Classical
+  checkpoint prediction PASS; comparison checksum replay PASS. Full unittest
+  discover chạy 210 test: 204 PASS, sáu ERROR không thuộc model change (hai do
+  system Python thiếu optional Selenium; bốn do pre-existing human-UI test/
+  workflow signature mismatch). Các ABSA system tests đều PASS. Không chạy
+  được `bash -n` vì Bash executable trên Windows báo logon-session error; Python
+  block sửa trong server script chưa được thực thi trên Linux trong task này.
+- **Quyết định phương pháp:** Giữ six-model family để tạo classical/deep/
+  transformer baselines có thể so sánh, nhưng không tái dùng legacy row-level
+  KFold vì sẽ rò leakage group. Dùng một split/metric/threshold/test contract
+  chung; khác biệt model-specific được ghi trong config/run metadata. Không
+  áp early stopping giả cho LR/NB. Bảng test dùng để báo benchmark, không được
+  dùng ngược lại để tune hyperparameter hay thay fold/config sau khi xem test.
+- **Giới hạn:** Chưa chạy CNN-BiLSTM full training, chưa load/train actual
+  pretrained XLM-RoBERTa trong integration smoke, chưa đo VRAM/runtime/storage
+  của đủ sáu model, và chưa chạy full 3-fold. Pickle inference chỉ được load
+  từ sealed trusted local artifact, không nhận file `.pkl` không tin cậy.
+  Current release/test vẫn là pseudo-label engineering release có giant
+  template component; không biến thành human-gold Q1 evidence chỉ vì có thêm
+  baseline. Một shared fixed config tạo fairness nhưng chưa thay thế
+  model-specific hyperparameter search được nested trong development data.
+- **Next dependency (planned, chưa thực thi):** Reinstall `.[ml]` trên Kaggle/
+  server; chạy six-model capacity suite với cùng `--run-id`, `--folds 3` và
+  bounded sample để đo thời gian/VRAM; freeze data manifest, assignment hash,
+  config và environment inventory; sau đó chạy full suite một lần. Nếu bị
+  ngắt dùng `--resume`. Trước final paper claim cần multi-seed hoặc nested
+  development-only tuning được pre-register, ablation cho proposed PhoBERT,
+  statistical comparison và locked independently human-adjudicated test.

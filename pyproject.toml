@@ -20,6 +20,8 @@ ml = [
   "numpy>=2,<3",
   "torch>=2.4,<3",
   "transformers>=4.45,<5",
+  "tqdm>=4.66,<5",
+  "scikit-learn>=1.4,<2",
 ]
 dev = [
   "pytest>=8,<9",

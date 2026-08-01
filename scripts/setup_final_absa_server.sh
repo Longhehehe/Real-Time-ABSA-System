@@ -376,7 +376,7 @@ log "Validating immutable model-ready data"
 )
 
 if ! $SKIP_MODEL_DOWNLOAD; then
-  log "Downloading or verifying vinai/phobert-base"
+  log "Downloading or verifying PhoBERT and XLM-RoBERTa backbones"
   local_only="False"
   if $OFFLINE; then
     local_only="True"
@@ -384,15 +384,15 @@ if ! $SKIP_MODEL_DOWNLOAD; then
   "$VENV_PYTHON" -X utf8 -c "
 from transformers import AutoModel
 from absa_system.tokenization import load_offset_tokenizer
-name = 'vinai/phobert-base'
 local = $local_only
-tokenizer = load_offset_tokenizer(name, local_files_only=local)
-model = AutoModel.from_pretrained(name, local_files_only=local)
-print({
-    'model': name,
-    'tokenizer_fast': tokenizer.is_fast,
-    'hidden_size': model.config.hidden_size,
-})
+for name in ('vinai/phobert-base', 'xlm-roberta-base'):
+    tokenizer = load_offset_tokenizer(name, local_files_only=local)
+    model = AutoModel.from_pretrained(name, local_files_only=local)
+    print({
+        'model': name,
+        'tokenizer_fast': tokenizer.is_fast,
+        'hidden_size': model.config.hidden_size,
+    })
 "
 fi
 

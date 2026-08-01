@@ -3,12 +3,16 @@
 from __future__ import annotations
 
 from argparse import ArgumentParser, Namespace
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Sequence
 import json
 
+from .cross_validation import train_kfold_model, validate_kfold_training_run
 from .data import build_model_ready_release, validate_model_ready_release
 from .inference import ABSAPredictor
+from .model_registry import MODEL_NAMES, get_model_spec
+from .results import validate_suite_comparison
 from .training import train_model, validate_training_run
 
 
@@ -50,6 +54,18 @@ def build_parser() -> ArgumentParser:
     )
     validate_run.add_argument("run_dir", type=Path)
 
+    validate_kfold_run = subparsers.add_parser(
+        "validate-kfold-run",
+        help="Validate recursive closure and checksums of a K-fold run.",
+    )
+    validate_kfold_run.add_argument("run_dir", type=Path)
+
+    validate_benchmark = subparsers.add_parser(
+        "validate-benchmark",
+        help="Validate checksums and closure of a suite comparison directory.",
+    )
+    validate_benchmark.add_argument("comparison_dir", type=Path)
+
     train = subparsers.add_parser(
         "train",
         help="Train, select thresholds on dev and evaluate test once.",
@@ -69,6 +85,88 @@ def build_parser() -> ArgumentParser:
     train.add_argument("--max-length", type=int)
     train.add_argument("--batch-size", type=int)
     train.add_argument("--gradient-accumulation-steps", type=int)
+    train.add_argument(
+        "--no-progress",
+        action="store_true",
+        help="Disable tqdm train/dev/test progress bars.",
+    )
+
+    train_kfold = subparsers.add_parser(
+        "train-kfold",
+        help=(
+            "Run group-aware K-fold CV with per-fold early stopping and one "
+            "locked-test ensemble evaluation."
+        ),
+    )
+    train_kfold.add_argument("--data", type=Path, required=True)
+    train_kfold.add_argument("--output", type=Path, required=True)
+    train_kfold.add_argument(
+        "--model",
+        choices=[name for name in MODEL_NAMES if get_model_spec(name).iterative],
+        default="phobert",
+        help="One neural model; use train-benchmark for the complete suite.",
+    )
+    train_kfold.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/training_v1.json"),
+    )
+    train_kfold.add_argument("--device")
+    train_kfold.add_argument("--folds", type=int)
+    train_kfold.add_argument("--max-development-samples", type=int)
+    train_kfold.add_argument("--max-test-samples", type=int)
+    train_kfold.add_argument("--max-epochs", type=int)
+    train_kfold.add_argument("--max-length", type=int)
+    train_kfold.add_argument("--batch-size", type=int)
+    train_kfold.add_argument("--gradient-accumulation-steps", type=int)
+    train_kfold.add_argument(
+        "--no-progress",
+        action="store_true",
+        help="Disable tqdm bars but keep structured fold/metric events.",
+    )
+
+    benchmark = subparsers.add_parser(
+        "train-benchmark",
+        help=(
+            "Train the original six-model family on identical group-aware "
+            "folds and save per-model plus comparison results."
+        ),
+    )
+    benchmark.add_argument("--data", type=Path, required=True)
+    benchmark.add_argument("--results-dir", type=Path, default=Path("results"))
+    benchmark.add_argument(
+        "--run-id",
+        help="Shared run ID; defaults to a UTC timestamp.",
+    )
+    benchmark.add_argument(
+        "--models",
+        nargs="+",
+        choices=list(MODEL_NAMES),
+        default=list(MODEL_NAMES),
+    )
+    benchmark.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/training_v1.json"),
+    )
+    benchmark.add_argument("--device")
+    benchmark.add_argument("--folds", type=int)
+    benchmark.add_argument("--max-development-samples", type=int)
+    benchmark.add_argument("--max-test-samples", type=int)
+    benchmark.add_argument("--max-epochs", type=int)
+    benchmark.add_argument("--max-length", type=int)
+    benchmark.add_argument("--batch-size", type=int)
+    benchmark.add_argument("--gradient-accumulation-steps", type=int)
+    benchmark.add_argument(
+        "--no-progress",
+        action="store_true",
+        help="Disable tqdm bars but keep structured fold/metric events.",
+    )
+    benchmark.add_argument(
+        "--resume",
+        action="store_true",
+        help="Reuse only already completed per-model runs that pass validation.",
+    )
 
     predict = subparsers.add_parser(
         "predict",
@@ -115,6 +213,14 @@ def main(argv: Sequence[str] | None = None) -> int:
         result = validate_training_run(_resolve(root, args.run_dir))
         print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
+    if args.command == "validate-kfold-run":
+        result = validate_kfold_training_run(_resolve(root, args.run_dir))
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0
+    if args.command == "validate-benchmark":
+        result = validate_suite_comparison(_resolve(root, args.comparison_dir))
+        print(json.dumps(result, ensure_ascii=False, indent=2))
+        return 0
     if args.command == "train":
         result = train_model(
             data_release=_resolve(root, args.data),
@@ -128,6 +234,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             max_length_override=args.max_length,
             batch_size_override=args.batch_size,
             gradient_accumulation_override=args.gradient_accumulation_steps,
+            show_progress_override=(False if args.no_progress else None),
         )
         print(
             json.dumps(
@@ -144,6 +251,63 @@ def main(argv: Sequence[str] | None = None) -> int:
                 indent=2,
             )
         )
+        return 0
+    if args.command == "train-kfold":
+        result = train_kfold_model(
+            model_name=args.model,
+            data_release=_resolve(root, args.data),
+            output_dir=_resolve(root, args.output),
+            config_path=_resolve(root, args.config),
+            device_name=args.device,
+            folds_override=args.folds,
+            max_development_samples=args.max_development_samples,
+            max_test_samples=args.max_test_samples,
+            max_epochs_override=args.max_epochs,
+            max_length_override=args.max_length,
+            batch_size_override=args.batch_size,
+            gradient_accumulation_override=args.gradient_accumulation_steps,
+            show_progress_override=(False if args.no_progress else None),
+        )
+        print(
+            json.dumps(
+                {
+                    "status": result["status"],
+                    "folds": result["folds"],
+                    "fold_results": result["fold_results"],
+                    "cross_fold_mean_std": result["cross_fold_mean_std"],
+                    "pooled_oof_metrics": result["pooled_oof_metrics"],
+                    "test_metrics": result["test_metrics"],
+                    "output": str(_resolve(root, args.output)),
+                },
+                ensure_ascii=False,
+                indent=2,
+            )
+        )
+        return 0
+    if args.command == "train-benchmark":
+        from .benchmark import train_benchmark_suite
+
+        suite_id = args.run_id or datetime.now(timezone.utc).strftime(
+            "%Y%m%dT%H%M%SZ"
+        )
+        result = train_benchmark_suite(
+            data_release=_resolve(root, args.data),
+            results_dir=_resolve(root, args.results_dir),
+            config_path=_resolve(root, args.config),
+            suite_id=suite_id,
+            models=args.models,
+            device_name=args.device,
+            folds_override=args.folds,
+            max_development_samples=args.max_development_samples,
+            max_test_samples=args.max_test_samples,
+            max_epochs_override=args.max_epochs,
+            max_length_override=args.max_length,
+            batch_size_override=args.batch_size,
+            gradient_accumulation_override=args.gradient_accumulation_steps,
+            show_progress_override=(False if args.no_progress else None),
+            resume=args.resume,
+        )
+        print(json.dumps(result, ensure_ascii=False, indent=2))
         return 0
     if args.command == "predict":
         predictor = ABSAPredictor(

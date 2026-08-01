@@ -9,14 +9,16 @@ Historical ABSA data is preserved under `legacy/data/`. The former training,
 API, dashboard, Kafka, Airflow and experiment source code is available under
 `legacy/system/` and in the Git branch `archive/pre-crawler-reset`.
 
-## Active ABSA model
+## Active ABSA models
 
-The active implementation is `src/absa_system/`. It uses PhoBERT as the text
-encoder, nine learned aspect queries, aspect-specific mention attention, and
-three polarity-specific evidence heads. Each aspect is predicted as an
-independent set over `negative`, `positive`, and `neutral`, so a genuine mixed
-case can retain both positive and negative labels. Neutral is made exclusive
-at decision time. No Monte Carlo component is used.
+The active implementation is `src/absa_system/`. It restores the complete
+original comparison family: Logistic Regression, Naive Bayes, BiLSTM,
+CNN-BiLSTM, PhoBERT and XLM-RoBERTa. PhoBERT remains the proposed model: it
+uses nine learned aspect queries, aspect-specific mention attention and three
+polarity-specific evidence heads. Every model predicts an independent set
+over `negative`, `positive`, and `neutral` per aspect, so a genuine mixed case
+can retain both positive and negative labels. Neutral is made exclusive at
+decision time. No Monte Carlo component is used.
 
 The current model-ready engineering release is:
 
@@ -50,6 +52,28 @@ python -X utf8 -m absa_system train `
 python -X utf8 -m absa_system validate-run `
   .\artifacts\models\absa_phobert_v1_<RUN_DATE>
 
+python -X utf8 -m absa_system train-kfold `
+  --model phobert `
+  --data .\data\model_ready\absa_pseudo_v1_2_20260729 `
+  --output .\artifacts\models\absa_phobert_3fold_<RUN_DATE> `
+  --config .\configs\training_v1.json `
+  --folds 3 `
+  --device cuda
+
+python -X utf8 -m absa_system validate-kfold-run `
+  .\artifacts\models\absa_phobert_3fold_<RUN_DATE>
+
+# Complete six-model experiment. Omitting --models selects all six.
+python -X utf8 -m absa_system train-benchmark `
+  --data .\data\model_ready\absa_pseudo_v1_2_20260729 `
+  --results-dir .\results `
+  --run-id full_v1 `
+  --folds 3 `
+  --device cuda
+
+python -X utf8 -m absa_system validate-benchmark `
+  .\results\comparisons\full_v1
+
 python -X utf8 -m absa_system predict `
   --checkpoint .\artifacts\models\absa_phobert_v1_<RUN_DATE>\model.pt `
   --device cuda `
@@ -57,9 +81,51 @@ python -X utf8 -m absa_system predict `
   --text "Máy hút mạnh nhưng đóng gói móp và giao hàng chậm."
 ```
 
-Training tunes per-aspect/per-polarity thresholds only on dev, selects the
-best epoch by end-to-end macro-F1, evaluates test once, and seals every
-completed run with a manifest and SHA-256 checksums. The
+Training displays `tqdm` progress bars for every train epoch and dev/test
+evaluation. After each epoch it prints an `epoch_completed` JSON event with
+loss, end-to-end macro/micro F1, mention F1, exact-set match, Jaccard, mixed
+F1 and per-polarity macro F1. The completed CLI response still contains the
+full per-label test metrics, while `epochs.jsonl` retains the full dev metrics
+for every epoch. Pass `--no-progress` when a non-interactive runner should
+keep only the structured metric events.
+
+The `train-kfold` command merges only the original train and dev partitions,
+then creates deterministic multi-label stratified folds over complete
+`leakage_group_id` groups. Every fold has its own early stopping, checkpoint,
+thresholds, `epochs.jsonl`, validation metrics and tqdm bars. It prints
+`fold_epoch_completed`, `fold_early_stopping` and `fold_completed` events.
+After all folds, it reports cross-fold mean +/- sample standard deviation and
+pooled out-of-fold metrics. The original test partition remains locked: fold
+models only contribute probabilities, those probabilities are averaged, and
+test metrics are computed once with thresholds selected from pooled OOF
+predictions. Recursive manifests and SHA-256 checksums seal the full run.
+The split report also records the largest indivisible leakage group and emits
+a warning when that group prevents balanced fold sizes; it never breaks a
+leakage group merely to make the fold counts look equal.
+
+The original `train` command remains available as the cheaper fixed
+train/dev/test baseline. It tunes thresholds on dev, selects the best epoch by
+end-to-end macro-F1, and evaluates test once. Do not compare a one-split result
+and a K-fold result as if they used the same evaluation protocol.
+
+`train-benchmark` enforces the same `fold_assignments.jsonl` checksum for all
+selected models. Logistic Regression and Naive Bayes use fold-local TF-IDF
+vocabularies and binary-relevance heads; they are non-iterative estimators, so
+their metadata explicitly records that early stopping is not applicable.
+BiLSTM, CNN-BiLSTM, PhoBERT and XLM-RoBERTa use per-fold early stopping on
+validation end-to-end macro-F1. Class weights/focal loss and fold-only
+threshold calibration are retained for imbalance handling. The locked test
+labels are scored only after all folds of one model have produced ensemble
+probabilities.
+
+Every run is stored under `results/<model>/<run-id>/` with sealed JSON
+artifacts, `fold_metrics.csv`, `epoch_metrics.csv`, fold checkpoints and
+SHA-256 checksums. Cross-model tables are written to
+`results/comparisons/<run-id>/all_models_comparison.{json,csv}`. If a long
+suite is interrupted, rerun the same command with `--resume`; an existing
+model is reused only after its artifact validator succeeds.
+
+The
 `absa_arch_smoke_v2_20260729` artifact only proves that the full GPU path
 works; its two-sample metrics are deliberately not model-performance results.
 

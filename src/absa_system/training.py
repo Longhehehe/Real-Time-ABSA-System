@@ -19,6 +19,7 @@ import numpy as np
 import torch
 from torch.optim import AdamW
 from torch.utils.data import DataLoader
+from tqdm.auto import tqdm
 
 from .data import read_json, sha256_file, validate_model_ready_release
 from .dataset import ABSADataset, collate_absa, load_model_records
@@ -100,6 +101,8 @@ def collect_probabilities(
     *,
     device: torch.device,
     amp: bool,
+    show_progress: bool = False,
+    description: str = "evaluate",
 ) -> dict[str, Any]:
     model.eval()
     mention_true: list[np.ndarray] = []
@@ -108,7 +111,16 @@ def collect_probabilities(
     sentiment_prob: list[np.ndarray] = []
     sample_ids: list[str] = []
     leakage_group_ids: list[str] = []
-    for raw_batch in loader:
+    progress = tqdm(
+        loader,
+        total=len(loader),
+        desc=description,
+        unit="batch",
+        dynamic_ncols=True,
+        mininterval=1.0,
+        disable=not show_progress,
+    )
+    for raw_batch in progress:
         batch = _move_batch(raw_batch, device)
         with _autocast(device, amp):
             output = model(
@@ -162,8 +174,58 @@ def evaluate_probabilities(
     return metrics, thresholds
 
 
+def _metric_summary(metrics: Mapping[str, Any]) -> dict[str, Any]:
+    """Return the stable console subset while full metrics stay in artifacts."""
+
+    end_to_end_micro = metrics["end_to_end_micro"]
+    mention_micro = metrics["mention_micro"]
+    mixed = metrics["mixed"]
+    per_label = metrics.get("end_to_end_per_label", {})
+    polarity_macro_f1: dict[str, float] = {}
+    for polarity in POLARITIES:
+        values = [
+            float(payload["f1"])
+            for label, payload in per_label.items()
+            if label.endswith(f"::{polarity}")
+        ]
+        polarity_macro_f1[polarity] = (
+            float(sum(values) / len(values)) if values else 0.0
+        )
+    return {
+        "num_samples": int(metrics["num_samples"]),
+        "end_to_end_macro_f1": float(metrics["end_to_end_macro_f1"]),
+        "end_to_end_micro": {
+            "precision": float(end_to_end_micro["precision"]),
+            "recall": float(end_to_end_micro["recall"]),
+            "f1": float(end_to_end_micro["f1"]),
+        },
+        "mention_macro_f1": float(metrics["mention_macro_f1"]),
+        "mention_micro_f1": float(mention_micro["f1"]),
+        "exact_set_match": float(metrics["exact_set_match"]),
+        "sample_jaccard": float(metrics["sample_jaccard"]),
+        "hamming_loss": float(metrics["hamming_loss"]),
+        "mixed": {
+            "precision": float(mixed["precision"]),
+            "recall": float(mixed["recall"]),
+            "f1": float(mixed["f1"]),
+            "support": int(mixed["support"]),
+        },
+        "polarity_macro_f1": polarity_macro_f1,
+    }
+
+
+def _emit_console_event(event: str, **payload: Any) -> None:
+    print(
+        json.dumps(
+            {"event": event, **payload},
+            ensure_ascii=False,
+        ),
+        flush=True,
+    )
+
+
 def _optimizer(
-    model: AspectEvidenceModel,
+    model: torch.nn.Module,
     *,
     backbone_lr: float,
     head_lr: float,
@@ -171,7 +233,12 @@ def _optimizer(
 ) -> AdamW:
     backbone_parameters = []
     head_parameters = []
-    backbone_ids = {id(parameter) for parameter in model.encoder.parameters()}
+    encoder = getattr(model, "encoder", None)
+    backbone_ids = (
+        {id(parameter) for parameter in encoder.parameters()}
+        if isinstance(encoder, torch.nn.Module)
+        else set()
+    )
     for parameter in model.parameters():
         if not parameter.requires_grad:
             continue
@@ -179,20 +246,26 @@ def _optimizer(
             backbone_parameters.append(parameter)
         else:
             head_parameters.append(parameter)
-    return AdamW(
-        [
+    groups = []
+    if backbone_parameters:
+        groups.append(
             {
                 "params": backbone_parameters,
                 "lr": backbone_lr,
                 "weight_decay": weight_decay,
-            },
+            }
+        )
+    if head_parameters:
+        groups.append(
             {
                 "params": head_parameters,
                 "lr": head_lr,
                 "weight_decay": weight_decay,
-            },
-        ]
-    )
+            }
+        )
+    if not groups:
+        raise ValueError("model has no trainable parameters")
+    return AdamW(groups)
 
 
 def _linear_warmup_decay(
@@ -398,6 +471,7 @@ def train_model(
     max_length_override: int | None = None,
     batch_size_override: int | None = None,
     gradient_accumulation_override: int | None = None,
+    show_progress_override: bool | None = None,
 ) -> dict[str, Any]:
     """Train one deterministic run and evaluate test once at the selected epoch."""
 
@@ -427,10 +501,16 @@ def train_model(
         for key, value in runtime_overrides.items()
         if value is not None
     }
+    if show_progress_override is not None:
+        config["show_progress"] = bool(show_progress_override)
+        config["runtime_overrides"]["show_progress"] = bool(
+            show_progress_override
+        )
     seed = int(config["seed"])
     set_seed(seed)
     device = resolve_device(device_name or config.get("device"))
     amp = bool(config.get("amp", True)) and device.type in {"cuda", "cpu"}
+    show_progress = bool(config.get("show_progress", True))
 
     train_records = load_model_records(
         data_release, "train", limit=max_train_samples
@@ -561,6 +641,7 @@ def train_model(
         ),
         "torch_version": torch.__version__,
         "transformers_version": distribution_version("transformers"),
+        "tqdm_version": distribution_version("tqdm"),
         "numpy_version": np.__version__,
         "tokenizer": {
             "class": tokenizer.__class__.__name__,
@@ -590,6 +671,20 @@ def train_model(
         },
     }
     _write_json(output_dir / "run.json", run_metadata)
+    _emit_console_event(
+        "training_started",
+        device=str(device),
+        train_records=len(train_records),
+        dev_records=len(dev_records),
+        test_records=len(test_records),
+        train_batches=len(train_loader),
+        dev_batches=len(dev_loader),
+        test_batches=len(test_loader),
+        epochs=epochs,
+        updates_per_epoch=updates_per_epoch,
+        total_updates=total_updates,
+        progress=show_progress,
+    )
 
     best_metric = -1.0
     best_epoch = 0
@@ -603,7 +698,16 @@ def train_model(
         model.train()
         epoch_losses: dict[str, float] = defaultdict(float)
         batches = 0
-        for batch_index, raw_batch in enumerate(train_loader, start=1):
+        train_progress = tqdm(
+            train_loader,
+            total=len(train_loader),
+            desc=f"Epoch {epoch}/{epochs} train",
+            unit="batch",
+            dynamic_ncols=True,
+            mininterval=1.0,
+            disable=not show_progress,
+        )
+        for batch_index, raw_batch in enumerate(train_progress, start=1):
             batch = _move_batch(raw_batch, device)
             with _autocast(device, amp):
                 output = model(
@@ -649,9 +753,21 @@ def train_model(
                 optimizer.zero_grad(set_to_none=True)
                 scheduler.step()
                 global_step += 1
+            if show_progress:
+                train_progress.set_postfix(
+                    loss=f"{epoch_losses['total'] / batches:.4f}",
+                    lr=f"{scheduler.get_last_lr()[0]:.2e}",
+                    updates=global_step,
+                    refresh=False,
+                )
 
         dev_predictions = collect_probabilities(
-            model, dev_loader, device=device, amp=amp
+            model,
+            dev_loader,
+            device=device,
+            amp=amp,
+            show_progress=show_progress,
+            description=f"Epoch {epoch}/{epochs} dev",
         )
         dev_metrics, thresholds = evaluate_probabilities(
             dev_predictions,
@@ -671,7 +787,8 @@ def train_model(
             "elapsed_seconds": time.monotonic() - started,
         }
         _append_jsonl(output_dir / "epochs.jsonl", epoch_log)
-        if primary > best_metric:
+        is_best = primary > best_metric
+        if is_best:
             best_metric = primary
             best_epoch = epoch
             best_thresholds = thresholds
@@ -706,8 +823,28 @@ def train_model(
             )
         else:
             epochs_without_improvement += 1
-            if epochs_without_improvement >= patience:
-                break
+        _emit_console_event(
+            "epoch_completed",
+            epoch=epoch,
+            epochs=epochs,
+            global_step=global_step,
+            train_loss=epoch_log["loss"],
+            dev_metrics=_metric_summary(dev_metrics),
+            is_best=is_best,
+            best_epoch=best_epoch,
+            best_dev_end_to_end_macro_f1=best_metric,
+            epochs_without_improvement=epochs_without_improvement,
+            elapsed_seconds=epoch_log["elapsed_seconds"],
+        )
+        if epochs_without_improvement >= patience:
+            _emit_console_event(
+                "early_stopping",
+                epoch=epoch,
+                patience=patience,
+                best_epoch=best_epoch,
+                best_dev_end_to_end_macro_f1=best_metric,
+            )
+            break
 
     if best_thresholds is None or not (output_dir / "model.pt").is_file():
         raise RuntimeError("training did not produce a valid checkpoint")
@@ -715,11 +852,21 @@ def train_model(
     model.load_state_dict(checkpoint["model_state_dict"])
     model.to(device)
     test_predictions = collect_probabilities(
-        model, test_loader, device=device, amp=amp
+        model,
+        test_loader,
+        device=device,
+        amp=amp,
+        show_progress=show_progress,
+        description="Final test",
     )
     test_metrics, _ = evaluate_probabilities(
         test_predictions,
         thresholds=best_thresholds,
+    )
+    _emit_console_event(
+        "test_completed",
+        selected_checkpoint_epoch=best_epoch,
+        metrics=_metric_summary(test_metrics),
     )
     final = {
         **run_metadata,
