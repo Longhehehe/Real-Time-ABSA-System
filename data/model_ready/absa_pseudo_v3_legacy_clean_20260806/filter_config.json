@@ -1,0 +1,10 @@
+{
+  "allowed_statuses": [
+    "KEEP"
+  ],
+  "curation_release": "data/releases/legacy_old_model_ready_8549_curation_v1_20260806",
+  "output_release": "data/model_ready/absa_pseudo_v3_legacy_clean_20260806",
+  "parent_release": "data/model_ready/absa_pseudo_v2_20260806",
+  "schema_version": "absa-model-filter-config/1.0.0",
+  "target_package": "absa_legacy_old_relabel_9772_v1_20260728"
+}

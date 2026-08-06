@@ -1,0 +1,376 @@
+{
+  "artifacts": [
+    {
+      "bytes": 273,
+      "path": "README.md",
+      "sha256": "a4d08f47f6b03545ae9863dfb5bd666ee8d06fb34431133aa0a094e425568e48"
+    },
+    {
+      "bytes": 15019395,
+      "path": "decision_ledger.jsonl",
+      "records": 32451,
+      "sha256": "097fa0feaaa7d2292713def7ee83b36e0ae05b0a4c8e49812a74dfe01e65b128"
+    },
+    {
+      "bytes": 4372022,
+      "path": "dev.jsonl",
+      "records": 2983,
+      "sha256": "6d21773f37df5a1b34345ecf980c7b393a488de5b752d91712eac30ca2a0c139"
+    },
+    {
+      "bytes": 390,
+      "path": "filter_config.json",
+      "sha256": "d940b26c90e5802044934c0235c80259dfdd58cebe1e4193f8b55ac98ca2d097"
+    },
+    {
+      "bytes": 4407794,
+      "path": "test.jsonl",
+      "records": 3041,
+      "sha256": "631cc643a9c5c6a9adc152797f1d421ee994a3386d89a21e544fbf56ee50a2c6"
+    },
+    {
+      "bytes": 30622021,
+      "path": "train.jsonl",
+      "records": 21446,
+      "sha256": "e2f0213d576d71b00a89b95a744068cf0f3d6ecb899f1057992665d602d05f2e"
+    }
+  ],
+  "counts": {
+    "candidate_before_exact_dedup": 32451,
+    "decisions": {
+      "EXCLUDE_LEGACY_CONFIRMED_DUPLICATE": 11,
+      "EXCLUDE_LEGACY_QUARANTINE": 4875,
+      "EXCLUDE_LEGACY_REQUIRES_RELABEL": 95,
+      "INCLUDE_LEGACY_KEEP": 3568,
+      "INCLUDE_PARENT_SPLIT": 23902
+    },
+    "model_ready_unique": 27470,
+    "source_records": 32451,
+    "splits": {
+      "dev": 2983,
+      "test": 3041,
+      "train": 21446
+    },
+    "target_package_included": 3568,
+    "target_package_parent_records": 8549
+  },
+  "created_at": "2026-08-06T09:18:14.209116+00:00",
+  "curation_sources": [
+    {
+      "path": "data/releases/lazada_vi_absa_curation_v2_1_2_20260725/curation_records.jsonl",
+      "sha256": "05e79bdf828a0575ed20ca3badefb715d2da650fadffd6e456fecb95642107d3"
+    },
+    {
+      "path": "data/releases/lazada_vi_absa_delta_curation_v1_20260728/curation_records.jsonl",
+      "sha256": "067db0de44c61461a6e7f55a0a2d325b82bb54eb8de50e82b93ccc268d88432e"
+    },
+    {
+      "path": "data/releases/lazada_vi_absa_delta_curation_v2_20260806/curation_records.jsonl",
+      "sha256": "3ef59e58f5a1194af063661a19621264263f95162876afea7c93d33c7c6465f9"
+    },
+    {
+      "path": "data/releases/legacy_old_model_ready_8549_curation_v1_20260806/curation_records.jsonl",
+      "sha256": "f32a54a56a26d111d12de30e25d2c19632db26ddbc5e9bde03c127a48d401459"
+    }
+  ],
+  "distributions": {
+    "dev": {
+      "groups": 585,
+      "mentions_by_aspect": {
+        "Bảo hành & Đổi trả": 85,
+        "Chất lượng sản phẩm": 2066,
+        "Dịch vụ & Thái độ Shop": 482,
+        "Giá cả & Khuyến mãi": 1059,
+        "Hiệu năng & Trải nghiệm": 1997,
+        "Tính xác thực": 112,
+        "Vận chuyển": 929,
+        "Đóng gói": 716,
+        "Đúng mô tả": 782
+      },
+      "mixed_aspect_instances": 409,
+      "records": 2983,
+      "sentiments_by_aspect": {
+        "Bảo hành & Đổi trả": {
+          "negative": 29,
+          "neutral": 24,
+          "positive": 34
+        },
+        "Chất lượng sản phẩm": {
+          "negative": 446,
+          "neutral": 80,
+          "positive": 1708
+        },
+        "Dịch vụ & Thái độ Shop": {
+          "negative": 125,
+          "neutral": 3,
+          "positive": 355
+        },
+        "Giá cả & Khuyến mãi": {
+          "negative": 84,
+          "neutral": 71,
+          "positive": 918
+        },
+        "Hiệu năng & Trải nghiệm": {
+          "negative": 397,
+          "neutral": 166,
+          "positive": 1628
+        },
+        "Tính xác thực": {
+          "negative": 17,
+          "neutral": 9,
+          "positive": 86
+        },
+        "Vận chuyển": {
+          "negative": 106,
+          "neutral": 14,
+          "positive": 819
+        },
+        "Đóng gói": {
+          "negative": 86,
+          "neutral": 16,
+          "positive": 620
+        },
+        "Đúng mô tả": {
+          "negative": 269,
+          "neutral": 11,
+          "positive": 516
+        }
+      }
+    },
+    "test": {
+      "groups": 601,
+      "mentions_by_aspect": {
+        "Bảo hành & Đổi trả": 80,
+        "Chất lượng sản phẩm": 1993,
+        "Dịch vụ & Thái độ Shop": 501,
+        "Giá cả & Khuyến mãi": 1008,
+        "Hiệu năng & Trải nghiệm": 2046,
+        "Tính xác thực": 112,
+        "Vận chuyển": 945,
+        "Đóng gói": 679,
+        "Đúng mô tả": 785
+      },
+      "mixed_aspect_instances": 396,
+      "records": 3041,
+      "sentiments_by_aspect": {
+        "Bảo hành & Đổi trả": {
+          "negative": 29,
+          "neutral": 24,
+          "positive": 29
+        },
+        "Chất lượng sản phẩm": {
+          "negative": 431,
+          "neutral": 86,
+          "positive": 1631
+        },
+        "Dịch vụ & Thái độ Shop": {
+          "negative": 121,
+          "neutral": 3,
+          "positive": 379
+        },
+        "Giá cả & Khuyến mãi": {
+          "negative": 79,
+          "neutral": 70,
+          "positive": 870
+        },
+        "Hiệu năng & Trải nghiệm": {
+          "negative": 417,
+          "neutral": 182,
+          "positive": 1647
+        },
+        "Tính xác thực": {
+          "negative": 20,
+          "neutral": 10,
+          "positive": 82
+        },
+        "Vận chuyển": {
+          "negative": 107,
+          "neutral": 13,
+          "positive": 832
+        },
+        "Đóng gói": {
+          "negative": 78,
+          "neutral": 16,
+          "positive": 590
+        },
+        "Đúng mô tả": {
+          "negative": 281,
+          "neutral": 10,
+          "positive": 508
+        }
+      }
+    },
+    "train": {
+      "groups": 3705,
+      "mentions_by_aspect": {
+        "Bảo hành & Đổi trả": 408,
+        "Chất lượng sản phẩm": 13606,
+        "Dịch vụ & Thái độ Shop": 2973,
+        "Giá cả & Khuyến mãi": 5984,
+        "Hiệu năng & Trải nghiệm": 13893,
+        "Tính xác thực": 577,
+        "Vận chuyển": 5627,
+        "Đóng gói": 3994,
+        "Đúng mô tả": 4989
+      },
+      "mixed_aspect_instances": 1940,
+      "records": 21446,
+      "sentiments_by_aspect": {
+        "Bảo hành & Đổi trả": {
+          "negative": 152,
+          "neutral": 119,
+          "positive": 142
+        },
+        "Chất lượng sản phẩm": {
+          "negative": 2377,
+          "neutral": 467,
+          "positive": 11501
+        },
+        "Dịch vụ & Thái độ Shop": {
+          "negative": 590,
+          "neutral": 14,
+          "positive": 2374
+        },
+        "Giá cả & Khuyến mãi": {
+          "negative": 432,
+          "neutral": 469,
+          "positive": 5154
+        },
+        "Hiệu năng & Trải nghiệm": {
+          "negative": 2203,
+          "neutral": 1063,
+          "positive": 11568
+        },
+        "Tính xác thực": {
+          "negative": 96,
+          "neutral": 43,
+          "positive": 438
+        },
+        "Vận chuyển": {
+          "negative": 496,
+          "neutral": 74,
+          "positive": 5095
+        },
+        "Đóng gói": {
+          "negative": 391,
+          "neutral": 76,
+          "positive": 3567
+        },
+        "Đúng mô tả": {
+          "negative": 1441,
+          "neutral": 34,
+          "positive": 3615
+        }
+      }
+    }
+  },
+  "filter_curation": {
+    "allowed_statuses": [
+      "KEEP"
+    ],
+    "checksum_entries_verified": 25,
+    "manifest_sha256": "7684ba5dc25bd0ec7673efae0706bbb38adf363e6ad7796af2e4efc34b90bace",
+    "path": "data/releases/legacy_old_model_ready_8549_curation_v1_20260806",
+    "release_id": "lazada-vi-absa-curation-c73e50690ac499e6",
+    "target_package": "absa_legacy_old_relabel_9772_v1_20260728"
+  },
+  "leakage_audit": {
+    "group_overlap": {
+      "dev_test": 0,
+      "train_dev": 0,
+      "train_test": 0
+    },
+    "parent_leakage_group_preserved": true,
+    "parent_split_preserved": true,
+    "review_text_sha256_unique": true,
+    "sample_id_unique": true
+  },
+  "parent_model_ready": {
+    "manifest_sha256": "b6af3aea22d3f10e5a49f1c8b327aa1f8786a3ec87527238c1d54ecd43589e72",
+    "path": "data/model_ready/absa_pseudo_v2_20260806",
+    "release_id": "absa-model-ready-fd6ac3b9484a3721e58e",
+    "validation": {
+      "groups": {
+        "dev": 903,
+        "test": 899,
+        "train": 8070
+      },
+      "records": 32451,
+      "splits": {
+        "dev": 3301,
+        "test": 3339,
+        "train": 25811
+      },
+      "status": "VALID"
+    }
+  },
+  "policy": {
+    "evaluation_label_warning": "All labels remain pseudo labels pending human verification; dev/test are engineering splits, not final gold benchmarks.",
+    "exclude_keep_cleaned_until_relabel": true,
+    "included_curation_statuses": [
+      "KEEP"
+    ],
+    "labels_modified": false,
+    "leakage_groups_preserved": true,
+    "operation": "FILTER_VALIDATED_MODEL_READY_PARENT",
+    "split_assignments_preserved": true,
+    "target_package": "absa_legacy_old_relabel_9772_v1_20260728",
+    "texts_modified": false
+  },
+  "release_id": "absa-model-ready-55ebc865870bb539febe",
+  "reservation_ledgers": [
+    {
+      "path": "data/annotations/human_reference_v1_20260726/private/group_reservations.jsonl",
+      "records": 6646,
+      "sha256": "a8ba153b6211f47f6d0f8f525cb62873ff069c47737d585a73949a7fc4d8357b"
+    },
+    {
+      "path": "data/annotations/q1_human_gold_1200_v1_20260728/private/group_reservations.jsonl",
+      "records": 4666,
+      "sha256": "ffc491344c1046f533cbb329c11a835debb2f93ebf84ffc13f8d6edd8553888e"
+    }
+  ],
+  "schema_version": "absa-model-ready-release/1.0.0",
+  "source_config": {
+    "path": "configs/model_filter_legacy_keep_v3_20260806.json",
+    "sha256": "d5adf82f67bdb182c155a5b6edec1d89c0f50c90815f408754a63a58321b4a3c"
+  },
+  "source_packages": [
+    {
+      "domain": "crawled_clean",
+      "name": "absa_ai_tranche_5000_v1_20260727",
+      "path": "data/annotations/absa_ai_tranche_5000_v1_20260727/final/ai_pseudo_labels.jsonl",
+      "records": 5000,
+      "sha256": "a58da3b437e03221a84845834ca3733af06b2e711d77932b3f77312c940823cc"
+    },
+    {
+      "domain": "crawled_clean",
+      "name": "absa_ai_remainder_8976_v1_20260728",
+      "path": "data/annotations/absa_ai_remainder_8976_v1_20260728/final/ai_pseudo_labels.jsonl",
+      "records": 8976,
+      "sha256": "0184e92ec82bd5b4919e33bd07f3ced3a7021800489703672bfdbc4836db8d9d"
+    },
+    {
+      "domain": "crawled_clean_delta",
+      "name": "absa_ai_delta_v1_20260728",
+      "path": "data/annotations/absa_ai_delta_v1_20260728/final/ai_pseudo_labels.jsonl",
+      "records": 613,
+      "sha256": "5674689d12124366be2190dd559cc2291034310f71601f161f551b923978b128"
+    },
+    {
+      "domain": "crawled_clean_delta_v2",
+      "name": "absa_ai_delta_v2_20260806",
+      "path": "data/annotations/absa_ai_delta_v2_20260806/final/ai_pseudo_labels.jsonl",
+      "records": 14348,
+      "sha256": "5a865107c10eb86f880e902e3c32b78e4a084ede80493ed1edeb122585b89ff0"
+    },
+    {
+      "domain": "legacy_old",
+      "name": "absa_legacy_old_relabel_9772_v1_20260728",
+      "path": "data/annotations/absa_legacy_old_relabel_9772_v1_20260728/final/ai_pseudo_labels.jsonl",
+      "records": 9772,
+      "sha256": "7674a86e15bebcecd6d598005606c3c798a4801b1ffcb40cfe9a8499a5559629"
+    }
+  ],
+  "status": "DEVELOPMENT_PSEUDO_MODEL_READY_NOT_GOLD"
+}
