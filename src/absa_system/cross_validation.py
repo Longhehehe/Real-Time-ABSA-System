@@ -22,7 +22,7 @@ from .data import read_json, sha256_file, validate_model_ready_release
 from .dataset import ABSADataset, collate_absa, load_model_records
 from .folds import build_stratified_group_folds, validate_fold_assignments
 from .losses import compute_absa_loss
-from .metrics import Thresholds
+from .metrics import EVALUATION_PROTOCOL, Thresholds
 from .model_registry import (
     build_neural_model,
     effective_neural_config,
@@ -153,8 +153,8 @@ def _ensemble_test_predictions(
 
 def _scalar_fold_metrics(summary: Mapping[str, Any]) -> dict[str, float]:
     metrics = {
-        "end_to_end_macro_f1": float(summary["end_to_end_macro_f1"]),
-        "end_to_end_micro_f1": float(summary["end_to_end_micro"]["f1"]),
+        "polarity_macro_f1": float(summary["polarity_macro_f1"]),
+        "polarity_micro_f1": float(summary["polarity_micro"]["f1"]),
         "mention_macro_f1": float(summary["mention_macro_f1"]),
         "mention_micro_f1": float(summary["mention_micro_f1"]),
         "exact_set_match": float(summary["exact_set_match"]),
@@ -162,7 +162,7 @@ def _scalar_fold_metrics(summary: Mapping[str, Any]) -> dict[str, float]:
         "hamming_loss": float(summary["hamming_loss"]),
         "mixed_f1": float(summary["mixed"]["f1"]),
     }
-    for polarity, value in summary["polarity_macro_f1"].items():
+    for polarity, value in summary["polarity_f1"].items():
         metrics[f"polarity_{polarity}_macro_f1"] = float(value)
     return metrics
 
@@ -308,7 +308,8 @@ def _train_one_fold(
     mention_pos_weight = mention_pos_weight.to(device)
     sentiment_pos_weight = sentiment_pos_weight.to(device)
     fold_metadata: dict[str, Any] = {
-        "schema_version": "absa-kfold-fold/1.0.0",
+        "schema_version": "absa-kfold-fold/2.0.0",
+        "evaluation_protocol": EVALUATION_PROTOCOL,
         "status": "RUNNING",
         "model_name": model_name,
         "model_family": model_spec.family,
@@ -447,7 +448,7 @@ def _train_one_fold(
             validation_predictions,
             thresholds=None,
         )
-        primary = float(validation_metrics["end_to_end_macro_f1"])
+        primary = float(validation_metrics["polarity_macro_f1"])
         epoch_log = {
             "fold": fold_number,
             "epoch": epoch,
@@ -456,7 +457,7 @@ def _train_one_fold(
                 name: value / max(batches, 1)
                 for name, value in epoch_losses.items()
             },
-            "validation_primary_metric": "end_to_end_macro_f1",
+            "validation_primary_metric": "polarity_macro_f1",
             "validation_primary_value": primary,
             "validation_metrics": validation_metrics,
             "elapsed_seconds": time.monotonic() - started,
@@ -483,7 +484,7 @@ def _train_one_fold(
                 "polarities": list(POLARITIES),
                 "max_length": max_length,
                 "best_epoch": best_epoch,
-                "best_validation_end_to_end_macro_f1": best_metric,
+                "best_validation_polarity_macro_f1": best_metric,
                 "training_config": dict(config),
                 "data_release_id": data_release_id,
                 "data_manifest_sha256": data_manifest_sha256,
@@ -516,7 +517,7 @@ def _train_one_fold(
             validation_metrics=_metric_summary(validation_metrics),
             is_best=is_best,
             best_epoch=best_epoch,
-            best_validation_end_to_end_macro_f1=best_metric,
+            best_validation_polarity_macro_f1=best_metric,
             epochs_without_improvement=epochs_without_improvement,
             patience=patience,
             elapsed_seconds=epoch_log["elapsed_seconds"],
@@ -529,7 +530,7 @@ def _train_one_fold(
                 stopped_epoch=epoch,
                 patience=patience,
                 best_epoch=best_epoch,
-                best_validation_end_to_end_macro_f1=best_metric,
+                best_validation_polarity_macro_f1=best_metric,
             )
             break
 
@@ -555,8 +556,8 @@ def _train_one_fold(
         thresholds=best_thresholds,
     )
     if not math.isclose(
-        float(recomputed_metrics["end_to_end_macro_f1"]),
-        float(best_validation_metrics["end_to_end_macro_f1"]),
+        float(recomputed_metrics["polarity_macro_f1"]),
+        float(best_validation_metrics["polarity_macro_f1"]),
         rel_tol=0.0,
         abs_tol=1e-12,
     ):
@@ -580,7 +581,7 @@ def _train_one_fold(
             "completed_at": datetime.now(timezone.utc).isoformat(),
             "elapsed_seconds": time.monotonic() - started,
             "best_epoch": best_epoch,
-            "best_validation_end_to_end_macro_f1": best_metric,
+            "best_validation_polarity_macro_f1": best_metric,
             "validation_metrics": fold_summary,
             "checkpoint": {
                 "path": checkpoint_filename,
@@ -602,7 +603,7 @@ def _train_one_fold(
     return {
         "fold": fold_number,
         "best_epoch": best_epoch,
-        "best_validation_end_to_end_macro_f1": best_metric,
+        "best_validation_polarity_macro_f1": best_metric,
         "validation_metrics": recomputed_metrics,
         "validation_predictions": best_validation_predictions,
         "test_predictions": test_predictions,
@@ -948,7 +949,8 @@ def train_kfold_model(
         raise RuntimeError("evidence_weight > 0 requires a fast tokenizer")
     tokenizer_vocab_size = getattr(tokenizer, "model_vocab_size", None)
     run_metadata: dict[str, Any] = {
-        "schema_version": "absa-kfold-training-run/1.0.0",
+        "schema_version": "absa-kfold-training-run/2.0.0",
+        "evaluation_protocol": EVALUATION_PROTOCOL,
         "status": "RUNNING",
         "model_name": model_name,
         "model_family": model_spec.family,
@@ -990,7 +992,7 @@ def train_kfold_model(
         "folds": folds,
         "early_stopping": {
             "enabled": True,
-            "monitor": "validation_end_to_end_macro_f1",
+            "monitor": "validation_polarity_macro_f1",
             "mode": "max",
             "patience": int(config.get("patience", 3)),
             "max_epochs": int(config["max_epochs"]),
@@ -1086,13 +1088,14 @@ def train_kfold_model(
         _metric_summary(result["validation_metrics"]) for result in fold_results
     ]
     aggregate_metrics = {
-        "schema_version": "absa-kfold-aggregate-metrics/1.0.0",
+        "schema_version": "absa-kfold-aggregate-metrics/2.0.0",
+        "evaluation_protocol": EVALUATION_PROTOCOL,
         "folds": [
             {
                 "fold": result["fold"],
                 "best_epoch": result["best_epoch"],
-                "best_validation_end_to_end_macro_f1": result[
-                    "best_validation_end_to_end_macro_f1"
+                "best_validation_polarity_macro_f1": result[
+                    "best_validation_polarity_macro_f1"
                 ],
                 "validation_metrics": fold_summaries[index],
             }

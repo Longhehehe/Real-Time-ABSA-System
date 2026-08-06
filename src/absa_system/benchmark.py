@@ -30,6 +30,7 @@ from .data import read_json, sha256_file, validate_model_ready_release
 from .dataset import load_model_records
 from .folds import build_stratified_group_folds, validate_fold_assignments
 from .model_registry import MODEL_NAMES, get_model_spec
+from .metrics import EVALUATION_PROTOCOL
 from .results import (
     validate_suite_comparison,
     write_run_metric_exports,
@@ -341,7 +342,8 @@ def train_classical_kfold_model(
     )
     data_manifest_sha256 = sha256_file(data_release / "manifest.json")
     run_metadata: dict[str, Any] = {
-        "schema_version": "absa-kfold-training-run/1.0.0",
+        "schema_version": "absa-kfold-training-run/2.0.0",
+        "evaluation_protocol": EVALUATION_PROTOCOL,
         "status": "RUNNING",
         "model_name": model_name,
         "model_family": spec.family,
@@ -454,9 +456,9 @@ def train_classical_kfold_model(
                         "event": "fit_completed",
                         "fold": fold_number,
                         "epoch": None,
-                        "validation_primary_metric": "end_to_end_macro_f1",
+                        "validation_primary_metric": "polarity_macro_f1",
                         "validation_primary_value": validation_metrics[
-                            "end_to_end_macro_f1"
+                            "polarity_macro_f1"
                         ],
                         "validation_metrics": validation_metrics,
                         "elapsed_seconds": elapsed,
@@ -472,7 +474,8 @@ def train_classical_kfold_model(
             "sha256": sha256_file(checkpoint_path),
         }
         fold_summary = {
-            "schema_version": "absa-kfold-fold/1.0.0",
+            "schema_version": "absa-kfold-fold/2.0.0",
+            "evaluation_protocol": EVALUATION_PROTOCOL,
             "status": "COMPLETED",
             "model_name": model_name,
             "model_family": spec.family,
@@ -492,8 +495,8 @@ def train_classical_kfold_model(
                 {str(row["leakage_group_id"]) for row in validation_records}
             ),
             "best_epoch": None,
-            "best_validation_end_to_end_macro_f1": validation_metrics[
-                "end_to_end_macro_f1"
+            "best_validation_polarity_macro_f1": validation_metrics[
+                "polarity_macro_f1"
             ],
             "validation_metrics": _metric_summary(validation_metrics),
             "checkpoint": checkpoint_metadata,
@@ -503,8 +506,8 @@ def train_classical_kfold_model(
             {
                 "fold": fold_number,
                 "best_epoch": None,
-                "best_validation_end_to_end_macro_f1": validation_metrics[
-                    "end_to_end_macro_f1"
+                "best_validation_polarity_macro_f1": validation_metrics[
+                    "polarity_macro_f1"
                 ],
                 "validation_metrics": validation_metrics,
                 "validation_predictions": validation_predictions,
@@ -537,13 +540,14 @@ def train_classical_kfold_model(
         _metric_summary(result["validation_metrics"]) for result in fold_results
     ]
     aggregate_metrics = {
-        "schema_version": "absa-kfold-aggregate-metrics/1.0.0",
+        "schema_version": "absa-kfold-aggregate-metrics/2.0.0",
+        "evaluation_protocol": EVALUATION_PROTOCOL,
         "folds": [
             {
                 "fold": result["fold"],
                 "best_epoch": None,
-                "best_validation_end_to_end_macro_f1": result[
-                    "best_validation_end_to_end_macro_f1"
+                "best_validation_polarity_macro_f1": result[
+                    "best_validation_polarity_macro_f1"
                 ],
                 "validation_metrics": fold_summaries[index],
             }
@@ -629,6 +633,11 @@ def train_benchmark_suite(
             result = read_json(run_dir / "run.json")
             if result.get("model_name") != model_name:
                 raise ValueError(f"resume model identity mismatch: {run_dir}")
+            if result.get("evaluation_protocol") != EVALUATION_PROTOCOL:
+                raise ValueError(
+                    "resume run uses the retired joint aspect-polarity protocol; "
+                    "start a new suite_id for separate aspect/polarity metrics"
+                )
         elif spec.iterative:
             result = train_kfold_model(
                 model_name=model_name,

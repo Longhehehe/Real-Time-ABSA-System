@@ -26,6 +26,7 @@ from .data import read_json, sha256_file, validate_model_ready_release
 from .dataset import ABSADataset, collate_absa, load_model_records
 from .losses import compute_absa_loss
 from .metrics import (
+    EVALUATION_PROTOCOL,
     Thresholds,
     apply_thresholds,
     compute_metrics,
@@ -174,6 +175,7 @@ def evaluate_probabilities(
         predictions["mention_prob"],
         predictions["sentiment_prob"],
         thresholds,
+        gate_polarity_by_mention=False,
     )
     metrics = compute_metrics(
         predictions["mention_true"],
@@ -187,27 +189,21 @@ def evaluate_probabilities(
 def _metric_summary(metrics: Mapping[str, Any]) -> dict[str, Any]:
     """Return the stable console subset while full metrics stay in artifacts."""
 
-    end_to_end_micro = metrics["end_to_end_micro"]
+    polarity_micro = metrics["polarity_micro"]
     mention_micro = metrics["mention_micro"]
     mixed = metrics["mixed"]
-    per_label = metrics.get("end_to_end_per_label", {})
-    polarity_macro_f1: dict[str, float] = {}
-    for polarity in POLARITIES:
-        values = [
-            float(payload["f1"])
-            for label, payload in per_label.items()
-            if label.endswith(f"::{polarity}")
-        ]
-        polarity_macro_f1[polarity] = (
-            float(sum(values) / len(values)) if values else 0.0
-        )
+    per_class = metrics.get("polarity_per_class", {})
+    polarity_f1 = {
+        polarity: float(per_class.get(polarity, {}).get("f1", 0.0))
+        for polarity in POLARITIES
+    }
     return {
         "num_samples": int(metrics["num_samples"]),
-        "end_to_end_macro_f1": float(metrics["end_to_end_macro_f1"]),
-        "end_to_end_micro": {
-            "precision": float(end_to_end_micro["precision"]),
-            "recall": float(end_to_end_micro["recall"]),
-            "f1": float(end_to_end_micro["f1"]),
+        "polarity_macro_f1": float(metrics["polarity_macro_f1"]),
+        "polarity_micro": {
+            "precision": float(polarity_micro["precision"]),
+            "recall": float(polarity_micro["recall"]),
+            "f1": float(polarity_micro["f1"]),
         },
         "mention_macro_f1": float(metrics["mention_macro_f1"]),
         "mention_micro_f1": float(mention_micro["f1"]),
@@ -220,7 +216,7 @@ def _metric_summary(metrics: Mapping[str, Any]) -> dict[str, Any]:
             "f1": float(mixed["f1"]),
             "support": int(mixed["support"]),
         },
-        "polarity_macro_f1": polarity_macro_f1,
+        "polarity_f1": polarity_f1,
     }
 
 
@@ -247,25 +243,25 @@ def _console_metric_lines(
 ) -> list[str]:
     if not isinstance(metrics, Mapping):
         return [f"  {title}: unavailable"]
-    micro = metrics.get("end_to_end_micro", {})
+    micro = metrics.get("polarity_micro", {})
     mixed = metrics.get("mixed", {})
-    polarity = metrics.get("polarity_macro_f1", {})
+    polarity = metrics.get("polarity_f1", {})
     return [
         f"  {title}",
         (
-            "    E2E macro-F1 : "
-            f"{_console_number(metrics.get('end_to_end_macro_f1'))}"
+            "    Polarity macro-F1: "
+            f"{_console_number(metrics.get('polarity_macro_f1'))}"
             "    | Mention macro-F1: "
             f"{_console_number(metrics.get('mention_macro_f1'))}"
         ),
         (
-            "    E2E micro P/R/F1: "
+            "    Polarity micro P/R/F1: "
             f"{_console_number(micro.get('precision'))} / "
             f"{_console_number(micro.get('recall'))} / "
             f"{_console_number(micro.get('f1'))}"
         ),
         (
-            "    Exact/Jaccard/Hamming: "
+            "    Polarity Exact/Jaccard/Hamming: "
             f"{_console_number(metrics.get('exact_set_match'))} / "
             f"{_console_number(metrics.get('sample_jaccard'))} / "
             f"{_console_number(metrics.get('hamming_loss'))}"
@@ -339,7 +335,7 @@ def _emit_console_event(event: str, **payload: Any) -> None:
                 f"  Early stopping: {payload.get('epochs_without_improvement', 0)}"
                 f"/{payload.get('patience', '-')} without improvement | "
                 f"best epoch={payload.get('best_epoch')} | best macro-F1="
-                f"{_console_number(payload.get('best_validation_end_to_end_macro_f1', payload.get('best_dev_end_to_end_macro_f1')))}"
+                f"{_console_number(payload.get('best_validation_polarity_macro_f1', payload.get('best_dev_polarity_macro_f1')))}"
             ),
             f"  Elapsed: {_console_duration(payload.get('elapsed_seconds'))}",
         ]
@@ -354,7 +350,7 @@ def _emit_console_event(event: str, **payload: Any) -> None:
             f"[EARLY STOP] {fold_prefix}stopped at epoch "
             f"{payload.get('stopped_epoch', payload.get('epoch'))}; "
             f"best epoch={payload.get('best_epoch')}, best macro-F1="
-            f"{_console_number(payload.get('best_validation_end_to_end_macro_f1', payload.get('best_dev_end_to_end_macro_f1')))}, "
+            f"{_console_number(payload.get('best_validation_polarity_macro_f1', payload.get('best_dev_polarity_macro_f1')))}, "
             f"patience={payload.get('patience')}.",
         ]
     elif event == "test_completed":
@@ -428,7 +424,7 @@ def _emit_console_event(event: str, **payload: Any) -> None:
         ]
     elif event == "kfold_completed":
         aggregate = payload.get("cross_fold_mean_std", {}).get(
-            "end_to_end_macro_f1", {}
+            "polarity_macro_f1", {}
         )
         lines = [
             "",
@@ -436,7 +432,7 @@ def _emit_console_event(event: str, **payload: Any) -> None:
             f"K-FOLD RUN COMPLETED | model={payload.get('model', '-')} | folds={payload.get('folds')}",
             separator,
             (
-                "  Cross-fold E2E macro-F1 mean +/- SD: "
+                "  Cross-fold polarity macro-F1 mean +/- SD: "
                 f"{_console_number(aggregate.get('mean'))} +/- "
                 f"{_console_number(aggregate.get('std'))}"
             ),
@@ -457,8 +453,8 @@ def _emit_console_event(event: str, **payload: Any) -> None:
             lines.append(
                 f"  {int(row.get('rank', 0)):>4}  "
                 f"{str(row.get('model', '-')):<23}  "
-                f"{_console_number(row.get('oof_end_to_end_macro_f1')):>12}  "
-                f"{_console_number(row.get('test_end_to_end_macro_f1')):>13}"
+                f"{_console_number(row.get('oof_polarity_macro_f1')):>12}  "
+                f"{_console_number(row.get('test_polarity_macro_f1')):>13}"
             )
         lines.append(f"  Results: {payload.get('comparison_dir')}")
     else:
@@ -867,7 +863,8 @@ def train_model(
     output_dir.mkdir(parents=True)
     _write_json(output_dir / "training_config.json", config)
     run_metadata = {
-        "schema_version": "absa-training-run/1.0.0",
+        "schema_version": "absa-training-run/2.0.0",
+        "evaluation_protocol": EVALUATION_PROTOCOL,
         "status": "RUNNING",
         "started_at": datetime.now(timezone.utc).isoformat(),
         "data_release": str(data_release),
@@ -1018,7 +1015,7 @@ def train_model(
             dev_predictions,
             thresholds=None,
         )
-        primary = float(dev_metrics["end_to_end_macro_f1"])
+        primary = float(dev_metrics["polarity_macro_f1"])
         epoch_log = {
             "epoch": epoch,
             "global_step": global_step,
@@ -1026,7 +1023,7 @@ def train_model(
                 name: value / max(batches, 1)
                 for name, value in epoch_losses.items()
             },
-            "dev_primary_metric": "end_to_end_macro_f1",
+            "dev_primary_metric": "polarity_macro_f1",
             "dev_primary_value": primary,
             "dev_metrics": dev_metrics,
             "elapsed_seconds": time.monotonic() - started,
@@ -1050,7 +1047,7 @@ def train_model(
                 "polarities": list(POLARITIES),
                 "max_length": max_length,
                 "best_epoch": best_epoch,
-                "best_dev_end_to_end_macro_f1": best_metric,
+                "best_dev_polarity_macro_f1": best_metric,
                 "training_config": config,
                 "data_release_id": data_manifest["release_id"],
                 "data_manifest_sha256": run_metadata[
@@ -1077,7 +1074,7 @@ def train_model(
             dev_metrics=_metric_summary(dev_metrics),
             is_best=is_best,
             best_epoch=best_epoch,
-            best_dev_end_to_end_macro_f1=best_metric,
+            best_dev_polarity_macro_f1=best_metric,
             epochs_without_improvement=epochs_without_improvement,
             patience=patience,
             elapsed_seconds=epoch_log["elapsed_seconds"],
@@ -1088,7 +1085,7 @@ def train_model(
                 epoch=epoch,
                 patience=patience,
                 best_epoch=best_epoch,
-                best_dev_end_to_end_macro_f1=best_metric,
+                best_dev_polarity_macro_f1=best_metric,
             )
             break
 
@@ -1120,7 +1117,7 @@ def train_model(
         "completed_at": datetime.now(timezone.utc).isoformat(),
         "elapsed_seconds": time.monotonic() - started,
         "best_epoch": best_epoch,
-        "best_dev_end_to_end_macro_f1": best_metric,
+        "best_dev_polarity_macro_f1": best_metric,
         "test_metrics": test_metrics,
         "checkpoint": {
             "path": "model.pt",

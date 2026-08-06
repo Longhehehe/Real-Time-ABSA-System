@@ -186,14 +186,14 @@ def _resolve(root: Path, value: Path) -> Path:
 def _compact_cli_metrics(metrics: dict) -> dict:
     summary = _metric_summary(metrics)
     return {
-        "end_to_end_macro_f1": summary["end_to_end_macro_f1"],
-        "end_to_end_micro_f1": summary["end_to_end_micro"]["f1"],
+        "polarity_macro_f1": summary["polarity_macro_f1"],
+        "polarity_micro_f1": summary["polarity_micro"]["f1"],
         "mention_macro_f1": summary["mention_macro_f1"],
         "exact_set_match": summary["exact_set_match"],
         "sample_jaccard": summary["sample_jaccard"],
         "hamming_loss": summary["hamming_loss"],
         "mixed_f1": summary["mixed"]["f1"],
-        "polarity_macro_f1": summary["polarity_macro_f1"],
+        "polarity_f1": summary["polarity_f1"],
     }
 
 
@@ -255,8 +255,8 @@ def main(argv: Sequence[str] | None = None) -> int:
                 {
                     "status": result["status"],
                     "best_epoch": result["best_epoch"],
-                    "best_dev_end_to_end_macro_f1": result[
-                        "best_dev_end_to_end_macro_f1"
+                    "best_dev_polarity_macro_f1": result[
+                        "best_dev_polarity_macro_f1"
                     ],
                     "test_metrics": _compact_cli_metrics(result["test_metrics"]),
                     "output": str(_resolve(root, args.output)),
@@ -288,9 +288,9 @@ def main(argv: Sequence[str] | None = None) -> int:
                     "status": result["status"],
                     "folds": result["folds"],
                     "model": args.model,
-                    "cross_fold_end_to_end_macro_f1": result[
+                    "cross_fold_polarity_macro_f1": result[
                         "cross_fold_mean_std"
-                    ]["end_to_end_macro_f1"],
+                    ]["polarity_macro_f1"],
                     "pooled_oof_metrics": _compact_cli_metrics(
                         result["pooled_oof_metrics"]
                     ),

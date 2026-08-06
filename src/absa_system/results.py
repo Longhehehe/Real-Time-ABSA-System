@@ -9,10 +9,11 @@ from typing import Any, Iterable, Mapping
 import json
 
 from .data import read_json, sha256_file
+from .metrics import EVALUATION_PROTOCOL
 
 
 SUMMARY_METRICS = (
-    "end_to_end_macro_f1",
+    "polarity_macro_f1",
     "mention_macro_f1",
     "exact_set_match",
     "sample_jaccard",
@@ -22,7 +23,7 @@ SUMMARY_METRICS = (
 
 def _flatten_summary(metrics: Mapping[str, Any]) -> dict[str, Any]:
     row = {name: metrics.get(name) for name in SUMMARY_METRICS}
-    for prefix in ("mention_micro", "end_to_end_micro", "mixed"):
+    for prefix in ("mention_micro", "polarity_micro", "mixed"):
         nested = metrics.get(prefix, {})
         if isinstance(nested, Mapping):
             for name in ("precision", "recall", "f1", "support"):
@@ -125,23 +126,24 @@ def write_suite_comparison(
                 "family": run["model_family"],
                 "folds": run["folds"],
                 "run_dir": run["run_dir"],
-                "oof_end_to_end_macro_f1": oof_metrics["end_to_end_macro_f1"],
-                "test_end_to_end_macro_f1": test_metrics[
-                    "end_to_end_macro_f1"
-                ],
+                "oof_polarity_macro_f1": oof_metrics["polarity_macro_f1"],
+                "test_polarity_macro_f1": test_metrics["polarity_macro_f1"],
                 "test_mention_macro_f1": test_metrics["mention_macro_f1"],
                 "test_exact_set_match": test_metrics["exact_set_match"],
                 "test_sample_jaccard": test_metrics["sample_jaccard"],
                 "test_hamming_loss": test_metrics["hamming_loss"],
             }
         )
-    rows.sort(key=lambda row: (-float(row["test_end_to_end_macro_f1"]), row["model"]))
+    rows.sort(
+        key=lambda row: (-float(row["test_polarity_macro_f1"]), row["model"])
+    )
     for rank, row in enumerate(rows, start=1):
         row["rank"] = rank
     payload = {
-        "schema_version": "absa-model-comparison/1.0.0",
+        "schema_version": "absa-model-comparison/2.0.0",
+        "evaluation_protocol": EVALUATION_PROTOCOL,
         "suite_id": suite_id,
-        "ranking_metric": "locked_test_end_to_end_macro_f1",
+        "ranking_metric": "locked_test_polarity_macro_f1",
         "models": rows,
     }
     with (root / "all_models_comparison.json").open(
@@ -209,6 +211,11 @@ def validate_suite_comparison(output_dir: str | Path) -> dict[str, Any]:
             raise ValueError(f"comparison checksum mismatch: {name}")
     manifest = read_json(root / "suite_manifest.json")
     comparison = read_json(root / "all_models_comparison.json")
+    if (
+        comparison.get("schema_version") != "absa-model-comparison/2.0.0"
+        or comparison.get("evaluation_protocol") != EVALUATION_PROTOCOL
+    ):
+        raise ValueError("comparison uses an unsupported evaluation protocol")
     if (
         manifest.get("status") != "SEALED_MODEL_COMPARISON"
         or manifest.get("suite_id") != comparison.get("suite_id")

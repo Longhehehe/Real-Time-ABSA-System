@@ -10,6 +10,9 @@ import numpy as np
 from .schema import ASPECTS, POLARITIES
 
 
+EVALUATION_PROTOCOL = "separate-aspect-polarity/1.0.0"
+
+
 def sigmoid(values: np.ndarray) -> np.ndarray:
     values = np.asarray(values, dtype=np.float64)
     positive = values >= 0
@@ -135,8 +138,14 @@ def apply_thresholds(
     mention_prob: np.ndarray,
     sentiment_prob: np.ndarray,
     thresholds: Thresholds,
+    *,
+    gate_polarity_by_mention: bool = True,
 ) -> tuple[np.ndarray, np.ndarray]:
-    """Apply thresholds and enforce the canonical output constraints."""
+    """Apply thresholds and enforce the canonical polarity constraints.
+
+    Evaluation can keep polarity decisions independent from predicted aspect
+    mentions. Production inference gates those decisions by predicted mentions.
+    """
 
     mention_prob = np.asarray(mention_prob, dtype=np.float64)
     sentiment_prob = np.asarray(sentiment_prob, dtype=np.float64)
@@ -145,18 +154,21 @@ def apply_thresholds(
         sentiment_prob >= thresholds.sentiment[None, :, :]
     )
 
-    for sample_index, aspect_index in np.argwhere(predicted_mention):
-        values = predicted_sentiment[sample_index, aspect_index]
-        probabilities = sentiment_prob[sample_index, aspect_index]
-        if values[2] and (values[0] or values[1]):
-            if probabilities[2] >= max(probabilities[0], probabilities[1]):
-                values[0] = False
-                values[1] = False
-            else:
-                values[2] = False
-        if not values.any():
-            values[int(np.argmax(probabilities))] = True
-    predicted_sentiment[~predicted_mention] = False
+    batch_size, num_aspects = predicted_mention.shape
+    for sample_index in range(batch_size):
+        for aspect_index in range(num_aspects):
+            values = predicted_sentiment[sample_index, aspect_index]
+            probabilities = sentiment_prob[sample_index, aspect_index]
+            if values[2] and (values[0] or values[1]):
+                if probabilities[2] >= max(probabilities[0], probabilities[1]):
+                    values[0] = False
+                    values[1] = False
+                else:
+                    values[2] = False
+            if not values.any():
+                values[int(np.argmax(probabilities))] = True
+    if gate_polarity_by_mention:
+        predicted_sentiment[~predicted_mention] = False
     return predicted_mention.astype(np.int8), predicted_sentiment.astype(np.int8)
 
 
@@ -166,6 +178,7 @@ def compute_metrics(
     mention_pred: np.ndarray,
     sentiment_pred: np.ndarray,
 ) -> dict[str, Any]:
+    """Score aspect detection and gold-aspect polarity classification separately."""
     mention_true = np.asarray(mention_true, dtype=np.int8)
     sentiment_true = np.asarray(sentiment_true, dtype=np.int8)
     mention_pred = np.asarray(mention_pred, dtype=np.int8)
@@ -182,24 +195,48 @@ def compute_metrics(
         )
         for aspect_index, aspect in enumerate(ASPECTS)
     }
-    joint_per_label: dict[str, dict[str, float]] = {}
+    polarity_per_label: dict[str, dict[str, float]] = {}
     for aspect_index, aspect in enumerate(ASPECTS):
+        mentioned = mention_true[:, aspect_index].astype(bool)
         for polarity_index, polarity in enumerate(POLARITIES):
-            joint_per_label[f"{aspect}::{polarity}"] = _binary_prf(
-                sentiment_true[:, aspect_index, polarity_index],
-                sentiment_pred[:, aspect_index, polarity_index],
+            polarity_per_label[f"{aspect}::{polarity}"] = _binary_prf(
+                sentiment_true[mentioned, aspect_index, polarity_index],
+                sentiment_pred[mentioned, aspect_index, polarity_index],
             )
 
-    flat_true = sentiment_true.reshape(len(sentiment_true), -1)
-    flat_pred = sentiment_pred.reshape(len(sentiment_pred), -1)
-    intersections = np.logical_and(flat_true, flat_pred).sum(axis=1)
-    unions = np.logical_or(flat_true, flat_pred).sum(axis=1)
-    jaccard = np.where(unions > 0, intersections / np.maximum(unions, 1), 1.0)
-    exact_match = np.all(flat_true == flat_pred, axis=1)
+    gold_mention_mask = mention_true.astype(bool)
+    polarity_true = sentiment_true[gold_mention_mask]
+    polarity_pred = sentiment_pred[gold_mention_mask]
+    flat_true = polarity_true.reshape(-1)
+    flat_pred = polarity_pred.reshape(-1)
 
-    mixed_true = np.logical_and(sentiment_true[:, :, 0], sentiment_true[:, :, 1])
-    mixed_pred = np.logical_and(sentiment_pred[:, :, 0], sentiment_pred[:, :, 1])
-    joint_micro = _binary_prf(flat_true, flat_pred)
+    sample_intersections: list[int] = []
+    sample_unions: list[int] = []
+    sample_exact: list[bool] = []
+    for sample_index in range(len(sentiment_true)):
+        sample_mask = gold_mention_mask[sample_index]
+        sample_true = sentiment_true[sample_index, sample_mask].reshape(-1)
+        sample_pred = sentiment_pred[sample_index, sample_mask].reshape(-1)
+        sample_intersections.append(
+            int(np.logical_and(sample_true, sample_pred).sum())
+        )
+        sample_unions.append(int(np.logical_or(sample_true, sample_pred).sum()))
+        sample_exact.append(bool(np.array_equal(sample_true, sample_pred)))
+    intersections = np.asarray(sample_intersections, dtype=np.int64)
+    unions = np.asarray(sample_unions, dtype=np.int64)
+    jaccard = np.where(unions > 0, intersections / np.maximum(unions, 1), 1.0)
+    exact_match = np.asarray(sample_exact, dtype=bool)
+
+    mixed_true = np.logical_and(polarity_true[:, 0], polarity_true[:, 1])
+    mixed_pred = np.logical_and(polarity_pred[:, 0], polarity_pred[:, 1])
+    polarity_micro = _binary_prf(flat_true, flat_pred)
+    polarity_per_class = {
+        polarity: _binary_prf(
+            polarity_true[:, polarity_index],
+            polarity_pred[:, polarity_index],
+        )
+        for polarity_index, polarity in enumerate(POLARITIES)
+    }
     return {
         "num_samples": int(len(mention_true)),
         "mention_micro": _binary_prf(mention_true, mention_pred),
@@ -207,13 +244,18 @@ def compute_metrics(
             np.mean([metrics["f1"] for metrics in mention_per_aspect.values()])
         ),
         "mention_per_aspect": mention_per_aspect,
-        "end_to_end_micro": joint_micro,
-        "end_to_end_macro_f1": float(
-            np.mean([metrics["f1"] for metrics in joint_per_label.values()])
+        "polarity_micro": polarity_micro,
+        "polarity_macro_f1": float(
+            np.mean([metrics["f1"] for metrics in polarity_per_class.values()])
         ),
-        "end_to_end_per_label": joint_per_label,
+        "polarity_per_class": polarity_per_class,
+        "polarity_per_label": polarity_per_label,
         "exact_set_match": float(exact_match.mean()),
         "sample_jaccard": float(jaccard.mean()),
-        "hamming_loss": float(np.not_equal(flat_true, flat_pred).mean()),
+        "hamming_loss": (
+            float(np.not_equal(flat_true, flat_pred).mean())
+            if flat_true.size
+            else 0.0
+        ),
         "mixed": _binary_prf(mixed_true, mixed_pred),
     }
