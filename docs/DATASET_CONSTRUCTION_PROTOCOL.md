@@ -4795,3 +4795,697 @@ Các đẳng thức kiểm tra closure:
   kernel và chạy bounded one-model pilot để xác nhận notebook presentation;
   chỉ sau đó resume/full six-model suite. Nếu cần ingest log tự động, freeze
   `ABSA_CONSOLE_FORMAT=json` trong job environment thay vì parse human text.
+
+## TASK-20260802-057 — Loại bỏ đánh giá E2E và tách aspect/polarity evaluation
+
+- **Trạng thái:** ĐÃ THỰC THI thay đổi source, metric schema, early-stopping,
+  console/CLI và result-comparison contract; ĐÃ chạy unit/semantic checks cục
+  bộ. CHƯA chạy lại full six-model benchmark hoặc sinh metric paper mới.
+- **Mục tiêu:** Thực hiện quyết định nghiên cứu rằng aspect detection và polarity
+  classification phải được báo cáo riêng; không sử dụng metric E2E làm metric
+  chính. Làm rõ multi-polarity của hệ thống chỉ là đồng thời `positive+negative`
+  trên cùng aspect; `neutral` là trạng thái riêng và không được trộn với hai
+  polarity này.
+- **Đầu vào:** Source hiện hành tại `src/absa_system/{metrics,training,
+  cross_validation,benchmark,results,cli}.py`; taxonomy cố định 9 aspect và ba
+  output polarity `negative`, `positive`, `neutral`; config
+  `configs/training_v1.json`. Không đọc lại, sửa, xóa hoặc ghi đè `data/raw/`
+  hay model-ready release.
+- **Phương pháp đã thực thi:** `tune_thresholds` tiếp tục chọn 9 aspect threshold
+  và 27 aspect-polarity threshold chỉ trên validation labels. Trong evaluation,
+  polarity prediction không còn bị gate bởi predicted aspect; polarity được
+  chấm duy nhất trên các aspect xuất hiện theo gold mention mask. Aspect
+  detection vẫn được chấm độc lập bằng mention macro/micro-F1. Trong production
+  inference, polarity vẫn bị gate theo predicted mention để không xuất polarity
+  cho aspect không được mô hình phát hiện.
+- **Định nghĩa metric mới đã thực thi:** `polarity_macro_f1` là trung bình F1 của
+  đúng ba lớp `negative`, `positive`, `neutral`, sau khi gom các gold-mentioned
+  aspect instance; `polarity_micro` gom toàn bộ ba polarity decisions. Full
+  diagnostics vẫn lưu `polarity_per_class` và `polarity_per_label` cho từng cặp
+  aspect-polarity. Exact-set, sample-Jaccard và Hamming được tính trên polarity
+  của gold-mentioned aspects. `mixed` chỉ đúng khi cả negative và positive cùng
+  bật; neutral+polar bị decoder loại trừ.
+- **Code/schema đã thay đổi:** Xóa các key/console label mang tên
+  `end_to_end_*`; early stopping của neural model chuyển sang
+  `validation_polarity_macro_f1`; classical fold primary metric, OOF/test
+  summary, CSV exports, CLI compact output và suite ranking chuyển sang polarity
+  macro-F1. Thêm protocol ID `separate-aspect-polarity/1.0.0`; run/fold/
+  aggregate/comparison schema tăng lên version 2. Resume fail-closed nếu run cũ
+  dùng joint aspect-polarity protocol; phải dùng `suite_id` mới.
+- **Tài liệu vận hành đã thay đổi:** README và
+  `docs/SERVER_SETUP_FINAL_ABSA.md` mô tả evaluation tách rời, early stopping
+  theo polarity macro-F1 và đổi ví dụ full benchmark từ `full_v1` sang
+  `full_v2`; ghi rõ run version 1 không được resume bằng source version 2.
+- **Output thực tế:** Source compile thành công; không sinh dataset release mới
+  và không thay đổi nhãn. Một Naive Bayes smoke checkpoint/artifact set được
+  sinh dưới `.tmp/task057_metric_smoke` và bị Git-ignore; đây không phải model
+  hoặc kết quả dùng cho paper. Kết quả benchmark đang chạy theo code cũ không
+  tương thích để resume với source mới.
+- **Kiểm thử đo được:** `compileall` PASS; `git diff --check` PASS; tám test trong
+  `test_absa_system.py` PASS. Semantic isolation check tạo trường hợp aspect
+  prediction sai hoàn toàn nhưng polarity prediction đúng trên gold aspect:
+  mention macro-F1=0, polarity exact-set=1 và polarity macro-F1=1/3 do chỉ lớp
+  positive có support trong synthetic sample; payload không còn key
+  `end_to_end_*`. Test hiện hữu cũng xác nhận positive+negative được giữ đồng
+  thời và neutral exclusivity được áp dụng.
+- **Benchmark smoke đo được (không dùng cho paper):** Chạy Naive Bayes với 40
+  development record, 10 locked-test record và 2 fold. Fold polarity macro-F1
+  lần lượt 0,3918 và 0,4876; pooled OOF=0,4425; locked-test=0,5556. Run có 22
+  sealed file, `validate_kfold_training_run=VALID`; comparison có 4 sealed file,
+  `validate_suite_comparison=VALID`. Artifact không chứa metric key hoặc console
+  label cũ; các số chỉ xác nhận execution contract trên mẫu cực nhỏ.
+- **Quyết định:** Không đổi tên metric cũ một cách hình thức. Cách tính cũ trên
+  toàn bộ 27 aspect-polarity slots đã được thay thật bằng conditional polarity
+  evaluation trên gold-mentioned aspects. Các log TASK-055/TASK-056 được giữ
+  nguyên như lịch sử của protocol cũ, không được sửa ngược thành procedure mới.
+- **Giới hạn:** Primary polarity metric mới không tự phản ánh lỗi aspect
+  detection; vì vậy paper bắt buộc báo cả mention macro/micro-F1 cạnh polarity
+  macro/micro-F1 và mixed-F1. Full benchmark cũ không thể so trực tiếp với run
+  version 2. Chưa đo tác động của metric/early-stopping mới trên full dataset.
+- **Next dependency (planned, chưa thực thi):** Tạo `run-id` mới, chạy bounded
+  six-model pilot trên Kaggle để xác nhận artifact schema version 2 và console;
+  sau đó chạy lại full K-fold benchmark từ đầu. Không dùng `--resume` với
+  `full_v1` hoặc bất kỳ run version 1 nào.
+
+## TASK-20260805-058 — Chẩn đoán bottleneck của mô hình chính trên pseudo dataset
+
+- **Trạng thái:** ĐÃ THỰC THI audit read-only source/config/data/artifact,
+  checkpoint inference, full-test rescoring và các kiểm tra định lượng cục bộ;
+  chỉ bổ sung task log này. Không sửa model, loss, label, split, model-ready
+  release hoặc `data/raw/`; không chạy lại training.
+- **Mục tiêu:** Xác định mô hình PhoBERT chính thực sự không học được hay kết
+  quả thấp đến từ định nghĩa metric, chất lượng/cấu trúc dataset, long-tail,
+  split hoặc mismatch giữa objective và evaluation; xếp hạng bottleneck dựa
+  trên bằng chứng thay vì chỉ dựa vào một scalar metric.
+- **Đầu vào thực tế:** Source hiện hành tại `src/absa_system/`; config
+  `configs/{training_v1,model_data_v1}.json`; immutable release
+  `data/model_ready/absa_pseudo_v1_2_20260729`; sealed one-split checkpoint
+  `artifacts/models/absa`; audit
+  `artifacts/audits/giant_leakage_group_v1_20260801`; human-gold package và
+  protocol hiện có. Git worktree đã có thay đổi của người dùng trước task;
+  audit không hoàn tác hoặc ghi đè các thay đổi đó.
+- **Phương pháp thực tế đã chạy:** Đối chiếu schema/model/query attention,
+  focal BCE, class weights, evidence/consistency objectives, tokenizer,
+  threshold tuning, inference gating, split builder và metric version 1/2.
+  Parse toàn bộ 28.266 model-ready JSONL để đo source, curation status, label,
+  group, length và evidence coverage. Chạy `validate-data` và `validate-run`;
+  chạy tám test ABSA bằng unittest discovery. Lần gọi unittest đầu theo tên
+  module thất bại vì `tests/` không phải Python package; lệnh discovery đúng
+  sau đó PASS 8/8. Không tính lần lỗi invocation này là lỗi hệ thống.
+- **Checkpoint inference/rescoring thực tế:** Dùng local RTX 3050 Laptop GPU,
+  PyTorch 2.6.0+cu124 và Transformers 4.51.3, load checkpoint ở chế độ
+  `local_files_only`. Bốn câu kiểm soát xác nhận aspect, negative, positive,
+  neutral và mixed đều đi qua production inference đúng về mặt chức năng.
+  Sau đó chạy forward toàn bộ 2.897 test record với threshold đã khóa ở
+  checkpoint và tái chấm bằng source protocol hiện tại
+  `separate-aspect-polarity/1.0.0`; không ghi prediction vào release/artifact.
+- **Kết quả metric đã đo:** Artifact cũ ghi joint end-to-end macro-F1
+  `0,670593`, nhưng khi cùng checkpoint được chấm đúng theo protocol tách task
+  hiện tại, polarity macro-F1 là `0,832194`, polarity micro-F1 `0,948110`,
+  mention macro/micro-F1 `0,896434/0,919208`, polarity exact-set `0,849845`,
+  sample Jaccard `0,935044`, mixed-F1 `0,636364`. F1 gộp theo class là
+  negative `0,899166`, positive `0,973673`, neutral `0,623742`. Vì định nghĩa
+  khác nhau, `0,670593` không được dùng để kết luận model version 2 chỉ đạt
+  0,67 và cũng không được thay ngược vào sealed artifact version 1.
+- **Long-tail đã xác nhận:** Trong train có 48.846 polarity-positive instances:
+  negative `7.676` (`15,71%`), positive `39.423` (`80,71%`), neutral `1.747`
+  (`3,58%`). Test có `1.401/5.873/274`, tương ứng
+  `18,56%/77,81%/3,63%`. Neutral theo aspect có support test rất nhỏ:
+  Shop service `1` (F1 `0`), shipping `7` (`0,3333`), description `9`
+  (`0,2667`), packaging `9` (`0,5556`), authenticity `13` (`0,4706`) và
+  warranty `16` (`0,5333`). Threshold được tune riêng cho 27 head nên các
+  head này về bản chất đang chọn threshold từ một đến vài chục positive mẫu.
+- **Rare-aspect/multi-aspect finding:** Mention F1 thấp nhất ở Shop service
+  `0,8006`, warranty `0,8108` và authenticity `0,8273`, với test support lần
+  lượt `326/59/118`; shipping và packaging đạt `0,9814/0,9625`. Polarity
+  exact-set giảm từ `0,9647` trên record một aspect xuống `0,8664` với hai
+  aspect và `0,7851` với ít nhất ba aspect. Review trên 200 ký tự có exact-set
+  `0,7425`, thấp hơn `0,8685` ở nhóm không quá 100 ký tự.
+- **Không phải truncation/evidence-availability bottleneck:** Tokenize lại toàn
+  corpus bằng đúng aligned PhoBERT tokenizer cho thấy chỉ `5/22.508` train,
+  `1/2.861` dev và `1/2.897` test vượt 256 token. Chỉ ba gold-mentioned train
+  instances, một dev và một test mất evidence sau truncation. Trước token hóa,
+  mọi `62.029/62.029` mentioned instance trên ba split có ít nhất một evidence
+  span. Vì vậy độ giảm ở review dài chủ yếu là compositional/multi-aspect
+  difficulty, không phải cutoff 256 trên quy mô đáng kể.
+- **Dataset-mixture bottleneck đã xác nhận:** Train chứa `7.179/22.508`
+  (`31,90%`) record `QUARANTINE`; test chứa `941/2.897` (`32,48%`). Audit giant
+  group đã có cho thấy `8.505/28.266` record có primary reason
+  `PLATFORM_TEMPLATE`, và group 6.967 record nằm hoàn toàn ở train. Rescoring
+  theo domain cho polarity macro-F1 `0,8347` trên crawled clean (n=1.085),
+  `0,8265` trên legacy old (n=836), nhưng chỉ `0,7345` trên crawled quarantine
+  (n=940); các macro theo domain nhỏ phải được đọc cùng support.
+- **K-fold heterogeneity đã đo nhưng chưa train:** Chạy deterministic
+  group-aware assignment hiện tại trên train+dev tạo fold size
+  `8.904/8.228/8.237`. Giant group vào fold 1; fold này có 3.731 quarantine,
+  1.586 legacy và toàn bộ 503 clean-delta + 289 quarantine-delta record, trong
+  khi fold 2/3 chỉ có `2.040/2.070` quarantine và `3.073/3.055` legacy. Positive
+  share của fold 1 là `82,24%`, so với khoảng `79,3%` ở hai fold còn lại. Group
+  isolation đúng nhưng domain/label mixture giữa folds không đồng nhất, nên
+  variance của full K-fold và việc một fold phải generalize vào giant template
+  component là bottleneck dự kiến có bằng chứng định lượng.
+- **Objective/evaluation mismatch cần ablation:** Ở epoch 8, weighted evidence
+  term là `0,495515/0,686182`, chiếm `72,21%` scalar train loss; weighted
+  mention/sentiment chỉ chiếm `8,19%/18,43%`. Evidence loss vẫn ở `2,4776` và
+  best dev metric xuất hiện tại epoch cuối, nên chưa có bằng chứng overfit và
+  auxiliary objective đang là phần loss chưa hội tụ lớn nhất. Ngoài ra source
+  version 2 chấm polarity không gate theo predicted mention, nhưng training
+  vẫn có consistency penalty nối hai xác suất. Trong test, 416/7.197 gold
+  aspect bị miss mention nhưng tạo 168/788 (`21,32%`) polarity decision errors;
+  conditional polarity macro-F1 là `0,8513` khi mention hit và `0,6925` khi
+  mention miss. Đây là correlation và hypothesis cho ablation, chưa phải bằng
+  chứng nhân quả để tự ý xóa evidence/consistency loss.
+- **Nhãn/benchmark ceiling:** Tất cả model-ready train/dev/test labels vẫn là
+  `AI_PSEUDO_LABEL_PENDING_HUMAN_VERIFICATION`. Một số disagreement đọc tay có
+  semantic ambiguity rõ, ví dụ câu “đáng tiền: phù hợp” bị gán experience
+  neutral, hoặc câu complaint toàn cục có price neutral nhưng model dự đoán
+  negative. Human-gold package 1.200 record vẫn
+  `BUILT_PENDING_HUMAN_ANNOTATION`, chưa có hai FINAL A/B, IAA hoặc adjudication.
+  Do đó pseudo-test chủ yếu đo khả năng bắt chước annotator AI và không thể xác
+  định ceiling/chất lượng thực ngoài domain.
+- **Quyết định chẩn đoán:** Không coi backbone/checkpoint hỏng; validation,
+  forward và learning curve đều hoạt động, dev metric tăng từ `0,4428` đến
+  `0,6957` và best epoch là 8. Bottleneck ưu tiên là: (1) pseudo-label và 30%
+  platform-template/quarantine mixture cùng giant group; (2) neutral/mixed và
+  rare-aspect support; (3) thiếu rerun protocol version 2, full baseline,
+  multi-seed và independent human-gold; (4) secondary model/objective mismatch
+  cần ablation. Không đề xuất tăng `max_length` như fix chính.
+- **Validation/output:** `validate-data=VALID` cho 28.266 record và group counts
+  `7.383/876/877`; `validate-run=VALID`, sealed checkpoint SHA-256
+  `3d4d9e4ffe3537d0fe4911a63bf2c6abe428549aeae8991d71abe94cf56ed2d3`;
+  ABSA tests PASS 8/8. Protocol DOCX được render lại và Pandoc plain-text
+  round-trip PASS, gồm đúng task ID và các số rescoring. Các diagnostic chỉ in
+  stdout; không tạo performance artifact mới và không biến số rescoring thành
+  paper result.
+- **Giới hạn:** Chỉ có một PhoBERT seed/one-split checkpoint; không có full
+  six-model run version 2 trong workspace, nên chưa thể kết luận proposed
+  architecture hơn/kém baseline. Domain-conditioned metric vẫn dùng pseudo
+  gold; kiểm tra disagreement thủ công không phải random blinded error audit.
+  Không đo gradient norm theo loss term, nên tỷ lệ scalar loss không đồng nghĩa
+  chính xác với tỷ lệ gradient. Không thay đổi sealed run cũ để nhét metric mới.
+- **Next dependency — planned, CHƯA thực thi:** Ưu tiên publish release mới loại
+  pure platform template và relabel/adjudicate buyer residual; hoàn tất locked
+  human-gold A/B→IAA→adjudication. Trên development-only data, chạy cùng fold
+  assignment cho baseline/proposed với multi-seed và ablation tối thiểu:
+  evidence weight `{0,0.05,0.2}`, consistency `{0,0.1}`, class-balanced sampler
+  hoặc effective-number loss, và threshold shrinkage/global fallback cho head
+  support thấp. Chỉ sau khi freeze các quyết định này mới đánh giá một lần trên
+  human-gold test; không tune tiếp trên pseudo test đã xem nhiều lần.
+
+## TASK-20260805-059 — Audit khả năng cào thêm và pipeline raw→pseudo-label
+
+- **Trạng thái:** ĐÃ THỰC THI audit read-only code/config/protocol/manifest,
+  crawl capacity dry-run và kiểm tra process liên quan; chỉ bổ sung task log và
+  render lại protocol. Không gọi Lazada, không mở Chrome, không crawl live,
+  không gọi dịch vụ LLM, không sửa `data/raw/`, manifest, release hoặc nhãn.
+- **Mục tiêu:** Trả lời cách tiếp tục thu thập dữ liệu từ inventory hiện tại và
+  xác định repository đã có pipeline hoàn chỉnh từ raw crawl qua cleaning,
+  leakage control, pseudo-AI annotation tới model-ready hay chưa.
+- **Đầu vào thực tế:** `run_crawl_automatic.{cmd,ps1}`, README collection
+  runbook, `configs/{collector,collection_plan}.toml`; các builder/validator
+  parent, curation, annotation và model-ready; 413 crawl manifest dưới
+  `data/raw/`; các task audit 026–028 và delta execution 027.
+- **Phương pháp đã thực thi:** Đọc entry point supervisor và từng CLI
+  downstream; chạy offline
+  `lazada-collect crawl-scale --target-reviews 50000 --dry-run`; phân nhóm
+  trạng thái toàn bộ manifest; chạy `finalize_stale_runs.py --raw-root
+  data/raw` không có `--apply`; đối chiếu process đang chạy để không nhận nhầm
+  một job Python không liên quan là collector. Không thực thi các lệnh trong
+  runbook planned bên dưới.
+
+### Kết quả crawl readiness — đã đo
+
+- Inventory current-policy có **32.922** accepted unique review; target tổng
+  50.000 còn **17.078**. Capacity estimate cần khoảng 342 product nếu mỗi
+  product đạt đủ 50 accepted review; 21 record policy cũ/không hợp lệ không
+  được tính. Dry-run xác nhận 8 segment, 24 query, cross-run ID/text dedup,
+  quality policy `substantive_vi_v2`, cookie file hợp lệ với 28 Lazada cookie
+  còn active tại thời điểm audit.
+- `TargetReviews` là **target tổng**, không phải số muốn thêm. Vì vậy thêm
+  10.000 từ mốc hiện tại dùng target 42.922; target 50.000 tương ứng thêm
+  17.078. Chạy lại cùng target sẽ resume bằng cross-run dedup và checkpoint,
+  không bắt đầu lại từ 0.
+- Trạng thái 413 manifest: 1 `completed`, 7 `completed_target`, 3
+  `completed_with_shortfall`, 72 `failed`, 5 `interrupted_external`, 207
+  `paused_rate_limit`, 117 `stopped_max_products` và **1 `running` stale**.
+  Manifest stale là crawl DOM `20260729T053113Z-b7dc5e27`, checkpoint
+  2026-07-29T05:31:43Z; đã ghi 4 accepted review, target lúc đó 41.928 và
+  remaining 9.006. Không còn collector process tương ứng.
+- Dry-run `finalize_stale_runs.py` xác nhận action `would_finalize`; chưa dùng
+  `--apply`. Manifest này phải được đóng có kiểm soát trước khi freeze parent
+  release mới. Bốn review đã ghi vẫn nằm trong inventory 32.922; finalize
+  không đồng nghĩa xóa chúng.
+
+### Coverage pipeline — kết luận đã xác minh
+
+- Các **component** đã có đủ: supervisor crawl→raw; immutable parent builder +
+  validator; curation partition + validator; leakage/reference reservation;
+  preparation tranche; diagnostic và primary pseudo-LLM generation; sealing;
+  semantic audit; finalization; independent validation; model-ready prepare +
+  validation. TASK-20260728-027 đã thực thi thành công toàn luồng này cho delta
+  990 raw accepted: 613 clean-core được đưa qua labeling workflow, 375
+  quarantine, 2 duplicate; terminal annotation 554 `LABELED`, 46 `ESCALATE`,
+  13 `REJECT_NON_REVIEW`.
+- Repository **chưa có một orchestrator one-click end-to-end**. Supervisor
+  hiện dừng ở `data/raw/`; các bước downstream phải gọi riêng và nhiều default
+  vẫn trỏ release/config 2026-07-25 hoặc package cũ. Crawl mới không tự đi vào
+  frozen curation, pseudo-label package hay `configs/model_data_v1.json`.
+- Vì vậy pipeline hoàn chỉnh ở mức kỹ thuật/component và đã được chứng minh
+  end-to-end, nhưng chưa hoàn chỉnh ở mức vận hành tự động. Một round mới phải
+  có release/config/output version mới, explicit cutoff/raw scope và fail
+  closed nếu còn manifest `running`.
+- Không nên gọi LLM cho mọi raw record để đạt “100% labeled”. Coverage đúng là
+  mọi canonical record được hạch toán vào `KEEP`, `KEEP_CLEANED`, `QUARANTINE`
+  hoặc `EXCLUDE_AUTO`; chỉ clean-core không thuộc reference/leakage reservation
+  mới đủ điều kiện pseudo-label. Kết quả delta trước chỉ giữ 613/990
+  (61,92%) vào clean-core, nên 10.000 accepted mới không đảm bảo tạo 10.000
+  training record.
+
+### Runbook tiếp theo — PLANNED, CHƯA thực thi
+
+- Preflight/finalize stale manifest có xác nhận; chạy supervisor hybrid
+  `-ValidateOnly`, rồi bounded pilot và resume cùng target tổng. Không bypass
+  CAPTCHA/rate-limit và không để máy sleep.
+- Sau khi round đóng: freeze explicit raw cutoff thành parent release version
+  mới → validate; build curation bằng config version mới → validate partition;
+  loại/quarantine pure platform template và chỉ phục hồi buyer residual sau
+  relabel/adjudication; prepare clean-core incremental tranche với explicit
+  reference/safe-frame; diagnostic → primary generation → seal → semantic
+  audit → finalize → validate.
+- Tạo `model_data` config version mới liệt kê rõ package mới và nguồn cũ nào
+  được giữ, rồi `absa_system prepare`/`validate-data` vào output model-ready
+  version mới. Không append hoặc sửa in-place frozen release hiện có.
+- Nếu mục tiêu là sửa imbalance thay vì chỉ tăng quy mô, duy trì một expansion
+  tranche tự nhiên và một challenge tranche tách riêng cho neutral/mixed,
+  warranty, authenticity và shop service. Không coi star rating là nhãn ABSA
+  và không trộn challenge sample vào ước lượng phân phối tự nhiên mà không có
+  weighting/audit.
+
+- **Output:** Báo cáo readiness và runbook này; không có dataset/model artifact
+  mới. Protocol DOCX được render lại và kiểm tra Pandoc round-trip ở cuối task.
+- **Quyết định:** Khuyến nghị dùng hybrid supervisor và target tổng 42.922 nếu
+  muốn thêm khoảng 10.000 accepted review. Không khẳng định “đã tự động hoàn
+  toàn”; không chạy live hoặc finalize stale state khi chưa được người dùng yêu
+  cầu; không tái sử dụng default release path cũ.
+- **Giới hạn:** Dry-run không dự báo được challenge/rate limit hoặc clean-core
+  yield thực tế; cookie có thể hết hạn sau audit. Collector ghi raw theo thư
+  mục ngày, nên round kéo dài nhiều ngày cần một cơ chế cutoff/manifest
+  selection rõ ràng; hiện chưa có post-crawl orchestrator tự đóng scope đó.
+  Pseudo-AI label vẫn pending human verification và không thay thế human-gold.
+- **Next dependency:** Người dùng chốt target/sampling frame và có muốn thực
+  thi crawl hay xây orchestrator post-crawl. Trước khi publish round mới cần
+  xác nhận đóng manifest stale, đặt release ID/cutoff mới và quyết định chính
+  sách loại platform-template/buyer-residual.
+
+## TASK-20260806-060 — Chuẩn hóa corpus 55k qua curation, pseudo-label và model-ready
+
+- **Trạng thái:** ĐÃ THỰC THI toàn bộ data flow từ raw inventory tới immutable
+  parent, curation/dedup, leakage-safe pseudo-label, replay seal, semantic
+  audit, final publication và model-ready validation. Không sửa/xóa
+  `data/raw/`; không ghi đè release/package cũ; không train lại model.
+- **Mục tiêu:** Xử lý phần dữ liệu mới sau khi collection đạt 55.000 accepted
+  review bằng cùng cleaning rule và cùng pseudo-label model/prompt/setting như
+  delta 2026-07-28; loại duplicate/platform template khỏi nguồn train và tạo
+  một model-ready release version mới có checksum, ledger và group isolation.
+- **Đầu vào thực tế:** 581 crawl manifest dưới `data/raw/`; collection history
+  current-policy 55.000 review và 21 record policy cũ/invalid; frozen base
+  parent 31.928, delta v1 990; cleaning rule 2.1.2; human-reference/reservation
+  frozen 2026-07-26; prompt/schema/model của tranche delta v1; model-data
+  config v1 và training setting hiện hành.
+
+### Raw closure và scope cutoff — đã thực thi
+
+- Kiểm kê trước build xác nhận 0 manifest `running` và không có crawler process.
+  Trạng thái 581 manifest: 1 `completed`, 9 `completed_target`, 3
+  `completed_with_shortfall`, 72 `failed`, 6 `interrupted_external`, 290
+  `paused_rate_limit`, 200 `stopped_max_products`. Offline `crawl-scale
+  --target-reviews 55000 --dry-run` trả đúng 55.000 current-policy accepted,
+  remaining 0.
+- Delta chưa phát hành được xác định bằng closure:
+  55.000 − 31.928 base − 990 delta v1 = **22.082**. Scope gồm 4 review ngày
+  2026-07-29 chưa phát hành và 22.078 review ngày 2026-08-05/06.
+- **Code change đã thực thi:** Mở rộng `build_corpus_release.py` bằng cutoff
+  inclusive `--raw-date-from/--raw-date-through`, ghi cả hai boundary vào
+  source manifest và chỉ hash/read/validate file nằm trong scope. Mở rộng
+  `validate_corpus_release.py` để replay đúng cùng scope; field không có ở
+  release cũ vẫn backward-compatible. Chọn cutoff 2026-07-29..2026-08-06 để
+  phát hiện near-duplicate/template trên toàn round, thay vì build tách từng
+  ngày hoặc kéo lại 32.918 record cũ.
+
+### Parent và curation release — đã thực thi và VALID
+
+- Parent `data/releases/lazada_vi_reviews_delta_v2_20260806/`, ID
+  `lazada-vi-substantive_vi_v2-99454e376f64`, có đúng 22.082 canonical,
+  22.022 primary-annotation candidate và 60 manual-review candidate; 19
+  punctuation-duplicate nonrepresentative, 53 near-duplicate pair/45 cluster,
+  63 internal-repeated-sentence record. Validator xác minh 40 release file,
+  680 raw source file, 0 running manifest, mọi label cell blank. Manifest
+  SHA-256 `dd72b82f214a4fd35fac7bff6f59538c033a565558a1fd4f57d59ef081b17853`.
+- Tạo config version mới `configs/cleaning_delta_v2_20260806.json` từ đúng rule
+  2.1.2 và base-independent QC escalation rỗng; chỉ đổi parent/output path.
+  Curation `data/releases/lazada_vi_absa_delta_curation_v2_20260806/`, ID
+  `lazada-vi-absa-curation-2e0d8efc7c208cfd`, partition kín:
+
+| Status | Record | Tỷ lệ parent | Hành động |
+|---|---:|---:|---|
+| `KEEP` | 14.207 | 64,34% | clean-core |
+| `KEEP_CLEANED` | 141 | 0,64% | clean-core sau transformation |
+| `QUARANTINE` | 7.659 | 34,68% | không pseudo-label |
+| `EXCLUDE_AUTO` | 75 | 0,34% | confirmed duplicate |
+| **Tổng** | **22.082** | **100%** | partition closure |
+
+- Primary reason trong quarantine: 6.925 `PLATFORM_TEMPLATE`, 426
+  `REWARD_DISCLOSURE`, 235 `INTERNAL_REPETITION`, 108
+  `POST_CLEAN_QUALITY`, 52 `NONREVIEW_SUSPECT`, 25 `HARD_NONREVIEW`, 18
+  `PRIVACY`, 11 `NEAR_DUPLICATE`. Có 1.673 transformation, 75 confirmed
+  duplicate alias, 23 near-duplicate pair/20 cluster và 92 template family.
+- Curation validator trả `VALID`, 25 checksum entry và reproducible rebuild
+  `BYTE_REPRODUCIBLE`; manifest SHA-256
+  `902f8c9af7daa8e6b57d75e22651053a2ea3a120508616edffc1e144e3d16ab6`.
+
+### Leakage-safe pseudo-label — đã thực thi cùng frozen setting
+
+- Prepared package `data/annotations/absa_ai_delta_v2_20260806/`, tranche
+  `tranche-0006`, ID `absa-ai-tranche-c02af469e9eac1fd`, target đúng toàn bộ
+  14.348 clean-core. Explicit incremental reference/safe-frame replay cho
+  reference overlap 0, reserved-group overlap 0, prior-tranche overlap 0;
+  human-confirmed calibration 88, accepted prompt calibration 68, diagnostic
+  holdout 20.
+- Generation giữ đúng setting delta v1: backend Codex, model
+  `gpt-5.6-terra`, reasoning `medium`, batch 20, 8 workers, retry 3,
+  timeout 420 giây, max-token 4.096, thinking `auto`; prompt
+  `absa-ai-compact-v1.0.0` SHA-256
+  `4184cc3dc33980f5d985f40628b319f9e69eb4f183dd363d1832f1101dbdb08c`;
+  schema SHA-256
+  `0205bac4e8a379b19972da98d1df2869c9b20d20c2c22087d5f84b4ccfd88e9e`.
+- Diagnostic 20/20, failure 0, technical gate `PASS`. Primary hoàn tất
+  14.348/14.348, missing 0: 13.257 `LABELED`, 852 `ESCALATE`, 239
+  `REJECT_NON_REVIEW`; 34.766 mentioned aspect-cell, 1.339 mixed aspect-cell,
+  2.425 review-level multi-polarity.
+- Terminal wrapper chạm timeout một giờ nhưng Python worker tiếp tục an toàn
+  từ checkpoint. Lượt đầu kết thúc còn thiếu 5 record và chưa sinh summary;
+  replay cùng config đọc lại checkpoint, dùng 6 provider call để đóng closure.
+  Seal replay trả `SEALED_REPLAY_VALID`: diagnostic 1 attempt, primary 1.065
+  attempt, 5 recovered failure marker, không còn unrecovered target.
+- Semantic audit khó 60 record dùng cùng model/reasoning, batch 20 và 3 worker:
+  47 `NO_MATERIAL_ISSUE`, 3 `MINOR_OR_BOUNDARY`, 10 `MAJOR`, label mutation 0;
+  đây không phải corpus accuracy. Audit manifest SHA-256
+  `9900643defb984fadb64971b0da4a35dbdd67dfb5faa02c52f8dad91db8c3700`.
+- Final publication có 14.348 pseudo-label, 5.270 human-review queue record,
+  status `AI_PSEUDO_LABEL_PENDING_HUMAN_VERIFICATION`; independent validator
+  trả `VALID`, reference/reserved overlap 0. Final manifest SHA-256
+  `5c3a27d2aefe67259420abba232af9094e2d1adf4fed369d232d6e5b4e602d0b`.
+
+### Model-ready v2 — đã thực thi và VALID
+
+- Tạo `configs/model_data_v2_20260806.json`, giữ nguyên schema, seed 20260729,
+  split 80/10/10 và reservation ledger. Giữ ba package crawled-clean cũ cùng
+  legacy-old, thêm delta v2; **chủ động bỏ hai package quarantine base/delta**
+  khỏi source list để platform-template đã chẩn đoán không quay lại train.
+  Training config/model hyperparameter không bị thay đổi.
+- Release `data/model_ready/absa_pseudo_v2_20260806/`, ID
+  `absa-model-ready-fd6ac3b9484a3721e58e`, nhận 38.709 source row; ledger loại
+  2.784 annotation status, 734 non-review, 2 exact-text duplicate và 2.738
+  human-gold reservation. Còn **32.451 unique model-ready**: train 25.811,
+  dev 3.301, test 3.339; group tương ứng 8.070/903/899 và validator trả
+  `VALID`.
+- Domain composition model-ready: 10.107 `crawled_clean`, 538
+  `crawled_clean_delta`, 13.257 `crawled_clean_delta_v2`, 8.549 `legacy_old`.
+  Curation status là 32.226 `KEEP` + 225 `KEEP_CLEANED`; **0 quarantine**.
+  Tổng 79.834 polarity instance: negative 14.314 (17,93%), positive 62.008
+  (77,67%), neutral 3.512 (4,40%); mixed aspect instance 2.961. Model-ready
+  manifest SHA-256
+  `b6af3aea22d3f10e5a49f1c8b327aa1f8786a3ec87527238c1d54ecd43589e72`.
+
+### Validation, quyết định và giới hạn
+
+- `py_compile` PASS cho toàn bộ script đã dùng; `git diff --check` PASS.
+  Parent, curation, tranche và model-ready validators đều PASS; old delta v1
+  parent validator cũng PASS sau code change, xác nhận backward compatibility.
+  ABSA suite chạy bằng system Python có Torch PASS 8/8.
+- Full `.venv` discovery chạy 203 test: 198 PASS, 5 ERROR. Một lỗi là
+  `test_absa_system` không import được vì `.venv` không cài Torch; chạy lại
+  bằng system Python PASS 8/8. Bốn lỗi còn lại thuộc pre-existing
+  human-annotation UI contract mismatch (`workflow` payload và
+  `AnnotationServer` constructor), ngoài các file task này; không sửa lấn
+  phạm vi. Các nhóm collector/curation/release/AI tranche trong lượt full đều
+  PASS.
+- **Quyết định đã thực thi:** Không label 7.659 quarantine chỉ để tăng số lượng;
+  không đưa hai quarantine package cũ vào model-ready v2; không sửa frozen
+  release cũ; không train sau khi data release vừa được publish. `same setting`
+  được hiểu là cùng cleaning rule và cùng LLM model/prompt/generation setting;
+  data-source config phải đổi có chủ đích để loại bottleneck template.
+- **Giới hạn:** 13.257 record `LABELED` và mọi label cũ vẫn là AI pseudo-label,
+  không phải human gold. 5.270 queue record và 10 semantic-audit `MAJOR` cần
+  human review; 7.659 quarantine cần curator/adjudication nếu muốn phục hồi
+  buyer residual. Neutral đã tăng so với release cũ nhưng vẫn chỉ 4,40%; shop
+  service/warranty/authenticity vẫn là rare aspects. 198/203 full regression
+  không phải full green vì mismatch UI nêu trên.
+- **KẾ HOẠCH CHƯA THỰC THI:** Không chạy training/benchmark, không human-adjudicate
+  queue/quarantine, không merge in-place artifact cũ. Training tiếp theo phải
+  dùng model-ready v2 và `configs/training_v1.json`/protocol metric v2 với run ID
+  mới; không resume checkpoint được train trên release cũ.
+- **Next dependency:** Ưu tiên human-check 10 audit `MAJOR`, sau đó queue theo
+  `ESCALATE`/neutral/mixed/rare-aspect; chạy bounded smoke training rồi full
+  group-aware benchmark từ đầu trên model-ready v2. Theo dõi riêng neutral và
+  rare-aspect support thay vì chỉ báo một macro scalar.
+
+## TASK-20260806-061 — Chạy lại 8.549 legacy model-ready qua cleaning hiện hành
+
+- **Trạng thái:** ĐÃ THỰC THI label-blind projection, curation rule 2.1.2,
+  checksum validation và byte-reproducible rebuild. Không sửa/xóa `data/raw/`,
+  không ghi đè legacy source/model-ready v2, không dùng nhãn làm đầu vào cho
+  cleaning và chưa thay đổi tập train/dev/test đang dùng.
+- **Mục tiêu:** Lấy đúng 8.549 review `legacy_old` đang có trong
+  `absa_pseudo_v2_20260806`, chạy qua cùng pipeline cleaning hiện hành và đo
+  số record còn đủ điều kiện clean-core.
+- **Đầu vào thực tế:** model-ready ID
+  `absa-model-ready-fd6ac3b9484a3721e58e`; package
+  `absa_legacy_old_relabel_9772_v1_20260728`; frozen label-blind source ID
+  `legacy-old-label-blind-e28aa62584100f31`; cleaning rule 2.1.2 và guideline
+  V2. Membership gốc gồm train 6.876, dev 837, test 836, tổng 8.549.
+
+### Projection label-blind — đã thực thi và VALID
+
+- **Code change đã thực thi:** Thêm
+  `scripts/build_legacy_model_ready_parent.py` để verify checksum của cả
+  model-ready và frozen label-blind source, chọn membership theo package, bind
+  một-một `sample_id`/text/SHA-256, bỏ toàn bộ label, evidence, annotation
+  status và split khỏi record dùng cho cleaning, rồi xuất corpus-parent có
+  audit một-một và checksum closure. Script SHA-256
+  `11565759e6b9165c030c8eaa14851e16bcaa50b58c3cb863bbfdd0ecceb5ab61`.
+- Parent version mới:
+  `data/releases/legacy_old_model_ready_8549_parent_v1_20260806/`, ID
+  `legacy-model-ready-parent-f1669a387bb5be9e`, đúng 8.549 canonical + 8.549
+  audit record, 5 checksum entry. Membership sample-ID SHA-256
+  `9b2101276f57cbbcd14b2a810e88cec73d89d3da622d1196d78f04905460e428`;
+  validator trả `VALID`, `annotation_fields_copied=false`. Manifest SHA-256
+  `b454dd32eaed2024b6cbcece9431b7bfb6f7571593d22d055978a9d36e863eef`.
+- Legacy không có product ID, rating, query, SKU và review time. Để không gom
+  sai mọi record “không rõ sản phẩm” thành một product, projection gán một
+  synthetic product ID duy nhất cho từng review. Vì vậy rule toàn cục vẫn
+  chạy, nhưng product-scoped duplicate/template evidence không thể phục dựng.
+- Lần build curation đầu tiên dừng trước publication vì parent adapter chưa có
+  `provenance/SOURCE_SHA256SUMS.txt`; không sinh output release. Adapter đã
+  được sửa để bind 8 input artifact, parent được build lại và validate trước
+  khi curation chạy lại thành công.
+
+### Curation result — đã đo và VALID
+
+- Tạo config
+  `configs/cleaning_legacy_model_ready_8549_v1_20260806.json`, giữ nguyên toàn
+  bộ rule/threshold 2.1.2 từ delta v2, chỉ đổi parent/output; QC escalation
+  vẫn rỗng. Config SHA-256
+  `9e00a86893b4fe60da7ec28a7459445d9f641f4ff14443d4b5f76d543b2e108c`.
+- Release mới:
+  `data/releases/legacy_old_model_ready_8549_curation_v1_20260806/`, ID
+  `lazada-vi-absa-curation-c73e50690ac499e6`:
+
+| Status | Record | Tỷ lệ trên 8.549 | Diễn giải |
+|---|---:|---:|---|
+| `KEEP` | 3.568 | 41,74% | giữ nguyên text |
+| `KEEP_CLEANED` | 95 | 1,11% | giữ sau transformation |
+| **Clean-core giữ lại** | **3.663** | **42,85%** | đủ điều kiện annotation/model input |
+| `QUARANTINE` | 4.875 | 57,02% | cần loại khỏi train hiện tại hoặc human review |
+| `EXCLUDE_AUTO` | 11 | 0,13% | confirmed punctuation-exact duplicate |
+| **Tổng** | **8.549** | **100%** | partition closure |
+
+- Primary reason theo status: quarantine gồm 3.546 `POST_CLEAN_QUALITY`, 1.195
+  `PLATFORM_TEMPLATE`, 83 `INTERNAL_REPETITION`, 40 `REWARD_DISCLOSURE`, 7
+  `NONREVIEW_SUSPECT`, 3 `NEAR_DUPLICATE`, 1 `PRIVACY`; 11 duplicate nằm ở
+  `EXCLUDE_AUTO`. Trong toàn bộ quarantine, các quality reason có thể overlap:
+  3.681 `TOO_SHORT_CHARS`, 2.716 `TOO_FEW_WORDS`, 2.295
+  `LOW_QUALITY_SCORE`, 1.505 `TOO_FEW_MEANINGFUL_WORDS`, 175
+  `INSUFFICIENT_VIETNAMESE_SIGNAL`, 17 `LOW_LEXICAL_DIVERSITY`, 7
+  `FOREIGN_SCRIPT_DOMINANT`.
+- Pipeline tạo 441 transformation, 11 confirmed duplicate alias, 3
+  near-duplicate pair/cluster và 82 template family. Curation validator trả
+  `VALID`, kiểm 25 checksum entry; rebuild cùng timestamp trả
+  `BYTE_REPRODUCIBLE` và khớp cả 25 file. Manifest SHA-256
+  `7684ba5dc25bd0ec7673efae0706bbb38adf363e6ad7796af2e4efc34b90bace`.
+
+### Quyết định, giới hạn và bước tiếp theo
+
+- **Quyết định đã thực thi:** Đây là release audit độc lập; chưa tự động xóa
+  4.886 record khỏi model-ready v2. Con số có thể dùng ngay theo rule hiện tại
+  là **3.663**, không phải toàn bộ 8.549. `QUARANTINE` không đồng nghĩa record
+  chắc chắn vô dụng và chưa bị xóa.
+- **Giới hạn:** Rule 2.1.2 được thiết kế cho corpus `substantive_vi_v2`, gồm
+  ngưỡng tối thiểu 80 ký tự/15 từ; vì vậy phần lớn legacy ngắn bị quarantine.
+  Đây là kết quả đúng của pipeline hiện tại, không tự chứng minh mọi short
+  review đều sai cho ABSA. Thiếu product metadata làm giảm khả năng audit
+  template/dedup trong từng sản phẩm. Nhãn legacy vẫn là pseudo-label pending
+  human verification; cleaning này không đánh giá độ đúng của nhãn.
+- **KẾ HOẠCH CHƯA THỰC THI:** Chưa publish model-ready v3. Nếu chấp nhận policy
+  hiện tại, cần lọc model-ready bằng 3.663 clean-core ID, giữ group-aware split;
+  95 text đã transformation phải pseudo-label lại hoặc được human adjudicate,
+  không tái dùng nhãn cũ một cách mù quáng. Nếu muốn cứu short review, trước
+  hết phải tạo một policy legacy-specific version mới và human-calibrate trên
+  sample quarantine, không nới ngưỡng trực tiếp trong frozen rule 2.1.2.
+- **Next dependency:** Người dùng chọn giữa (a) strict: loại/quarantine 4.886
+  record và dựng model-ready v3 từ 3.663 legacy sạch, hoặc (b) calibrate một
+  policy legacy-specific trên mẫu human review rồi mới chốt retention cuối.
+
+## TASK-20260806-062 — Phát hành model-ready v3 loại legacy lỗi
+
+- **Trạng thái:** ĐÃ THỰC THI strict filtering, publication, checksum/schema/
+  leakage validation, exact-parent-subset audit và byte-reproducible rebuild.
+  Không sửa/xóa `data/raw/`; không ghi đè/xóa model-ready v2; không gọi AI,
+  không đổi text/nhãn/split/leakage group của record được giữ.
+- **Mục tiêu:** Theo quyết định của người dùng, loại legacy lỗi khỏi model-ready
+  hiện hành và chốt dataset khoảng 27k. Chỉ tái sử dụng nhãn khi legacy record
+  có curation status `KEEP` và text hoàn toàn không đổi.
+- **Đầu vào thực tế:** Parent model-ready v2 ID
+  `absa-model-ready-fd6ac3b9484a3721e58e`, 32.451 record; legacy curation ID
+  `lazada-vi-absa-curation-c73e50690ac499e6`, 8.549 decision; target package
+  `absa_legacy_old_relabel_9772_v1_20260728`.
+
+### Phương pháp và code change — đã thực thi
+
+- Thêm `scripts/filter_model_ready_legacy.py` và config
+  `configs/model_filter_legacy_keep_v3_20260806.json`. Filter validate parent
+  trước khi đọc, verify toàn bộ checksum curation, bind `sample_id` và raw text
+  SHA-256 một-một, rồi ghi một decision cho từng record parent.
+- Policy đóng băng cho lần phát hành này: non-target package được giữ nguyên;
+  legacy `KEEP` chỉ được giữ khi `transformation_ids` rỗng và
+  `curated_text_sha256 == raw_text_sha256`; `KEEP_CLEANED` bị loại chờ relabel;
+  `QUARANTINE` và `EXCLUDE_AUTO` bị loại. Record được include được copy nguyên
+  object, nên text, evidence, pseudo-label, split và leakage group không đổi.
+- Script SHA-256
+  `bacbf7159f54622c4202c2f913c114c4b5ffa0a038c70d01908f0ce78854420f`;
+  config SHA-256
+  `d5adf82f67bdb182c155a5b6edec1d89c0f50c90815f408754a63a58321b4a3c`.
+
+### Output và kết quả đo — đã thực thi và VALID
+
+- Release mới:
+  `data/model_ready/absa_pseudo_v3_legacy_clean_20260806/`, ID
+  `absa-model-ready-55ebc865870bb539febe`, có **27.470 unique model-ready**:
+
+| Thành phần | Record | Quyết định |
+|---|---:|---|
+| Crawled-clean hiện có | 23.902 | giữ nguyên |
+| Legacy `KEEP`, text không đổi | 3.568 | giữ nguyên nhãn/split |
+| Legacy `KEEP_CLEANED` | 95 | loại tạm, phải relabel |
+| Legacy `QUARANTINE` | 4.875 | loại khỏi v3 |
+| Legacy `EXCLUDE_AUTO` | 11 | loại confirmed duplicate |
+| **Model-ready v3** | **27.470** | **23.902 + 3.568** |
+
+- Split được bảo toàn từ parent: train 21.446, dev 2.983, test 3.041; group
+  tương ứng 3.705/585/601. Group overlap train–dev, train–test và dev–test đều
+  0; sample ID và review-text SHA-256 đều unique.
+- Decision ledger có đúng 32.451 row: 23.902 `INCLUDE_PARENT_SPLIT`, 3.568
+  `INCLUDE_LEGACY_KEEP`, 4.875 `EXCLUDE_LEGACY_QUARANTINE`, 95
+  `EXCLUDE_LEGACY_REQUIRES_RELABEL`, 11
+  `EXCLUDE_LEGACY_CONFIRMED_DUPLICATE`. Tổng loại so với v2 là 4.981.
+- `absa_system validate-data` trả `VALID`, 27.470 record. Audit độc lập join
+  parent/child xác nhận output là exact subset, mọi record include bằng nguyên
+  object parent và tập include trong ledger bằng đúng tập output. Rebuild cùng
+  timestamp trả `BYTE_REPRODUCIBLE`, khớp 7 checksum entry. Manifest SHA-256
+  `8f0f61d37fdc402ebfbfb50edc4007929f8122ed974981f71e91bdd23945a5f7`.
+
+### Quyết định, giới hạn và next dependency
+
+- **Quyết định đã thực thi:** V3 27.470 là release được khuyến nghị cho lần
+  train tiếp theo. V2 32.451 vẫn được giữ immutable làm provenance/rollback,
+  nhưng không còn là input được khuyến nghị. Không xóa vật lý artifact cũ.
+- **Giới hạn:** 27.470 vẫn chứa AI pseudo-label pending human verification;
+  thao tác này chỉ loại legacy fail cleaning, không chứng minh nhãn còn lại
+  đúng. 95 `KEEP_CLEANED` chưa được cứu vì text sau cleaning chưa được gắn nhãn
+  lại. Split được bảo toàn để so sánh được với v2, nên tỷ lệ split sau filter
+  không còn đúng tuyệt đối 80/10/10.
+- **KẾ HOẠCH CHƯA THỰC THI:** Chưa train/benchmark trên v3, chưa relabel 95
+  legacy cleaned, chưa human-adjudicate quarantine và chưa xóa model-ready v2.
+- **Next dependency:** Dùng đường dẫn v3 làm `--data` cho smoke training/full
+  benchmark mới. Nếu muốn tăng từ 27.470 lên 27.565, phải pseudo-label/human
+  review lại đúng 95 text đã transform rồi phát hành một version tiếp theo.
+
+## TASK-20260806-063 — Train hai classical baseline trên model-ready v3
+
+- **Trạng thái:** ĐÃ THỰC THI full 3-fold Logistic Regression và Naive Bayes,
+  locked-test evaluation, sealing và validation cho từng run cùng comparison
+  suite. Không chạy neural model/GPU, không sửa dataset/config/code và không
+  tune lại sau khi xem locked test.
+- **Mục tiêu:** Chạy hai mô hình đơn giản trước để thiết lập baseline nhanh,
+  kiểm tra toàn bộ training/evaluation path trên model-ready v3 và tạo mốc so
+  sánh trước PhoBERT.
+- **Đầu vào thực tế:** Dataset ID
+  `absa-model-ready-55ebc865870bb539febe`, 27.470 record; train 21.446, dev
+  2.983, locked test 3.041; `configs/training_v1.json` SHA-256
+  `de77e40eb02431d589046001f2eb48a1b43f21b7a1dce7d47485b955fd3fd29c`;
+  seed 20260729; 3 fold; evaluation protocol
+  `separate-aspect-polarity/1.0.0`.
+- **Phương pháp đã thực thi:** `train-benchmark --models
+  logistic_regression naive_bayes --folds 3 --device cpu --no-progress` với
+  run ID `classical_v3_20260806`. Development train+dev gồm 24.429 sample/
+  4.290 leakage group, chia fold 8.141/8.144/8.144; test giữ khóa 3.041.
+  Hai model dùng cùng exact fold assignment SHA-256
+  `8f796579874a4ef8c908f6b5e1a02df07f6b8cd4faa709201aae0aa353f57b1e`;
+  group overlap development–test bằng 0.
+
+### Kết quả đã đo trên locked pseudo-label test
+
+| Metric | Logistic Regression | Naive Bayes |
+|---|---:|---:|
+| OOF polarity macro-F1 | 0,7581 | 0,6897 |
+| Test polarity macro-F1 | **0,7568** | 0,6828 |
+| Test polarity micro-F1 | **0,8925** | 0,8749 |
+| Test mention macro-F1 | **0,8534** | 0,6497 |
+| Test exact-set match | **0,7014** | 0,6718 |
+| Test sample Jaccard | **0,8560** | 0,8346 |
+| Test hamming loss | **0,0756** | 0,0881 |
+| Test mixed F1 | **0,3719** | 0,3499 |
+| Negative F1 | **0,7843** | 0,7078 |
+| Neutral F1 | **0,5450** | 0,4104 |
+| Positive F1 | **0,9412** | 0,9303 |
+
+- Logistic Regression có cross-fold polarity macro-F1 mean 0,7595, sample SD
+  0,0008; Naive Bayes mean 0,6878, SD 0,0079. Logistic Regression đứng hạng 1
+  trên locked-test polarity macro-F1 và tốt hơn Naive Bayes 0,0740 điểm tuyệt
+  đối ở metric này.
+- Output đã seal:
+  `results/logistic_regression/classical_v3_20260806/` (27 file),
+  `results/naive_bayes/classical_v3_20260806/` (27 file), và
+  `results/comparisons/classical_v3_20260806/` (4 file). Hai
+  `validate-kfold-run` và `validate-benchmark` đều trả `VALID`. Manifest
+  SHA-256 tương ứng:
+  `787038697cd5287669199c3736a91f2614f858591e665d3d560c4399fbc6b458`,
+  `e80d6e5ea1dffb88a7e417860a82fa51cb526549925f5d9147eb728396183b9b`,
+  comparison suite
+  `7eda668a7531d7b93c396295e360cffd69637cf54239396cb86ae0ef692543c2`.
+
+### Quyết định, giới hạn và next dependency
+
+- **Quyết định:** Logistic Regression là classical baseline hiện tại; Naive
+  Bayes yếu rõ ở mention rare aspects và neutral. Neutral/mixed vẫn là điểm
+  nghẽn của cả hai, kể cả khi positive F1 rất cao.
+- **Giới hạn:** Đây là đánh giá trên locked **pseudo-label test**, không phải
+  human-gold accuracy; điểm cao có thể phản ánh pattern của pseudo-labeler.
+  Locked test đã được đọc đúng một lần cho suite này, nên không dùng kết quả
+  để tune hyperparameter rồi báo lại trên cùng test. Classical model không có
+  early stopping; `best_epoch` không áp dụng.
+- **KẾ HOẠCH CHƯA THỰC THI:** Chưa chạy BiLSTM, CNN-BiLSTM, PhoBERT hoặc
+  XLM-RoBERTa; chưa chạy human-gold benchmark; chưa deploy checkpoint.
+- **Next dependency:** Chạy PhoBERT bằng cùng fold assignment/evaluation
+  contract và so với Logistic Regression; ưu tiên theo dõi neutral F1, mixed
+  F1 và rare-aspect mention F1 thay vì chỉ polarity micro-F1.

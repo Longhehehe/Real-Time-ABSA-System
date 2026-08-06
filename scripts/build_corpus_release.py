@@ -45,6 +45,7 @@ LEGACY_COLUMNS = ["reviewContent", *ASPECT_COLUMNS]
 TOKEN_RE = re.compile(r"\b[^\W_]+\b", flags=re.UNICODE)
 CLAUSE_CAPTURE_RE = re.compile(r"([^.!?…;\n]+)([.!?…;\n]+|$)")
 HEX_SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+RAW_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 REQUIRED_REVIEW_FIELDS = {
     "schema_version",
     "crawl_id",
@@ -375,9 +376,63 @@ def _validate_review_row(
         raise ValueError(f"Stored quality metrics mismatch at {location}: {mismatches}")
 
 
+def _validate_raw_date(value: str | None, *, option: str) -> str | None:
+    if value is None:
+        return None
+    if not RAW_DATE_RE.fullmatch(value):
+        raise ValueError(f"{option} must use YYYY-MM-DD format")
+    try:
+        datetime.fromisoformat(value)
+    except ValueError as exc:
+        raise ValueError(f"{option} is not a valid calendar date") from exc
+    return value
+
+
+def _path_in_raw_date_scope(
+    path: Path,
+    raw_root: Path,
+    *,
+    raw_date_from: str | None,
+    raw_date_through: str | None,
+) -> bool:
+    if raw_date_from is None and raw_date_through is None:
+        return True
+    relative = path.relative_to(raw_root)
+    if not relative.parts or not RAW_DATE_RE.fullmatch(relative.parts[0]):
+        return False
+    raw_date = relative.parts[0]
+    if raw_date_from is not None and raw_date < raw_date_from:
+        return False
+    if raw_date_through is not None and raw_date > raw_date_through:
+        return False
+    return True
+
+
+def _scoped_paths(
+    raw_root: Path,
+    pattern: str,
+    *,
+    raw_date_from: str | None,
+    raw_date_through: str | None,
+) -> list[Path]:
+    return sorted(
+        path
+        for path in raw_root.rglob(pattern)
+        if _path_in_raw_date_scope(
+            path,
+            raw_root,
+            raw_date_from=raw_date_from,
+            raw_date_through=raw_date_through,
+        )
+    )
+
+
 def _read_canonical(
     raw_root: Path,
     plan_path: Path,
+    *,
+    raw_date_from: str | None,
+    raw_date_through: str | None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     policy = load_plan(plan_path).quality
     rows: list[dict[str, Any]] = []
@@ -386,7 +441,12 @@ def _read_canonical(
     malformed = 0
     response_origins: dict[str, set[tuple[str, int, str]]] = defaultdict(set)
 
-    for path in sorted(raw_root.rglob("reviews.jsonl")):
+    for path in _scoped_paths(
+        raw_root,
+        "reviews.jsonl",
+        raw_date_from=raw_date_from,
+        raw_date_through=raw_date_through,
+    ):
         with path.open("r", encoding="utf-8") as handle:
             for line_number, line in enumerate(handle, 1):
                 if not line.strip():
@@ -512,11 +572,20 @@ def _write_legacy_csv(
 def _source_inventory(
     raw_root: Path,
     project_root: Path,
+    *,
+    raw_date_from: str | None,
+    raw_date_through: str | None,
 ) -> tuple[int, str, str]:
     source_files = sorted(
         path
         for path in raw_root.rglob("*")
         if path.is_file()
+        and _path_in_raw_date_scope(
+            path,
+            raw_root,
+            raw_date_from=raw_date_from,
+            raw_date_through=raw_date_through,
+        )
     )
     temporary_files = [
         path for path in source_files if path.name.endswith(".tmp")
@@ -556,11 +625,21 @@ def _jsonl_count(path: Path) -> int:
     return count
 
 
-def _validate_manifests(raw_root: Path) -> dict[str, Any]:
+def _validate_manifests(
+    raw_root: Path,
+    *,
+    raw_date_from: str | None,
+    raw_date_through: str | None,
+) -> dict[str, Any]:
     statuses: Counter[str] = Counter()
     aggregate = Counter()
     manifest_count = 0
-    for path in sorted(raw_root.rglob("manifest.json")):
+    for path in _scoped_paths(
+        raw_root,
+        "manifest.json",
+        raw_date_from=raw_date_from,
+        raw_date_through=raw_date_through,
+    ):
         manifest_count += 1
         manifest = json.loads(path.read_text(encoding="utf-8"))
         crawl_id = str(manifest.get("crawl_id") or "")
@@ -644,6 +723,8 @@ def _artifact(path: Path, root: Path, records: int | None = None) -> dict[str, A
 def build_release(
     *,
     raw_root: Path,
+    raw_date_from: str | None,
+    raw_date_through: str | None,
     output: Path,
     plan_path: Path,
     collector_config: Path,
@@ -658,6 +739,20 @@ def build_release(
     project_root = Path.cwd().resolve()
     raw_root = raw_root.resolve()
     output = output.resolve()
+    raw_date_from = _validate_raw_date(
+        raw_date_from,
+        option="--raw-date-from",
+    )
+    raw_date_through = _validate_raw_date(
+        raw_date_through,
+        option="--raw-date-through",
+    )
+    if (
+        raw_date_from is not None
+        and raw_date_through is not None
+        and raw_date_from > raw_date_through
+    ):
+        raise ValueError("--raw-date-from must not be after --raw-date-through")
     try:
         raw_root.relative_to(project_root)
     except ValueError as exc:
@@ -676,9 +771,23 @@ def build_release(
         source_file_count,
         initial_source_inventory,
         source_inventory_sha256,
-    ) = _source_inventory(raw_root, project_root)
-    manifest_validation = _validate_manifests(raw_root)
-    rows, source_counts = _read_canonical(raw_root, plan_path)
+    ) = _source_inventory(
+        raw_root,
+        project_root,
+        raw_date_from=raw_date_from,
+        raw_date_through=raw_date_through,
+    )
+    manifest_validation = _validate_manifests(
+        raw_root,
+        raw_date_from=raw_date_from,
+        raw_date_through=raw_date_through,
+    )
+    rows, source_counts = _read_canonical(
+        raw_root,
+        plan_path,
+        raw_date_from=raw_date_from,
+        raw_date_through=raw_date_through,
+    )
     manifest_review_total = manifest_validation[
         "aggregate_physical_counts"
     ]["reviews_written"]
@@ -1164,6 +1273,8 @@ def build_release(
                 "\\",
                 "/",
             ),
+            "raw_date_from": raw_date_from,
+            "raw_date_through": raw_date_through,
             **source_counts,
             "source_files_hashed": source_file_count,
             "source_inventory_sha256": source_inventory_sha256,
@@ -1306,7 +1417,12 @@ def build_release(
         final_source_file_count,
         final_source_inventory,
         final_source_inventory_sha256,
-    ) = _source_inventory(raw_root, project_root)
+    ) = _source_inventory(
+        raw_root,
+        project_root,
+        raw_date_from=raw_date_from,
+        raw_date_through=raw_date_through,
+    )
     if (
         final_source_file_count != source_file_count
         or final_source_inventory != initial_source_inventory
@@ -1324,6 +1440,14 @@ def build_release(
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--raw-root", type=Path, default=Path("data/raw"))
+    parser.add_argument(
+        "--raw-date-from",
+        help="Optional inclusive YYYY-MM-DD raw directory cutoff.",
+    )
+    parser.add_argument(
+        "--raw-date-through",
+        help="Optional inclusive YYYY-MM-DD raw directory cutoff.",
+    )
     parser.add_argument(
         "--output",
         type=Path,
@@ -1355,6 +1479,8 @@ def main() -> int:
         parser.error("--near-duplicate-threshold must be in (0, 1]")
     manifest = build_release(
         raw_root=args.raw_root,
+        raw_date_from=args.raw_date_from,
+        raw_date_through=args.raw_date_through,
         output=args.output,
         plan_path=args.plan,
         collector_config=args.collector_config,

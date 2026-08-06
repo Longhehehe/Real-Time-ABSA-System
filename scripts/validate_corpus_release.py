@@ -26,6 +26,7 @@ ASPECT_COLUMNS = [
 LEGACY_COLUMNS = ["reviewContent", *ASPECT_COLUMNS]
 TOKEN_RE = re.compile(r"\b[^\W_]+\b", flags=re.UNICODE)
 WHITESPACE_RE = re.compile(r"\s+")
+RAW_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 FORBIDDEN_KEYS = {
     "avatar",
     "buyer",
@@ -98,6 +99,38 @@ def _safe_child(root: Path, relative: str) -> Path:
     except ValueError as exc:
         raise ValueError(f"Path escapes validation root: {relative}") from exc
     return path
+
+
+def _path_in_raw_date_scope(
+    path: Path,
+    raw_root: Path,
+    *,
+    raw_date_from: str | None,
+    raw_date_through: str | None,
+) -> bool:
+    if raw_date_from is None and raw_date_through is None:
+        return True
+    for name, value in (
+        ("raw_date_from", raw_date_from),
+        ("raw_date_through", raw_date_through),
+    ):
+        if value is not None and not RAW_DATE_RE.fullmatch(value):
+            raise ValueError(f"Invalid source {name}: {value!r}")
+    if (
+        raw_date_from is not None
+        and raw_date_through is not None
+        and raw_date_from > raw_date_through
+    ):
+        raise ValueError("Source raw date range is reversed")
+    relative = path.relative_to(raw_root)
+    if not relative.parts or not RAW_DATE_RE.fullmatch(relative.parts[0]):
+        return False
+    raw_date = relative.parts[0]
+    if raw_date_from is not None and raw_date < raw_date_from:
+        return False
+    if raw_date_through is not None and raw_date > raw_date_through:
+        return False
+    return True
 
 
 def _contains_forbidden_key(value: Any) -> str | None:
@@ -221,16 +254,31 @@ def validate_release(
         if not path.is_file() or _sha256_file(path) != expected:
             raise ValueError(f"Frozen raw source changed or is missing: {relative}")
     raw_root = _safe_child(project_root, manifest["source"]["raw_root"])
+    raw_date_from = manifest["source"].get("raw_date_from")
+    raw_date_through = manifest["source"].get("raw_date_through")
     actual_raw_files = {
         str(path.relative_to(project_root)).replace("\\", "/")
         for path in raw_root.rglob("*")
         if path.is_file()
+        and _path_in_raw_date_scope(
+            path,
+            raw_root,
+            raw_date_from=raw_date_from,
+            raw_date_through=raw_date_through,
+        )
     }
     if actual_raw_files != set(source_inventory):
         raise ValueError("Current raw file set differs from frozen source inventory")
 
     running_manifests = []
     for path in sorted(raw_root.rglob("manifest.json")):
+        if not _path_in_raw_date_scope(
+            path,
+            raw_root,
+            raw_date_from=raw_date_from,
+            raw_date_through=raw_date_through,
+        ):
+            continue
         value = json.loads(path.read_text(encoding="utf-8"))
         if value.get("status") == "running":
             running_manifests.append(str(path))
