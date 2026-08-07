@@ -146,6 +146,14 @@ def parser() -> argparse.ArgumentParser:
     value.add_argument("--max-length", type=int)
     value.add_argument("--batch-size", type=int)
     value.add_argument("--gradient-accumulation-steps", type=int)
+    value.add_argument(
+        "--multi-gpu",
+        action="store_true",
+        help=(
+            "Use CUDA GPUs 0 and 1 with DataParallel and AMP for selected "
+            "PhoBERT/XLM-RoBERTa runs."
+        ),
+    )
     value.add_argument("--no-progress", action="store_true")
     value.add_argument(
         "--resume",
@@ -185,6 +193,8 @@ def main() -> int:
         "results_dir": str(output_root),
         "folds": args.folds,
         "device": args.device,
+        "multi_gpu": bool(args.multi_gpu),
+        "amp": "forced_on_for_transformers" if args.multi_gpu else "from_config",
         "resume": bool(args.resume),
         "kaggle": IS_KAGGLE,
         "existing_comparison": comparison_validation,
@@ -209,6 +219,7 @@ def main() -> int:
         gradient_accumulation_override=args.gradient_accumulation_steps,
         show_progress_override=(False if args.no_progress else None),
         resume=bool(args.resume),
+        multi_gpu=bool(args.multi_gpu),
     )
     print(
         json.dumps(
