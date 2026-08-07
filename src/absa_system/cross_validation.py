@@ -48,7 +48,10 @@ from .training import (
     evaluate_probabilities,
     load_checkpoint,
     resolve_device,
+    resolve_multi_gpu_device_ids,
     set_seed,
+    unwrap_data_parallel,
+    wrap_data_parallel,
 )
 
 
@@ -196,6 +199,7 @@ def _train_one_fold(
     tokenizer: Any,
     config: Mapping[str, Any],
     device: torch.device,
+    multi_gpu_device_ids: list[int],
     amp: bool,
     show_progress: bool,
     output_dir: Path,
@@ -217,6 +221,11 @@ def _train_one_fold(
     include_evidence = bool(config.get("evidence_weight", 0.0) > 0)
     max_length = int(config["max_length"])
     batch_size = int(config["batch_size"])
+    if multi_gpu_device_ids and batch_size < len(multi_gpu_device_ids):
+        raise ValueError(
+            "--multi-gpu requires a global --batch-size of at least 2 so "
+            "both GPUs receive samples"
+        )
     eval_batch_size = int(config.get("eval_batch_size", batch_size))
     num_workers = int(config.get("num_workers", 0))
     train_dataset = ABSADataset(
@@ -292,6 +301,7 @@ def _train_one_fold(
         head_lr=float(config["head_lr"]),
         weight_decay=float(config.get("weight_decay", 0.01)),
     )
+    model = wrap_data_parallel(model, multi_gpu_device_ids)
     accumulation = int(config.get("gradient_accumulation_steps", 1))
     max_epochs = int(config["max_epochs"])
     updates_per_epoch = max(1, math.ceil(len(train_loader) / accumulation))
@@ -326,6 +336,11 @@ def _train_one_fold(
         "validation_groups": len(
             {str(row["leakage_group_id"]) for row in validation_records}
         ),
+        "parallelism": {
+            "mode": "data_parallel" if multi_gpu_device_ids else "single_device",
+            "device_ids": multi_gpu_device_ids,
+            "amp": amp,
+        },
         "tokenizer": {
             "class": tokenizer.__class__.__name__,
             "is_fast": bool(getattr(tokenizer, "is_fast", False)),
@@ -470,14 +485,15 @@ def _train_one_fold(
             best_thresholds = thresholds
             best_validation_metrics = validation_metrics
             epochs_without_improvement = 0
+            checkpoint_model = unwrap_data_parallel(model)
             checkpoint = {
                 "schema_version": "absa-checkpoint/1.0.0",
                 "model_name": model_name,
                 "model_family": model_spec.family,
-                "model_config": model.export_config(),
+                "model_config": checkpoint_model.export_config(),
                 "model_state_dict": {
                     key: value.detach().cpu()
-                    for key, value in model.state_dict().items()
+                    for key, value in checkpoint_model.state_dict().items()
                 },
                 "thresholds": thresholds.as_dict(),
                 "aspects": list(ASPECTS),
@@ -541,8 +557,9 @@ def _train_one_fold(
     ):
         raise RuntimeError(f"fold {fold_number} did not produce a checkpoint")
     checkpoint = load_checkpoint(output_dir / checkpoint_filename, device="cpu")
-    model.load_state_dict(checkpoint["model_state_dict"])
-    model.to(device)
+    checkpoint_model = unwrap_data_parallel(model)
+    checkpoint_model.load_state_dict(checkpoint["model_state_dict"])
+    checkpoint_model.to(device)
     best_validation_predictions = collect_probabilities(
         model,
         validation_loader,
@@ -812,6 +829,7 @@ def train_kfold_model(
     batch_size_override: int | None = None,
     gradient_accumulation_override: int | None = None,
     show_progress_override: bool | None = None,
+    multi_gpu: bool = False,
 ) -> dict[str, Any]:
     """Run group-aware K-fold CV and one locked-test ensemble evaluation."""
 
@@ -819,6 +837,10 @@ def train_kfold_model(
     if not model_spec.iterative:
         raise ValueError(
             f"{model_name} is a classical estimator; use the benchmark trainer"
+        )
+    if multi_gpu and model_spec.family != "transformer":
+        raise ValueError(
+            "--multi-gpu is supported for phobert and xlm_roberta only"
         )
     data_release = data_release.resolve()
     output_dir = output_dir.resolve()
@@ -849,11 +871,19 @@ def train_kfold_model(
         config["show_progress"] = bool(show_progress_override)
         config["runtime_overrides"]["show_progress"] = bool(show_progress_override)
     config = effective_neural_config(model_name, config)
+    config["runtime_overrides"]["multi_gpu"] = bool(multi_gpu)
+    if multi_gpu:
+        config["amp"] = True
+        config["runtime_overrides"]["amp"] = True
     folds = int(config.get("k_folds", 5))
     if folds < 2:
         raise ValueError("k_folds must be at least 2")
     seed = int(config["seed"])
     device = resolve_device(device_name or config.get("device"))
+    multi_gpu_device_ids = resolve_multi_gpu_device_ids(
+        device,
+        enabled=bool(multi_gpu),
+    )
     amp = bool(config.get("amp", True)) and device.type in {"cuda", "cpu"}
     show_progress = bool(config.get("show_progress", True))
     train_records = load_model_records(data_release, "train")
@@ -965,6 +995,16 @@ def train_kfold_model(
         "cuda_name": (
             torch.cuda.get_device_name(device) if device.type == "cuda" else None
         ),
+        "parallelism": {
+            "mode": "data_parallel" if multi_gpu_device_ids else "single_device",
+            "requested": bool(multi_gpu),
+            "device_ids": multi_gpu_device_ids,
+            "cuda_names": [
+                torch.cuda.get_device_name(index)
+                for index in multi_gpu_device_ids
+            ],
+            "amp": amp,
+        },
         "torch_version": torch.__version__,
         "transformers_version": distribution_version("transformers"),
         "tqdm_version": distribution_version("tqdm"),
@@ -1020,6 +1060,7 @@ def train_kfold_model(
         locked_test_records=len(test_records),
         device=str(device),
         progress=show_progress,
+        parallelism=run_metadata["parallelism"],
         early_stopping=run_metadata["early_stopping"],
         fold_assignment_validation=assignment_validation,
         split_warnings=split_warnings,
@@ -1059,6 +1100,7 @@ def train_kfold_model(
             tokenizer=tokenizer,
             config=config,
             device=device,
+            multi_gpu_device_ids=multi_gpu_device_ids,
             amp=amp,
             show_progress=show_progress,
             output_dir=fold_dir,

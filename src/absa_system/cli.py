@@ -85,6 +85,7 @@ def build_parser() -> ArgumentParser:
     train.add_argument("--max-length", type=int)
     train.add_argument("--batch-size", type=int)
     train.add_argument("--gradient-accumulation-steps", type=int)
+    train.add_argument("--multi-gpu", action="store_true")
     train.add_argument(
         "--no-progress",
         action="store_true",
@@ -119,6 +120,7 @@ def build_parser() -> ArgumentParser:
     train_kfold.add_argument("--max-length", type=int)
     train_kfold.add_argument("--batch-size", type=int)
     train_kfold.add_argument("--gradient-accumulation-steps", type=int)
+    train_kfold.add_argument("--multi-gpu", action="store_true")
     train_kfold.add_argument(
         "--no-progress",
         action="store_true",
@@ -157,6 +159,7 @@ def build_parser() -> ArgumentParser:
     benchmark.add_argument("--max-length", type=int)
     benchmark.add_argument("--batch-size", type=int)
     benchmark.add_argument("--gradient-accumulation-steps", type=int)
+    benchmark.add_argument("--multi-gpu", action="store_true")
     benchmark.add_argument(
         "--no-progress",
         action="store_true",
@@ -249,6 +252,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             batch_size_override=args.batch_size,
             gradient_accumulation_override=args.gradient_accumulation_steps,
             show_progress_override=(False if args.no_progress else None),
+            multi_gpu=bool(args.multi_gpu),
         )
         print(
             json.dumps(
@@ -281,6 +285,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             batch_size_override=args.batch_size,
             gradient_accumulation_override=args.gradient_accumulation_steps,
             show_progress_override=(False if args.no_progress else None),
+            multi_gpu=bool(args.multi_gpu),
         )
         print(
             json.dumps(
@@ -324,6 +329,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             gradient_accumulation_override=args.gradient_accumulation_steps,
             show_progress_override=(False if args.no_progress else None),
             resume=args.resume,
+            multi_gpu=bool(args.multi_gpu),
         )
         print(
             json.dumps(

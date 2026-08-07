@@ -614,6 +614,7 @@ def train_benchmark_suite(
     gradient_accumulation_override: int | None = None,
     show_progress_override: bool | None = None,
     resume: bool = False,
+    multi_gpu: bool = False,
 ) -> dict[str, Any]:
     """Run selected models sequentially and publish a comparison table."""
 
@@ -653,6 +654,7 @@ def train_benchmark_suite(
                 batch_size_override=batch_size_override,
                 gradient_accumulation_override=gradient_accumulation_override,
                 show_progress_override=show_progress_override,
+                multi_gpu=bool(multi_gpu and spec.family == "transformer"),
             )
         else:
             result = train_classical_kfold_model(

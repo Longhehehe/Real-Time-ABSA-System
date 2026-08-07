@@ -62,6 +62,53 @@ def resolve_device(requested: str | None = None) -> torch.device:
     return torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
+def resolve_multi_gpu_device_ids(
+    device: torch.device,
+    *,
+    enabled: bool,
+) -> list[int]:
+    """Validate the two-GPU contract and return logical CUDA device IDs."""
+
+    if not enabled:
+        return []
+    if device.type != "cuda" or not torch.cuda.is_available():
+        raise RuntimeError("--multi-gpu requires CUDA")
+    if device.index not in {None, 0}:
+        raise RuntimeError(
+            "--multi-gpu requires --device cuda or --device cuda:0 because "
+            "GPU 0 is the DataParallel coordinator"
+        )
+    available = torch.cuda.device_count()
+    if available < 2:
+        raise RuntimeError(
+            f"--multi-gpu requires at least 2 visible CUDA GPUs; found {available}"
+        )
+    return [0, 1]
+
+
+def wrap_data_parallel(
+    model: torch.nn.Module,
+    device_ids: list[int],
+) -> torch.nn.Module:
+    """Wrap a model on the first two visible GPUs when requested."""
+
+    if not device_ids:
+        return model
+    return torch.nn.DataParallel(
+        model,
+        device_ids=device_ids,
+        output_device=device_ids[0],
+    )
+
+
+def unwrap_data_parallel(model: torch.nn.Module) -> torch.nn.Module:
+    """Return the canonical model so checkpoints never contain ``module.`` keys."""
+
+    if isinstance(model, torch.nn.DataParallel):
+        return model.module
+    return model
+
+
 def _move_batch(batch: Mapping[str, Any], device: torch.device) -> dict[str, Any]:
     return {
         key: value.to(device, non_blocking=True)
@@ -290,6 +337,7 @@ def _emit_console_event(event: str, **payload: Any) -> None:
     separator = "=" * 78
     lines: list[str]
     if event == "training_started":
+        parallelism = payload.get("parallelism", {})
         lines = [
             "",
             separator,
@@ -306,6 +354,11 @@ def _emit_console_event(event: str, **payload: Any) -> None:
             (
                 f"  Batches train/dev/test: {payload.get('train_batches')} / "
                 f"{payload.get('dev_batches')} / {payload.get('test_batches')}"
+            ),
+            (
+                f"  Parallelism: {parallelism.get('mode', 'single_device')} | "
+                f"GPU IDs: {parallelism.get('device_ids', [])} | "
+                f"AMP: {'on' if parallelism.get('amp') else 'off'}"
             ),
         ]
     elif event in {"epoch_completed", "fold_epoch_completed"}:
@@ -364,6 +417,7 @@ def _emit_console_event(event: str, **payload: Any) -> None:
     elif event == "kfold_started":
         validation = payload.get("fold_assignment_validation", {})
         early = payload.get("early_stopping", {})
+        parallelism = payload.get("parallelism", {})
         lines = [
             "",
             separator,
@@ -380,6 +434,11 @@ def _emit_console_event(event: str, **payload: Any) -> None:
             (
                 f"  Early stopping: patience={early.get('patience')} | "
                 f"max epochs={early.get('max_epochs')} | monitor={early.get('monitor')}"
+            ),
+            (
+                f"  Parallelism: {parallelism.get('mode', 'single_device')} | "
+                f"GPU IDs: {parallelism.get('device_ids', [])} | "
+                f"AMP: {'on' if parallelism.get('amp') else 'off'}"
             ),
         ]
         for warning in payload.get("split_warnings", []):
@@ -710,6 +769,7 @@ def train_model(
     batch_size_override: int | None = None,
     gradient_accumulation_override: int | None = None,
     show_progress_override: bool | None = None,
+    multi_gpu: bool = False,
 ) -> dict[str, Any]:
     """Train one deterministic run and evaluate test once at the selected epoch."""
 
@@ -744,9 +804,17 @@ def train_model(
         config["runtime_overrides"]["show_progress"] = bool(
             show_progress_override
         )
+    config["runtime_overrides"]["multi_gpu"] = bool(multi_gpu)
+    if multi_gpu:
+        config["amp"] = True
+        config["runtime_overrides"]["amp"] = True
     seed = int(config["seed"])
     set_seed(seed)
     device = resolve_device(device_name or config.get("device"))
+    multi_gpu_device_ids = resolve_multi_gpu_device_ids(
+        device,
+        enabled=bool(multi_gpu),
+    )
     amp = bool(config.get("amp", True)) and device.type in {"cuda", "cpu"}
     show_progress = bool(config.get("show_progress", True))
 
@@ -788,6 +856,11 @@ def train_model(
     )
     generator = torch.Generator().manual_seed(seed)
     batch_size = int(config["batch_size"])
+    if multi_gpu_device_ids and batch_size < len(multi_gpu_device_ids):
+        raise ValueError(
+            "--multi-gpu requires a global --batch-size of at least 2 so "
+            "both GPUs receive samples"
+        )
     num_workers = int(config.get("num_workers", 0))
     train_loader = DataLoader(
         train_dataset,
@@ -843,6 +916,7 @@ def train_model(
         head_lr=float(config["head_lr"]),
         weight_decay=float(config.get("weight_decay", 0.01)),
     )
+    model = wrap_data_parallel(model, multi_gpu_device_ids)
     accumulation = int(config.get("gradient_accumulation_steps", 1))
     epochs = int(config["max_epochs"])
     updates_per_epoch = max(1, math.ceil(len(train_loader) / accumulation))
@@ -878,6 +952,16 @@ def train_model(
             if device.type == "cuda"
             else None
         ),
+        "parallelism": {
+            "mode": "data_parallel" if multi_gpu_device_ids else "single_device",
+            "requested": bool(multi_gpu),
+            "device_ids": multi_gpu_device_ids,
+            "cuda_names": [
+                torch.cuda.get_device_name(index)
+                for index in multi_gpu_device_ids
+            ],
+            "amp": amp,
+        },
         "torch_version": torch.__version__,
         "transformers_version": distribution_version("transformers"),
         "tqdm_version": distribution_version("tqdm"),
@@ -923,6 +1007,7 @@ def train_model(
         updates_per_epoch=updates_per_epoch,
         total_updates=total_updates,
         progress=show_progress,
+        parallelism=run_metadata["parallelism"],
     )
 
     best_metric = -1.0
@@ -1035,12 +1120,13 @@ def train_model(
             best_epoch = epoch
             best_thresholds = thresholds
             epochs_without_improvement = 0
+            checkpoint_model = unwrap_data_parallel(model)
             checkpoint = {
                 "schema_version": "absa-checkpoint/1.0.0",
-                "model_config": model.export_config(),
+                "model_config": checkpoint_model.export_config(),
                 "model_state_dict": {
                     key: value.detach().cpu()
-                    for key, value in model.state_dict().items()
+                    for key, value in checkpoint_model.state_dict().items()
                 },
                 "thresholds": thresholds.as_dict(),
                 "aspects": list(ASPECTS),
@@ -1092,8 +1178,9 @@ def train_model(
     if best_thresholds is None or not (output_dir / "model.pt").is_file():
         raise RuntimeError("training did not produce a valid checkpoint")
     checkpoint = load_checkpoint(output_dir / "model.pt", device="cpu")
-    model.load_state_dict(checkpoint["model_state_dict"])
-    model.to(device)
+    checkpoint_model = unwrap_data_parallel(model)
+    checkpoint_model.load_state_dict(checkpoint["model_state_dict"])
+    checkpoint_model.to(device)
     test_predictions = collect_probabilities(
         model,
         test_loader,

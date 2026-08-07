@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
-from typing import Any
+from typing import Any, NamedTuple
 import math
 
 import torch
@@ -12,8 +11,9 @@ import torch.nn as nn
 from .schema import ASPECTS, POLARITIES
 
 
-@dataclass
-class ABSAOutput:
+class ABSAOutput(NamedTuple):
+    """Tensor-only output compatible with PyTorch ``DataParallel`` gather."""
+
     mention_logits: torch.Tensor
     sentiment_logits: torch.Tensor
     mention_attention_logits: torch.Tensor
